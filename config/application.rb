@@ -26,7 +26,7 @@ Bundler.require(*Rails.groups)
 module MesDevisSansOublis
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.2
 
     config.i18n.default_locale = :fr
     config.i18n.fallbacks = [:en]
@@ -40,5 +40,7 @@ module MesDevisSansOublis
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.autoload_lib(ignore: %w[assets tasks])
   end
 end
