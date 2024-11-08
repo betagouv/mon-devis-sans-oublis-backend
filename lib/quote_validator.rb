@@ -29,10 +29,15 @@ class QuoteValidator
     validate_dates
     validate_pro
     validate_client
+    validate_rge
   end
 
   # date d'emission, date de pré-visite (CEE uniquement ?), validité (par défaut 3 mois -> Juste un warning), Date de début de chantier (CEE uniquement)
   def validate_dates
+  end
+
+  # V0 on check la présence - attention devrait dépendre du geste, à terme, on pourra utiliser une API pour vérifier la validité
+  def validate_rge
   end
 
   # doit valider les mentions administratives associées à l'artisan
@@ -78,6 +83,7 @@ class QuoteValidator
     validate_address(address)
   end
 
+  # numéro, rue, cp, ville - si pas suffisant numéro de parcelle cadastrale. V0, on check juste la présence ? 
   def validate_address(address)
 
   end
