@@ -14,7 +14,7 @@ class QuoteValidator
   def validate!
     @errors = []
 
-    @errors << "SIRET number is missing" if @quote[:siret].blank?
+    @errors << "SIRET number is missing" if @quote[:siret_number].blank?
 
     valid?
   end
