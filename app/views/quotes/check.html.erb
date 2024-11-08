@@ -3,7 +3,7 @@
 <h1>Fichier du Devis :</h1>
 <%= form_tag check_quotes_path, multipart: true do %>
   <%= file_field_tag :quote_file %>
-  <%= submit_tag "Check" %>
+  <%= submit_tag "Vérifier", class: "fr-btn fr-btn--primary fr-btn--lg" %>
 <% end %>
 
 <% if defined?(@quote_valid) %>
