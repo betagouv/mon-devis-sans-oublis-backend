@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     end
   end
 
+  # Website static pages
   get "a_propos", to: "pages#a_propos"
   get "contact", to: "pages#contact"
 end
