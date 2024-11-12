@@ -140,7 +140,7 @@ class QuoteValidator
 
 
       # VENTILATION 
-    when 'vmc_simple_flux'
+      when 'vmc_simple_flux'
         validate_vmc_simple_flux(geste)
       when 'vmc_double_flux'
         validate_vmc_double_flux(geste)
