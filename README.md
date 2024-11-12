@@ -1,7 +1,12 @@
 # Mon Devis Sans Oublis
 
-![Capture d’écran 2024-07-09 à 12 02 42](https://github.com/betagouv/rails-template/assets/107635/51592c9e-3f74-4384-9561-354c7085b16b)
+## Tech
 
+Site en Ruby on Rails 7, Ruby 3, Node.js 18 et [Publi.codes](https://publi.codes/).
+
+-----
+
+![Capture d’écran 2024-07-09 à 12 02 42](https://github.com/betagouv/rails-template/assets/107635/51592c9e-3f74-4384-9561-354c7085b16b)
 
 ## Introduction
 
