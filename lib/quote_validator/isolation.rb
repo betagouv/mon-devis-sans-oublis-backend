@@ -5,7 +5,7 @@ module QuoteValidator
   class Isolation < Base
     # doit valider les critères techniques associés aux gestes présents dans le devis
     def validate
-      works = @quote[:gestes]
+      works = @quote[:gestes] || []
       works.each do |geste|
         case geste[:type]
 

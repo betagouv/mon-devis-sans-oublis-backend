@@ -38,7 +38,7 @@ module QuoteValidator
 
     # doit valider les mentions administratives associées à l'artisan
     def validate_pro
-      @pro = @quote[:pro]
+      @pro = @quote[:pro] || {}
       @errors << "pro_raison_sociale_manquant" if @pro[:raison_sociale].blank?
       @errors << "pro_forme_juridique_manquant" if @pro[:forme_juridique].blank?
       @errors << "tva_manquant" if @pro[:numero_tva].blank?
@@ -48,13 +48,13 @@ module QuoteValidator
       @errors << "capital_manquant" if @pro[:capital].blank?
       @errors << "siret_manquant" if @pro[:siret].blank?
       # beaucoup de confusion entre SIRET (14 chiffres pour identifier un etablissement) et SIREN (9 chiffres pour identifier une entreprise)
-      @errors << "siret_format_erreur" if @pro[:siret].length != 14 && @pro[:siret].length.positive?
+      @errors << "siret_format_erreur" if @pro[:siret]&.length != 14 && @pro[:siret]&.length&.positive?
       validate_pro_address
     end
 
     # doit valider les mentions administratives associées au client
     def validate_client
-      @client = @quote[:client]
+      @client = @quote[:client] || {}
       @errors << "client_prenom_manquant" if @client[:prenom].blank?
       @errors << "client_nom_manquant" if @client[:nom].blank?
       validate_client_address
@@ -83,7 +83,7 @@ module QuoteValidator
 
     # doit valider les critères techniques associés aux gestes présents dans le devis
     def validate_works
-      works = @quote[:gestes]
+      works = @quote[:gestes] || []
       works.each do |geste|
         case geste[:type]
 
