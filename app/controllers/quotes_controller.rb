@@ -32,7 +32,7 @@ class QuotesController < ApplicationController
   end
 
   def quote_validation(quote_attributes)
-    quote_validation = QuoteValidator.new(quote_attributes)
+    quote_validation = QuoteValidator::Global.new(quote_attributes)
     quote_validation.validate!
 
     @quote_valid = quote_validation.valid?
