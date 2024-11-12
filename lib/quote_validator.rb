@@ -94,6 +94,9 @@ class QuoteValidator
     works = @quote[:gestes]
     works.each do |geste|
       case geste[:type]
+
+
+      # ISOLATION
       when 'isolation_mur_ite'
         validate_isolation_ite(geste)
       when 'isolation_combles_perdues'
@@ -106,20 +109,31 @@ class QuoteValidator
         validate_isolation_iti(geste)
       when 'isolation_plancher_bas'
         validate_isolation_plancher_bas(geste)
-      when 'type_2'
-        validate_type_2(geste)
-      when 'type_2'
-        validate_type_2(geste)
-      when 'type_2'
-        validate_type_2(geste)
-      when 'type_2'
-        validate_type_2(geste)
+
+
+      # MENUISERIEs
+      when 'menuiserie_fenetre'
+        validate_menuiserie_fenetre(geste)
+      when 'menuiserie_fenetre_toit'
+        validate_menuiserie_fenetre_toit(geste)
+      when 'menuiserie_porte'
+        validate_menuiserie_porte(geste)
+      when 'menuiserie_volet_isolant'
+        validate_menuiserie_volet_isolant(geste)
+
+      when ''
+        validate_(geste)
       else
         @errors << "geste_inconnu"
       end
     end
   end
 
+  #################################################
+  ####              ISOLATION                  ####
+  #################################################
+
+  # Validation des critères communs aux différentes isolations
   def validate_isolation(geste, error)
 
     error << "marque_manquant" if geste[:marque].blank?
@@ -128,9 +142,7 @@ class QuoteValidator
     error << "epaisseur_manquant" if geste[:epaisseur].blank? #TODO : check unité ? 
     error << "R_manquant" if geste[:R].blank?
     
-    # TODO : V1 - vérifier les normes
-    
-     
+    # TODO : V1 - vérifier les normes    
   end
 
   def validate_isolation_ite(geste)
@@ -186,6 +198,82 @@ class QuoteValidator
     error_toiture << "localisation_manquant" if geste[:localisation].blank?  
     errors << eror_plancher
   end
+
+
+
+  #################################################
+  ####              MENUISERIE                 ####
+  #################################################
+  
+  # validation des critères communs à toutes les menuiseries 
+  def validate_menuiserie(geste, error)
+    error << "marque_manquant" if geste[:marque].blank?
+    error << "reference_manquant" if geste[:reference].blank?
+    error << "type_materiau_manquant" if geste[:type_materiau].blank? #bois, alu, pvc ...
+    error << "type_vitrage_manquant" if geste[:type_vitrage].blank? #simple - double vitrage
+    error << "type_pose_manquant" if geste[:type_pose].blank? #renovation ou depose totale
+    error << "localisation_manquant" if geste[:localisation].blank?
+    error << "position_paroie_manquant" if geste[:position_paroie].blank? # nu intérieur, nu extérieur, tunnel ... 
+
+  end
+
+  def validate_menuiserie_fenetre(geste)
+    error = []
+
+    validate_menuiserie(geste,error)
+    error << "uw_manquant" if geste[:uw].blank?
+    error << "sw_manquant" if geste[:sw].blank? 
+    # V1, check valeurs : Uw ≤ 1,3 W/m².K et Sw ≥ 0,3 OU Uw ≤ 1,7 W/m².K et Sw ≥ 0,36
+
+    errors << error
+  end
+  
+  def validate_menuiserie_fenetre_toit(geste)
+    error = []
+    
+    validate_menuiserie(geste,error)
+    error << "uw_manquant" if geste[:uw].blank?
+    error << "sw_manquant" if geste[:sw].blank? 
+    # V1, check valeurs : (Uw ≤ 1,5 W/m².K et Sw ≤ 0,36 )
+
+    errors << error
+  end
+  
+  def validate_menuiserie_porte(geste)
+    error = []
+    
+    validate_menuiserie(geste,error)
+    error << "ud_manquant" if geste[:ud].blank? #TODO : Que CEE ? 
+    #v1, check valeurs : Ud ≤ 1,7 W/m².K
+
+    errors << error
+  end
+  
+  def validate_menuiserie_volet_isolant(geste)
+    error = []
+    
+    validate_menuiserie(geste,error)
+
+    error << "deltaR_manquant" if geste[:deltaR].blank? #TODO: Que CEE ? 
+    #v1, check valeurs :La résistance thermique additionnelle DeltaR (DeltaR ≥ 0,22 m².K/W)
+
+    errors << error
+  end
+
+
+  #################################################
+  ####              CHAUFFAGE                  ####
+  #################################################
+
+
+  #################################################
+  ####         EAU CHAUDE SANITAIRE            ####
+  #################################################
+
+
+  #################################################
+  ####             VENTILATION                 ####
+  #################################################
 
   def valid?
     !@errors.nil? && @errors.empty?
