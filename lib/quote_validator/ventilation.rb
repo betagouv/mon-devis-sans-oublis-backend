@@ -6,7 +6,7 @@
 
 module QuoteValidator
   # Validator for the Quote
-  class Chauffage < Base
+  class Ventilation < Base
     # rubocop:disable Metrics/MethodLength
     def validate_ventilation(geste, error)
       fields = {
