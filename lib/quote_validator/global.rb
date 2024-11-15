@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Validator for the Quote
 module QuoteValidator
+  # Validator for the Quote
   class Global < Base
     def validate!
       @errors = []
@@ -27,28 +27,39 @@ module QuoteValidator
       validate_rge
     end
 
-    # date d'emission, date de pré-visite (CEE uniquement ?), validité (par défaut 3 mois -> Juste un warning), Date de début de chantier (CEE uniquement)
+    # date d'emission, date de pré-visite (CEE uniquement ?),
+    # validité (par défaut 3 mois -> Juste un warning),
+    # Date de début de chantier (CEE uniquement)
     def validate_dates; end
 
-    # V0 on check la présence - attention devrait dépendre du geste, à terme, on pourra utiliser une API pour vérifier la validité
+    # V0 on check la présence - attention devrait dépendre du geste, à terme,
+    # on pourra utiliser une API pour vérifier la validité
     # Attention, souvent on a le logo mais rarement le numéro RGE.
     def validate_rge; end
 
     # doit valider les mentions administratives associées à l'artisan
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
     def validate_pro
       @pro = @quote[:pro] || {}
       @errors << "pro_raison_sociale_manquant" if @pro[:raison_sociale].blank?
       @errors << "pro_forme_juridique_manquant" if @pro[:forme_juridique].blank?
       @errors << "tva_manquant" if @pro[:numero_tva].blank?
-      # TODO: check format tva : FR et de 11 chiffres (une clé informatique de 2 chiffres et le numéro SIREN à 9 chiffres de l'entreprise)
+      # TODO: check format tva : FR et de 11 chiffres
+      # (une clé informatique de 2 chiffres et le numéro SIREN à 9 chiffres de l'entreprise)
 
       # TODO: rajouter une condition si personne physique professionnelle et dans ce cas pas de SIRET nécessaire
       @errors << "capital_manquant" if @pro[:capital].blank?
       @errors << "siret_manquant" if @pro[:siret].blank?
-      # beaucoup de confusion entre SIRET (14 chiffres pour identifier un etablissement) et SIREN (9 chiffres pour identifier une entreprise)
+      # beaucoup de confusion entre SIRET (14 chiffres pour identifier un etablissement)
+      # et SIREN (9 chiffres pour identifier une entreprise)
       @errors << "siret_format_erreur" if @pro[:siret]&.length != 14 && @pro[:siret]&.length&.positive?
       validate_pro_address
     end
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
 
     # doit valider les mentions administratives associées au client
     def validate_client
@@ -58,7 +69,8 @@ module QuoteValidator
       validate_client_address
     end
 
-    # vérifier la présence de l'adresse du client. + Warning pour préciser que l'adresse de facturation = adresse de chantier si pas de présence
+    # vérifier la présence de l'adresse du client.
+    # + Warning pour préciser que l'adresse de facturation = adresse de chantier si pas de présence
     def validate_client_address
       client_address = @client[:adresse]
       validate_address(client_address)
@@ -80,6 +92,9 @@ module QuoteValidator
     def validate_address(address); end
 
     # doit valider les critères techniques associés aux gestes présents dans le devis
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength
     def validate_works
       works = @quote[:gestes] || []
       isolation = Isolation.new(@quote)
@@ -88,7 +103,7 @@ module QuoteValidator
       eau_chaude = EauChaude.new(@quote)
       ventilation = Ventilation.new(@quote)
 
-      works.each do |geste|
+      works.each do |geste| # rubocop:disable Metrics/BlockLength
         @errors << case geste[:type]
 
                    # ISOLATION
@@ -147,6 +162,9 @@ module QuoteValidator
                      "geste_inconnu"
                    end
       end
+      # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/CyclomaticComplexity
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end

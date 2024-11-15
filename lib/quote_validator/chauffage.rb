@@ -4,8 +4,8 @@
 ####              CHAUFFAGE                  ####
 #################################################
 
-# Validator for the Quote
 module QuoteValidator
+  # Validator for the Quote
   class Chauffage < Base
     def validate_chauffage(geste, error)
       error << "puissance_manquant" if geste[:puissance].blank?
@@ -17,6 +17,10 @@ module QuoteValidator
       @warnings << "remplacement_chaudiere_condensation_manquant" if geste[:mention_remplacement].blank?
     end
 
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/PerceivedComplexity
     def validate_chaudiere_biomasse(geste)
       error = []
       validate_chauffage(geste, error)
@@ -58,7 +62,14 @@ module QuoteValidator
 
       error
     end
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
 
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength
     def validate_poele_insert(geste)
       error = []
 
@@ -90,7 +101,12 @@ module QuoteValidator
 
       error
     end
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
 
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
     def validate_systeme_solaire_combine(geste)
       error = []
 
@@ -123,6 +139,8 @@ module QuoteValidator
 
       error
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
 
     def validate_pac(geste)
       error = []

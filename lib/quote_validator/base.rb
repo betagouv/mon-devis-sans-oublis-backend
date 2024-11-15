@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Validator for the Quote
 module QuoteValidator
+  # Validator for the Quote
   class Base
     attr_accessor :errors, :warnings
 

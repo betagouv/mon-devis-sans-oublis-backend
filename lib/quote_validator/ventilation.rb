@@ -4,9 +4,10 @@
 ####              VENTILATION                ####
 #################################################
 
-# Validator for the Quote
 module QuoteValidator
+  # Validator for the Quote
   class Chauffage < Base
+    # rubocop:disable Metrics/MethodLength
     def validate_ventilation(geste, error)
       fields = {
         "type_vmc_manquant" => :type_vmc,
@@ -19,13 +20,15 @@ module QuoteValidator
         "reference_bouche_extraction" => :reference_bouche_extraction,
         "nombre_bouche_extraction" => :nombre_bouche_extraction,
         "classe_caisson_manquant" => :classe_caisson,
-        "puissance" => :puissance # Puissance electrique du moteur en fonction de la config du logement exprimé en (W-Th-C)  (doit être basse conso)
+        "puissance" => :puissance # Puissance electrique du moteur en fonction de la config du logement
+        # exprimé en (W-Th-C) (doit être basse conso)
       }
 
       fields.each do |error_message, field|
         error << error_message if geste[field].blank?
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     def validate_vmc_simple_flux(geste)
       error = []
@@ -38,7 +41,8 @@ module QuoteValidator
       # Si menuisier qui installe → à Préciser dans le devis
 
       # TODO: V1 : vérifier classe energetique du caisson B ou supérieur
-      # TODO V1 : ⇒ Caisson basse conso avec puissance electrique absobée pondéréé ≤ 15 WThC (configuration T4 avec 1 salle de bain et 1WC)
+      # TODO V1 : ⇒ Caisson basse conso avec puissance electrique absobée pondéréé ≤ 15 WThC
+      # (configuration T4 avec 1 salle de bain et 1WC)
 
       fields.each do |error_message, field|
         error << error_message if geste[field].blank?

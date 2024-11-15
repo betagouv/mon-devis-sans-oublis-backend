@@ -4,8 +4,8 @@
 ####              ISOLATION                  ####
 #################################################
 
-# Validator for the Quote
 module QuoteValidator
+  # Validator for the Quote
   class Isolation < Base
     # Validation des critères communs aux différentes isolations
     def validate_isolation(geste, error)
@@ -71,7 +71,8 @@ module QuoteValidator
       error_plancher = []
 
       validate_isolation(geste, error_plancher)
-      # TODO : check valeur R en V1 - R ≥ 3 m².K/W pour les planchers bas sur sous-sol, sur vide sanitaire ou sur passage ouvert
+      # TODO : check valeur R en V1 - R ≥ 3 m².K/W pour les planchers bas sur sous-sol,
+      # sur vide sanitaire ou sur passage ouvert
       error_toiture << "localisation_manquant" if geste[:localisation].blank?
       eror_plancher
     end

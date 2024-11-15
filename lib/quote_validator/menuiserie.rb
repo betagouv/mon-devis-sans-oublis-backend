@@ -4,10 +4,12 @@
 ####              MENUISERIE                 ####
 #################################################
 
-# Validator for the Quote
 module QuoteValidator
+  # Validator for the Quote
   class Menuiserie < Base
     # validation des critères communs à toutes les menuiseries
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
     def validate_menuiserie(geste, error)
       error << "marque_manquant" if geste[:marque].blank?
       error << "reference_manquant" if geste[:reference].blank?
@@ -17,6 +19,8 @@ module QuoteValidator
       error << "localisation_manquant" if geste[:localisation].blank?
       error << "position_paroie_manquant" if geste[:position_paroie].blank? # nu intérieur, nu extérieur, tunnel ...
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
 
     def validate_menuiserie_fenetre(geste)
       error = []

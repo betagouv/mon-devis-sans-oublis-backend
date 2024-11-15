@@ -4,8 +4,8 @@
 ####         EAU CHAUDE SANITAIRE            ####
 #################################################
 
-# Validator for the Quote
 module QuoteValidator
+  # Validator for the Quote
   class EauChaude < Base
     def validate_eau_chaude(geste, error)
       fields = {
@@ -21,6 +21,7 @@ module QuoteValidator
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def validate_cesi(geste)
       error = []
 
@@ -43,6 +44,7 @@ module QuoteValidator
 
       error
     end
+    # rubocop:enable Metrics/MethodLength
 
     def validate_chauffe_eau_thermodynamique(geste)
       error = []
@@ -52,7 +54,8 @@ module QuoteValidator
         "COP_manquant" => :COP, # COP de l’equipement mesuré conformément aux condition de la norme EN 16147
         # ≥ à 2,5 pour une installation sur air extrait,
         # ≥ à 2,4 dans les autres cas.
-        "type_installation_manquant" => :type_installation # air exterieur, sr air exrait ou sur air ambiant -> Alors préciser la pièce TODO
+        "type_installation_manquant" => :type_installation # air exterieur, sur air exrait ou sur air ambiant
+        # -> Alors préciser la pièce TODO
       }
 
       # TODO: V1 : Véfifier valeur ETAS fonction du profil de soutirage
