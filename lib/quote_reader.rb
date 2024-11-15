@@ -20,7 +20,7 @@ class QuoteReader
       rge_number: find_rge_number(quote_text),
       siret_number: find_siret_number(quote_text),
 
-      full_text: quote_text
+      full_text: fix_french_characters(quote_text)
     }
   rescue PDF::Reader::MalformedPDFError, PDF::Reader::UnsupportedFeatureError,
          StandardError
@@ -28,6 +28,26 @@ class QuoteReader
   end
 
   private
+
+  # rubocop:disable Metrics/MethodLength
+  def fix_french_characters(text)
+    corrections = {
+      "ÿ" => " ",
+      "oe" => "œ",
+      "Ã©" => "é",
+      "Ã¨" => "è",
+      "Ãª" => "ê",
+      "Ã´" => "ô",
+      "Ã " => "à",
+      "Ã§" => "ç",
+      "â" => "'",
+      "â" => "-",
+      "â¬" => "€"
+    }
+    corrections.each { |original, replacement| text.gsub!(original, replacement) }
+
+    text
+  end
 
   def parse_error(error)
     error_message = case error
