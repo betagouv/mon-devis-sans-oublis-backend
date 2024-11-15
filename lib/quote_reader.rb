@@ -12,13 +12,16 @@ class QuoteReader
     @filepath = filepath
   end
 
+  # rubocop:disable Metrics/MethodLength
   def read_attributes
     @quote_text = extract_text_from_pdf(filepath)
 
     {
       quote_number: find_quote_number(quote_text),
       rge_number: find_rge_number(quote_text),
-      siret_number: find_siret_number(quote_text),
+      pro: {
+        siret: find_siret(quote_text)
+      },
 
       full_text: fix_french_characters(quote_text)
     }
@@ -26,6 +29,7 @@ class QuoteReader
          StandardError
     raise parse_error(error)
   end
+  # rubocop:enable Metrics/MethodLength
 
   private
 
@@ -71,7 +75,7 @@ class QuoteReader
     text[/RGE\s+N°\s*(\d+)/i, 1] if text
   end
 
-  def find_siret_number(text)
+  def find_siret(text)
     text[/SIRET\s*:\s*(\d{3}\s*\d{3}\s*\d{3}\s*\d{5})/i, 1]&.gsub(/\s/, "") if text
   end
 

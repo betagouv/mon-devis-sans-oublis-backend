@@ -21,7 +21,9 @@ class QuotesController < ApplicationController
     {
       quote_number: nil,
       rge_number: nil,
-      siret_number: nil
+      pro: {
+        siret: nil
+      }
     }
   end
 
