@@ -18,3 +18,11 @@ services:
       PGPORT: 5433
     ports:
       - "5433:5433"
+  python:
+    build:
+      context: python
+      dockerfile: Dockerfile
+    command: sh -c "pip install -r requirements.txt && python -i app.py"
+    volumes:
+      - "./python:/app"
+      # - "huggingface_cache:/app/huggingface"

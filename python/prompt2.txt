@@ -1,0 +1,48 @@
+Voici le texte d’un devis de rénovation énergétique. C’est à la base un pdf. Les gestes de travaux sont souvent dans un tableau.
+Je dois récupérer les données structurées pour les vérifier ensuite. 
+
+Peux-tu me donner les résultats sous la forme du JSON suivant : 
+
+```json
+{mention_devis: boolean; 
+numero_devis : text; 
+pro_raison_sociale: text; 
+pro_forme_juridique: text; 
+numero_tva: text; 
+capital: decimal; 
+siret: integer; 
+
+siret_format_erreur: boolean;
+
+pro_adresse: text; 
+
+date_devis: date; 
+
+validite: boolean;
+
+date_debut_chantier: date; 
+
+date_pre_visite: date
+
+}
+```
+
+Mention_devis, vérifie qu’il est bien indiqué dans le document qu’il s’agit d’un devis; 
+numero_devis: doit récupérer le numéro du devis qui est censé être unique. 
+pro_raison_sociale : c’est le nom de l’entreprise qui fait les travaux. 
+pro_forme_juridique : c’est la forme juridique de l’entreprise (ex: SAS, SARL, EURL, SASU, …) 
+
+numero_tva : Est un text de 13 caractères avec FR suivi de 11 chiffres. Il s’agit du numéro de TVA intra communautaire de l’entreprise. 
+capital : c’est le capital social de l’entreprise. C’est un montant en € pour les entreprises française. 
+
+Siret : C’est l’identifiant de l’entreprise qui est une suite de 14 chiffres. Attention, il faut faut pas le remplir si l’artisan a mis le SIREN à la place (qui est lui composé d’une suite de 9 chiffres) Si tu identifie un SIREN à 9 chiffre, il faut mettre siret_format_erreur à true et ne pas remplir siret.
+
+pro_adresse est l’adresse de l’artisan. C’est très souvent un numéro, une rue, un code postal et une ville
+
+Date_devis est les dates de création du devis. 
+
+validité : Il faut vérifier la présence d’une date de validité - il s’agit du temps où le devis est valide et qui permet au client de réfléchir et de pouvoir le signer dans ce temps imparti sans changement de prix. Ici, je veux savoir si c’est indiqué dans le devis ou non 
+
+date_debut_chantier : date de prévision du lancement du chantier par l’artisan. 
+
+date_pre_visite : très souvent l’artisan vient sur place avant de créer le devis.
