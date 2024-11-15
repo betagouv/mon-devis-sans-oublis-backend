@@ -48,6 +48,7 @@ class QuoteReader
 
     text
   end
+  # rubocop:enable Metrics/MethodLength
 
   def parse_error(error)
     error_message = case error
