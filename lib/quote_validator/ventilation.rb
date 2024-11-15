@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
-
-  #################################################
-  ####              VENTILATION                ####
-  #################################################
+#################################################
+####              VENTILATION                ####
+#################################################
 
 # Validator for the Quote
 module QuoteValidator
   class Chauffage < Base
-
-    
     def validate_ventilation(geste, error)
       fields = {
         "type_vmc_manquant" => :type_vmc,
@@ -47,7 +44,7 @@ module QuoteValidator
         error << error_message if geste[field].blank?
       end
 
-      return error
+      error
     end
 
     def validate_vmc_double_flux(geste)
@@ -65,8 +62,7 @@ module QuoteValidator
         error << error_message if geste[field].blank?
       end
 
-      return error
+      error
     end
-
   end
 end

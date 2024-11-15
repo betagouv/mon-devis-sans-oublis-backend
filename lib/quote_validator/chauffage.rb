@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
-
-  #################################################
-  ####              CHAUFFAGE                  ####
-  #################################################
+#################################################
+####              CHAUFFAGE                  ####
+#################################################
 
 # Validator for the Quote
 module QuoteValidator
   class Chauffage < Base
-
-
     def validate_chauffage(geste, error)
       error << "puissance_manquant" if geste[:puissance].blank?
       error << "marque_manquant" if geste[:marque].blank?
@@ -59,7 +56,7 @@ module QuoteValidator
       # TODO: V1 : Classe IV selon classification européenne
       error << "classe_regulateur_manquant" if geste[:classe_regulateur].blank?
 
-      return error
+      error
     end
 
     def validate_poele_insert(geste)
@@ -91,7 +88,7 @@ module QuoteValidator
 
       end
 
-      return error
+      error
     end
 
     def validate_systeme_solaire_combine(geste)
@@ -124,7 +121,7 @@ module QuoteValidator
       # ≥ 90% si EES de l’appoint inférieur à 90 %
       # ≥ 98% si EES de l’appoint ≥ 90 % et inférieur à 98 %. Sinon supérieur d’au moins 5 points à l’EES de l’appoint.
 
-      return error
+      error
     end
 
     def validate_pac(geste)
@@ -143,8 +140,7 @@ module QuoteValidator
 
       error << "cop_manquant" if geste[:cop].blank? # TODO: V1 Check if SCOP is required too.
 
-      return error
+      error
     end
-
   end
 end

@@ -7,7 +7,6 @@ module QuoteValidator
       @errors = []
       @warnings = []
 
-      
       @errors << isolation.errors
       @warnings << isolation.warnings
 
@@ -90,66 +89,64 @@ module QuoteValidator
       ventilation = Ventilation.new(@quote)
 
       works.each do |geste|
-        case geste[:type]
+        @errors << case geste[:type]
 
-        # ISOLATION
-        when "isolation_mur_ite"
-          @errors << isolation.validate_isolation_ite(geste)
-        when "isolation_combles_perdues"
-          @errors << isolation.validate_isolation_combles(geste)
-        when "isolation_rampants-toiture"
-          @errors << isolation.validate_isolation_rampants(geste)
-        when "isolation_toiture_terrasse"
-          @errors << isolation.validate_isolation_toiture_terrasse(geste)
-        when "isolation_mur_iti"
-          @errors << isolation.validate_isolation_iti(geste)
-        when "isolation_plancher_bas"
-          @errors << isolation.validate_isolation_plancher_bas(geste)
+                   # ISOLATION
+                   when "isolation_mur_ite"
+                     isolation.validate_isolation_ite(geste)
+                   when "isolation_combles_perdues"
+                     isolation.validate_isolation_combles(geste)
+                   when "isolation_rampants-toiture"
+                     isolation.validate_isolation_rampants(geste)
+                   when "isolation_toiture_terrasse"
+                     isolation.validate_isolation_toiture_terrasse(geste)
+                   when "isolation_mur_iti"
+                     isolation.validate_isolation_iti(geste)
+                   when "isolation_plancher_bas"
+                     isolation.validate_isolation_plancher_bas(geste)
 
-        # MENUISERIEs
-        when "menuiserie_fenetre"
-          @errors << menuiserie.validate_menuiserie_fenetre(geste)
-        when "menuiserie_fenetre_toit"
-          @errors << menuiserie.validate_menuiserie_fenetre_toit(geste)
-        when "menuiserie_porte"
-          @errors << menuiserie.validate_menuiserie_porte(geste)
-        when "menuiserie_volet_isolant"
-          @errors << menuiserie.validate_menuiserie_volet_isolant(geste)
+                   # MENUISERIEs
+                   when "menuiserie_fenetre"
+                     menuiserie.validate_menuiserie_fenetre(geste)
+                   when "menuiserie_fenetre_toit"
+                     menuiserie.validate_menuiserie_fenetre_toit(geste)
+                   when "menuiserie_porte"
+                     menuiserie.validate_menuiserie_porte(geste)
+                   when "menuiserie_volet_isolant"
+                     menuiserie.validate_menuiserie_volet_isolant(geste)
 
-        # CHAUFFAGE
-        when "chaudiere_biomasse"
-          @errors << chauffage.validate_chaudiere_biomasse(geste)
-        when "poele_insert"
-          @errors << chauffage.validate_poele_insert(geste)
-        when "systeme_solaire_combine"
-          @errors << chauffage.validate_systeme_solaire_combine(geste)
-        when "pac"
-          @errors << chauffage.validate_pac(geste)
+                   # CHAUFFAGE
+                   when "chaudiere_biomasse"
+                     chauffage.validate_chaudiere_biomasse(geste)
+                   when "poele_insert"
+                     chauffage.validate_poele_insert(geste)
+                   when "systeme_solaire_combine"
+                     chauffage.validate_systeme_solaire_combine(geste)
+                   when "pac"
+                     chauffage.validate_pac(geste)
 
-        # EAU CHAUDE SANITAIRE
-        when "chauffe_eau_solaire_individuel"
-          @errors << eau_chaude.validate_cesi(geste)
-        when "chauffe_eau_thermodynamique"
-          @errors << eau_chaude.validate_chauffe_eau_thermodynamique(geste)
+                   # EAU CHAUDE SANITAIRE
+                   when "chauffe_eau_solaire_individuel"
+                     eau_chaude.validate_cesi(geste)
+                   when "chauffe_eau_thermodynamique"
+                     eau_chaude.validate_chauffe_eau_thermodynamique(geste)
 
-        # VENTILATION
-        when "vmc_simple_flux"
-          @errors << ventilation.validate_vmc_simple_flux(geste)
-        when "vmc_double_flux"
-          @errors << ventilation.validate_vmc_double_flux(geste)
+                   # VENTILATION
+                   when "vmc_simple_flux"
+                     ventilation.validate_vmc_simple_flux(geste)
+                   when "vmc_double_flux"
+                     ventilation.validate_vmc_double_flux(geste)
 
-        # DEPOSE CUVE A FIOUL
+                   # DEPOSE CUVE A FIOUL
 
-        # SYSTEME DE REGULATION
+                   # SYSTEME DE REGULATION
 
-        # AUDIT ENERGETIQUE
+                   # AUDIT ENERGETIQUE
 
-        else
-          @errors << "geste_inconnu"
-        end
+                   else
+                     "geste_inconnu"
+                   end
       end
     end
-
-    
   end
 end

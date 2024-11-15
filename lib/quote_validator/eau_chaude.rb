@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
-
-  #################################################
-  ####         EAU CHAUDE SANITAIRE            ####
-  #################################################
+#################################################
+####         EAU CHAUDE SANITAIRE            ####
+#################################################
 
 # Validator for the Quote
 module QuoteValidator
   class EauChaude < Base
-
-
     def validate_eau_chaude(geste, error)
       fields = {
         "marque_manquant" => :marque,
@@ -44,7 +41,7 @@ module QuoteValidator
         error << error_message if geste[field].blank?
       end
 
-      return error
+      error
     end
 
     def validate_chauffe_eau_thermodynamique(geste)
@@ -64,9 +61,7 @@ module QuoteValidator
         error << error_message if geste[field].blank?
       end
 
-      return error
+      error
     end
-    
-
   end
 end

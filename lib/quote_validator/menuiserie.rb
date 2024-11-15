@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
-
-  #################################################
-  ####              MENUISERIE                 ####
-  #################################################
+#################################################
+####              MENUISERIE                 ####
+#################################################
 
 # Validator for the Quote
 module QuoteValidator
   class Menuiserie < Base
-
-
     # validation des critères communs à toutes les menuiseries
     def validate_menuiserie(geste, error)
       error << "marque_manquant" if geste[:marque].blank?
@@ -29,7 +26,7 @@ module QuoteValidator
       error << "sw_manquant" if geste[:sw].blank?
       # V1, check valeurs : Uw ≤ 1,3 W/m².K et Sw ≥ 0,3 OU Uw ≤ 1,7 W/m².K et Sw ≥ 0,36
 
-      return error
+      error
     end
 
     def validate_menuiserie_fenetre_toit(geste)
@@ -40,7 +37,7 @@ module QuoteValidator
       error << "sw_manquant" if geste[:sw].blank?
       # V1, check valeurs : (Uw ≤ 1,5 W/m².K et Sw ≤ 0,36 )
 
-      return error
+      error
     end
 
     def validate_menuiserie_porte(geste)
@@ -50,7 +47,7 @@ module QuoteValidator
       error << "ud_manquant" if geste[:ud].blank? # TODO : Que CEE ?
       # v1, check valeurs : Ud ≤ 1,7 W/m².K
 
-      return error
+      error
     end
 
     def validate_menuiserie_volet_isolant(geste)
@@ -61,8 +58,7 @@ module QuoteValidator
       error << "deltaR_manquant" if geste[:deltaR].blank? # TODO: Que CEE ?
       # v1, check valeurs :La résistance thermique additionnelle DeltaR (DeltaR ≥ 0,22 m².K/W)
 
-      return error
+      error
     end
-
   end
 end
