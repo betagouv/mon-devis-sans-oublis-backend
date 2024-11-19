@@ -3,13 +3,17 @@
 module QuoteValidator
   # Validator for the Quote
   class Base
-    attr_accessor :errors, :warnings
+    attr_accessor :errors, :quote, :warnings
 
     # @param [Hash] quote
     # quote is a hash with the following keys
     # - siret: [String] the SIRET number of the company
     def initialize(quote)
-      @quote = quote
+      @quote = TrackingHash.new(quote)
+    end
+
+    def fields
+      quote.keys_accessed
     end
 
     def validate!

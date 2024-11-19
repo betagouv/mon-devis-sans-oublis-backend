@@ -16,8 +16,8 @@ module QuoteValidator
     # doit valider les mentions administratives du devis
     def validate_admin
       # mention devis présente ou non, quote[:devis] est un boolean
-      @errors << "devis_manquant" unless @quote[:devis]
-      @errors << "numero_devis_manquant" if @quote[:numero_devis].present?
+      @errors << "devis_manquant" unless quote[:devis]
+      @errors << "numero_devis_manquant" if quote[:numero_devis].present?
       validate_dates
       validate_pro
       validate_client
@@ -39,7 +39,7 @@ module QuoteValidator
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     def validate_pro
-      @pro = @quote[:pro] || {}
+      @pro = quote[:pro] ||= TrackingHash.new
       @errors << "pro_raison_sociale_manquant" if @pro[:raison_sociale].blank?
       @errors << "pro_forme_juridique_manquant" if @pro[:forme_juridique].blank?
       @errors << "tva_manquant" if @pro[:numero_tva].blank?
@@ -60,7 +60,7 @@ module QuoteValidator
 
     # doit valider les mentions administratives associées au client
     def validate_client
-      @client = @quote[:client] || {}
+      @client = quote[:client] ||= TrackingHash.new
       @errors << "client_prenom_manquant" if @client[:prenom].blank?
       @errors << "client_nom_manquant" if @client[:nom].blank?
       validate_client_address
@@ -93,12 +93,12 @@ module QuoteValidator
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/MethodLength
     def validate_works
-      works = @quote[:gestes] || []
-      isolation = Isolation.new(@quote)
-      menuiserie = Menuiserie.new(@quote)
-      chauffage = Chauffage.new(@quote)
-      eau_chaude = EauChaude.new(@quote)
-      ventilation = Ventilation.new(@quote)
+      works = quote[:gestes] || []
+      isolation = Isolation.new(quote)
+      menuiserie = Menuiserie.new(quote)
+      chauffage = Chauffage.new(quote)
+      eau_chaude = EauChaude.new(quote)
+      ventilation = Ventilation.new(quote)
 
       @errors += works.flat_map do |geste| # rubocop:disable Metrics/BlockLength
         case geste[:type]
