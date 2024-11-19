@@ -17,20 +17,26 @@ class QuotesController < ApplicationController
 
   protected
 
-  def default_quote_attributes
-    {
-      quote_number: nil,
-      rge_number: nil,
-      pro: {
-        siret: nil
-      }
-    }
+  def quote_fields
+    quote_validation = QuoteValidator::Global.new({})
+    quote_validation.validate!
+    quote_validation.fields
+  end
+
+  def default_quote_attributes(fields = quote_fields)
+    fields.to_h do |field, value|
+      if value.is_a?(Hash)
+        [field, default_quote_attributes(value)]
+      else
+        [field, nil]
+      end
+    end
   end
 
   def file_to_attributes(uploaded_file)
     temp_file_path = uploaded_file.tempfile.path
 
-    QuoteReader.new(temp_file_path).read_attributes
+    QuoteReader::Global.new(temp_file_path).read_attributes
   end
 
   def quote_validation(quote_attributes)
