@@ -52,11 +52,13 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
             adresse_chantier: "43"
           },
           pro: {
-            adresse: "42 rue",
+            adresse: "42",
             raison_sociale: "ACME",
             forme_juridique: "SAS",
             numero_tva: "123456",
-            capital: "1000"
+            capital: "1000",
+            rge_number: nil,
+            siret: nil
           }
         )
       end
