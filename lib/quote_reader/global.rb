@@ -11,7 +11,7 @@ module QuoteReader
 
     def read_attributes
       quote_text = Pdf.new(filepath).extract_text
-      Text.new(quote_text).read_attributes
+      NaiveText.new(quote_text).read_attributes
     end
   end
 end

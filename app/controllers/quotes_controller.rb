@@ -24,9 +24,11 @@ class QuotesController < ApplicationController
   end
 
   def default_quote_attributes(fields = quote_fields)
-    fields.to_h do |field, value|
-      if value.is_a?(Hash)
-        [field, default_quote_attributes(value)]
+    fields.to_h do |field|
+      if field.is_a?(Hash)
+        [field.keys.first, default_quote_attributes(field.values.first)]
+      elsif field.is_a?(Array)
+        field
       else
         [field, nil]
       end
