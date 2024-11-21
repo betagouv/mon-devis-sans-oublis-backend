@@ -26,7 +26,7 @@ Bundler.require(*Rails.groups)
 module MesDevisSansOublis
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.0
 
     config.i18n.default_locale = :fr
     config.i18n.fallbacks = [:en]

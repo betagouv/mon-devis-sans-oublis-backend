@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "~> 3.3.6"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails"
+gem "rails", "~> 8.0.0"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -51,6 +51,7 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 gem "dsfr-view-components"
+gem "view_component", "~> 3.19"
 
 # Mon Devis Sans Oublis custom gems
 gem "pdf-reader"
@@ -66,7 +67,7 @@ end
 
 group :test do
   gem "capybara"
-  gem "cucumber-rails", require: false
+  gem "cucumber-rails", require: false # , "~> 3.0"
   gem "faker", require: false
   gem "guard"
   gem "guard-cucumber"
