@@ -1,0 +1,110 @@
+Voici le texte d’un devis de rénovation énergétique. C’est à la base un pdf. Les gestes de travaux sont souvent dans un tableau.
+Je dois récupérer les données structurées pour les vérifier ensuite. 
+Je ne veux que des informations effectivement inscrites dans le devis. Si tu ne trouves pas ou que tu n’es pas sûr, il vaut mieux laisser le champ vide.
+Je souhaites que les informations soient extraites **uniquement** du devis sans aucune interprétation ou ajout basé sur des connaissances extérieures.
+
+Peux-tu me donner les résultats sous la forme du JSON suivant : 
+
+```json
+{mention_devis: boolean; 
+numero_devis : text; 
+pro_raison_sociale: text; 
+pro_forme_juridique: text; 
+numero_tva: text; 
+capital: decimal; 
+siret: integer; 
+
+siret_format_erreur: boolean;
+
+pro_adresse: text; 
+
+date_devis: date; 
+
+validite: boolean;
+
+date_debut_chantier: date; 
+
+date_pre_visite: date; 
+gestes : [{geste1},{geste2}...]
+
+}
+```
+
+Mention_devis, vérifie qu’il est bien indiqué dans le document qu’il s’agit d’un devis; 
+numero_devis: doit récupérer le numéro du devis qui est censé être unique. 
+pro_raison_sociale : c’est le nom de l’entreprise qui fait les travaux. 
+pro_forme_juridique : c’est la forme juridique de l’entreprise (ex: SAS, SARL, EURL, SASU, …) 
+
+numero_tva : Est un text de 13 caractères avec FR suivi de 11 chiffres. Il s’agit du numéro de TVA intra communautaire de l’entreprise. 
+capital : c’est le capital social de l’entreprise. C’est un montant en € pour les entreprises française. 
+
+Siret : C’est l’identifiant de l’entreprise qui est une suite de 14 chiffres.Attention, l’artisan fait souvent l’erreur de mettre le SIREN (9 chiffres) à la place
+
+siret_format_erreur : Si tu identifie un SIREN (9 chiffres) au lieu du SIRET (14 chiffres) alors siret_format_erreur = true
+
+pro_adresse : adresse de l’artisan. C’est très souvent un numéro, une rue, un code postal et une ville
+
+Date_devis  :est la date de création du devis. 
+
+validité : l’artisan a-t-il indiqué la durée de validité du devis (souvent en mois ou avec une date)
+
+date_debut_chantier : date de prévision du lancement du chantier par l’artisan. 
+
+date_pre_visite : très souvent l’artisan vient sur place avant de créer le devis.  
+
+Pour chaque geste, il faut également sortir un JSON dont les paramètres dépendent du type de gestes. 
+
+Pour une pompe à chaleur air/eau: 
+
+```jsx
+{type:'PAC air/eau'; 
+intitule: text;
+marque: text; 
+reference: text; 
+ETAS: Pourcentage; 
+regime_temperature: text;
+type_fluide_frigorigene: text;
+}
+```
+
+Sachant que l’intitulé est le texte décrivant le geste de travaux. 
+
+la marque est la marque de la pompe à chaleur 
+
+la référence et le modèle 
+
+l’ETAS est l’efficacité énergétique saisonnière exprimé en % 
+
+le régime de température est une des options suivantes : Basse, Moyenne, Haute 
+
+type_fluide_frigorigene : c’est le fluide qui permet de restituer la chaleur ou le froid. Il s’agit souvent d’un accronyme comme R32 ou R410A par exemple 
+
+Pour un chauffe-eau thermodynamique : 
+
+```jsx
+{type: chauffe eau thermodynamique; 
+intitule: text;
+marque: text; 
+reference: text; 
+volume: integer; 
+ETAS: pourcentage; 
+profil_soutirage: text; 
+COP: decimal; 
+type_installation: text}
+```
+
+Sachant que l’intitulé est le texte décrivant le geste de travaux. 
+
+la marque est la marque de la pompe à chaleur 
+
+la référence et le modèle 
+
+l’ETAS est l’efficacité énergétique saisonnière exprimé en % 
+
+le volume est la taille du ballon exprimée en Litre 
+
+le profil de soutirage est une des options suivantes : M, L, XL, XXL
+
+la COP est un nombre 
+
+et le type d’installation est par exemple air exterieur, sur air exrait ou sur air ambiant
