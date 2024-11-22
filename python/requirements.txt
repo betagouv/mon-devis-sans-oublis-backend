@@ -1,4 +1,8 @@
+accelerate
+llama-index
 numpy
+ollama
+openai
 pandas
 protobuf
 sentencepiece

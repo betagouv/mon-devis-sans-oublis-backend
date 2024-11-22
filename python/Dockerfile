@@ -10,15 +10,19 @@ ENV PYTHONUNBUFFERED=1 \
     LANG=C.UTF-8 \
     HF_HOME=/app/huggingface_cache
 
-# Set working directory
-WORKDIR /app
-
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     git \
     curl \
     && rm -rf /var/lib/apt/lists/*
+
+RUN useradd -m app
+USER app
+WORKDIR /home/app
+
+# Set working directory
+WORKDIR /app
 
 # Install dependencies for Apple Silicon compatibility (macOS M2)
 RUN pip install --upgrade pip setuptools wheel

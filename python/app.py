@@ -1,6 +1,9 @@
 from transformers import AutoTokenizer, AutoModelForQuestionAnswering, DistilBertForQuestionAnswering, pipeline
 import torch
 
+from llama_index import main as llama_index_main
+from llama32_vision import main as llama32_vision_main
+
 print("Running...")
 
 with open("prompt.txt", "r") as file:
@@ -69,6 +72,8 @@ def deepset():
     return result['answer']
 
 # print(distilbert())
-print(deepset())
+# print(deepset())
+
+print(llama_index_main())
 
 print("Done")

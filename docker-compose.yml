@@ -23,6 +23,7 @@ services:
       context: python
       dockerfile: Dockerfile
     command: sh -c "pip install -r requirements.txt && python -i app.py"
+    # docker compose stop; docker compose run python /bin/bash
     volumes:
       - "./python:/app"
       # - "huggingface_cache:/app/huggingface"
