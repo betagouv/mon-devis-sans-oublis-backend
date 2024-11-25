@@ -5,6 +5,8 @@ module QuoteReader
   class Global
     attr_reader :filepath
 
+    VERSION = "0.0.1"
+
     def initialize(filepath)
       @filepath = filepath
     end

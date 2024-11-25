@@ -3,6 +3,8 @@
 module QuoteValidator
   # Validator for the Quote
   class Global < Base
+    VERSION = "0.0.1"
+
     def validate!
       @errors = []
       @warnings = []
