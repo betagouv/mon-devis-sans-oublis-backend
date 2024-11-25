@@ -33,56 +33,73 @@ module QuoteReader
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
 
+    NUMBER_REFERENCE_REGEX = /n?[.°]/i
+    BETWEEN_LABEL_VALUE_REGEX = /\s+(?:#{NUMBER_REFERENCE_REGEX})?\s*(?::\s*)?/i
+    FRENCH_CHARACTER_REGEX = /[\wÀ-ÖØ-öø-ÿ]/i
+    PHONE_REGEX = /(?:\(?\+?33\)?)? ?(?:[\s.]*\d\d){5}/i # TODO: find better
+
+    def self.find_adresse(text)
+      text[/Adresse\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
+    end
+
+    def self.find_adresse_chantier(text)
+      text[/Adresse chantier\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
+    end
+
     def self.find_adresse_pro(text)
-      text[/Adresse Pro\s*:\s*(\w+)/i, 1]
+      text[/Adresse Pro\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
     end
 
-    def self.find_raison_sociale(text)
-      text[/Raison sociale\s*:\s*(\w+)/i, 1]
-    end
-
-    def self.find_forme_juridique(text)
-      text[/Forme juridique\s*:\s*(\w+)/i, 1]
-    end
-
-    def self.find_numero_tva(text)
-      text[/TVA\s*:\s*(\w+)/i, 1]
+    def self.find_assurance(text)
+      text[/Assurance(?:\s+décennale)?#{BETWEEN_LABEL_VALUE_REGEX}((?:[#{FRENCH_CHARACTER_REGEX}:]+\s+)+(?:#{NUMBER_REFERENCE_REGEX}\s*)?(?:contrat\s+#{FRENCH_CHARACTER_REGEX}*\s*\d+)?)/i, 1] # rubocop:disable Layout/LineLength
     end
 
     def self.find_capital(text)
-      text[/Capital\s*:\s*(\w+)/i, 1]
+      text[/(?:Capitale?|capilâide)(?:\s+de)?#{BETWEEN_LABEL_VALUE_REGEX}(\d+(?: \d{3})*)\s*€/i, 1]
+    end
+
+    def self.find_forme_juridique(text)
+      text[/Forme juridique\s*:\s*(SAS|SARL|EURL|#{FRENCH_CHARACTER_REGEX}+) ?/i, 1]
+    end
+
+    def self.find_iban(text)
+      text[/(?:IBAN|RIB)#{BETWEEN_LABEL_VALUE_REGEX}(FR\d{2}\s?(?:\d{4}\s?){2,5}#{FRENCH_CHARACTER_REGEX}?\d{2})/i, 1]
     end
 
     def self.find_mention_devis(text)
       text[/devis/i] if text
     end
 
-    def self.find_adresse(text)
-      text[/Adresse\s*:\s*(\w+)/i, 1]
-    end
-
-    def self.find_adresse_chantier(text)
-      text[/Adresse chantier\s*:\s*(\w+)/i, 1]
-    end
-
     def self.find_nom(text)
-      text[/Nom\s*:\s*(\w+)/i, 1]
-    end
-
-    def self.find_prenom(text)
-      text[/Prénom\s*:\s*(\w+)/i, 1]
+      text[/Nom\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
     end
 
     def self.find_numero_devis(text)
-      text[/DEVIS\s+N°\s*(\d+)/i, 1]
+      text[/DEVIS\s+N.?\s*(#{FRENCH_CHARACTER_REGEX}*\d{4,})/i, 1]
+    end
+
+    def self.find_numero_tva(text)
+      text[/TVA(?:\s+intracommunautaire)?#{BETWEEN_LABEL_VALUE_REGEX}(FR\d{2}\s?\d{9})/i, 1]
+    end
+
+    def self.find_prenom(text)
+      text[/Prénom\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
+    end
+
+    def self.find_raison_sociale(text)
+      text[/Raison sociale\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
     end
 
     def self.find_rge_number(text)
-      text[/RGE\s+N°\s*(\d+)/i, 1]
+      text[/RGE#{BETWEEN_LABEL_VALUE_REGEX}((?:E-)?E?\d+)/i, 1]
     end
 
     def self.find_siret(text)
-      text[/SIRET\s*:\s*(\d{3}\s*\d{3}\s*\d{3}\s*\d{5})/i, 1]&.gsub(/\s/, "")
+      text[/SIRET#{BETWEEN_LABEL_VALUE_REGEX}(\d{3}\s*\d{3}\s*\d{3}\s*\d{5})/i, 1]
+    end
+
+    def self.find_telephone(text)
+      text[/(?:T[eé]l\.?(?:[eé]phone)#{BETWEEN_LABEL_VALUE_REGEX})?(#{PHONE_REGEX})/i, 1]
     end
   end
 end
