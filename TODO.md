@@ -1,5 +1,0 @@
-- [ ] Upload mode API synchrone / asynchrone avec documentation
-- [ ] Sauvegarder devis
-- [ ] Faire schéma du flow et des classes QuoteReader
-- [ ] Retirer et corriger les exepctions lint rubocop
-- [ ] Ajouter des tests
