@@ -18,6 +18,7 @@ class QuotesController < ApplicationController
                             file_to_attributes(params[:quote_file])
                           rescue QuoteReader::ReadError
                             @quote_errors << "file_reading_error"
+                            nil
                           end
                         else
                           default_quote_attributes

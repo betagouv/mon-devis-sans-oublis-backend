@@ -6,17 +6,17 @@ module QuoteReader
     def read_attributes
       return super if text.blank?
 
-      super.merge(call_llm)
+      super.merge(llm_result)
     end
 
     private
 
-    def call_llm
-      # TODO: API
+    def llm_result
+      Llms::Mistral.new(prompt).chat_completion(text) if Llms::Mistral.configured?
     end
 
     def prompt
-      File.read("prompt_qa.txt")
+      Rails.root.join("lib/quote_reader/prompt_qa.txt").read
     end
   end
 end

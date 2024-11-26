@@ -13,7 +13,12 @@ module QuoteReader
 
     def read_attributes
       quote_text = Pdf.new(filepath).extract_text
-      NaiveText.new(quote_text).read_attributes
+      naive_attributes = NaiveText.new(quote_text).read_attributes
+
+      anonymised_text = Anonymiser.new(quote_text).anonymised_text
+      qa_attributes = Qa.new(anonymised_text).read_attributes
+
+      naive_attributes.merge(qa_attributes)
     end
   end
 end
