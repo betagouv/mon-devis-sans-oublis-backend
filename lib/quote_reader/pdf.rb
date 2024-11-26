@@ -5,7 +5,7 @@ require "pdf-reader"
 module QuoteReader
   # Read Quote from PDF file to extract Quote text
   class Pdf
-    class ReadError < StandardError; end
+    class ReadError < QuoteReader::ReadError; end
 
     attr_reader :filepath, :quote_text
 
@@ -16,8 +16,8 @@ module QuoteReader
     def extract_text
       fix_french_characters(extract_text_from_pdf(filepath))
     rescue PDF::Reader::MalformedPDFError, PDF::Reader::UnsupportedFeatureError,
-           StandardError
-      raise parse_error(error)
+           StandardError => e
+      raise parse_error(e)
     end
 
     private

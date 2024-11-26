@@ -2,25 +2,58 @@
 
 # Controller for the Quotes resource
 class QuotesController < ApplicationController
+  skip_before_action :verify_authenticity_token, if: -> { request.format.json? && action_name == "check" }
+
   PROFILES = %i[artisan particulier mandataire conseiller].freeze
 
   before_action :set_profile, only: %i[check]
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def check
+    @quote_errors = []
+
     @quote_attributes = if params[:quote_file].present?
-                          file_to_attributes(params[:quote_file])
+                          begin
+                            file_to_attributes(params[:quote_file])
+                          rescue QuoteReader::ReadError
+                            @quote_errors << "file_reading_error"
+                          end
                         else
                           default_quote_attributes
                         end
-    return unless @quote_attributes
+    unless @quote_attributes
+      head :bad_request
+      return
+    end
 
-    quote_validation(@quote_attributes)
+    @quote_validation = quote_validation(@quote_attributes)
+    @quote_valid = @quote_validation.valid?
+    @quote_errors += @quote_validation.errors
+
+    http_status = @quote_valid ? :ok : :unprocessable_entity
+    respond_to do |format|
+      format.html { render :check, status: http_status }
+      format.json do
+        render json: {
+          valid: @quote_valid,
+          errors: @quote_errors
+        }, status: http_status
+      end
+    end
   rescue QuoteReader::ReadError => e
     @quote_errors = [e.message]
   end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   def profiles
     @profiles = PROFILES
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @profiles }
+    end
   end
 
   protected
@@ -54,10 +87,6 @@ class QuotesController < ApplicationController
   end
 
   def quote_validation(quote_attributes)
-    quote_validation = QuoteValidator::Global.new(quote_attributes)
-    quote_validation.validate!
-
-    @quote_valid = quote_validation.valid?
-    @quote_errors = quote_validation.errors
+    QuoteValidator::Global.new(quote_attributes).tap(&:validate!)
   end
 end
