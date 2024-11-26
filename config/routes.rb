@@ -6,9 +6,11 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
+  # Routes are in French voluntarily, but inner code is in English.
+
   # Quotes
 
-  get "profiles", to: "quotes#profiles"
+  get "profils", to: "quotes#profiles", as: :profiles
   resources :quotes, only: [], path: "" do
     collection do
       match ":profile/devis/verifier",
