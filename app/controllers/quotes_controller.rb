@@ -31,13 +31,17 @@ class QuotesController < ApplicationController
     @quote_valid = @quote_validation.valid?
     @quote_errors += @quote_validation.errors
 
+    temp_file_path = params[:quote_file]&.tempfile&.path
+    @quote_preview_path = QuoteReader::Preview.new(temp_file_path).generate_preview if temp_file_path
+
     http_status = @quote_valid ? :ok : :unprocessable_entity
     respond_to do |format|
       format.html { render :check, status: http_status }
       format.json do
         render json: {
           valid: @quote_valid,
-          errors: @quote_errors
+          errors: @quote_errors,
+          preview: @quote_preview_path
         }, status: http_status
       end
     end
