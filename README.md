@@ -6,6 +6,8 @@
 
 Ce repo est le code source pour faire tourner la plateforme [Mon Devis Sans Oublis](https://mon-devis-sans-oublis.beta.gouv.fr/) (MDSO) basé sur certains services et outils choisis :
 
+**Le projet est encore en tout début de phase de construction et donc sujet à évolutions à travers des cyclse courts.**
+
 * [Ruby on Rails](https://rubyonrails.org/) version 7 comme boîte à outil et socle technique applicatif ;
 * le [DSFR](https://www.systeme-de-design.gouv.fr/) pour réutiliser les éléments graphiques officiels via la [librairie de
 composants DSFR](https://github.com/betagouv/dsfr-view-components)
@@ -20,7 +22,36 @@ composants DSFR](https://github.com/betagouv/dsfr-view-components)
 * Rubocop (RSpec et Rails) pour le linting ;
 * Docker pour avoir un environnement de développement.
 
-La base de données est configurée avec PostgreSQL.
+## Moteur et fonctionnement interne / Architecture
+
+Les fichiers devis sont traités par le `QuotesController` qui les envoient aux services:
+
+- `QuoteReader` lisant le devis brut puis extractant les information du devis de manière naïve en se basant sur le texte du PDF et via solutions LLM avec croisement de données d'annuaires publiques de la rénovation
+- puis ces attributs de devis sont vérifier par le `QuoteValdiator` qui controlle un ensemble de règles et renvoit les erreurs correspondantes
+
+## API
+
+via header `Accept` à la valeur `application/json` pour forcer le retour au format JSON et non classique HTML
+
+- GET `/profils` pour lister les profils disponibles
+- POST `/[:profil]/devis/verifier` avec paramètre `quote_file` contenant le fichier
+le type de retour avec erreurs retournées est:
+```
+{
+    "valid": false,
+    "errors": [
+        "file_reading_error",
+        "devis_manquant",
+        "pro_raison_sociale_manquant",
+        "pro_forme_juridique_manquant",
+        "tva_manquant",
+        "capital_manquant",
+        "siret_manquant",
+        "client_prenom_manquant",
+        "client_nom_manquant"
+    ]
+}
+``` 
 
 ## Démarrage
 
