@@ -2,7 +2,7 @@
 
 module QuoteReader
   # Read Quote text to extract Quote attributes by asking questions via LLM prompt online services
-  class QA < Text
+  class Qa < Text
     def read_attributes
       return super if text.blank?
 
