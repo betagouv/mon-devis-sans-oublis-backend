@@ -111,7 +111,9 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
 
   describe ".find_forme_juridique" do
     it "returns the forme_juridique" do
-      skip "Add test for find_forme_juridique"
+      expect(described_class.find_forme_juridique(" SAS ")).to eq("SAS")
+      expect(described_class.find_forme_juridique(" SARL ")).to eq("SARL")
+      expect(described_class.find_forme_juridique(" EURL ")).to eq("EURL")
     end
   end
 
@@ -137,6 +139,7 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
   describe ".find_numero_tva" do
     it "returns the numero_tva" do
       expect(described_class.find_numero_tva("TVA  :FR10831861234")).to eq("FR10831861234")
+      expect(described_class.find_numero_tva("TVA intra FR86504321234")).to eq("FR86504321234")
       expect(described_class.find_numero_tva("TVA intracommunautaire : FR86504321234")).to eq("FR86504321234")
     end
   end
@@ -169,6 +172,9 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
 
   describe ".find_telephone" do
     it "returns the telephone" do
+      expect(described_class.find_telephone("01 23 45 67 89")).to eq("01 23 45 67 89")
+      # expect(described_class.find_telephone("+331 23 45 67 89")).to eq("+331 23 45 67 89") # TODO
+      # expect(described_class.find_telephone("+33 1 23 45 67 89")).to eq("+33 1 23 45 67 89") # TODO
       expect(described_class.find_telephone(" (33) 01 23 45 67 89")).to eq("(33) 01 23 45 67 89")
     end
   end

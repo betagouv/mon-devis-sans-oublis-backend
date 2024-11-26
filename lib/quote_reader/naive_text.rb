@@ -36,7 +36,7 @@ module QuoteReader
     NUMBER_REFERENCE_REGEX = /n?[.°]/i
     BETWEEN_LABEL_VALUE_REGEX = /\s+(?:#{NUMBER_REFERENCE_REGEX})?\s*(?::\s*)?/i
     FRENCH_CHARACTER_REGEX = /[\wÀ-ÖØ-öø-ÿ]/i
-    PHONE_REGEX = /(?:\(?\+?33\)?)? ?(?:[\s.]*\d\d){5}/i # TODO: find better
+    PHONE_REGEX = /(?:\(?\+?33\)?)?\s?(?:[\s.]*\d\d){5}/i # TODO: find better
 
     def self.find_adresse(text)
       text[/Adresse\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
@@ -59,7 +59,7 @@ module QuoteReader
     end
 
     def self.find_forme_juridique(text)
-      text[/Forme juridique\s*:\s*(SAS|SARL|EURL|#{FRENCH_CHARACTER_REGEX}+) ?/i, 1]
+      text[/\s+(SAS|SARL|EURL)\s+/, 1] || text[/Forme juridique\s*:\s*(#{FRENCH_CHARACTER_REGEX}+) ?/i, 1]
     end
 
     def self.find_iban(text)
@@ -79,7 +79,8 @@ module QuoteReader
     end
 
     def self.find_numero_tva(text)
-      text[/TVA(?:\s+intracommunautaire)?#{BETWEEN_LABEL_VALUE_REGEX}(FR\d{2}\s?\d{9})/i, 1]
+      text[/(FR\d{2}\s?\d{9})/i, 1]
+      # text[/TVA(?:\s+intra(?:communautaire)?)?#{BETWEEN_LABEL_VALUE_REGEX}(FR\d{2}\s?\d{9})/i, 1]
     end
 
     def self.find_prenom(text)
