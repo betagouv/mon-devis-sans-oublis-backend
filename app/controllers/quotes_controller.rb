@@ -2,6 +2,10 @@
 
 # Controller for the Quotes resource
 class QuotesController < ApplicationController
+  PROFILES = %i[artisan particulier mandataire conseiller].freeze
+
+  before_action :set_profile, only: %i[check]
+
   def check
     @quote_attributes = if params[:quote_file].present?
                           file_to_attributes(params[:quote_file])
@@ -15,7 +19,15 @@ class QuotesController < ApplicationController
     @quote_errors = [e.message]
   end
 
+  def profiles
+    @profiles = PROFILES
+  end
+
   protected
+
+  def set_profile
+    @profile ||= PROFILES.detect { |profile| profile == params[:profile].to_sym } if params[:profile]
+  end
 
   def quote_fields
     quote_validation = QuoteValidator::Global.new({})

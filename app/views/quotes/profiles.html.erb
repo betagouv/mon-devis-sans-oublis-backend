@@ -1,0 +1,6 @@
+<h1>Vous êtes :</h1>
+<ul>
+  <% @profiles.each do |profile| %>
+    <li><%= link_to t(".#{profile}"), check_quotes_path(profile: profile) %></li>
+  <% end %> 
+</ul>

@@ -3,3 +3,13 @@ fr:
     sponsor: "Ministère\nde la transition\nécologique"
     service_name: "Mon Devis Sans Oublis"
     service_description: "La plateforme de pré-vérification des devis"
+  home:
+    index:
+      quote_check_cta: "Vérifier mon devis"
+  quotes:
+    profiles:
+      title:
+        artisan: Artisan
+        particulier: Particulier
+        mandataire: Mandataire
+        conseiller: Conseiller
