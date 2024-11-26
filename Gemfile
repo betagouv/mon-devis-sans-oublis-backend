@@ -53,6 +53,7 @@ gem "bootsnap", require: false
 gem "dsfr-view-components"
 
 # Mon Devis Sans Oublis custom gems
+gem "mini_magick"
 gem "pdf-reader"
 
 group :development, :test do
