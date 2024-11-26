@@ -1,8 +1,7 @@
-<%# TODO: Form with file upload %>
-
 <h1>Fichier du Devis :</h1>
 <%= form_tag check_quotes_path, multipart: true do %>
   <%= file_field_tag :quote_file %>
+  <%= hidden_field_tag :profile, @profile %>
   <%= submit_tag "Vérifier", class: "fr-btn fr-btn--primary fr-btn--lg" %>
 <% end %>
 

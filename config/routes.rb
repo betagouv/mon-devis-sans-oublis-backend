@@ -6,15 +6,23 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  root "home#index"
+  # Quotes
 
-  resources :quotes, only: [] do
+  get "profiles", to: "quotes#profiles"
+  resources :quotes, only: [], path: "" do
     collection do
-      match :check, via: %i[get post], as: :check
+      match ":profile/devis/verifier",
+            to: "quotes#check",
+            via: %i[get post],
+            as: :check,
+            constraints: { profile: /#{QuotesController::PROFILES.join('|')}/ }
     end
   end
 
   # Website static pages
+
+  root "home#index"
+
   get "a_propos", to: "pages#a_propos"
   get "contact", to: "pages#contact"
 end
