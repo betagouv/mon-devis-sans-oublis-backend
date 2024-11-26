@@ -7,16 +7,16 @@ Peux-tu me donner les résultats sous la forme du JSON suivant :
 
 ```json
 {mention_devis: boolean; 
-numero_devis : text; 
-pro_raison_sociale: text; 
-pro_forme_juridique: text; 
-numero_tva: text; 
-capital: decimal; 
-siret: integer; 
+numero_devis : text ou null; 
+pro_raison_sociale: text ou null; 
+pro_forme_juridique: text ou null; 
+numero_tva: text ou null; 
+capital: decimal ou null; 
+siret: integer ou null; 
 
 siret_format_erreur: boolean;
 
-pro_adresse: text; 
+pro_adresse: text ou null; 
 
 date_devis: date; 
 
@@ -58,12 +58,12 @@ Pour une pompe à chaleur air/eau:
 
 ```jsx
 {type:'PAC air/eau'; 
-intitule: text;
-marque: text; 
-reference: text; 
+intitule: text ou null;
+marque: text ou null; 
+reference: text ou null; 
 ETAS: Pourcentage; 
-regime_temperature: text;
-type_fluide_frigorigene: text;
+regime_temperature: text ou null;
+type_fluide_frigorigene: text ou null;
 }
 ```
 
@@ -83,13 +83,13 @@ Pour un chauffe-eau thermodynamique :
 
 ```jsx
 {type: chauffe eau thermodynamique; 
-intitule: text;
-marque: text; 
-reference: text; 
-volume: integer; 
+intitule: text ou null;
+marque: text ou null; 
+reference: text ou null; 
+volume: integer ou null; 
 ETAS: pourcentage; 
-profil_soutirage: text; 
-COP: decimal; 
+profil_soutirage: text ou null; 
+COP: decimal ou null; 
 type_installation: text}
 ```
 

@@ -48,8 +48,8 @@ module Llms
 
       result = JSON.parse(response.body)
       content = result.dig("choices", 0, "message", "content")
-      json_result = content[/(\{.+\})/im, 1]
-      JSON.parse(json_result)
+      content_json_result = content[/(\{.+\})/im, 1]
+      JSON.parse(content_json_result, symbolize_names: true)
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
