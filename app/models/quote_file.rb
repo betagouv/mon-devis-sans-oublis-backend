@@ -6,12 +6,9 @@ require "mime/types"
 class QuoteFile < ApplicationRecord
   has_one_attached :file
 
+  validates :file, attached: true, content_type: ["application/pdf"], size: { less_than: 50.megabytes }
   validates :filename, presence: true
-  validates :file, presence: true
   validates :hexdigest, presence: true, uniqueness: true
-
-  validate :correct_file_type
-  validate :file_size_validation
 
   def self.find_or_create_file(tempfile, filename)
     hexdigest = hexdigest_for_file(tempfile)
@@ -38,19 +35,5 @@ class QuoteFile < ApplicationRecord
       filename: File.basename(tempfile.path),
       content_type: content_type
     }
-  end
-
-  private
-
-  def correct_file_type
-    return unless file.attached? && !file.content_type.in?(%w[application/pdf])
-
-    errors.add(:file, "must be a PDF")
-  end
-
-  def file_size_validation
-    return unless file.attached? && file.blob.byte_size > 50.megabytes
-
-    errors.add(:file, "is too large. Maximum size is 50MB.")
   end
 end
