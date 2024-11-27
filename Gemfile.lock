@@ -249,6 +249,8 @@ GEM
     pry (0.15.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    pry-rails (0.3.11)
+      pry (>= 0.13.0)
     psych (5.2.0)
       stringio
     public_suffix (6.0.1)
@@ -421,6 +423,7 @@ DEPENDENCIES
   mime-types
   pdf-reader
   pg
+  pry-rails
   puma (~> 6.0)
   rails
   rspec
