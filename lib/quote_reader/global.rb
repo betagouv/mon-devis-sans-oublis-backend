@@ -3,7 +3,11 @@
 module QuoteReader
   # Read Quote from PDF file to extract Quote attributes
   class Global
-    attr_reader :filepath
+    attr_reader :filepath, :text,
+                :anonymised_text,
+                :naive_attributes, :naive_version,
+                :qa_attributes, :qa_version,
+                :read_attributes
 
     VERSION = "0.0.1"
 
@@ -11,15 +15,23 @@ module QuoteReader
       @filepath = filepath
     end
 
-    def read_attributes
-      quote_text = Pdf.new(filepath).extract_text
-      naive_attributes = NaiveText.new(quote_text).read_attributes
+    # rubocop:disable Metrics/AbcSize
+    def read
+      @text = Pdf.new(filepath).extract_text
 
-      anonymised_text = Anonymiser.new(quote_text).anonymised_text
-      qa_attributes = Qa.new(anonymised_text).read_attributes
+      naive_reader = NaiveText.new(text)
+      @naive_attributes = naive_reader.read
+      @naive_version = naive_reader.version
 
-      deep_merge_if_absent(naive_attributes, qa_attributes)
+      @anonymised_text = Anonymiser.new(text).anonymised_text
+
+      qa_reader = Qa.new(anonymised_text)
+      @qa_attributes = qa_reader.read
+      @qa_version = qa_reader.version
+
+      @read_attributes = deep_merge_if_absent(naive_attributes, qa_attributes)
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 

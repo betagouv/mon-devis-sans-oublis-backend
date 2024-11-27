@@ -7,14 +7,14 @@ module QuoteReader
   class Pdf
     class ReadError < QuoteReader::ReadError; end
 
-    attr_reader :filepath, :quote_text
+    attr_reader :filepath, :text
 
     def initialize(filepath)
       @filepath = filepath
     end
 
     def extract_text
-      fix_french_characters(extract_text_from_pdf(filepath))
+      @text = fix_french_characters(extract_text_from_pdf(filepath))
     rescue PDF::Reader::MalformedPDFError, PDF::Reader::UnsupportedFeatureError,
            StandardError => e
       raise parse_error(e)
@@ -58,9 +58,9 @@ module QuoteReader
 
     def extract_text_from_pdf(pdf_path)
       reader = PDF::Reader.new(pdf_path)
-      text = reader.pages.map(&:text)
+      raw_text = reader.pages.map(&:text)
 
-      text.join("\n") # Join all pages text into a single string, separated by new lines
+      raw_text.join("\n") # Join all pages text into a single string, separated by new lines
     end
   end
 end

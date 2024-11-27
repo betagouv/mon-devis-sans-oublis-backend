@@ -16,7 +16,7 @@ module QuoteReader
       return nil if @raw_text.nil?
 
         # TODO: Make it more generic
-      attributes = QuoteReader::NaiveText.new(@raw_text).read_attributes
+      attributes = QuoteReader::NaiveText.new(@raw_text).read
 
       tmp_anonymised_text = @raw_text
 

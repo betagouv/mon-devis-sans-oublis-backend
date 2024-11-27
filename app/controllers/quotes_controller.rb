@@ -4,36 +4,35 @@
 class QuotesController < ApplicationController
   skip_before_action :verify_authenticity_token, if: -> { request.format.json? && action_name == "check" }
 
-  PROFILES = %i[artisan particulier mandataire conseiller].freeze
+  PROFILES = %w[artisan particulier mandataire conseiller].freeze
 
   before_action :set_profile, only: %i[check]
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def check
-    @quote_errors = []
-
     upload_file = params[:quote_file]
-    @quote_attributes = if upload_file.present?
-                          begin
-                            file = upload_file.tempfile
-                            quote_file = QuoteFile.find_or_create_file(file, upload_file.original_filename)
-                            file_to_attributes(quote_file.local_path)
-                          rescue QuoteReader::ReadError
-                            @quote_errors << "file_reading_error"
-                            nil
-                          end
-                        else
-                          default_quote_attributes
-                        end
+
+    # Default web form
+    if request.format.html? && upload_file.blank?
+      @quote_attributes = QuoteCheckService.default_quote_attributes
+      render :check
+      return
+    end
+
+    if upload_file.present?
+      @quote_check = QuoteCheckService.new(
+        upload_file.tempfile, upload_file.original_filename, params[:profile]
+      ).check
+      @quote_attributes = @quote_check.read_attributes
+      @quote_valid = @quote_check.quote_valid?
+      @quote_errors = @quote_check.validation_errors
+    end
+
     unless @quote_attributes
       head :bad_request
       return
     end
-
-    @quote_validation = quote_validation(@quote_attributes)
-    @quote_valid = @quote_validation.valid?
-    @quote_errors += @quote_validation.errors
 
     http_status = @quote_valid ? :ok : :unprocessable_entity
     respond_to do |format|
@@ -64,31 +63,5 @@ class QuotesController < ApplicationController
 
   def set_profile
     @profile ||= PROFILES.detect { |profile| profile == params[:profile].to_sym } if params[:profile]
-  end
-
-  def quote_fields
-    quote_validation = QuoteValidator::Global.new({})
-    quote_validation.validate!
-    quote_validation.fields
-  end
-
-  def default_quote_attributes(fields = quote_fields)
-    fields.to_h do |field|
-      if field.is_a?(Hash)
-        [field.keys.first, default_quote_attributes(field.values.first)]
-      elsif field.is_a?(Array)
-        field
-      else
-        [field, nil]
-      end
-    end
-  end
-
-  def file_to_attributes(filepath)
-    QuoteReader::Global.new(filepath).read_attributes
-  end
-
-  def quote_validation(quote_attributes)
-    QuoteValidator::Global.new(quote_attributes).tap(&:validate!)
   end
 end

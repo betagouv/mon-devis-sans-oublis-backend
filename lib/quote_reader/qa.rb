@@ -3,10 +3,16 @@
 module QuoteReader
   # Read Quote text to extract Quote attributes by asking questions via LLM prompt online services
   class Qa < Text
-    def read_attributes
+    VERSION = "0.0.1"
+
+    def read
       return super if text.blank?
 
-      super.merge(llm_result)
+      @read_attributes = super.merge(llm_result)
+    end
+
+    def version
+      self.class::VERSION
     end
 
     private

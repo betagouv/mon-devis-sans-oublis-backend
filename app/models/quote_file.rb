@@ -5,6 +5,7 @@ require "mime/types"
 # Class to store uploaded Quote files, raw like
 class QuoteFile < ApplicationRecord
   has_one_attached :file
+  has_many :quote_checks, dependent: :nullify, inverse_of: :file
 
   validates :file, attached: true, content_type: ["application/pdf"], size: { less_than: 50.megabytes }
   validates :filename, presence: true

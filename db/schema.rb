@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_27_080510) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_27_103358) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,25 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_27_080510) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "quote_checks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "file_id"
+    t.datetime "started_at", null: false
+    t.datetime "finished_at"
+    t.string "profile", null: false
+    t.text "text"
+    t.text "anonymised_text"
+    t.jsonb "naive_attributes"
+    t.string "naive_version"
+    t.jsonb "qa_attributes"
+    t.string "qa_version"
+    t.jsonb "read_attributes"
+    t.jsonb "validation_errors"
+    t.string "validation_version"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["file_id"], name: "index_quote_checks_on_file_id"
+  end
+
   create_table "quote_files", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "filename", null: false
     t.string "hexdigest", null: false
@@ -53,4 +72,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_27_080510) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "quote_checks", "quote_files", column: "file_id"
 end

@@ -3,35 +3,41 @@
 module QuoteReader
   # Read Quote text to extract Quote attributes Naively
   class NaiveText < Text
+    VERSION = "0.0.1"
+
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
-    def read_attributes
+    def read
       return super if text.blank?
 
-      super.merge({
-                    devis: self.class.find_mention_devis(text),
-                    numero_devis: self.class.find_numero_devis(text),
+      @read_attributes = super.merge({
+                                       devis: self.class.find_mention_devis(text),
+                                       numero_devis: self.class.find_numero_devis(text),
 
-                    client: {
-                      nom: self.class.find_nom(text),
-                      prenom: self.class.find_nom(text),
-                      adresse: self.class.find_adresse(text),
-                      adresse_chantier: self.class.find_adresse_chantier(text)
-                    },
-                    pro: {
-                      adresse: self.class.find_adresse_pro(text),
-                      raison_sociale: self.class.find_raison_sociale(text),
-                      forme_juridique: self.class.find_forme_juridique(text),
-                      numero_tva: self.class.find_numero_tva(text),
-                      capital: self.class.find_capital(text),
-                      siret: self.class.find_siret(text),
+                                       client: {
+                                         nom: self.class.find_nom(text),
+                                         prenom: self.class.find_nom(text),
+                                         adresse: self.class.find_adresse(text),
+                                         adresse_chantier: self.class.find_adresse_chantier(text)
+                                       },
+                                       pro: {
+                                         adresse: self.class.find_adresse_pro(text),
+                                         raison_sociale: self.class.find_raison_sociale(text),
+                                         forme_juridique: self.class.find_forme_juridique(text),
+                                         numero_tva: self.class.find_numero_tva(text),
+                                         capital: self.class.find_capital(text),
+                                         siret: self.class.find_siret(text),
 
-                      rge_number: self.class.find_rge_number(text)
-                    }
-                  })
+                                         rge_number: self.class.find_rge_number(text)
+                                       }
+                                     })
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
+
+    def version
+      self.class::VERSION
+    end
 
     NUMBER_REFERENCE_REGEX = /n?[.°]/i
     BETWEEN_LABEL_VALUE_REGEX = /\s+(?:#{NUMBER_REFERENCE_REGEX})?\s*(?::\s*)?/i
