@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe QuoteReader::NaiveText, type: :service do
-  describe "#read_attributes" do
-    subject(:attributes) { described_class.new(text).read_attributes }
+  describe "#read" do
+    subject(:attributes) { described_class.new(text).read }
 
     context "when the text is nil" do
       let(:text) { nil }

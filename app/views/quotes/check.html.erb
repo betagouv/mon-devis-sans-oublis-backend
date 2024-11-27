@@ -9,7 +9,7 @@
   <hr />
 
   <h1>Résultat vérification du Devis : <%= @quote_valid ? 'Valide' : 'Invalide' %></h1>
-  <pre><%= @quote_errors.join("\n") %></pre>
+  <pre><%= @quote_errors&.join("\n") %></pre>
 <% end %>
 
 <% if @quote_attributes %>
