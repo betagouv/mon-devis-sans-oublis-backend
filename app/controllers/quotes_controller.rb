@@ -13,9 +13,12 @@ class QuotesController < ApplicationController
   def check
     @quote_errors = []
 
-    @quote_attributes = if params[:quote_file].present?
+    upload_file = params[:quote_file]
+    @quote_attributes = if upload_file.present?
                           begin
-                            file_to_attributes(params[:quote_file])
+                            file = upload_file.tempfile
+                            quote_file = QuoteFile.find_or_create_file(file, upload_file.original_filename)
+                            file_to_attributes(quote_file.local_path)
                           rescue QuoteReader::ReadError
                             @quote_errors << "file_reading_error"
                             nil
@@ -81,10 +84,8 @@ class QuotesController < ApplicationController
     end
   end
 
-  def file_to_attributes(uploaded_file)
-    temp_file_path = uploaded_file.tempfile.path
-
-    QuoteReader::Global.new(temp_file_path).read_attributes
+  def file_to_attributes(filepath)
+    QuoteReader::Global.new(filepath).read_attributes
   end
 
   def quote_validation(quote_attributes)

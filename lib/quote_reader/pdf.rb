@@ -50,7 +50,7 @@ module QuoteReader
                       when PDF::Reader::UnsupportedFeatureError
                         "Failed to parse PDF: An unsupported feature was used in the PDF."
                       when StandardError
-                        "An error occurred: #{e.message}"
+                        "An error occurred: #{error.message}"
                       end
 
       ReadError.new(error_message)

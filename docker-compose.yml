@@ -11,6 +11,8 @@ services:
        - '.env.local'
     depends_on:
       - db
+    stdin_open: true
+    tty: true
   db:
     image: postgres:15
     environment:
