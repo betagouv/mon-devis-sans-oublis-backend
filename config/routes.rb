@@ -10,16 +10,12 @@ Rails.application.routes.draw do
 
   # Quotes
 
-  get "profils", to: "quotes#profiles", as: :profiles
-  resources :quotes, only: [], path: "" do
-    collection do
-      match ":profile/devis/verifier",
-            to: "quotes#check",
-            via: %i[get post],
-            as: :check,
-            constraints: { profile: /#{QuotesController::PROFILES.join('|')}/ }
-    end
-  end
+  get "profils", to: "quote_checks#profiles", as: :profiles
+  match ":profile/devis/verifier",
+        to: "quote_checks#new",
+        via: %i[get post],
+        as: :new_quote_check,
+        constraints: { profile: /#{QuoteChecksController::PROFILES.join('|')}/ }
 
   # Website static pages
 

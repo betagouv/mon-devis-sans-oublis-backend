@@ -4,7 +4,7 @@
 class QuoteCheck < ApplicationRecord
   belongs_to :file, class_name: "QuoteFile"
 
-  validates :profile, presence: true, inclusion: { in: QuotesController::PROFILES }
+  validates :profile, presence: true, inclusion: { in: QuoteChecksController::PROFILES }
 
   validates :started_at, presence: true
 

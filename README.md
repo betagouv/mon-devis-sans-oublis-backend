@@ -24,7 +24,7 @@ composants DSFR](https://github.com/betagouv/dsfr-view-components)
 
 ## Moteur et fonctionnement interne / Architecture
 
-Les fichiers devis sont traités par le `QuotesController` qui les envoient aux services:
+Les fichiers devis sont traités par le `QuoteChecksController` qui les envoient aux services:
 
 - `QuoteReader` lisant le devis brut puis extractant les information du devis de manière naïve en se basant sur le texte du PDF et via solutions LLM avec croisement de données d'annuaires publiques de la rénovation
 - puis ces attributs de devis sont vérifier par le `QuoteValdiator` qui controlle un ensemble de règles et renvoit les erreurs correspondantes

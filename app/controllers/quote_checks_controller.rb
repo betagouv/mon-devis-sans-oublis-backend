@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Controller for the Quotes resource
-class QuotesController < ApplicationController
+class QuoteChecksController < ApplicationController
   skip_before_action :verify_authenticity_token, if: -> { request.format.json? && action_name == "check" }
 
   PROFILES = %w[artisan particulier mandataire conseiller].freeze
@@ -10,7 +10,7 @@ class QuotesController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
-  def check
+  def new
     upload_file = params[:quote_file]
 
     # Default web form
