@@ -7,10 +7,15 @@ require:
   - rubocop-factory_bot
   - rubocop-rspec_rails
 
-
 AllCops:
   NewCops: enable
 
+Style/Documentation:
+  Enabled: true
+  Exclude:
+    - 'app/config/application.rb'
+    - 'app/mailers/**/*.rb'
+    - 'db/migrate/**/*.rb'
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: "double_quotes"
