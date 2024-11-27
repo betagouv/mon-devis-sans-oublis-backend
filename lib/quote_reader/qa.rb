@@ -12,7 +12,9 @@ module QuoteReader
     private
 
     def llm_result
-      Llms::Mistral.new(prompt).chat_completion(text) if Llms::Mistral.configured?
+      return Llms::Mistral.new(prompt).chat_completion(text) if Llms::Mistral.configured?
+
+      {}
     end
 
     def prompt

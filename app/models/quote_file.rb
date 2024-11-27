@@ -36,4 +36,8 @@ class QuoteFile < ApplicationRecord
       content_type: content_type
     }
   end
+
+  def local_path
+    ActiveStorage::Blob.service.path_for(file.key) if file
+  end
 end
