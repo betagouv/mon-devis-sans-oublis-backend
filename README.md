@@ -59,6 +59,12 @@ le type de retour avec erreurs retournées est:
 docker-compose up
 ```
 
+ou si vous l'installez directement (non recommandé)
+
+```shell
+DATABASE_URL='postgresql://postgres:dummy@localhost:5433' bin/rails server -b 0.0.0.0
+```
+
 ## Environnement
 
 Tout l'environnement est configuré pour et depuis [Docker](https://www.docker.com/). Des
