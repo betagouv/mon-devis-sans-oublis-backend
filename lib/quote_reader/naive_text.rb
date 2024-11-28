@@ -72,6 +72,10 @@ module QuoteReader
       text[/(?:IBAN|RIB)#{BETWEEN_LABEL_VALUE_REGEX}(FR\d{2}\s?(?:\d{4}\s?){2,5}#{FRENCH_CHARACTER_REGEX}?\d{2})/i, 1]
     end
 
+    def self.find_label_number(text)
+      text[%r{((?:CPLUS|QB|QPAC|QPV|QS|VPLUS)/\d{5})}i, 1]
+    end
+
     def self.find_mention_devis(text)
       text[/devis/i] if text
     end
@@ -98,7 +102,8 @@ module QuoteReader
     end
 
     def self.find_rge_number(text)
-      text[/RGE#{BETWEEN_LABEL_VALUE_REGEX}((?:E-)?E?\d+)/i, 1]
+      # Warning to not match the IBAN
+      text[/(?:\A|.*#{BETWEEN_LABEL_VALUE_REGEX})((?:R|E-)?E?\d{5,6})/i, 1]
     end
 
     def self.find_siret(text)
