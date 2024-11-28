@@ -29,6 +29,10 @@ Les fichiers devis sont traités par le `QuoteChecksController` qui les envoient
 - `QuoteReader` lisant le devis brut puis extractant les information du devis de manière naïve en se basant sur le texte du PDF et via solutions LLM avec croisement de données d'annuaires publiques de la rénovation
 - puis ces attributs de devis sont vérifier par le `QuoteValdiator` qui controlle un ensemble de règles et renvoit les erreurs correspondantes
 
+### Tester un devis en local
+
+`docker compose exec web rake 'quote_checks:create[tmp/devis_tests/DC004200PAC-Aireau+Chauffe eau thermo.pdf]' | less`
+
 ## API
 
 via header `Accept` à la valeur `application/json` pour forcer le retour au format JSON et non classique HTML
