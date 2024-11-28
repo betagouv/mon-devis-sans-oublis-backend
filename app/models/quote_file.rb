@@ -7,7 +7,9 @@ class QuoteFile < ApplicationRecord
   has_one_attached :file
   has_many :quote_checks, dependent: :nullify, inverse_of: :file
 
-  validates :file, attached: true, content_type: ["application/pdf"], size: { less_than: 50.megabytes }
+  # Do not limit on content_type: ["application/pdf"]
+  # So check can manualy review them
+  validates :file, attached: true, size: { less_than: 50.megabytes }
   validates :filename, presence: true
   validates :hexdigest, presence: true, uniqueness: true
 

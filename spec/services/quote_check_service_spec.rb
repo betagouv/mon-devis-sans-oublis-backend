@@ -8,20 +8,24 @@ RSpec.describe QuoteCheckService, type: :service do
   let(:profile) { "artisan" }
 
   describe "#initialize" do
+    subject(:init) { described_class.new(tempfile, filename, profile) }
+
     it "creates a new quote check" do
-      expect { described_class.new(tempfile, filename, profile) }.to change(QuoteCheck, :count).by(1)
+      expect { init }.to change(QuoteCheck, :count).by(1)
     end
 
     context "when the profile is not valid" do
       let(:profile) { "invalid" }
 
       it "raises an error" do
-        expect { described_class.new(tempfile, filename, profile) }.to raise_error(ActiveRecord::RecordInvalid)
+        expect { init }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
   end
 
   describe "#check" do
+    subject(:quote_check) { described_class.new(tempfile, filename, profile).check }
+
     # rubocop:disable RSpec/ExampleLength
     # rubocop:disable RSpec/MultipleExpectations
     it "returns the completed quote check" do
@@ -40,5 +44,13 @@ RSpec.describe QuoteCheckService, type: :service do
     end
     # rubocop:enable RSpec/MultipleExpectations
     # rubocop:enable RSpec/ExampleLength
+
+    context "when the file is not a PDF" do
+      let(:tempfile) { fixture_file_upload("quote_files/Devis_test.png", "image/png") }
+
+      it "creates the QuoteCheck with dedicated error" do
+        expect(quote_check.validation_errors).to include("unsupported_file_format")
+      end
+    end
   end
 end

@@ -46,6 +46,7 @@ class QuoteCheckService
     )
   end
 
+  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def read_quote
     quote_reader = QuoteReader::Global.new(quote_check.file.local_path)
@@ -64,10 +65,17 @@ class QuoteCheckService
     quote_check.assign_attributes(
       validation_errors: ["file_reading_error"]
     )
+  rescue QuoteReader::UnsupportedFileType
+    quote_check.assign_attributes(
+      validation_errors: ["unsupported_file_format"]
+    )
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   def validate_quote
+    return if quote_check.read_attributes.blank?
+
     quote_validator = QuoteValidator::Global.new(quote_check.read_attributes)
     quote_check.assign_attributes(
       validation_errors: quote_validator.errors,
