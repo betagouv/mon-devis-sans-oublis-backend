@@ -57,7 +57,7 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
             forme_juridique: "SAS",
             numero_tva: "FR12345678911",
             capital: "1000",
-            rge_number: nil,
+            rge_number: "123456",
             siret: nil
           }
         )
@@ -160,7 +160,24 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
     it "returns the rge_number" do
       expect(described_class.find_rge_number("RGE  n. :E123456")).to eq("E123456")
       expect(described_class.find_rge_number("RGE n°E-E123456")).to eq("E-E123456")
+      expect(described_class.find_rge_number("RE12345")).to eq("RE12345")
+      expect(described_class.find_rge_number("E123456")).to eq("E123456")
+      expect(described_class.find_rge_number("E-E123456")).to eq("E-E123456")
     end
+  end
+
+  describe ".find_label_number" do
+    # rubocop:disable RSpec/ExampleLength
+    it "returns the label_number" do
+      expect(described_class.find_label_number("QB/74612")).to eq("QB/74612")
+      expect(described_class.find_label_number("QS/51778")).to eq("QS/51778")
+      expect(described_class.find_label_number("QPV/59641")).to eq("QPV/59641")
+      expect(described_class.find_label_number("QPAC/59641")).to eq("QPAC/59641")
+      expect(described_class.find_label_number("CPLUS/67225")).to eq("CPLUS/67225")
+      expect(described_class.find_label_number("CPLUS/67225")).to eq("CPLUS/67225")
+      expect(described_class.find_label_number("VPLUS/49707")).to eq("VPLUS/49707")
+    end
+    # rubocop:enable RSpec/ExampleLength
   end
 
   describe ".find_siret" do
