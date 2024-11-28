@@ -12,12 +12,12 @@ RSpec.describe QuoteFile do
     end
 
     context "with a non-PDF file" do
-      it "is not valid" do
+      it "still save it for further purpose" do
         file = fixture_file_upload("quote_files/Devis_test.png", "image/png")
 
         expect do
           described_class.find_or_create_file(file, file.original_filename)
-        end.to raise_error(ActiveRecord::RecordInvalid)
+        end.not_to raise_error
       end
     end
   end

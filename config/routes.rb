@@ -16,6 +16,13 @@ Rails.application.routes.draw do
         via: %i[get post],
         as: :new_quote_check,
         constraints: { profile: /#{QuoteChecksController::PROFILES.join('|')}/ }
+  resources :quote_checks, only: [:index], path: "devis" do
+    member do
+      get "resultats_verification", to: "quote_checks#show"
+      get "corriger", to: "quote_checks#edit"
+      put "corriger", to: "quote_checks#update"
+    end
+  end
 
   # Website static pages
 

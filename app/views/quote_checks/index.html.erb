@@ -1,0 +1,32 @@
+<h1>Les Devis</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Date heure soumission</th>
+            <th>Nom fichier</th>
+            <th>Temps traitement</th>
+            <th>Profil</th>
+            <th>naive_attributes</th>
+            <th>qa_attributes</th>
+            <th>Attributs finaux lus</th>
+            <th>Erreurs de validation</th>
+            <th>anonymised_text</th>
+        </tr>
+    </thead>
+    <tbody>
+    <% @quote_checks.each do |quote_check| %>
+        <tr>
+            <td><%= quote_check.created_at %></td>
+            <td><%= quote_check.file.filename %></td>
+            <td><%= distance_of_time_in_words(quote_check.finished_at - quote_check.created_at) if quote_check.finished_at %></td>
+            <td><%= quote_check.profile %></td>
+            <td><pre><%= JSON.pretty_generate quote_check.naive_attributes&.except("full_text") %></pre></td>
+            <td><pre><%= JSON.pretty_generate(quote_check.qa_attributes&.except("full_text")).gsub("\n", "<br>").html_safe %></pre></td>
+            <td><pre><%= JSON.pretty_generate quote_check.read_attributes&.except("full_text") %></pre></td>
+            <td><pre><%= JSON.pretty_generate quote_check.validation_errors %></pre></td>
+            <td style="font-size: 6px"><pre><%= JSON.pretty_generate quote_check.anonymised_text %></pre></td>
+        </tr>
+    <% end %>
+    </tbody>
+</table>
