@@ -131,6 +131,8 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
       expect(described_class.find_forme_juridique(" SAS ")).to eq("SAS")
       expect(described_class.find_forme_juridique(" SARL ")).to eq("SARL")
       expect(described_class.find_forme_juridique(" EURL ")).to eq("EURL")
+      expect(described_class.find_forme_juridique(" E.U.R.L ")).to eq("E.U.R.L")
+      expect(described_class.find_forme_juridique(" E.U.R.L. ")).to eq("E.U.R.L") # TODO: force the final dot if whished
     end
   end
 

@@ -53,7 +53,21 @@ module QuoteReader
 
     BETWEEN_LABEL_VALUE_REGEX = /\s+(?:#{NUMBER_REFERENCE_REGEX})?\s*(?::\s*)?/i
     EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-    FORME_JURIDIQUE_REGEX = /SAS|S\.A\.S|S\.A\.S\.|SARL|S\.A\.R\.L|S\.A\.R\.L\.|EURL|E\.U\.R\.L|E\.U\.R\.L\./i
+    FORME_JURIDIQUE_REGEX = /
+    (?:                   # Begin group for legal forms
+      E\.?I             | # Entreprise Individuelle
+      E\.?I\.?R\.?L     | # Entreprise Individuelle à Responsabilité Limitée
+      E\.?U\.?R\.?L     | # Entreprise Unipersonnelle à Responsabilité Limitée
+      S\.?A\.?R\.?L     | # Société à Responsabilité Limitée
+      S\.?A\.?S\.?U?    | # Société par Actions Simplifiée (Unipersonnelle optional)
+      S\.?N\.?C         | # Société en Nom Collectif
+      S\.?C\.?O\.?P     | # Société Coopérative Ouvrière de Production
+      G\.?I\.?E         | # Groupement d'Intérêt Économique
+      S\.?E\.?M         | # Société d'Économie Mixte
+      S\.?A             # Société Anonyme
+    )
+    \.?                 # Optional period at the end
+    /xi
     FRENCH_ADDRESS_REGEX = /(?:\d{1,4}\s)?(?:[A-Za-zÀ-ÖØ-öø-ÿ'\-\s]+),?\s(?:\d{5})\s(?:[A-Za-zÀ-ÖØ-öø-ÿ'\-\s]+)/i
     FRENCH_CHARACTER_REGEX = /[\wÀ-ÖØ-öø-ÿ]/i
     PHONE_REGEX = /(?:\(?\+?33\)?)?\s?(?:[\s.]*\d\d){5}/i # TODO: find better
@@ -88,8 +102,7 @@ module QuoteReader
     end
 
     def self.find_forme_juridique(text)
-      text[/\s+(#{FORME_JURIDIQUE_REGEX})\s+/, 1] ||
-        text[/Forme juridique\s*:\s*(#{FRENCH_CHARACTER_REGEX}+) ?/i, 1]
+      text[/\b(#{FORME_JURIDIQUE_REGEX})\b/, 1]
     end
 
     def self.find_ibans(text)
