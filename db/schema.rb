@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_29_100846) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_29_173002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,6 +64,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_29_100846) do
     t.string "validation_version"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "qa_result"
     t.index ["file_id"], name: "index_quote_checks_on_file_id"
   end
 

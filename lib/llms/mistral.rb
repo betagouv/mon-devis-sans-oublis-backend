@@ -9,7 +9,7 @@ module Llms
   class Mistral
     class ResultError < StandardError; end
 
-    attr_reader :prompt
+    attr_reader :prompt, :read_attributes, :result
 
     def initialize(prompt)
       @api_key = ENV.fetch("MISTRAL_API_KEY")
@@ -46,12 +46,20 @@ module Llms
 
       raise ResultError, "Error: #{response.code} - #{response.message}" unless response.is_a?(Net::HTTPSuccess)
 
-      result = JSON.parse(response.body)
+      @result = JSON.parse(response.body)
       content = result.dig("choices", 0, "message", "content")
       content_json_result = content[/(\{.+\})/im, 1]
-      JSON.parse(content_json_result, symbolize_names: true)
+      @read_attributes = JSON.parse(content_json_result, symbolize_names: true)
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
+
+    def model
+      result&.fetch("model")
+    end
+
+    def usage
+      result&.fetch("usage")
+    end
   end
 end

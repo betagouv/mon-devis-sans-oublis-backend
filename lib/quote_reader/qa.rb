@@ -5,10 +5,12 @@ module QuoteReader
   class Qa < Text
     VERSION = "0.0.1"
 
+    attr_reader :read_attributes, :result
+
     def read
       return {} if text.blank?
 
-      @read_attributes = llm_result
+      @read_attributes = llm_read_attributes
     end
 
     def version
@@ -17,10 +19,16 @@ module QuoteReader
 
     private
 
-    def llm_result
-      return Llms::Mistral.new(prompt).chat_completion(text) if Llms::Mistral.configured?
+    def llm_read_attributes
+      if Llms::Mistral.configured?
+        mistral = Llms::Mistral.new(prompt)
+        mistral.chat_completion(text)
 
-      {}
+        @read_attributes = mistral.read_attributes
+        @result = mistral.result
+      end
+
+      read_attributes || {}
     end
 
     def prompt

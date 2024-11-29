@@ -9,7 +9,7 @@ module QuoteReader
                 :text,
                 :anonymised_text,
                 :naive_attributes, :naive_version,
-                :qa_attributes, :qa_version,
+                :qa_attributes, :qa_result, :qa_version,
                 :read_attributes
 
     VERSION = "0.0.1"
@@ -37,6 +37,7 @@ module QuoteReader
 
       qa_reader = Qa.new(anonymised_text)
       @qa_attributes = qa_reader.read
+      @qa_result = qa_reader.result
       @qa_version = qa_reader.version
 
       @read_attributes = deep_merge_if_absent(naive_attributes, qa_attributes)
