@@ -18,7 +18,7 @@
     <% @quote_checks.each do |quote_check| %>
         <tr>
             <td><%= quote_check.created_at %></td>
-            <td><%= quote_check.file.filename %></td>
+            <td><%= quote_check.file&.filename || 'Fichier source supprimé' %></td>
             <td><%= distance_of_time_in_words(quote_check.finished_at - quote_check.created_at) if quote_check.finished_at %></td>
             <td><%= quote_check.profile %></td>
             <td><pre><%= JSON.pretty_generate quote_check.naive_attributes %></pre></td>
