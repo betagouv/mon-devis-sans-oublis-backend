@@ -21,9 +21,9 @@
             <td><%= quote_check.file.filename %></td>
             <td><%= distance_of_time_in_words(quote_check.finished_at - quote_check.created_at) if quote_check.finished_at %></td>
             <td><%= quote_check.profile %></td>
-            <td><pre><%= JSON.pretty_generate quote_check.naive_attributes&.except("full_text") %></pre></td>
-            <td><pre><%= JSON.pretty_generate(quote_check.qa_attributes&.except("full_text")).gsub("\n", "<br>").html_safe %></pre></td>
-            <td><pre><%= JSON.pretty_generate quote_check.read_attributes&.except("full_text") %></pre></td>
+            <td><pre><%= JSON.pretty_generate quote_check.naive_attributes %></pre></td>
+            <td><pre><%= JSON.pretty_generate(quote_check.qa_attributes).gsub("\n", "<br>").html_safe %></pre></td>
+            <td><pre><%= JSON.pretty_generate quote_check.read_attributes %></pre></td>
             <td><pre><%= JSON.pretty_generate quote_check.validation_errors %></pre></td>
             <td style="font-size: 6px"><pre><%= JSON.pretty_generate quote_check.anonymised_text %></pre></td>
         </tr>

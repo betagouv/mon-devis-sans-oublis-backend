@@ -11,26 +11,26 @@ module QuoteReader
       return {} if text.blank?
 
       @read_attributes = {
-                                       devis: self.class.find_mention_devis(text),
-                                       numero_devis: self.class.find_numero_devis(text),
+        devis: self.class.find_mention_devis(text),
+        numero_devis: self.class.find_numero_devis(text),
 
-                                       client: {
-                                         nom: self.class.find_nom(text),
-                                         prenom: self.class.find_nom(text),
-                                         adresse: self.class.find_adresse(text),
-                                         adresse_chantier: self.class.find_adresse_chantier(text)
-                                       },
-                                       pro: {
-                                         adresse: self.class.find_adresse_pro(text),
-                                         raison_sociale: self.class.find_raison_sociale(text),
-                                         forme_juridique: self.class.find_forme_juridique(text),
-                                         numero_tva: self.class.find_numero_tva(text),
-                                         capital: self.class.find_capital(text),
-                                         siret: self.class.find_siret(text),
+        client: {
+          nom: self.class.find_nom(text),
+          prenom: self.class.find_nom(text),
+          adresse: self.class.find_adresse(text),
+          adresse_chantier: self.class.find_adresse_chantier(text)
+        },
+        pro: {
+          adresse: self.class.find_adresse_pro(text),
+          raison_sociale: self.class.find_raison_sociale(text),
+          forme_juridique: self.class.find_forme_juridique(text),
+          numero_tva: self.class.find_numero_tva(text),
+          capital: self.class.find_capital(text),
+          siret: self.class.find_siret(text),
 
-                                         rge_number: self.class.find_rge_number(text)
-                                       }
-                                     }
+          rge_number: self.class.find_rge_number(text)
+        }
+      }
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize

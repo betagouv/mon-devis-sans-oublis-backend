@@ -9,13 +9,13 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
     context "when the text is nil" do
       let(:text) { nil }
 
-      it { is_expected.to eq({ full_text: nil }) }
+      it { is_expected.to eq({}) }
     end
 
     context "when the text is empty" do
       let(:text) { "" }
 
-      it { is_expected.to eq({ full_text: "" }) }
+      it { is_expected.to eq({}) }
     end
 
     context "when the text is not empty" do

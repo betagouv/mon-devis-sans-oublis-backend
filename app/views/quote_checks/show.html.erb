@@ -18,8 +18,8 @@
   <h1>Attributs détecté du Devis :</h1>
   <pre><%= JSON.pretty_generate @quote_attributes %></pre>
 
-  <% if @quote_attributes.key?(:full_text) %>
+  <% if @quote_check&.text.present? %>
     <h1>Texte du Devis :</h1>
-    <pre><%= @quote_attributes.fetch(:full_text) %></pre>
+    <pre><%= @quote_check&.text %></pre>
   <% end %>
 <% end %>

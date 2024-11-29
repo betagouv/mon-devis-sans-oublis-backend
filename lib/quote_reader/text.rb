@@ -10,9 +10,7 @@ module QuoteReader
     end
 
     def read
-      @read_attributes = {
-        full_text: text
-      }
+      @read_attributes = {}
     end
   end
 end
