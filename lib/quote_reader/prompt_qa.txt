@@ -1,22 +1,17 @@
-Voici le texte d’un devis de rénovation énergétique. C’est à la base un pdf. Les gestes de travaux sont souvent dans un tableau.
-Je dois récupérer les données structurées pour les vérifier ensuite. 
-Je ne veux que des informations effectivement inscrites dans le devis. Si tu ne trouves pas ou que tu n’es pas sûr, il vaut mieux laisser le champ vide.
-Je souhaites que les informations soient extraites **uniquement** du devis sans aucune interprétation ou ajout basé sur des connaissances extérieures.
+Contexte : Nous avons un devis pdf, nous avons sorti le texte pour pouvoir l’analyser et l'avons anonymisé. Il s’agit d’un devis de rénovation énergétique d’un artisan pour un particulier. Il peut y avoir plusieurs gestes de travaux. 
 
-Peux-tu me donner les résultats sous la forme du JSON suivant : 
+Rôle : Vous êtes un expert en lecture de devis et vous devez récupérer les données structurées du devis pour les intégrer dans le JSON suivant
 
-```json
+
+Voici les JSON que l'on souhaite récupérer : 
+
+# JSON général
+
+```jsx
 {mention_devis: boolean; 
-numero_devis : text ou null; 
-pro_raison_sociale: text ou null; 
-pro_forme_juridique: text ou null; 
-numero_tva: text ou null; 
-capital: decimal ou null; 
-siret: integer ou null; 
+numero_devis : text; 
+pro_forme_juridique: text; 
 
-siret_format_erreur: boolean;
-
-pro_adresse: text ou null; 
 
 date_devis: date; 
 
@@ -27,84 +22,179 @@ date_debut_chantier: date;
 date_pre_visite: date; 
 gestes : [{geste1},{geste2}...]
 
-}
+} 
 ```
 
-Mention_devis, vérifie qu’il est bien indiqué dans le document qu’il s’agit d’un devis; 
-numero_devis: doit récupérer le numéro du devis qui est censé être unique. 
-pro_raison_sociale : c’est le nom de l’entreprise qui fait les travaux. 
-pro_forme_juridique : c’est la forme juridique de l’entreprise (ex: SAS, SARL, EURL, SASU, …) 
-
-numero_tva : Est un text de 13 caractères avec FR suivi de 11 chiffres. Il s’agit du numéro de TVA intra communautaire de l’entreprise. 
-capital : c’est le capital social de l’entreprise. C’est un montant en € pour les entreprises française. 
-
-Siret : C’est l’identifiant de l’entreprise qui est une suite de 14 chiffres.Attention, l’artisan fait souvent l’erreur de mettre le SIREN (9 chiffres) à la place
-
-siret_format_erreur : Si tu identifie un SIREN (9 chiffres) au lieu du SIRET (14 chiffres) alors siret_format_erreur = true
-
-pro_adresse : adresse de l’artisan. C’est très souvent un numéro, une rue, un code postal et une ville
-
-Date_devis  :est la date de création du devis. 
-
-validité : l’artisan a-t-il indiqué la durée de validité du devis (souvent en mois ou avec une date)
-
-date_debut_chantier : date de prévision du lancement du chantier par l’artisan. 
-
-date_pre_visite : très souvent l’artisan vient sur place avant de créer le devis.  
-
-Pour chaque geste, il faut également sortir un JSON dont les paramètres dépendent du type de gestes. 
-
-Pour une pompe à chaleur air/eau: 
+### chauffe-eau thermodynamique :
 
 ```jsx
-{type:'PAC air/eau'; 
-intitule: text ou null;
-marque: text ou null; 
-reference: text ou null; 
-ETAS: Pourcentage; 
-regime_temperature: text ou null;
-type_fluide_frigorigene: text ou null;
-}
-```
-
-Sachant que l’intitulé est le texte décrivant le geste de travaux. 
-
-la marque est la marque de la pompe à chaleur 
-
-la référence et le modèle 
-
-l’ETAS est l’efficacité énergétique saisonnière exprimé en % 
-
-le régime de température est une des options suivantes : Basse, Moyenne, Haute 
-
-type_fluide_frigorigene : c’est le fluide qui permet de restituer la chaleur ou le froid. Il s’agit souvent d’un accronyme comme R32 ou R410A par exemple 
-
-Pour un chauffe-eau thermodynamique : 
-
-```jsx
-{type: chauffe eau thermodynamique; 
-intitule: text ou null;
-marque: text ou null; 
-reference: text ou null; 
-volume: integer ou null; 
+{type: 'chauffe_eau_thermo'; 
+intitule: text;
+marque: text; 
+reference: text; 
+volume: integer (en Litre); 
 ETAS: pourcentage; 
-profil_soutirage: text ou null; 
-COP: decimal ou null; 
-type_installation: text}
+profil_soutirage: enum(M,L,XL,XXL); 
+COP: decimal;}
 ```
 
-Sachant que l’intitulé est le texte décrivant le geste de travaux. 
+### Chauffe-eau solaire individuel (CESI)
 
-la marque est la marque de la pompe à chaleur 
+```jsx
+{type: 'chauffe_eau_solaire_individuel'; 
+intitule: text;
+marque: text; 
+reference: text; 
+volume: integer (Litre); 
+ETAS: pourcentage; 
+profil_soutirage: enum(M,L,XL,XXL); 
+type_appoint: enum (electrique, autre); 
+surface_capteur: Decimal (m2); 
+classe_energetique_ballon: text; 
+fluide_capteur: enum(eau, eau glycolée, air);}
+```
 
-la référence et le modèle 
+### Isolation
 
-l’ETAS est l’efficacité énergétique saisonnière exprimé en % 
+```jsx
+{type: enum(isolation_comble_perdu, isolation_rampants_toiture, isolation_toiture_terrasse, isolation_thermique_par_interieur_ITI, isolation_thermique_par_exterieur_ITE, isolation_plancher_bas);
+intitule: text; 
+marque_isolant: text;
+reference_isolant: text;
+surface_isolant: Decimal (m2); 
+epaisseur_isolant: Decimal (cm); 
+Resistance_thermique: Decimal (m².K/W);
+}
+```
 
-le volume est la taille du ballon exprimée en Litre 
+Pour isolation_thermique_par_interieur_ITI, isolation_thermique_par_exterieur_ITE il faut rajouter : 
 
-le profil de soutirage est une des options suivantes : M, L, XL, XXL
+```jsx
+{presence_parement: boolean; 
+presence_protection: boolean; 
+presence_fixation: boolean;}
+```
 
-la COP est un nombre 
+Pour isolation_plancher_bas, il faut rajouter: 
 
-et le type d’installation est par exemple air exterieur, sur air exrait ou sur air ambiant
+```jsx
+{localisation: text;
+emplacement: enum(sous-face, par le dessus);
+}
+```
+
+### Menuiseries
+
+```jsx
+{type: 'menuiserie'; 
+intitule: text,
+type_menuiserie: enum(fenetre, porte_fenetre, porte, fenetre_de_toit,..); 
+type_materiaux: enum (PVC, bois, aluminium); 
+type_vitrage: enum(simple,double, triple,...); 
+type_pose: enum(renovation,despose_totale); 
+localisation: text; 
+position_paroie: enum(nu_interieur, nu_exterieur, tunnel); 
+uw: decimal (W/m2.K); 
+sw: decimal
+}
+```
+
+dans le cadre d’une porte 
+
+```jsx
+{ud: W/m2.K} à la place du uw et sw
+```
+
+# Système chauffage
+
+### poele à bois :
+
+```jsx
+{type: 'poele'; 
+type_combustible: enum(bois,granules);
+intitule: text;
+marque: text; 
+reference: text; 
+puissance: Decimal **(kW);** 
+remplacement_chaudiere_condensation: boolean;
+ETAS: pourcentage **(ɳs)**; 
+rendement_energetique: decimal;
+label_flamme_verte: boolean;
+emission_monoxyde_carbone: Integer (mg/Nm3);
+emission_composés_organique: Integer (mgC/Nm3);
+emission_particules: Integer (mg/Nm3); 
+emission_oxydes_azotes: Integer (mg/Nm3)}
+```
+
+### pompe à chaleur air/eau:
+
+```jsx
+{type:enum(pac_air_eau, pac_eau_eau, pac_air_air, pac_hybride) ; 
+intitule: text;
+remplacement_chaudiere_condensation: boolean;
+marque: text; 
+reference: text; 
+ETAS: Pourcentage; 
+puissance: decimal **(kW);**
+regime_temperature: enum(basse, moyenne, haute);
+type_fluide_frigorigene: text;
+COP: decimal;
+}
+```
+
+### Chaudière biomasse
+
+```jsx
+{type:'chaudiere_biomasse'; 
+intitule: text; 
+marque: text;
+reference: text;
+type_combustible: enum(buche,granule,copeaux,...);
+presence_note_dimensionnement: boolean; 
+type_chargement: enum(manuel,automatique);
+ETAS: pourcentage; 
+puissance: decimal (kW);
+remplacement_chaudiere_condensation: boolean;
+label_flamme_verte: boolean; 
+emission_monoxyde_carbone: Integer (mg/Nm3);
+emission_composés_organique: Integer (mgC/Nm3);
+emission_particules: Integer (mg/Nm3); 
+emission_oxydes_azotes: Integer (mg/Nm3);
+type_silo: text (externeinterne, neuf/existant, textile/maconner); 
+contenance: Decimal (Litre); 
+marque_regulateur: text; 
+reference_regulateur: text; 
+classe_regulateur: text}
+
+```
+
+### systeme solaire combine
+
+```jsx
+{type:'systeme_solaire_combine'; 
+intitule: text;
+remplacement_chaudiere_condensation: boolean;
+marque: text; 
+reference: text; 
+ETAS: Pourcentage; 
+puissance: decimal **(kW);**
+marque_capteurs: text; 
+reference_capteurs: text; 
+type_capteurs: text; 
+surface_captage: decimal (m2); 
+productivite_capteurs: decimal (W/m2); 
+volume_ballon:decimal (litre);
+profil_soutirage: enum(M,L,XL,XXL); 
+energie_appoint: (electricite, gaz,...);
+}
+```
+
+voici le texte du devis anonymise : 
+
+
+
+
+Réfléchissez étape par étape.
+
+Vous ne répondrez que par un objet JSON qui concatene le JSON général et tous les JSON des gestes présent dans le devis
+  Ne fournissez pas d’explications.
