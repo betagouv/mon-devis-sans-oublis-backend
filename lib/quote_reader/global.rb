@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-require "marcel"
-
 module QuoteReader
   class UnsupportedFileType < StandardError; end
 
   # Read Quote from PDF file to extract Quote attributes
   class Global
-    attr_reader :filepath,
+    attr_reader :content, :content_type,
                 :text,
                 :anonymised_text,
                 :naive_attributes, :naive_version,
@@ -16,8 +14,9 @@ module QuoteReader
 
     VERSION = "0.0.1"
 
-    def initialize(filepath)
-      @filepath = filepath
+    def initialize(content, content_type)
+      @content = content
+      @content_type = content_type
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -28,7 +27,7 @@ module QuoteReader
               "File type #{content_type} not supported"
       end
 
-      @text = Pdf.new(filepath).extract_text
+      @text = Pdf.new(content).extract_text
 
       naive_reader = NaiveText.new(text)
       @naive_attributes = naive_reader.read
@@ -46,11 +45,6 @@ module QuoteReader
     # rubocop:enable Metrics/AbcSize
 
     private
-
-    def content_type
-      @content_type ||= MIME::Types.type_for(filepath).first&.content_type || # From file name
-                        Marcel::MimeType.for(Pathname.new(filepath)) # From file content
-    end
 
     def deep_merge_if_absent(hash1, hash2)
       hash1.merge(hash2) do |_key, old_val, new_val|
