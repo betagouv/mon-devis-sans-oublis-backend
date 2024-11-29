@@ -12,29 +12,27 @@ module QuoteReader
       return {} if text.blank?
 
       @read_attributes = {
+        # 1. Quote informations
         devis: self.class.find_mention_devis(text),
         numero_devis: self.class.find_numero_devis(text),
-
         client: {
+          adresse_chantier: self.class.find_adresse_chantier(text),
           nom: self.class.find_nom(text),
-          prenom: self.class.find_nom(text),
-          adresse_chantier: self.class.find_adresse_chantier(text)
+          prenom: self.class.find_nom(text)
         },
         pro: {
           adresse: self.class.find_adresse_pro(text),
-          raison_sociale: self.class.find_raison_sociale(text),
-          forme_juridique: self.class.find_forme_juridique(text),
-          numero_tva: self.class.find_numeros_tva(text).first,
           capital: self.class.find_capital(text),
-          siret: self.class.find_sirets(text).first,
-
+          forme_juridique: self.class.find_forme_juridique(text),
+          labels: self.class.find_label_numbers(text),
+          numero_tva: self.class.find_numeros_tva(text).first,
+          raison_sociale: self.class.find_raison_sociale(text),
           rge_number: self.class.find_rge_numbers(text).first,
-
-          labels: self.class.find_label_numbers(text)
+          siret: self.class.find_sirets(text).first
         },
 
-        # Personal infos
-        addresses: self.class.find_adresses(text),
+        # 2. Generic personal and professional informations
+        adresses: self.class.find_adresses(text),
         emails: self.class.find_emails(text),
         ibans: self.class.find_ibans(text),
         numeros_tva: self.class.find_numeros_tva(text),
