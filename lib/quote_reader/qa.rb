@@ -6,9 +6,9 @@ module QuoteReader
     VERSION = "0.0.1"
 
     def read
-      return super if text.blank?
+      return {} if text.blank?
 
-      @read_attributes = super.merge(llm_result)
+      @read_attributes = llm_result
     end
 
     def version

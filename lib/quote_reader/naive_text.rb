@@ -8,9 +8,9 @@ module QuoteReader
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
     def read
-      return super if text.blank?
+      return {} if text.blank?
 
-      @read_attributes = super.merge({
+      @read_attributes = {
                                        devis: self.class.find_mention_devis(text),
                                        numero_devis: self.class.find_numero_devis(text),
 
@@ -30,7 +30,7 @@ module QuoteReader
 
                                          rge_number: self.class.find_rge_number(text)
                                        }
-                                     })
+                                     }
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
