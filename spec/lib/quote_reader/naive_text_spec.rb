@@ -37,7 +37,7 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
           TVA : FR12345678911
           Capital : 1000 €
           Siret : 123456789
-          RGE Number : 123456
+          RGE Number : E123456
         TEXT
       end
 
@@ -48,7 +48,6 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
           client: {
             nom: "Doe",
             prenom: "Doe",
-            adresse: "42",
             adresse_chantier: "43"
           },
           pro: {
@@ -57,7 +56,8 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
             forme_juridique: "SAS",
             numero_tva: "FR12345678911",
             capital: "1000",
-            rge_number: "123456",
+            labels: ["E123456"],
+            rge_number: "E123456",
             siret: nil
           }
         )
@@ -68,15 +68,15 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
 
   # rubocop:disable RSpec/MultipleExpectations
 
-  describe ".find_adresse" do
+  describe ".find_adresses" do
     # rubocop:disable RSpec/ExampleLength
     it "returns the adresse" do
       expect(
-        described_class.find_adresse("17 rue de l'union 94140 ALFORTVILLE")
-      ).to eq("17 rue de l'union 94140 ALFORTVILLE")
+        described_class.find_adresses("17 rue de l'union 94140 ALFORTVILLE")
+      ).to eq(["17 rue de l'union 94140 ALFORTVILLE"])
       expect(
-        described_class.find_adresse("17 rue de l'union\n94140 ALFORTVILLE")
-      ).to eq("17 rue de l'union\n94140 ALFORTVILLE")
+        described_class.find_adresses("17 rue de l'union\n94140 ALFORTVILLE")
+      ).to eq(["17 rue de l'union\n94140 ALFORTVILLE"])
     end
     # rubocop:enable RSpec/ExampleLength
   end
@@ -112,11 +112,17 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
     end
   end
 
-  describe ".find_iban" do
-    it "returns the iban" do
+  describe ".find_ibans" do
+    it "returns the ibans" do
       expect(
-        described_class.find_iban("IBAN : FR74 3000 1234 9000 0000 1234 P77")
-      ).to eq("FR74 3000 1234 9000 0000 1234 P77")
+        described_class.find_ibans("IBAN : FR74 3000 1234 9000 0000 1234 P77")
+      ).to eq(["FR74 3000 1234 9000 0000 1234 P77"])
+    end
+  end
+
+  describe ".find_emails" do
+    it "returns the emails" do
+      expect(described_class.find_emails("no-reply@example.com")).to eq(["no-reply@example.com"])
     end
   end
 
@@ -147,11 +153,13 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
     end
   end
 
-  describe ".find_numero_tva" do
-    it "returns the numero_tva" do
-      expect(described_class.find_numero_tva("TVA  :FR10831861234")).to eq("FR10831861234")
-      expect(described_class.find_numero_tva("TVA intra FR86504321234")).to eq("FR86504321234")
-      expect(described_class.find_numero_tva("TVA intracommunautaire : FR86504321234")).to eq("FR86504321234")
+  describe ".find_numeros_tva" do
+    it "returns the numeros_tva" do
+      expect(described_class.find_numeros_tva("FRAB123456789")).to eq(["FRAB123456789"])
+      expect(described_class.find_numeros_tva("FR12345678910")).to eq(["FR12345678910"])
+      expect(described_class.find_numeros_tva("TVA  :FR10831861234")).to eq(["FR10831861234"])
+      expect(described_class.find_numeros_tva("TVA intra FR86504321234")).to eq(["FR86504321234"])
+      expect(described_class.find_numeros_tva("TVA intracommunautaire : FR86504321234")).to eq(["FR86504321234"])
     end
   end
 
@@ -170,43 +178,57 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
     end
   end
 
-  describe ".find_rge_number" do
-    it "returns the rge_number" do
-      expect(described_class.find_rge_number("RGE  n. :E123456")).to eq("E123456")
-      expect(described_class.find_rge_number("RGE n°E-E123456")).to eq("E-E123456")
-      expect(described_class.find_rge_number("RE12345")).to eq("RE12345")
-      expect(described_class.find_rge_number("E123456")).to eq("E123456")
-      expect(described_class.find_rge_number("E-E123456")).to eq("E-E123456")
+  describe ".find_rge_numbers" do
+    it "returns the rge_numbers" do
+      expect(described_class.find_rge_numbers("RGE  n. :E123456")).to eq(["E123456"])
+      expect(described_class.find_rge_numbers("RGE n°E-E123456")).to eq(["E-E123456"])
+      expect(described_class.find_rge_numbers("RE12345")).to eq(["RE12345"])
+      expect(described_class.find_rge_numbers("E123456")).to eq(["E123456"])
+      expect(described_class.find_rge_numbers("E-E123456")).to eq(["E-E123456"])
     end
   end
 
-  describe ".find_label_number" do
+  describe ".find_label_numbers" do
     # rubocop:disable RSpec/ExampleLength
-    it "returns the label_number" do
-      expect(described_class.find_label_number("QB/74612")).to eq("QB/74612")
-      expect(described_class.find_label_number("QS/51778")).to eq("QS/51778")
-      expect(described_class.find_label_number("QPV/59641")).to eq("QPV/59641")
-      expect(described_class.find_label_number("QPAC/59641")).to eq("QPAC/59641")
-      expect(described_class.find_label_number("CPLUS/67225")).to eq("CPLUS/67225")
-      expect(described_class.find_label_number("CPLUS/67225")).to eq("CPLUS/67225")
-      expect(described_class.find_label_number("VPLUS/49707")).to eq("VPLUS/49707")
+    it "returns the label_numbers" do
+      expect(described_class.find_label_numbers("QB/74612")).to eq(["QB/74612"])
+      expect(described_class.find_label_numbers("QS/51778")).to eq(["QS/51778"])
+      expect(described_class.find_label_numbers("QPV/59641")).to eq(["QPV/59641"])
+      expect(described_class.find_label_numbers("QPAC/59641")).to eq(["QPAC/59641"])
+      expect(described_class.find_label_numbers("CPLUS/67225")).to eq(["CPLUS/67225"])
+      expect(described_class.find_label_numbers("CPLUS/67225")).to eq(["CPLUS/67225"])
+      expect(described_class.find_label_numbers("VPLUS/49707")).to eq(["VPLUS/49707"])
     end
     # rubocop:enable RSpec/ExampleLength
   end
 
-  describe ".find_siret" do
-    it "returns the siret" do
-      expect(described_class.find_siret("Siret : 12345678900000")).to eq("12345678900000")
-      expect(described_class.find_siret("Siret : 123 456 789 00000")).to eq("123 456 789 00000")
+  describe ".find_sirets" do
+    it "returns the sirets" do
+      expect(described_class.find_sirets("Siret : 12345678900000")).to eq(["12345678900000"])
+      expect(described_class.find_sirets("Siret : 123 456 789 00000")).to eq(["123 456 789 00000"])
     end
   end
 
-  describe ".find_telephone" do
+  describe ".find_telephones" do
     it "returns the telephone" do
-      expect(described_class.find_telephone("01 23 45 67 89")).to eq("01 23 45 67 89")
-      # expect(described_class.find_telephone("+331 23 45 67 89")).to eq("+331 23 45 67 89") # TODO
-      # expect(described_class.find_telephone("+33 1 23 45 67 89")).to eq("+33 1 23 45 67 89") # TODO
-      expect(described_class.find_telephone(" (33) 01 23 45 67 89")).to eq("(33) 01 23 45 67 89")
+      expect(described_class.find_telephones("01 23 45 67 89")).to eq(["01 23 45 67 89"])
+      # expect(described_class.find_telephones("+331 23 45 67 89")).to eq(["+331 23 45 67 89"]) # TODO
+      # expect(described_class.find_telephones("+33 1 23 45 67 89")).to eq(["+33 1 23 45 67 89"]) # TODO
+      expect(described_class.find_telephones(" (33) 01 23 45 67 89")).to eq(["(33) 01 23 45 67 89"])
+    end
+  end
+
+  describe ".find_rcss" do
+    it "returns the rcss" do
+      expect(described_class.find_rcss("RCS Nice B 987654321")).to eq(["RCS Nice B 987654321"])
+      expect(described_class.find_rcss("RCS 987654321")).to eq(["RCS 987654321"])
+    end
+  end
+
+  describe ".find_uris" do
+    it "returns the uris" do
+      expect(described_class.find_uris("http://perdu.com")).to eq(["http://perdu.com"])
+      expect(described_class.find_uris("https://example.com/404/not_found")).to eq(["https://example.com/404/not_found"])
     end
   end
 

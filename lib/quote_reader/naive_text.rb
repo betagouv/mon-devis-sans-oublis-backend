@@ -2,6 +2,7 @@
 
 module QuoteReader
   # Read Quote text to extract Quote attributes Naively
+  # rubocop:disable Metrics/ClassLength
   class NaiveText < Text
     VERSION = "0.0.1"
 
@@ -17,19 +18,30 @@ module QuoteReader
         client: {
           nom: self.class.find_nom(text),
           prenom: self.class.find_nom(text),
-          adresse: self.class.find_adresse(text),
           adresse_chantier: self.class.find_adresse_chantier(text)
         },
         pro: {
           adresse: self.class.find_adresse_pro(text),
           raison_sociale: self.class.find_raison_sociale(text),
           forme_juridique: self.class.find_forme_juridique(text),
-          numero_tva: self.class.find_numero_tva(text),
+          numero_tva: self.class.find_numeros_tva(text).first,
           capital: self.class.find_capital(text),
-          siret: self.class.find_siret(text),
+          siret: self.class.find_sirets(text).first,
 
-          rge_number: self.class.find_rge_number(text)
-        }
+          rge_number: self.class.find_rge_numbers(text).first,
+
+          labels: self.class.find_label_numbers(text)
+        },
+
+        # Personal infos
+        addresses: self.class.find_adresses(text),
+        emails: self.class.find_emails(text),
+        ibans: self.class.find_ibans(text),
+        numeros_tva: self.class.find_numeros_tva(text),
+        rcss: self.class.find_rcss(text),
+        sirets: self.class.find_sirets(text),
+        telephones: self.class.find_telephones(text),
+        uris: self.class.find_uris(text)
       }
     end
     # rubocop:enable Metrics/MethodLength
@@ -40,25 +52,29 @@ module QuoteReader
     end
 
     NUMBER_REFERENCE_REGEX = /n?[.°]/i
+
     BETWEEN_LABEL_VALUE_REGEX = /\s+(?:#{NUMBER_REFERENCE_REGEX})?\s*(?::\s*)?/i
+    EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+    FORME_JURIDIQUE_REGEX = /SAS|S\.A\.S|S\.A\.S\.|SARL|S\.A\.R\.L|S\.A\.R\.L\.|EURL|E\.U\.R\.L|E\.U\.R\.L\./i
+    FRENCH_ADDRESS_REGEX = /(?:\d{1,4}\s)?(?:[A-Za-zÀ-ÖØ-öø-ÿ'\-\s]+),?\s(?:\d{5})\s(?:[A-Za-zÀ-ÖØ-öø-ÿ'\-\s]+)/i
     FRENCH_CHARACTER_REGEX = /[\wÀ-ÖØ-öø-ÿ]/i
     PHONE_REGEX = /(?:\(?\+?33\)?)?\s?(?:[\s.]*\d\d){5}/i # TODO: find better
-    FORME_JURIDIQUE_REGEX = /SAS|S\.A\.S|S\.A\.S\.|SARL|S\.A\.R\.L|S\.A\.R\.L\.|EURL|E\.U\.R\.L|E\.U\.R\.L\./i
-    FRENCH_ADDRESS_REGEX = /^(?:\d{1,4}\s)?(?:[A-Za-zÀ-ÖØ-öø-ÿ'\-\s]+),?\s(?:\d{5})\s(?:[A-Za-zÀ-ÖØ-öø-ÿ'\-\s]+)$/i
+    RCS_REGEX = /R\.?C\.?S\.?(?:\s+[A-Za-zÀ-ÖØ-öø-ÿ\s-]+)?(?:\s+[AB])?\s+\d{9}/i
+    URI_REGEX = %r{(?:https?|ftp)://[^\s/$.?#].[^\s]*}i
 
-    def self.find_adresse(text)
-      text[/Adresse\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1] ||
-        text[/(#{FRENCH_ADDRESS_REGEX})/i, 1]
+    def self.find_adresses(text)
+      (text.scan(/Adresse\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i).flatten +
+        text.scan(/(#{FRENCH_ADDRESS_REGEX})/i).flatten).uniq
     end
 
     def self.find_adresse_chantier(text)
       text[/Adresse chantier\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1] ||
-        find_adresse(text)
+        find_adresses(text).first
     end
 
     def self.find_adresse_pro(text)
       text[/Adresse Pro\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1] ||
-        find_adresse(text)
+        find_adresses(text).first
     end
 
     def self.find_assurance(text)
@@ -69,17 +85,26 @@ module QuoteReader
       text[/(?:Capitale?|capilâide)(?:\s+de)?#{BETWEEN_LABEL_VALUE_REGEX}(\d+(?: \d{3})*)\s*€/i, 1]
     end
 
+    def self.find_emails(text)
+      text.scan(/\b(#{EMAIL_REGEX})\b/i).flatten.compact.uniq
+    end
+
     def self.find_forme_juridique(text)
       text[/\s+(#{FORME_JURIDIQUE_REGEX})\s+/, 1] ||
         text[/Forme juridique\s*:\s*(#{FRENCH_CHARACTER_REGEX}+) ?/i, 1]
     end
 
-    def self.find_iban(text)
-      text[/(?:IBAN|RIB)#{BETWEEN_LABEL_VALUE_REGEX}(FR\d{2}\s?(?:\d{4}\s?){2,5}#{FRENCH_CHARACTER_REGEX}?\d{2})/i, 1]
+    def self.find_ibans(text)
+      text.scan(
+        /(?:IBAN|RIB)#{BETWEEN_LABEL_VALUE_REGEX}(FR\d{2}\s?(?:\d{4}\s?){2,5}#{FRENCH_CHARACTER_REGEX}?\d{2})/i
+      ).flatten.compact.uniq
     end
 
-    def self.find_label_number(text)
-      text[%r{((?:CPLUS|QB|QPAC|QPV|QS|VPLUS)/\d{5})}i, 1]
+    def self.find_label_numbers(text)
+      # Warning : insure caracter before not match the IBAN
+      text.scan(
+        %r{(?:\A|.*#{BETWEEN_LABEL_VALUE_REGEX})((?:(?:CPLUS|QB|QPAC|QPV|QS|VPLUS)/|(?:R|E-)?E)\d{5,6})}i
+      ).flatten.compact.uniq
     end
 
     def self.find_mention_devis(text)
@@ -94,9 +119,8 @@ module QuoteReader
       text[/DEVIS\s+N.?\s*(#{FRENCH_CHARACTER_REGEX}*\d{4,})/i, 1]
     end
 
-    def self.find_numero_tva(text)
-      text[/(FR\d{2}\s?\d{9})/i, 1]
-      # text[/TVA(?:\s+intra(?:communautaire)?)?#{BETWEEN_LABEL_VALUE_REGEX}(FR\d{2}\s?\d{9})/i, 1]
+    def self.find_numeros_tva(text)
+      text.scan(/\bFR[A-Z0-9]{2}\d{9}\b/i).flatten.compact.uniq
     end
 
     def self.find_prenom(text)
@@ -114,17 +138,25 @@ module QuoteReader
         text[/Raison sociale\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
     end
 
-    def self.find_rge_number(text)
-      # Warning to not match the IBAN
-      text[/(?:\A|.*#{BETWEEN_LABEL_VALUE_REGEX})((?:R|E-)?E?\d{5,6})/i, 1]
+    def self.find_rge_numbers(text)
+      find_label_numbers(text).select { |label_number| label_number.start_with?(/(?:R|E-)?E?/i) }
     end
 
-    def self.find_siret(text)
-      text[/SIRET#{BETWEEN_LABEL_VALUE_REGEX}(\d{3}\s*\d{3}\s*\d{3}\s*\d{5})/i, 1]
+    def self.find_sirets(text)
+      text.scan(/\b(\d{3}\s*\d{3}\s*\d{3}\s*\d{5})\b/i).flatten.compact.uniq
     end
 
-    def self.find_telephone(text)
-      text[/(?:T[eé]l\.?(?:[eé]phone)#{BETWEEN_LABEL_VALUE_REGEX})?(#{PHONE_REGEX})/i, 1]
+    def self.find_telephones(text)
+      text.scan(/(?:T[eé]l\.?(?:[eé]phone)#{BETWEEN_LABEL_VALUE_REGEX})?(#{PHONE_REGEX})/i).flatten.compact.uniq
+    end
+
+    def self.find_rcss(text)
+      text.scan(/\b(#{RCS_REGEX})\b/i).flatten.compact.uniq
+    end
+
+    def self.find_uris(text)
+      text.scan(/\b(#{URI_REGEX})\b/i).flatten.compact.uniq
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
