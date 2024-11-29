@@ -11,18 +11,28 @@ class QuoteFile < ApplicationRecord
   # So check can manualy review them
   validates :file, attached: true, size: { less_than: 50.megabytes }
   validates :filename, presence: true
+  validates :content_type, presence: true
   validates :hexdigest, presence: true, uniqueness: true
 
+  # rubocop:disable Metrics/MethodLength
   def self.find_or_create_file(tempfile, filename)
     hexdigest = hexdigest_for_file(tempfile)
+    file = tempfile_to_file(tempfile)
 
-    find_by(hexdigest: hexdigest) || create!(
+    existing_quote_file = find_by(hexdigest: hexdigest)
+    return existing_quote_file if existing_quote_file
+
+    new(
       filename: filename,
-      file: tempfile_to_file(tempfile),
+      content_type: file[:content_type],
       hexdigest: hexdigest,
       uploaded_at: Time.current
-    )
+    ).tap do |new_quote_file|
+      new_quote_file.file.attach(io: tempfile, filename: File.basename(tempfile.path))
+      new_quote_file.save!
+    end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def self.hexdigest_for_file(tempfile)
     Digest::SHA256.file(tempfile).hexdigest
@@ -42,5 +52,9 @@ class QuoteFile < ApplicationRecord
 
   def local_path
     ActiveStorage::Blob.service.path_for(file.key) if file
+  end
+
+  def content
+    file&.download
   end
 end

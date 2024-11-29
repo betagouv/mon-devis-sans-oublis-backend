@@ -49,7 +49,10 @@ class QuoteCheckService
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def read_quote
-    quote_reader = QuoteReader::Global.new(quote_check.file.local_path)
+    quote_reader = QuoteReader::Global.new(
+      quote_check.file.content,
+      quote_check.file.content_type
+    )
     quote_reader.read
 
     quote_check.assign_attributes(

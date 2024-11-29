@@ -53,7 +53,8 @@ gem "bootsnap", require: false
 gem "dsfr-view-components"
 
 # Mon Devis Sans Oublis custom gems
-gem "active_storage_validations"
+gem "active_storage-postgresql" # Store file in database
+gem "active_storage_validations" # Validate ActiveStorage attachments
 gem "mime-types"
 gem "pdf-reader"
 
