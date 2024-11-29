@@ -61,6 +61,7 @@ class QuoteCheckService
       naive_attributes: quote_reader.naive_attributes,
       naive_version: quote_reader.naive_version,
       qa_attributes: quote_reader.qa_attributes,
+      qa_result: quote_reader.qa_result,
       qa_version: quote_reader.qa_version,
       read_attributes: quote_reader.read_attributes
     )

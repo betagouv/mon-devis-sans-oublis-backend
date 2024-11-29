@@ -22,4 +22,9 @@
     <h1>Texte du Devis :</h1>
     <pre><%= @quote_check&.text %></pre>
   <% end %>
+
+  <% if @quote_check.present? %>
+    <h1>QuoteCheck attributes :</h1>
+    <pre><%= JSON.pretty_generate @quote_check&.attributes.to_json %></pre>
+  <% end %>
 <% end %>
