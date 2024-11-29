@@ -43,17 +43,22 @@ module QuoteReader
     BETWEEN_LABEL_VALUE_REGEX = /\s+(?:#{NUMBER_REFERENCE_REGEX})?\s*(?::\s*)?/i
     FRENCH_CHARACTER_REGEX = /[\wÀ-ÖØ-öø-ÿ]/i
     PHONE_REGEX = /(?:\(?\+?33\)?)?\s?(?:[\s.]*\d\d){5}/i # TODO: find better
+    FORME_JURIDIQUE_REGEX = /SAS|S\.A\.S|S\.A\.S\.|SARL|S\.A\.R\.L|S\.A\.R\.L\.|EURL|E\.U\.R\.L|E\.U\.R\.L\./i
+    FRENCH_ADDRESS_REGEX = /^(?:\d{1,4}\s)?(?:[A-Za-zÀ-ÖØ-öø-ÿ'\-\s]+),?\s(?:\d{5})\s(?:[A-Za-zÀ-ÖØ-öø-ÿ'\-\s]+)$/i
 
     def self.find_adresse(text)
-      text[/Adresse\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
+      text[/Adresse\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1] ||
+        text[/(#{FRENCH_ADDRESS_REGEX})/i, 1]
     end
 
     def self.find_adresse_chantier(text)
-      text[/Adresse chantier\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
+      text[/Adresse chantier\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1] ||
+        find_adresse(text)
     end
 
     def self.find_adresse_pro(text)
-      text[/Adresse Pro\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
+      text[/Adresse Pro\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1] ||
+        find_adresse(text)
     end
 
     def self.find_assurance(text)
@@ -65,7 +70,8 @@ module QuoteReader
     end
 
     def self.find_forme_juridique(text)
-      text[/\s+(SAS|SARL|EURL)\s+/, 1] || text[/Forme juridique\s*:\s*(#{FRENCH_CHARACTER_REGEX}+) ?/i, 1]
+      text[/\s+(#{FORME_JURIDIQUE_REGEX})\s+/, 1] ||
+        text[/Forme juridique\s*:\s*(#{FRENCH_CHARACTER_REGEX}+) ?/i, 1]
     end
 
     def self.find_iban(text)
@@ -94,11 +100,18 @@ module QuoteReader
     end
 
     def self.find_prenom(text)
-      text[/Prénom\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
+      french_first_names = %w[Jean Marie Jacques Claire Pierre Sophie Amélie Luc Léa Élodie Chloé Théo]
+
+      french_first_names.detect { |first_name| text[/(#{first_name})/i, 1] } ||
+        text[/Prénom\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
     end
 
     def self.find_raison_sociale(text)
-      text[/Raison sociale\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
+      forme_jurique_raison_sociale_regex = /#{FORME_JURIDIQUE_REGEX}\s+.+|.+\s+#{FORME_JURIDIQUE_REGEX}/i
+
+      text[/(#{forme_jurique_raison_sociale_regex})(?:\s+.*)?\Z/, 1] ||
+        text[/\A(?:.*\s)?+(#{forme_jurique_raison_sociale_regex}\s+.+)\s+/, 1] ||
+        text[/Raison sociale\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
     end
 
     def self.find_rge_number(text)

@@ -69,20 +69,31 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
   # rubocop:disable RSpec/MultipleExpectations
 
   describe ".find_adresse" do
+    # rubocop:disable RSpec/ExampleLength
     it "returns the adresse" do
-      skip "Add test for find_adresse"
+      expect(
+        described_class.find_adresse("17 rue de l'union 94140 ALFORTVILLE")
+      ).to eq("17 rue de l'union 94140 ALFORTVILLE")
+      expect(
+        described_class.find_adresse("17 rue de l'union\n94140 ALFORTVILLE")
+      ).to eq("17 rue de l'union\n94140 ALFORTVILLE")
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 
   describe ".find_adresse_chantier" do
     it "returns the adresse_chantier" do
-      skip "Add test for find_adresse_chantier"
+      expect(
+        described_class.find_adresse_chantier("17 rue de l'union 94140 ALFORTVILLE")
+      ).to eq("17 rue de l'union 94140 ALFORTVILLE")
     end
   end
 
   describe ".find_adresse_pro" do
     it "returns the adresse_pro" do
-      skip "Add test for find_adresse_pro"
+      expect(
+        described_class.find_adresse_pro("17 rue de l'union 94140 ALFORTVILLE")
+      ).to eq("17 rue de l'union 94140 ALFORTVILLE")
     end
   end
 
@@ -119,13 +130,13 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
 
   describe ".find_mention_devis" do
     it "returns the mention_devis" do
-      skip "Add test for find_mention_devis"
+      expect(described_class.find_mention_devis("Devis")).to eq("Devis")
     end
   end
 
   describe ".find_nom" do
     it "returns the nom" do
-      skip "Add test for find_nom"
+      expect(described_class.find_nom("Nom: DUPONT")).to eq("DUPONT")
     end
   end
 
@@ -146,13 +157,16 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
 
   describe ".find_prenom" do
     it "returns the prenom" do
-      skip "Add test for find_prenom"
+      expect(described_class.find_prenom("Jean")).to eq("Jean")
     end
   end
 
   describe ".find_raison_sociale" do
     it "returns the raison_sociale" do
-      skip "Add test for find_raison_sociale"
+      expect(described_class.find_raison_sociale("SARL Super")).to eq("SARL Super")
+      expect(described_class.find_raison_sociale("S.A.R.L Super")).to eq("S.A.R.L Super")
+      expect(described_class.find_raison_sociale("EURL Super")).to eq("EURL Super")
+      expect(described_class.find_raison_sociale("Super EURL")).to eq("Super EURL")
     end
   end
 
