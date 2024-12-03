@@ -6,7 +6,7 @@ class QuoteChecksController < ApplicationController
 
   before_action :authenticate, only: %i[index show edit update], if: -> { !Rails.env.development? }
   before_action :quote_check, only: %i[show edit update]
-  before_action :set_profile, only: %i[new]
+  before_action :profile, only: %i[new show]
 
   skip_before_action :verify_authenticity_token, if: -> { request.format.json? && action_name == "new" }
 
@@ -87,8 +87,9 @@ class QuoteChecksController < ApplicationController
   end
   # rubocop:enable Metrics/MethodLength
 
-  def set_profile
-    @profile ||= PROFILES.detect { |profile| profile == params[:profile].to_sym } if params[:profile]
+  def profile
+    @profile ||= @quote_check&.profile ||
+                     (params[:profile].present? && PROFILES.detect { |profile| profile == params[:profile] })
   end
 
   def set_quote_check_results
