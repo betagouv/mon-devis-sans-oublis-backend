@@ -74,6 +74,10 @@ DATABASE_URL='postgresql://postgres:dummy@localhost:5433' bin/rails server -b 0.
 Tout l'environnement est configuré pour et depuis [Docker](https://www.docker.com/). Des
 commandes utiles sont fournies dans le [Makefile](./Makefile).
 
+## Mails
+
+[Mail previews](http://localhost:3000/rails/mailers/)
+
 ## Intégration continue
 
 Une cinématique [GitHub Action](https://github.com/betagouv/mondevissansoublis/tree/main/.github/workflows) est founie qui lance :

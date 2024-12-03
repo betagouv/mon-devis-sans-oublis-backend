@@ -151,6 +151,8 @@ GEM
       pagy (~> 6)
       view_component (~> 2)
     erubi (1.13.0)
+    ethon (0.16.0)
+      ffi (>= 1.15.0)
     factory_bot (6.5.0)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.4.4)
@@ -370,6 +372,10 @@ GEM
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     shellany (0.0.1)
+    sib-api-v3-sdk (9.1.0)
+      addressable (~> 2.3, >= 2.3.0)
+      json (~> 2.1, >= 2.1.0)
+      typhoeus (~> 1.0, >= 1.0.1)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -389,6 +395,8 @@ GEM
     turbo-rails (2.0.11)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
+    typhoeus (1.4.1)
+      ethon (>= 0.9.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.6.0)
@@ -448,6 +456,7 @@ DEPENDENCIES
   rubocop-rspec_rails
   sentry-rails
   sentry-ruby
+  sib-api-v3-sdk
   sprockets-rails
   stimulus-rails
   turbo-rails
