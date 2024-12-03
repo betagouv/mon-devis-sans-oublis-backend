@@ -71,14 +71,17 @@ class QuoteChecksController < ApplicationController
       return
     end
 
+    @quote_check_json = {
+      valid: @quote_valid,
+      errors: @quote_errors,
+      error_messages: @quote_errors.index_with { |error_key| I18n.t("quote_validator.errors.#{error_key}") }
+    }
+
     http_status = @quote_valid ? :ok : :unprocessable_entity
     respond_to do |format|
       format.html { render :show, status: http_status }
       format.json do
-        render json: {
-          valid: @quote_valid,
-          errors: @quote_errors
-        }, status: http_status
+        render json: @quote_check_json, status: http_status
       end
     end
   end

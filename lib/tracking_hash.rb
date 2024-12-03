@@ -5,7 +5,7 @@ class TrackingHash < Hash
   def initialize(constructor = {})
     super()
     @keys_accessed = Set.new
-    constructor.each do |key, value|
+    constructor&.each do |key, value|
       self[key] = value.is_a?(Hash) ? TrackingHash.new(value) : value
     end
   end
