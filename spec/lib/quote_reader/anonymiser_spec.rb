@@ -11,7 +11,7 @@ RSpec.describe QuoteReader::Anonymiser, type: :service do
           "Devis\nNumero de devis : 1234\n\nClient\nNom : Doe\nPrenom : John\n1234,tel 0123456789 0123456788"
         ).anonymised_text
       )
-        .to eq("Devis\nNumero de devis : 1234\n\nClient\nNom : NOM\nPrenom : John\n1234,telTELEPHONETETELEPHONETE")
+        .to eq("Devis\nNumero de devis : 1234\n\nClient\nNom : NOM\nPrenom : John\n1234,tel TELEPHONET TELEPHONET")
     end
     # rubocop:enable RSpec/ExampleLength
   end
