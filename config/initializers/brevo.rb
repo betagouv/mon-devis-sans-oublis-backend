@@ -25,4 +25,6 @@ if ENV.key?("BREVO_API_KEY")
   SibApiV3Sdk.configure do |config|
     config.api_key["api-key"] = ENV.fetch("BREVO_API_KEY")
   end
+
+  Rails.application.config.action_mailer.delivery_method = :brevo unless Rails.env.test?
 end

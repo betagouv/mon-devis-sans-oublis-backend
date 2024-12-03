@@ -47,6 +47,8 @@ module MesDevisSansOublis
 
     config.autoload_lib(ignore: %w[assets tasks])
 
+    config.active_job.queue_adapter = :good_job
+
     config.action_mailer.default_url_options = { host: ENV.fetch("APPLICATION_HOST", nil) }
 
     config.application_name = "Mon Devis Sans Oublis"
