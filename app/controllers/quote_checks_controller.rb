@@ -74,7 +74,7 @@ class QuoteChecksController < ApplicationController
     @quote_check_json = {
       valid: @quote_valid,
       errors: @quote_errors,
-      error_messages: @quote_errors.index_with { |error_key| I18n.t("quote_validator.errors.#{error_key}") }
+      error_messages: @quote_errors&.index_with { |error_key| I18n.t("quote_validator.errors.#{error_key}") }
     }
 
     http_status = @quote_valid ? :ok : :unprocessable_entity
@@ -89,7 +89,7 @@ class QuoteChecksController < ApplicationController
 
   def profile
     @profile ||= @quote_check&.profile ||
-                     (params[:profile].present? && PROFILES.detect { |profile| profile == params[:profile] })
+                 (params[:profile].present? && PROFILES.detect { |profile| profile == params[:profile] })
   end
 
   def set_quote_check_results
