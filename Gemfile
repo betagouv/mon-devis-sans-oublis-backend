@@ -55,6 +55,7 @@ gem "dsfr-view-components"
 # Mon Devis Sans Oublis custom gems
 gem "active_storage-postgresql" # Store file in database
 gem "active_storage_validations" # Validate ActiveStorage attachments
+gem "good_job" # Postgres-backed job queue
 gem "mime-types"
 gem "pdf-reader"
 gem "sib-api-v3-sdk", require: false # Brevo (ex Sendinblue) API
