@@ -158,7 +158,9 @@ module QuoteReader
     end
 
     def self.find_telephones(text)
-      text.scan(/(?:T[eé]l\.?(?:[eé]phone)#{BETWEEN_LABEL_VALUE_REGEX})?(#{PHONE_REGEX})/i).flatten.filter_map(&:strip).uniq
+      text.scan(
+        /(?:T[eé]l\.?(?:[eé]phone)#{BETWEEN_LABEL_VALUE_REGEX})?(#{PHONE_REGEX})/i
+      ).flatten.filter_map(&:strip).uniq
     end
 
     def self.find_rcss(text)
