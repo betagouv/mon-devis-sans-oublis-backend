@@ -14,5 +14,11 @@ RSpec.describe QuoteReader::Anonymiser, type: :service do
         .to eq("Devis\nNumero de devis : 1234\n\nClient\nNom : NOM\nPrenom : John\n1234,tel TELEPHONET TELEPHONET")
     end
     # rubocop:enable RSpec/ExampleLength
+
+    context "when the text is empty" do
+      it "returns nil" do
+        expect(described_class.new("").anonymised_text).to eq("")
+      end
+    end
   end
 end

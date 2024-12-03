@@ -14,10 +14,13 @@ module QuoteReader
     end
 
     # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/MethodLength
     # Recursive method to replace text from attributes, like Rails parameters
     def replace_text_from_attributes(attributes, fields_or_field, text)
       if fields_or_field.is_a?(Symbol)
+        return text unless attributes.key?(fields_or_field)
+
         values = Array.wrap(attributes.fetch(fields_or_field))
 
         tmp_anonymised_text = text
@@ -40,12 +43,15 @@ module QuoteReader
 
       if fields_or_field.is_a?(Hash)
         field = fields_or_field.keys.first
+        return text unless attributes.key?(field)
+
         return replace_text_from_attributes(attributes.fetch(field), fields_or_field.fetch(field), text)
       end
 
       raise NotImplementedError
     end
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize
 
     def anonymised_text
