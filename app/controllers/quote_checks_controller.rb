@@ -18,6 +18,7 @@ class QuoteChecksController < ApplicationController
     render_show
   end
 
+  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def new
     upload_file = params[:quote_file]
@@ -35,10 +36,13 @@ class QuoteChecksController < ApplicationController
       ).check
     end
 
+    QuoteCheckMailer.created(@quote_check).deliver_later
+
     render_show
   end
-
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
+
   def edit
     render_show
   end
