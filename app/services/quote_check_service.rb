@@ -28,7 +28,7 @@ class QuoteCheckService
 
   def check
     read_quote
-    validate_quote
+    validate_quote if quote_check.validation_errors.blank?
 
     quote_check.update!(finished_at: Time.current)
 

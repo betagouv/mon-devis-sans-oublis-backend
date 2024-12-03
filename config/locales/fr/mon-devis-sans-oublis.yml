@@ -13,3 +13,6 @@ fr:
         particulier: Particulier
         mandataire: Mandataire
         conseiller: Conseiller
+  quote_validator:
+    errors:
+      devis_manquant: "La mention devis est manquante."
