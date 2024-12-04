@@ -114,7 +114,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_03_233607) do
     t.datetime "cron_at"
     t.uuid "batch_id"
     t.uuid "batch_callback_id"
-    t.boolean "is_discrete"
+    t.boolean "is_discrete", default: false, null: false
     t.integer "executions_count"
     t.text "job_class"
     t.integer "error_event", limit: 2

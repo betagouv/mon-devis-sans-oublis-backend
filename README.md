@@ -74,9 +74,17 @@ DATABASE_URL='postgresql://postgres:dummy@localhost:5433' bin/rails server -b 0.
 Tout l'environnement est configuré pour et depuis [Docker](https://www.docker.com/). Des
 commandes utiles sont fournies dans le [Makefile](./Makefile).
 
+## Tâches asynchrones
+
+Elles sont listées dans la base de données PostgreSQL via le librairie `good_job`.
+
+Un panneau de suivis est disponible sur [/mdso_good_job/](http://localhost:3000/mdso_good_job/) sous mot de passe hors développement.
+
 ## Mails
 
-[Mail previews](http://localhost:3000/rails/mailers/)
+Ils sont envoyés en asynchrones via le service Brevo.
+
+- [Mail previews](http://localhost:3000/rails/mailers/)
 
 ## Intégration continue
 
