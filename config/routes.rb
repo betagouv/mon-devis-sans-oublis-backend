@@ -30,4 +30,6 @@ Rails.application.routes.draw do
 
   get "a_propos", to: "pages#a_propos"
   get "contact", to: "pages#contact"
+
+  mount GoodJob::Engine => "mdso_good_job"
 end
