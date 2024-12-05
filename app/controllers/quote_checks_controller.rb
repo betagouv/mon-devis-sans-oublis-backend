@@ -70,11 +70,6 @@ class QuoteChecksController < ApplicationController
   def render_show
     set_quote_check_results
 
-    unless @quote_attributes
-      head :bad_request
-      return
-    end
-
     @quote_check_json = {
       valid: @quote_valid,
       errors: @quote_errors,

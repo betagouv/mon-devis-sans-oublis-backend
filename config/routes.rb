@@ -24,6 +24,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    namespace :v1 do
+      resources :quote_checks, only: %i[create show]
+    end
+  end
+
   # Website static pages
 
   root "home#index"
