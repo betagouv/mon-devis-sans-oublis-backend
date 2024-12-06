@@ -8,6 +8,12 @@ class QuoteCheck < ApplicationRecord
 
   validates :started_at, presence: true
 
+  def status
+    return "pending" if finished_at.blank?
+
+    validation_errors.blank? ? "valid" : "invalid"
+  end
+
   # valid? is already used by the framework
   def quote_valid?
     validation_version.present? && validation_errors.blank?
