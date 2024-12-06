@@ -91,15 +91,15 @@ module QuoteValidator
 
     # numéro, rue, cp, ville - si pas suffisant numéro de parcelle cadastrale. V0, on check juste la présence ?
     def validate_address(address, type)
-      if address.blank? 
-        case type
-        when "client"
-          @errors << "client_adresse_manquant"
-        when "chantier" # ne devrait pas arriver, mais par la suite, faudrait vérifier la justesse de l'adresse
-          @errors << "chantier_adresse_manquant"
-        when "pro"
-          @errors << "pro_adresse_manquant"
-        end
+      return if address.present?
+
+      case type
+      when "client"
+        @errors << "client_adresse_manquant"
+      when "chantier" # ne devrait pas arriver, mais par la suite, faudrait vérifier la justesse de l'adresse
+        @errors << "chantier_adresse_manquant"
+      when "pro"
+        @errors << "pro_adresse_manquant"
       end
     end
 

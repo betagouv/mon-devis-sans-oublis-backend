@@ -63,7 +63,7 @@ marque_isolant: text;
 reference_isolant: text;
 surface_isolant: Decimal (m2); 
 epaisseur_isolant: Decimal (cm); 
-Resistance_thermique: Decimal (m².K/W);
+resistance_thermique: Decimal (m².K/W);
 }
 ```
 
