@@ -16,3 +16,141 @@ fr:
   quote_validator:
     errors:
       devis_manquant: "La mention devis est manquante."
+      numero_devis_manquant: ""
+
+      # Informations de l'artisan
+      pro_raison_sociale_manquant: ""
+      pro_forme_juridique_manquant: ""
+      tva_manquant: ""
+      capital_manquant: ""
+      siret_manquant: ""
+      siret_format_erreur: ""
+      # todo adresse
+
+      # Information du client : 
+      client_prenom_manquant: ""
+      client_nom_manquant: ""
+      # todo adresse
+      chantier_facturation_idem: ""
+
+
+#################################################
+####              CHAUFFAGE                  ####
+#################################################
+
+      puissance_manquant: ""
+      marque_manquant: ""
+      reference_manquant: ""
+      ETAS_manquant: ""
+      remplacement_chaudiere_condensation_manquant: ""
+      # validate_chaudiere_biomasse
+      type_combustible_manquant: "" # buche, granulé, copeaux ...
+      type_chargement_manquant: "" # manuelle ou auto
+      type_silo_manquant: "" # externe/interne, neuf/existant, Textile/maconner
+      contenance_silo_manquant: ""
+      contenance_silo_trop_petit: ""
+      emission_CO_manquant: "" # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
+      emission_COG_manquant: "" # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
+      emission_particule_manquant: "" # Emission de particules (mg/Nm3)
+      emission_Nox_manquant: "" # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
+      marque_regulateur_manquant: ""
+      reference_regulateur_manquant: ""
+      classe_regulateur_manquant: ""
+      # validate_poele_insert
+      type_combustible_manquant: ""
+      rendement_energetique_manquant: ""
+      emission_CO_manquant: "" # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
+      emission_COG_manquant: "" # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
+      emission_particule_manquant: "" # Emission de particules (mg/Nm3)
+      emission_Nox_manquant: "" # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
+      # validate_systeme_solaire_combine
+      marque_capteurs_manquant: ""
+      reference_capteurs_manquant: ""
+      type_capteurs_manquant: ""
+      surface_captage_manquant: ""
+      productivite_capteurs_manquant: "" # W/m2
+      volume_ballon_manquant: "" #(peut être associé à plusieurs ballons)
+      energie_appoint_manquant: "" # electricité, gaz...
+      # validate_pac
+      type_pac_manquant: "" # air-eau, eau-eau, air-air, hybride 
+      regime_temperature_manquant: "" # basse, moyenne, haute
+      type_fluide_frigorigene_manquant: "" # R410A -  attention, celui ci va être restreint, R32 …
+      cop_manquant: ""
+
+
+#################################################
+####         EAU CHAUDE SANITAIRE            ####
+#################################################
+
+      marque_manquant : ""
+      reference_manquant: ""
+      volume_manquant: ""
+      ETAS_manquant: ""
+      profil_soutirage_manquant: ""
+      # validate_cesi
+      type_appoint_manquant: "" # electrique ou autre
+      surface_capteur_manquant: "" # TODO: V1 > 2m2 en metropole pour MPR
+      classe_energetique_ballon_manquant: "" # TODO: V1 minimum Classe C si volume ≤ 500L
+      fluide_manquant: "" # eau, eau glucolée ou air
+      # validate_chauffe_eau_thermodynamique
+      COP_manquant: "" # COP de l’equipement mesuré conformément aux condition de la norme EN 16147
+      type_installation_manquant: "" # air exterieur, sur air exrait ou sur air ambiant
+
+
+#################################################
+####              ISOLATION                  ####
+#################################################
+
+
+      marque_manquant: ""
+      reference_manquant: ""
+      surface_manquant: ""
+      epaisseur_manquant: ""
+      R_manquant: ""
+      # validate_isolation_toiture_terrasse
+      type_isolation_toiture_terrasse_manquant: ""
+      # validate_isolation_plancher_bas
+      localisation_manquant: ""
+
+
+
+#################################################
+####              MENUISERIE                 ####
+#################################################
+
+
+      marque_manquant: ""
+      reference_manquant: ""
+      type_materiau_manquant: "" # bois, alu, pvc ...
+      type_vitrage_manquant: "" # simple - double vitrage
+      type_pose_manquant: "" # renovation ou depose totale
+      localisation_manquant: ""
+      position_paroie_manquant: "" # nu intérieur, nu extérieur, tunnel ...
+      # validate_menuiserie_fenetre
+      uw_manquant: ""
+      sw_manquant: ""
+      # validate_menuiserie_fenetre_toit
+      uw_manquant: ""
+      sw_manquant: ""
+      # validate_menuiserie_porte
+      ud_manquant: ""
+      # validate_menuiserie_volet_isolant
+      deltaR_manquant: ""
+
+
+#################################################
+####              VENTILATION                ####
+#################################################
+
+
+      type_vmc_manquant: ""
+        # VMC simple flux hygroréable de type A (Hygro A)
+        # VMC simple flux hygroréable de type B (Hygro B)
+        # VMC double flux avec échangeur
+      marque_caisson_manquant: ""
+      reference_caisson_manquant: ""
+      marque_bouche_extraction: ""
+      reference_bouche_extraction: ""
+      nombre_bouche_extraction: ""
+      classe_caisson_manquant: ""
+      puissance: "" # Puissance electrique du moteur en fonction de la config du logement - exprimé en (W-Th-C) (doit être basse conso)

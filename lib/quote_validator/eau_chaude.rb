@@ -12,7 +12,7 @@ module QuoteValidator
         "marque_manquant" => :marque,
         "reference_manquant" => :reference,
         "volume_manquant" => :volume,
-        "ETAS manquant" => :ETAS,
+        "ETAS_manquant" => :ETAS,
         "profil_soutirage_manquant" => :profil_soutirage
       }
 

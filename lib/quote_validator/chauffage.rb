@@ -11,7 +11,7 @@ module QuoteValidator
       error << "puissance_manquant" if geste[:puissance].blank?
       error << "marque_manquant" if geste[:marque].blank?
       error << "reference_manquant" if geste[:reference].blank?
-      error << "ETAS manquant" if geste[:ETAS].blank # en %
+      error << "ETAS_manquant" if geste[:ETAS].blank # en %
 
       # TODO: à challenger
       @warnings << "remplacement_chaudiere_condensation_manquant" if geste[:mention_remplacement].blank?
@@ -24,7 +24,7 @@ module QuoteValidator
     def validate_chaudiere_biomasse(geste)
       error = []
       validate_chauffage(geste, error)
-      error << "type_combustible_manquant" if geste[:type_combustible].blank? # buche, granulé, coeaux ...
+      error << "type_combustible_manquant" if geste[:type_combustible].blank? # buche, granulé, copeaux ...
       error << "type_chargement_manquant" if geste[:type_chargement].blank? # manuelle ou auto
       error << "type_silo_manquant" if geste[:type_silo].blank? # externe/interne, neuf/existant, Textile/maconner
       error << "contenance_silo_manquant" if geste[:contenance_silo].blank?
@@ -149,8 +149,7 @@ module QuoteValidator
       # air-eau, eau-eau, air-air, hybride -> TODO Verifier si besoin de l'indication sur le devis
       error << "type_pac_manquant" if geste[:type_pac].blank?
       error << "regime_temperature_manquant" if geste[:regime_temperature].blank? # basse, moyenne, haute
-      # R410A -  attention, celui ci va être restreint, R32 …
-      error << "type_fluide_frigorigene_manquant" if geste[:type_fluide_frigorigene].blank?
+      error << "type_fluide_frigorigene_manquant" if geste[:type_fluide_frigorigene].blank? # R410A -  attention, celui ci va être restreint, R32 …
 
       # TODO: V1, verifier valeur ETAS :
       # ≥ 126% si basse T
