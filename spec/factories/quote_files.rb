@@ -7,9 +7,12 @@ FactoryBot.define do
     content_type { "application/pdf" }
     uploaded_at { "2024-11-26 19:35:07" }
 
-    after(:build) do |quote_check|
-      quote_check.file.attach(
-        io: Rails.root.join("spec/fixtures/files/quote_files/Devis_test.pdf").open,
+    after(:build) do |quote_file|
+      data = Rails.root.join("spec/fixtures/files/quote_files/Devis_test.pdf").open
+
+      quote_file.data = data
+      quote_file.file.attach(
+        io: data,
         filename: "Devis_test.pdf",
         content_type: "application/pdf"
       )

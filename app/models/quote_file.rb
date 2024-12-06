@@ -3,16 +3,21 @@
 require "mime/types"
 
 # Class to store uploaded Quote files, raw like
+# TODO: clear if we keep storing file in double in the data binary field,
+# AND also via active_storage-postgresq gem specific table via Postgres File OID
+# See .find_or_create_file and #content methods
 class QuoteFile < ApplicationRecord
   has_one_attached :file
   has_many :quote_checks, dependent: :nullify, inverse_of: :file
 
   # Do not limit on content_type: ["application/pdf"]
   # So check can manualy review them
-  validates :file, attached: true, size: { less_than: 50.megabytes }
   validates :filename, presence: true
   validates :content_type, presence: true
-  validates :hexdigest, presence: true, uniqueness: true
+  validates :hexdigest, presence: true, uniqueness: true # checksum like
+
+  validates :data, presence: true
+  validates :file, attached: true, size: { less_than: 50.megabytes }
 
   # rubocop:disable Metrics/MethodLength
   def self.find_or_create_file(tempfile, filename)
@@ -28,7 +33,12 @@ class QuoteFile < ApplicationRecord
       hexdigest: hexdigest,
       uploaded_at: Time.current
     ).tap do |new_quote_file|
-      new_quote_file.file.attach(io: tempfile, filename: File.basename(tempfile.path))
+      tempfile.rewind
+      new_quote_file.data = tempfile.read
+
+      tempfile.rewind
+      new_quote_file.file.attach(io: tempfile, filename: filename) # File.basename(tempfile.path)
+
       new_quote_file.save!
     end
   end
@@ -55,6 +65,6 @@ class QuoteFile < ApplicationRecord
   end
 
   def content
-    file&.download
+    data # OR file&.download
   end
 end
