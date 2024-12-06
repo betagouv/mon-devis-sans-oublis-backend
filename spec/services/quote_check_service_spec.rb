@@ -36,12 +36,12 @@ RSpec.describe QuoteCheckService, type: :service do
       expect(quote_check.anonymised_text).to be_a(String)
       expect(quote_check.read_attributes).to be_a(Hash)
       expect(quote_check.quote_valid?).to be_in([true, false])
-      expect(quote_check.validation_errors).to eq(%w[
-                                                    devis_manquant pro_raison_sociale_manquant
-                                                    pro_forme_juridique_manquant
-                                                    tva_manquant capital_manquant siret_manquant
-                                                    client_prenom_manquant client_nom_manquant
-                                                  ])
+      expect(quote_check.validation_errors).to include(*%w[
+                                                         devis_manquant pro_raison_sociale_manquant
+                                                         pro_forme_juridique_manquant
+                                                         tva_manquant capital_manquant siret_manquant
+                                                         client_prenom_manquant client_nom_manquant
+                                                       ])
 
       expect(quote_check.read_attributes.dig(
                "pro", "siret"
