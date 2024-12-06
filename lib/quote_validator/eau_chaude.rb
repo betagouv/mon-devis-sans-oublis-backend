@@ -12,7 +12,7 @@ module QuoteValidator
         "marque_manquant" => :marque,
         "reference_manquant" => :reference,
         "volume_manquant" => :volume,
-        "ETAS_manquant" => :ETAS,
+        "ETAS_eau_chaude_manquant" => :ETAS,
         "profil_soutirage_manquant" => :profil_soutirage
       }
 
@@ -22,6 +22,7 @@ module QuoteValidator
     end
 
     # rubocop:disable Metrics/MethodLength
+    # chauffe eau solaire individuel
     def validate_cesi(geste)
       error = []
 

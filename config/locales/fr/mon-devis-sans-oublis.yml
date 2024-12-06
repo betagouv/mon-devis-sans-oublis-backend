@@ -15,77 +15,83 @@ fr:
         conseiller: Conseiller
   quote_validator:
     errors:
-      devis_manquant: "La mention devis est manquante."
-      numero_devis_manquant: ""
+      devis_manquant: 'La mention explicite "devis" est obligatoire. Les bons de commande et propositions commerciales ne sont pas acceptés.'
+      numero_devis_manquant: "Un devis doit avoir un numéro unique."
 
       # Informations de l'artisan
-      pro_raison_sociale_manquant: ""
-      pro_forme_juridique_manquant: ""
-      tva_manquant: ""
-      capital_manquant: ""
-      siret_manquant: ""
-      siret_format_erreur: ""
-      # todo adresse
+      pro_raison_sociale_manquant: "Le nom de votre structure doit être mentionné."
+      pro_forme_juridique_manquant: "La forme juridique de votre structure doit être clairement indiquée. Exemples : EURL, SARL, SA,
+SNC, SAS."
+      tva_manquant: "Le numéro individuel d'identification à la TVA est obligatoire."
+      tva_manquant_infos : "En France, le numéro de TVA est constitué du code FR et de 11 chiffres (une clé informatique de 2 chiffres et le numéro SIREN à 9 chiffres de l'entreprise)."
+      capital_manquant: "Il faut indiquer le capital social de l'entreprise."
+      siret_manquant: "Le SIRET de l'établissement est manquant"
+      siret_manquant_infos : "Le Numéro SIRET (système d’identification du répertoire des établissements) est une série de 14 chiffres. Il correspond au numéro SIREN (Système d’Identification du Répertoire des Entreprises, à 9 chiffres) délivré lors de la création de l'entreprise, suivi du numéro NIC (numéro interne de classement)."
+      siret_format_erreur: "Attention, il semblerait que le SIREN ait été utilisé à la place du SIRET. Le SIRET est une série de 14 chiffres."
+      pro_adresse_manquant: "L'adresse du siège social est requise"
 
       # Information du client : 
-      client_prenom_manquant: ""
-      client_nom_manquant: ""
-      # todo adresse
-      chantier_facturation_idem: ""
+      client_prenom_manquant: "Le prénom du client est requis. Attention, le devis doit être établi au nom de la personne ayant fait la demande d’aide."
+      client_nom_manquant: "Le nom du client est requis. Attention, le devis doit être établi au nom de la personne ayant fait la demande d’aide. "
+      client_adresse_manquant: "L'adresse du client doit être indiquée." 
+      chantier_adresse_manquant: "Si l'adresse du chantier est différente de l'adresse de facturation, il faut l'indiquer clairement."
+      chantier_facturation_idem: "L'adresse de réalisation des travaux n'est pas indiquée. Est-ce bien la même que l'adresse de facturation ?"
 
 
 #################################################
 ####              CHAUFFAGE                  ####
 #################################################
 
-      puissance_manquant: ""
-      marque_manquant: ""
-      reference_manquant: ""
-      ETAS_manquant: ""
-      remplacement_chaudiere_condensation_manquant: ""
+      puissance_manquant: "La puissance du matériel doit être indiquée en KW."
+      marque_manquant: "La marque du matériel installé doit être indiquée."
+      reference_manquant: "Le modèle installé doit être clairement identifiable."
+      ETAS_chauffage_manquant: "L'efficacité énergétique saisonnière (ETAS) du système de chauffage est manquante. Il s'agit d'un pourcentage."
+      remplacement_chaudiere_condensation_manquant: "Lors d'un remplacement, il faut préciser si le système existant est (ou n’est pas) une chaudière à condensation."
       # validate_chaudiere_biomasse
-      type_combustible_manquant: "" # buche, granulé, copeaux ...
-      type_chargement_manquant: "" # manuelle ou auto
-      type_silo_manquant: "" # externe/interne, neuf/existant, Textile/maconner
-      contenance_silo_manquant: ""
-      contenance_silo_trop_petit: ""
-      emission_CO_manquant: "" # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
-      emission_COG_manquant: "" # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
-      emission_particule_manquant: "" # Emission de particules (mg/Nm3)
-      emission_Nox_manquant: "" # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
-      marque_regulateur_manquant: ""
-      reference_regulateur_manquant: ""
-      classe_regulateur_manquant: ""
+      type_combustible_chaudiere_manquant: "Il faut indiquer le combustible utilisé par la chaudière, par exemple : bûches, granulés ou copeaux." # buche, granulé, copeaux ...
+      type_chargement_manquant: "Veuillez indiquer si le chargement est manuel ou automatique" # manuelle ou auto
+      type_silo_manquant: "Il est important de décrir précisément le silo (externe ou interne, neuf ou existant, textile ou maçonné." # externe/interne, neuf/existant, Textile/maconner
+      contenance_silo_manquant: "La contenance du silo n'est pas indiquée dans le document."
+      contenance_silo_trop_petit: "Le volume du silo doit être supérieur ou égal à 225 litres."
+      emission_CO_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissions de monoxyde de carbone (CO) rapportée à 10% d’O2 (en mg/Nm3)." # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
+      emission_COG_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissions de composés organiques volatiles (COG) rapportée à 10% d’O2 (en mg/Nm3)." # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
+      emission_particule_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissionsde particules (en mg/Nm3)." # Emission de particules (mg/Nm3)
+      emission_Nox_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissionsd’oxydes d’azote (NOx) rapporté à 10% d’O2 (en mg/Nm3)." # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
+      marque_regulateur_manquant: "La marque du régulateur utilisé n'est pas indiquée."
+      reference_regulateur_manquant: "Le modèle du régulateur installé n'est pas indiqué."
+      classe_regulateur_manquant: "Le régulateur doit être de classe IV et cela doit être indiqué."
       # validate_poele_insert
-      type_combustible_manquant: ""
-      rendement_energetique_manquant: ""
-      emission_CO_manquant: "" # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
-      emission_COG_manquant: "" # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
-      emission_particule_manquant: "" # Emission de particules (mg/Nm3)
-      emission_Nox_manquant: "" # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
+      type_combustible_poele_manquant: "Il faut indiquer le combustible utilisé par le poele ou l'insert - bois, bûches ou granulés."
+      rendement_energetique_manquant: "Le rendement énergétique, valeur en pourcentage %."
+      emission_CO_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissions de monoxyde de carbone (CO) rapportée à 10% d’O2 (en mg/Nm3)." # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
+      emission_COG_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissions de composés organiques volatiles (COG) rapportée à 10% d’O2 (en mg/Nm3)." # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
+      emission_particule_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissionsde particules (en mg/Nm3)." # Emission de particules (mg/Nm3)
+      emission_Nox_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissionsd’oxydes d’azote (NOx) rapporté à 10% d’O2 (en mg/Nm3)." # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
       # validate_systeme_solaire_combine
-      marque_capteurs_manquant: ""
-      reference_capteurs_manquant: ""
-      type_capteurs_manquant: ""
-      surface_captage_manquant: ""
+      marque_capteurs_manquant: "La marque exacte du système doit être mentionnée."
+      reference_capteurs_manquant: "La référence exacte du système doit être mentionnée."
+      type_capteurs_manquant: "Le type de capteurs utilisés doit être mentionné."
+      # TODO Pas toujours les mêmes en fonction des aides !!
+      type_capteurs_manquant_infos: "Capteurs thermique à circulation de liquide ou d'air, hybrides thermiques et électriques à circulation de liquide"
+      surface_captage_manquant: "La surface de captage en m2 doit être indiquée."
       productivite_capteurs_manquant: "" # W/m2
-      volume_ballon_manquant: "" #(peut être associé à plusieurs ballons)
-      energie_appoint_manquant: "" # electricité, gaz...
+      volume_ballon_manquant: "Le volume du ou des ballons associés doit être indiqué en Litre." #(peut être associé à plusieurs ballons)
+      energie_appoint_manquant: "Quelle énergie d'appoint est utilisée ? (électricité, gaz,...)" # electricité, gaz...
       # validate_pac
-      type_pac_manquant: "" # air-eau, eau-eau, air-air, hybride 
-      regime_temperature_manquant: "" # basse, moyenne, haute
-      type_fluide_frigorigene_manquant: "" # R410A -  attention, celui ci va être restreint, R32 …
-      cop_manquant: ""
+      type_pac_manquant: "Il faut indiquer clairement dans l'intitulé le type de Pompe à chaleur installée (air-eau, eau-eau, hybride...)" # air-eau, eau-eau, air-air, hybride 
+      regime_temperature_manquant: "Le régime de la pompe à chaleur peut être Basse température, Moyenne température ou Haute température." # basse, moyenne, haute
+      type_fluide_frigorigene_manquant: "Quel est le liquide frigorigène utilisé dans la pompe à chaleur (ex: R32)" # R410A -  attention, celui ci va être restreint, R32 …
+      cop_manquant: "Le coefficient de performance de la Pompe à chaleur doit être indiqué. Il n'y a pas d'unité."
 
 
 #################################################
 ####         EAU CHAUDE SANITAIRE            ####
 #################################################
 
-      marque_manquant : ""
-      reference_manquant: ""
-      volume_manquant: ""
-      ETAS_manquant: ""
+      marque_manquant : "La marque du chauffe-eau doit être précisée."
+      reference_manquant: "Le modèle du chauffe-eau doit être précisé."
+      volume_manquant: "Le volume (en Litre) du chauffe-eau est manquant."
+      ETAS_eau_chaude__manquant: "L'éfficacité énergétique saisonière (ETAS) du chauffe eau doit être précisée. Il s'agit d'un pourcentage."
       profil_soutirage_manquant: ""
       # validate_cesi
       type_appoint_manquant: "" # electrique ou autre
