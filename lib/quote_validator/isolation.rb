@@ -13,7 +13,7 @@ module QuoteValidator
       error << "reference_isolation_manquant" if geste[:reference].blank?
       error << "surface_manquant" if geste[:surface].blank? # TODO : check unité ?
       error << "epaisseur_manquant" if geste[:epaisseur].blank? # TODO : check unité ?
-      error << "R_manquant" if geste[:Resistance_thermique].blank?
+      error << "r_manquant" if geste[:Resistance_thermique].blank?
 
       # TODO : V1 - vérifier les normes
     end

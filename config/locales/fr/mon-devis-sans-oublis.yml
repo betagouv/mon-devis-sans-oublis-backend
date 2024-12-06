@@ -45,7 +45,7 @@ SNC, SAS."
       puissance_manquant: "La puissance du matériel doit être indiquée en KW."
       marque_chauffage_manquant: "La marque du matériel installé doit être indiquée."
       reference_chauffage_manquant: "Le modèle installé doit être clairement identifiable."
-      ETAS_chauffage_manquant: "L'efficacité énergétique saisonnière (ETAS) du système de chauffage est manquante. Il s'agit d'un pourcentage."
+      etas_chauffage_manquant: "L'efficacité énergétique saisonnière (ETAS) du système de chauffage est manquante. Il s'agit d'un pourcentage."
       remplacement_chaudiere_condensation_manquant: "Lors d'un remplacement, il faut préciser si le système existant est (ou n’est pas) une chaudière à condensation."
       # validate_chaudiere_biomasse
       type_combustible_chaudiere_manquant: "Il faut indiquer le combustible utilisé par la chaudière, par exemple : bûches, granulés ou copeaux." # buche, granulé, copeaux ...
@@ -81,7 +81,7 @@ SNC, SAS."
       type_pac_manquant: "Il faut indiquer clairement dans l'intitulé le type de Pompe à chaleur installée (air-eau, eau-eau, hybride...)" # air-eau, eau-eau, air-air, hybride 
       regime_temperature_manquant: "Le régime de la pompe à chaleur peut être Basse température, Moyenne température ou Haute température." # basse, moyenne, haute
       type_fluide_frigorigene_manquant: "Quel est le liquide frigorigène utilisé dans la pompe à chaleur (ex: R32)" # R410A -  attention, celui ci va être restreint, R32 …
-      COP_chauffage_manquant: "Le coefficient de performance de la Pompe à chaleur doit être indiqué. Il n'y a pas d'unité."
+      cop_chauffage_manquant: "Le coefficient de performance de la Pompe à chaleur doit être indiqué. Il n'y a pas d'unité."
 
 
 #################################################
@@ -91,7 +91,7 @@ SNC, SAS."
       marque_eau_chaude_manquant : "La marque du chauffe-eau doit être précisée."
       reference_eau_chaude_manquant: "Le modèle du chauffe-eau doit être précisé."
       volume_manquant: "Le volume (en Litre) du chauffe-eau est manquant."
-      ETAS_eau_chaude__manquant: "L'éfficacité énergétique saisonière (ETAS) du chauffe eau doit être précisée. Il s'agit d'un pourcentage."
+      etas_eau_chaude__manquant: "L'éfficacité énergétique saisonière (ETAS) du chauffe eau doit être précisée. Il s'agit d'un pourcentage."
       profil_soutirage_manquant: "Le profil de soutirage du chauffe-eau doit être indiqué et est une des options suivantes : M, L, XL ou XXL."
       # validate_cesi
       type_appoint_manquant: "L'énergie d'appoint est-elle électrique ?" # electrique ou autre
@@ -99,7 +99,7 @@ SNC, SAS."
       classe_energetique_ballon_manquant: "La classe énergétique du ballon d'eau chaude doit être précisée." # TODO: V1 minimum Classe C si volume ≤ 500L
       fluide_manquant: "Quel fluide est utilisé pour le chauffe-eau solaire, eau, eau glucolée ou air." # eau, eau glucolée ou air
       # validate_chauffe_eau_thermodynamique
-      COP_eau_chaude_manquant: "Le coefficient de performance de l'équipement mesuré conformément aux condition de la norme EN 16147."
+      cop_eau_chaude_manquant: "Le coefficient de performance de l'équipement mesuré conformément aux condition de la norme EN 16147."
       type_installation_manquant: "Le chauffe-eau thermodynamique est-il sur air extérieur, sur air extrait ou sur air ambiant?" # air exterieur, sur air exrait ou sur air ambiant
 
 
@@ -112,7 +112,7 @@ SNC, SAS."
       reference_isolation_manquant: "La référence de l'installation est obligatoire."
       surface_manquant: "La surface isolée doit être précisée."
       epaisseur_manquant: "L'épaisseur de l'isolant doit être précisée en cm."
-      R_manquant: "La résistance thermique de l'installation doit être précisée et est définie en m2.K/W." # Decimal (m².K/W)
+      r_manquant: "La résistance thermique de l'installation doit être précisée et est définie en m2.K/W." # Decimal (m².K/W)
       # validate_isolation_toiture_terrasse
       type_isolation_toiture_terrasse_manquant: "L'isolation est-elle faite par l'intérieur ou par l'extérieur ?"
       # validate_isolation_plancher_bas
@@ -145,8 +145,8 @@ SNC, SAS."
       # validate_menuiserie_porte
       ud_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la porte ou de la porte-fenêtre doit être indiqué."
       # validate_menuiserie_volet_isolant
-      deltaR_manquant: "Le gain de résistance thermique (en W/m2⋅K) suite à l'installation du volet isolant est à indiquer précisément."
-      deltaR_manquant_infos: "Le ΔR représente l’augmentation de la résistance thermique (R) d’un élément de construction après rénovation."
+      deltar_manquant: "Le gain de résistance thermique (en W/m2⋅K) suite à l'installation du volet isolant est à indiquer précisément."
+      deltar_manquant_infos: "Le ΔR représente l’augmentation de la résistance thermique (R) d’un élément de construction après rénovation."
 
 
 #################################################

@@ -59,7 +59,7 @@ module QuoteValidator
 
       validate_menuiserie(geste, error)
 
-      error << "deltaR_manquant" if geste[:deltaR].blank? # TODO: Que CEE ?
+      error << "deltar_manquant" if geste[:deltaR].blank? # TODO: Que CEE ?
       # v1, check valeurs :La résistance thermique additionnelle DeltaR (DeltaR ≥ 0,22 m².K/W)
 
       error

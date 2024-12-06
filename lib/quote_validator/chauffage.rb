@@ -11,7 +11,7 @@ module QuoteValidator
       error << "puissance_manquant" if geste[:puissance].blank?
       error << "marque_isolation_manquant" if geste[:marque].blank?
       error << "reference_isolation_manquant" if geste[:reference].blank?
-      error << "ETAS_chauffage_manquant" if geste[:ETAS].blank # en %
+      error << "etas_chauffage_manquant" if geste[:ETAS].blank # en %
 
       # TODO: à challenger
       @warnings << "remplacement_chaudiere_condensation_manquant" if !geste[:remplacement_chaudiere_condensation]
@@ -155,7 +155,7 @@ module QuoteValidator
       # ≥ 126% si basse T
       # ≥ 111% si Haute T
 
-      error << "COP_chauffage_manquant" if geste[:cop].blank? # TODO: V1 Check if SCOP is required too.
+      error << "cop_chauffage_manquant" if geste[:cop].blank? # TODO: V1 Check if SCOP is required too.
 
       error
     end
