@@ -39,6 +39,7 @@ class QuoteCheckService
 
   def create_quote_check!(tempfile, filename, profile)
     quote_file = QuoteFile.find_or_create_file(tempfile, filename)
+
     @quote_check = QuoteCheck.create!(
       file: quote_file,
       profile: profile,
