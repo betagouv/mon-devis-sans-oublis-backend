@@ -56,7 +56,7 @@ SNC, SAS."
       emission_CO_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissions de monoxyde de carbone (CO) rapportée à 10% d’O2 (en mg/Nm3)." # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
       emission_COG_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissions de composés organiques volatiles (COG) rapportée à 10% d’O2 (en mg/Nm3)." # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
       emission_particule_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissionsde particules (en mg/Nm3)." # Emission de particules (mg/Nm3)
-      emission_Nox_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissionsd’oxydes d’azote (NOx) rapporté à 10% d’O2 (en mg/Nm3)." # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
+      emission_nox_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissionsd’oxydes d’azote (NOx) rapporté à 10% d’O2 (en mg/Nm3)." # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
       marque_regulateur_manquant: "La marque du régulateur utilisé n'est pas indiquée."
       reference_regulateur_manquant: "Le modèle du régulateur installé n'est pas indiqué."
       classe_regulateur_manquant: "Le régulateur doit être de classe IV et cela doit être indiqué."
@@ -66,7 +66,7 @@ SNC, SAS."
       emission_CO_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissions de monoxyde de carbone (CO) rapportée à 10% d’O2 (en mg/Nm3)." # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
       emission_COG_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissions de composés organiques volatiles (COG) rapportée à 10% d’O2 (en mg/Nm3)." # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
       emission_particule_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissionsde particules (en mg/Nm3)." # Emission de particules (mg/Nm3)
-      emission_Nox_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissionsd’oxydes d’azote (NOx) rapporté à 10% d’O2 (en mg/Nm3)." # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
+      emission_nox_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissionsd’oxydes d’azote (NOx) rapporté à 10% d’O2 (en mg/Nm3)." # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
       # validate_systeme_solaire_combine
       marque_capteurs_manquant: "La marque exacte du système doit être mentionnée."
       reference_capteurs_manquant: "La référence exacte du système doit être mentionnée."

@@ -14,7 +14,7 @@ module QuoteValidator
       error << "etas_chauffage_manquant" if geste[:ETAS].blank # en %
 
       # TODO: à challenger
-      @warnings << "remplacement_chaudiere_condensation_manquant" if !geste[:remplacement_chaudiere_condensation]
+      @warnings << "remplacement_chaudiere_condensation_manquant" unless geste[:remplacement_chaudiere_condensation]
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -48,7 +48,7 @@ module QuoteValidator
         # Emission de particules (mg/Nm3)
         # todo V1 : (≤40 pour manuelle et ≤30 pour automatique)
 
-        error << "emission_Nox_chaudiere_manquant" if geste[:emission_Nox].blank?
+        error << "emission_nox_chaudiere_manquant" if geste[:emission_Nox].blank?
         # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
         # TODO (≤200 pour les deux)
 
@@ -93,7 +93,7 @@ module QuoteValidator
         # Emission de particules rapportée à 13% d’O2(mg/Nm3)
         # TODO V1 / (≤40 si bûches ≤ 30 pour granulé)
 
-        error << "emission_Nox_poele_manquant" if geste[:emission_Nox].blank?
+        error << "emission_nox_poele_manquant" if geste[:emission_Nox].blank?
         # Emission d’oxydes d’azotes (NOx) rapporté à 13% d’O2 (mg/Nm3)
         # TODO V1 / (≤ 200 pour les deux)
 
@@ -149,7 +149,8 @@ module QuoteValidator
       # air-eau, eau-eau, air-air, hybride -> TODO Verifier si besoin de l'indication sur le devis
       error << "type_pac_manquant" if geste[:type_pac].blank?
       error << "regime_temperature_manquant" if geste[:regime_temperature].blank? # basse, moyenne, haute
-      error << "type_fluide_frigorigene_manquant" if geste[:type_fluide_frigorigene].blank? # R410A -  attention, celui ci va être restreint, R32 …
+      # R410A -  attention, celui ci va être restreint, R32 …
+      error << "type_fluide_frigorigene_manquant" if geste[:type_fluide_frigorigene].blank?
 
       # TODO: V1, verifier valeur ETAS :
       # ≥ 126% si basse T
