@@ -9,8 +9,8 @@ module QuoteValidator
   class EauChaude < Base
     def validate_eau_chaude(geste, error)
       fields = {
-        "marque_manquant" => :marque,
-        "reference_manquant" => :reference,
+        "marque_eau_chaude_manquant" => :marque,
+        "reference_eau_chaude_manquant" => :reference,
         "volume_manquant" => :volume,
         "ETAS_eau_chaude_manquant" => :ETAS,
         "profil_soutirage_manquant" => :profil_soutirage
@@ -52,7 +52,7 @@ module QuoteValidator
 
       validate_eau_chaude(geste, error)
       fields = {
-        "COP_manquant" => :COP, # COP de l’equipement mesuré conformément aux condition de la norme EN 16147
+        "COP_eau_chaude_manquant" => :COP, # COP de l’equipement mesuré conformément aux condition de la norme EN 16147
         # ≥ à 2,5 pour une installation sur air extrait,
         # ≥ à 2,4 dans les autres cas.
         "type_installation_manquant" => :type_installation # air exterieur, sur air exrait ou sur air ambiant

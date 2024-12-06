@@ -11,8 +11,8 @@ module QuoteValidator
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/CyclomaticComplexity
     def validate_menuiserie(geste, error)
-      error << "marque_manquant" if geste[:marque].blank?
-      error << "reference_manquant" if geste[:reference].blank?
+      error << "marque_menuiserie_manquant" if geste[:marque].blank?
+      error << "reference_menuiserie_manquant" if geste[:reference].blank?
       error << "type_materiau_manquant" if geste[:type_materiau].blank? # bois, alu, pvc ...
       error << "type_vitrage_manquant" if geste[:type_vitrage].blank? # simple - double vitrage
       error << "type_pose_manquant" if geste[:type_pose].blank? # renovation ou depose totale
@@ -26,8 +26,8 @@ module QuoteValidator
       error = []
 
       validate_menuiserie(geste, error)
-      error << "uw_manquant" if geste[:uw].blank?
-      error << "sw_manquant" if geste[:sw].blank?
+      error << "uw_fenetre_manquant" if geste[:uw].blank?
+      error << "sw_fenetre_manquant" if geste[:sw].blank?
       # V1, check valeurs : Uw ≤ 1,3 W/m².K et Sw ≥ 0,3 OU Uw ≤ 1,7 W/m².K et Sw ≥ 0,36
 
       error
@@ -37,8 +37,8 @@ module QuoteValidator
       error = []
 
       validate_menuiserie(geste, error)
-      error << "uw_manquant" if geste[:uw].blank?
-      error << "sw_manquant" if geste[:sw].blank?
+      error << "uw_fenetre_toit_manquant" if geste[:uw].blank?
+      error << "sw_fenetre_toit_manquant" if geste[:sw].blank?
       # V1, check valeurs : (Uw ≤ 1,5 W/m².K et Sw ≤ 0,36 )
 
       error
