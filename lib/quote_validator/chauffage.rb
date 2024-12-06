@@ -9,8 +9,8 @@ module QuoteValidator
   class Chauffage < Base
     def validate_chauffage(geste, error)
       error << "puissance_manquant" if geste[:puissance].blank?
-      error << "marque_manquant" if geste[:marque].blank?
-      error << "reference_manquant" if geste[:reference].blank?
+      error << "marque_isolation_manquant" if geste[:marque].blank?
+      error << "reference_isolation_manquant" if geste[:reference].blank?
       error << "ETAS_chauffage_manquant" if geste[:ETAS].blank # en %
 
       # TODO: à challenger
@@ -155,7 +155,7 @@ module QuoteValidator
       # ≥ 126% si basse T
       # ≥ 111% si Haute T
 
-      error << "cop_manquant" if geste[:cop].blank? # TODO: V1 Check if SCOP is required too.
+      error << "COP_chauffage_manquant" if geste[:cop].blank? # TODO: V1 Check if SCOP is required too.
 
       error
     end

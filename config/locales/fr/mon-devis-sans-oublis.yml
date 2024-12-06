@@ -43,8 +43,8 @@ SNC, SAS."
 #################################################
 
       puissance_manquant: "La puissance du matériel doit être indiquée en KW."
-      marque_manquant: "La marque du matériel installé doit être indiquée."
-      reference_manquant: "Le modèle installé doit être clairement identifiable."
+      marque_chauffage_manquant: "La marque du matériel installé doit être indiquée."
+      reference_chauffage_manquant: "Le modèle installé doit être clairement identifiable."
       ETAS_chauffage_manquant: "L'efficacité énergétique saisonnière (ETAS) du système de chauffage est manquante. Il s'agit d'un pourcentage."
       remplacement_chaudiere_condensation_manquant: "Lors d'un remplacement, il faut préciser si le système existant est (ou n’est pas) une chaudière à condensation."
       # validate_chaudiere_biomasse
@@ -81,26 +81,26 @@ SNC, SAS."
       type_pac_manquant: "Il faut indiquer clairement dans l'intitulé le type de Pompe à chaleur installée (air-eau, eau-eau, hybride...)" # air-eau, eau-eau, air-air, hybride 
       regime_temperature_manquant: "Le régime de la pompe à chaleur peut être Basse température, Moyenne température ou Haute température." # basse, moyenne, haute
       type_fluide_frigorigene_manquant: "Quel est le liquide frigorigène utilisé dans la pompe à chaleur (ex: R32)" # R410A -  attention, celui ci va être restreint, R32 …
-      cop_manquant: "Le coefficient de performance de la Pompe à chaleur doit être indiqué. Il n'y a pas d'unité."
+      COP_chauffage_manquant: "Le coefficient de performance de la Pompe à chaleur doit être indiqué. Il n'y a pas d'unité."
 
 
 #################################################
 ####         EAU CHAUDE SANITAIRE            ####
 #################################################
 
-      marque_manquant : "La marque du chauffe-eau doit être précisée."
-      reference_manquant: "Le modèle du chauffe-eau doit être précisé."
+      marque_eau_chaude_manquant : "La marque du chauffe-eau doit être précisée."
+      reference_eau_chaude_manquant: "Le modèle du chauffe-eau doit être précisé."
       volume_manquant: "Le volume (en Litre) du chauffe-eau est manquant."
       ETAS_eau_chaude__manquant: "L'éfficacité énergétique saisonière (ETAS) du chauffe eau doit être précisée. Il s'agit d'un pourcentage."
-      profil_soutirage_manquant: ""
+      profil_soutirage_manquant: "Le profil de soutirage du chauffe-eau doit être indiqué et est une des options suivantes : M, L, XL ou XXL."
       # validate_cesi
-      type_appoint_manquant: "" # electrique ou autre
-      surface_capteur_manquant: "" # TODO: V1 > 2m2 en metropole pour MPR
-      classe_energetique_ballon_manquant: "" # TODO: V1 minimum Classe C si volume ≤ 500L
-      fluide_manquant: "" # eau, eau glucolée ou air
+      type_appoint_manquant: "L'énergie d'appoint est-elle électrique ?" # electrique ou autre
+      surface_capteur_manquant: "La surface des capteurs en m2 doit être précisée." # TODO: V1 > 2m2 en metropole pour MPR
+      classe_energetique_ballon_manquant: "La classe énergétique du ballon d'eau chaude doit être précisée." # TODO: V1 minimum Classe C si volume ≤ 500L
+      fluide_manquant: "Quel fluide est utilisé pour le chauffe-eau solaire, eau, eau glucolée ou air." # eau, eau glucolée ou air
       # validate_chauffe_eau_thermodynamique
-      COP_manquant: "" # COP de l’equipement mesuré conformément aux condition de la norme EN 16147
-      type_installation_manquant: "" # air exterieur, sur air exrait ou sur air ambiant
+      COP_eau_chaude_manquant: "Le coefficient de performance de l'équipement mesuré conformément aux condition de la norme EN 16147."
+      type_installation_manquant: "Le chauffe-eau thermodynamique est-il sur air extérieur, sur air extrait ou sur air ambiant?" # air exterieur, sur air exrait ou sur air ambiant
 
 
 #################################################
@@ -108,15 +108,15 @@ SNC, SAS."
 #################################################
 
 
-      marque_manquant: ""
-      reference_manquant: ""
-      surface_manquant: ""
-      epaisseur_manquant: ""
-      R_manquant: ""
+      marque_isolation_manquant: "La marque du materiel d'isolation est manquante."
+      reference_isolation_manquant: "La référence de l'installation est obligatoire."
+      surface_manquant: "La surface isolée doit être précisée."
+      epaisseur_manquant: "L'épaisseur de l'isolant doit être précisée en cm."
+      R_manquant: "La résistance thermique de l'installation doit être précisée et est définie en m2.K/W." # Decimal (m².K/W)
       # validate_isolation_toiture_terrasse
-      type_isolation_toiture_terrasse_manquant: ""
+      type_isolation_toiture_terrasse_manquant: "L'isolation est-elle faite par l'intérieur ou par l'extérieur ?"
       # validate_isolation_plancher_bas
-      localisation_manquant: ""
+      localisation_manquant: "Pour l'isolation des planchers bas, il faut préciser sur quelle pièce cela donne."
 
 
 
@@ -125,23 +125,28 @@ SNC, SAS."
 #################################################
 
 
-      marque_manquant: ""
-      reference_manquant: ""
-      type_materiau_manquant: "" # bois, alu, pvc ...
-      type_vitrage_manquant: "" # simple - double vitrage
-      type_pose_manquant: "" # renovation ou depose totale
-      localisation_manquant: ""
-      position_paroie_manquant: "" # nu intérieur, nu extérieur, tunnel ...
+      marque_menuiserie_manquant: "Il faut indiquer précisément la marque de la menuiserie installée"
+      reference_menuiserie_manquant: "La référence de la menuiserie doit être indiquée."
+      type_materiau_manquant: "Il faut indiquer le matériau des montants : bois, alu, pvc ..." # bois, alu, pvc ...
+      type_vitrage_manquant: "Le vitrage est-il un simple ou un double vitrage ?" # simple - double vitrage
+      type_pose_manquant: "Il est important d'indiquer le type de pose, en rénovation ou en dépose totale." # renovation ou depose totale
+      localisation_manquant: "Pour une menuiserie, il faut indiquer dans quelle pièce elle est installée."
+      position_paroie_manquant: "Merci d'indiquer la position de la menuiserie, en nu intérieur, nu extérieur ou tunnel par exemple." # nu intérieur, nu extérieur, tunnel ...
       # validate_menuiserie_fenetre
-      uw_manquant: ""
-      sw_manquant: ""
+      uw_fenetre_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la fenêtre doit être indiqué."
+      uw_fenetre_manquant_infos: "Le coefficient Uw mesure la performance thermique globale d'une fenêtre, incluant le vitrage et le cadre."
+      sw_fentre_manquant: "Le facteur solaire de la fenêtre doit être clairement indiqué. Il va de 0 (pas de chaleur transmise) à 1 (toute la chaleur est transmise)."
+      sw_fenetre_manquant_infos: "Le Sw indique la capacité d'une fenêtre à laisser entrer la chaleur solaire. Il représente la proportion d’énergie solaire transmise à travers la fenêtre."
       # validate_menuiserie_fenetre_toit
-      uw_manquant: ""
-      sw_manquant: ""
+      uw_fenetre_toit_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la fenêtre de toit doit être indiqué."
+      uw_fenetre_toit_manquant_infos: "Le coefficient Uw mesure la performance thermique globale de la fenêtre de toit, incluant le vitrage et le cadre."
+      sw_fenetre_toit_manquant: "Le facteur solaire de la fenêtre doit être clairement indiqué. Il va de 0 (pas de chaleur transmise) à 1 (toute la chaleur est transmise)."
+      sw_fenetre_toit_manquant_infos: "Le Sw indique la capacité d'une fenêtre de toit à laisser entrer la chaleur solaire. Il représente la proportion d’énergie solaire transmise à travers la fenêtre de toit."
       # validate_menuiserie_porte
-      ud_manquant: ""
+      ud_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la porte ou de la porte-fenêtre doit être indiqué."
       # validate_menuiserie_volet_isolant
-      deltaR_manquant: ""
+      deltaR_manquant: "Le gain de résistance thermique (en W/m2⋅K) suite à l'installation du volet isolant est à indiquer précisément."
+      deltaR_manquant_infos: "Le ΔR représente l’augmentation de la résistance thermique (R) d’un élément de construction après rénovation."
 
 
 #################################################
@@ -149,14 +154,14 @@ SNC, SAS."
 #################################################
 
 
-      type_vmc_manquant: ""
+      type_vmc_manquant: "Le type de VMC installée est à préciser (exemple : VMC simple flux hygroréable de type A (Hygro A))."
         # VMC simple flux hygroréable de type A (Hygro A)
         # VMC simple flux hygroréable de type B (Hygro B)
         # VMC double flux avec échangeur
-      marque_caisson_manquant: ""
-      reference_caisson_manquant: ""
-      marque_bouche_extraction: ""
-      reference_bouche_extraction: ""
-      nombre_bouche_extraction: ""
-      classe_caisson_manquant: ""
-      puissance: "" # Puissance electrique du moteur en fonction de la config du logement - exprimé en (W-Th-C) (doit être basse conso)
+      marque_caisson_manquant: "La marque du caisson doit être précisément indiquée."
+      reference_caisson_manquant: "La référence du caisson doit être précisée."
+      marque_bouche_extraction: "La marque des bouches d'extraction doit être explicitement indiquée."
+      reference_bouche_extraction: "La référence des bouches d'extration est manquante."
+      nombre_bouche_extraction: "Il faut indiquer le nombre de bouche d'extraction."
+      classe_caisson_manquant: "Merci de préciser la classe d'efficacité énergétique du caisson."
+      puissance: "La puissance électrique du moteur (exprimée en W-Th-C) doit être précisée. " # Puissance electrique du moteur en fonction de la config du logement - exprimé en (W-Th-C) (doit être basse conso)

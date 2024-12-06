@@ -83,6 +83,14 @@ emplacement: enum(sous-face, par le dessus);
 }
 ```
 
+Pour isolation_toiture_terrasse, il faut rajouter: 
+
+```jsx
+{
+type_isolation_toiture_terrasse: text;
+}
+```
+
 ### Menuiseries
 
 ```jsx

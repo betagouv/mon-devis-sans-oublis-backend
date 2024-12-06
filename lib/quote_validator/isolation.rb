@@ -9,11 +9,11 @@ module QuoteValidator
   class Isolation < Base
     # Validation des critères communs aux différentes isolations
     def validate_isolation(geste, error)
-      error << "marque_manquant" if geste[:marque].blank?
-      error << "reference_manquant" if geste[:reference].blank?
+      error << "marque_isolation_manquant" if geste[:marque].blank?
+      error << "reference_isolation_manquant" if geste[:reference].blank?
       error << "surface_manquant" if geste[:surface].blank? # TODO : check unité ?
       error << "epaisseur_manquant" if geste[:epaisseur].blank? # TODO : check unité ?
-      error << "R_manquant" if geste[:R].blank?
+      error << "R_manquant" if geste[:Resistance_thermique].blank?
 
       # TODO : V1 - vérifier les normes
     end
