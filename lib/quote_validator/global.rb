@@ -74,23 +74,34 @@ module QuoteValidator
     # + Warning pour préciser que l'adresse de facturation = adresse de chantier si pas de présence
     def validate_client_address
       client_address = @client[:adresse]
-      validate_address(client_address)
+      validate_address(client_address, "client")
 
       site_address = @client[:adresse_chantier]
       if site_address.blank?
         @warnings << "chantier_facturation_idem"
       else
-        validate_address(site_address)
+        validate_address(site_address, "chantier")
       end
     end
 
     def validate_pro_address
       address = @pro[:adresse]
-      validate_address(address)
+      validate_address(address, "pro")
     end
 
     # numéro, rue, cp, ville - si pas suffisant numéro de parcelle cadastrale. V0, on check juste la présence ?
-    def validate_address(address); end
+    def validate_address(address, type)
+      if address.blank? 
+        case type
+        when "client"
+          @errors << "client_adresse_manquant"
+        when "chantier" # ne devrait pas arriver, mais par la suite, faudrait vérifier la justesse de l'adresse
+          @errors << "chantier_adresse_manquant"
+        when "pro"
+          @errors << "pro_adresse_manquant"
+        end
+      end
+    end
 
     # doit valider les critères techniques associés aux gestes présents dans le devis
     # rubocop:disable Metrics/AbcSize
