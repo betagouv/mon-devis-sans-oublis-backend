@@ -4,8 +4,12 @@
 class QuoteCheckService
   attr_reader :quote_check
 
-  def initialize(tempfile, filename, profile)
-    create_quote_check!(tempfile, filename, profile)
+  def initialize(tempfile_or_quote_check, filename, profile)
+    @quote_check = if tempfile_or_quote_check.is_a?(QuoteCheck)
+                     tempfile_or_quote_check
+                   else
+                     QuoteCheckUploadService.new(tempfile_or_quote_check, filename, profile).upload
+                   end
   end
 
   def self.quote_fields
@@ -36,16 +40,6 @@ class QuoteCheckService
   end
 
   private
-
-  def create_quote_check!(tempfile, filename, profile)
-    quote_file = QuoteFile.find_or_create_file(tempfile, filename)
-
-    @quote_check = QuoteCheck.create!(
-      file: quote_file,
-      profile: profile,
-      started_at: Time.current
-    )
-  end
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
