@@ -2,8 +2,6 @@
 
 # Controller for the Quotes resource
 class QuoteChecksController < ApplicationController
-  PROFILES = %w[artisan particulier mandataire conseiller].freeze
-
   before_action :authenticate, only: %i[index show edit update], if: -> { !Rails.env.development? }
   before_action :quote_check, only: %i[show edit update]
   before_action :profile, only: %i[new show]
@@ -52,7 +50,7 @@ class QuoteChecksController < ApplicationController
   end
 
   def profiles
-    @profiles = PROFILES
+    @profiles = QuoteCheck::PROFILES
 
     respond_to do |format|
       format.html

@@ -4,7 +4,8 @@
 class QuoteCheck < ApplicationRecord
   belongs_to :file, class_name: "QuoteFile"
 
-  validates :profile, presence: true, inclusion: { in: QuoteChecksController::PROFILES }
+  PROFILES = %w[artisan particulier mandataire conseiller].freeze
+  validates :profile, presence: true, inclusion: { in: PROFILES }
 
   validates :started_at, presence: true
 

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         to: "quote_checks#new",
         via: %i[get post],
         as: :new_quote_check,
-        constraints: { profile: /#{QuoteChecksController::PROFILES.join('|')}/ }
+        constraints: { profile: /#{QuoteCheck::PROFILES.join('|')}/ }
   resources :quote_checks, only: %i[index show], path: "devis" do
     member do
       get "resultats_verification", to: "quote_checks#show"
@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :profiles, only: %i[index]
       resources :quote_checks, only: %i[create show]
     end
   end
