@@ -56,7 +56,7 @@ module QuoteValidator
       @errors << "siret_manquant" if @pro[:siret].blank?
       # beaucoup de confusion entre SIRET (14 chiffres pour identifier un etablissement)
       # et SIREN (9 chiffres pour identifier une entreprise)
-      @errors << "siret_format_erreur" if @pro[:siret]&.length != 14 && @pro[:siret]&.length&.positive?
+      @errors << "siret_format_erreur" if @pro[:siret]&.gsub(/\s+/, '')&.length != 14 && @pro[:siret]&.length&.positive?
       validate_pro_address
     end
     # rubocop:enable Metrics/PerceivedComplexity
