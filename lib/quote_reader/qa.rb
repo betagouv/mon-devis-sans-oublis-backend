@@ -25,7 +25,7 @@ module QuoteReader
       mistral = Llms::Mistral.new(prompt)
       begin
         mistral.chat_completion(text)
-      rescue ResultError => e
+      rescue Llms::Mistral::ResultError => e
         ErrorNotifier.notify(e)
       end
 
