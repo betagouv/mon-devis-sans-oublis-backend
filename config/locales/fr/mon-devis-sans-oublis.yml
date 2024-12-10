@@ -29,6 +29,7 @@ SNC, SAS."
       siret_manquant_infos : "Le Numéro SIRET (système d’identification du répertoire des établissements) est une série de 14 chiffres. Il correspond au numéro SIREN (Système d’Identification du Répertoire des Entreprises, à 9 chiffres) délivré lors de la création de l'entreprise, suivi du numéro NIC (numéro interne de classement)."
       siret_format_erreur: "Attention, il semblerait que le SIREN ait été utilisé à la place du SIRET. Le SIRET est une série de 14 chiffres."
       pro_adresse_manquant: "L'adresse du siège social est requise"
+      rge_manquant: "Pour obtenir des aides, il faut avoir le label RGE du geste en question. Merci de préciser le numéro de certification."
 
       # Information du client : 
       client_prenom_manquant: "Le prénom du client est requis. Attention, le devis doit être établi au nom de la personne ayant fait la demande d’aide."
