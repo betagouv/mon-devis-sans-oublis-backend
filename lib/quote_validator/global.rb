@@ -20,7 +20,7 @@ module QuoteValidator
     def validate_admin
       # mention devis présente ou non, quote[:mention_devis] est un boolean
       @errors << "devis_manquant" unless quote[:mention_devis] || quote[:devis].present?
-      @errors << "numero_devis_manquant" if quote[:numero_devis].present?
+      @errors << "numero_devis_manquant" unless quote[:numero_devis].present?
 
       validate_dates
       validate_pro
