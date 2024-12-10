@@ -36,7 +36,7 @@ module QuoteReader
       @anonymised_text = Anonymiser.new(text).anonymised_text
 
       qa_reader = Qa.new(anonymised_text)
-      @qa_attributes = qa_reader.read
+      @qa_attributes = qa_reader.read || {}
       @qa_result = qa_reader.result
       @qa_version = qa_reader.version
 
