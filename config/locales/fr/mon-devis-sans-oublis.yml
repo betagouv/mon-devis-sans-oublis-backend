@@ -17,6 +17,10 @@ fr:
     errors:
       devis_manquant: 'La mention explicite "devis" est obligatoire. Les bons de commande et propositions commerciales ne sont pas acceptés.'
       numero_devis_manquant: "Un devis doit avoir un numéro unique."
+      date_validite_manquant: "Attention, si la date de validité n'est pas indiquée, elle est de 3 mois par défaut."
+      date_devis_manquant: "La date d'édition du devis est obligatoire."
+      date_chantier_manquant: "Nous recommandons de mettre la date de début de chantier prévue." 
+      date_pre_visite_manquant: "La date de pré visite technique est fortement recommandée, notamment dans le cadre des CEE."
 
       # Informations de l'artisan
       pro_raison_sociale_manquant: "Le nom de votre structure doit être mentionné."
