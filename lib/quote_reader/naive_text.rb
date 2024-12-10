@@ -72,7 +72,7 @@ module QuoteReader
     FRENCH_CHARACTER_REGEX = /[\wÀ-ÖØ-öø-ÿ]/i
     PHONE_REGEX = /(?:\(?\+?33\)?)?\s?(?:[\s.]*\d\d){5}/i # TODO: find better
     RCS_REGEX = /R\.?C\.?S\.?(?:\s+[A-Za-zÀ-ÖØ-öø-ÿ\s-]+)?(?:\s+[AB])?\s+\d{9}/i
-    URI_REGEX = %r{(?:https?|ftp)://[^\s/$.?#].[^\s]*}i
+    URI_REGEX = %r{(?:https?|ftp)://(?:www\.)?[^\s/$.?#].[^\s]*|www\.[^\s/$.?#].[^\s]*}i
 
     def self.find_adresses(text)
       (text.scan(/Adresse\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i).flatten +
