@@ -73,6 +73,7 @@ end
 group :test do
   gem "capybara"
   gem "cucumber-rails", require: false
+  gem "dotenv-rails"
   gem "faker", require: false
   gem "guard"
   gem "guard-cucumber"
@@ -84,6 +85,8 @@ group :test do
   gem "rubocop-rails"
   gem "rubocop-rspec"
   gem "rubocop-rspec_rails"
+  gem "vcr"
+  gem "webmock" # Required to intercept HTTP requests
 end
 
 group :development do

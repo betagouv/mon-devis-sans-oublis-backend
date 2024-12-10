@@ -1,0 +1,140 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-large-latest","messages":[{"role":"user","content":"Contexte
+        : Nous avons un devis pdf, nous avons sorti le texte pour pouvoir l’analyser
+        et l''avons anonymisé. Il s’agit d’un devis de rénovation énergétique d’un
+        artisan pour un particulier. Il peut y avoir plusieurs gestes de travaux.
+        \n\nRôle : Vous êtes un expert en lecture de devis et vous devez récupérer
+        les données structurées du devis pour les intégrer dans le JSON suivant\n\n\nVoici
+        les JSON que l''on souhaite récupérer : \n\n# JSON général\n\n```jsx\n{mention_devis:
+        boolean; \nnumero_devis : text; \npro_forme_juridique: text; \n\n\ndate_devis:
+        date; \n\nvalidite: boolean;\n\ndate_debut_chantier: date; \n\ndate_pre_visite:
+        date; \ngestes : [{geste1},{geste2}...]\n\n} \n```\n\n### chauffe-eau thermodynamique
+        :\n\n```jsx\n{type: ''chauffe_eau_thermo''; \nintitule: text;\nmarque: text;
+        \nreference: text; \nvolume: integer (en Litre); \nETAS: pourcentage; \nprofil_soutirage:
+        enum(M,L,XL,XXL); \nCOP: decimal;}\n```\n\n### Chauffe-eau solaire individuel
+        (CESI)\n\n```jsx\n{type: ''chauffe_eau_solaire_individuel''; \nintitule: text;\nmarque:
+        text; \nreference: text; \nvolume: integer (Litre); \nETAS: pourcentage; \nprofil_soutirage:
+        enum(M,L,XL,XXL); \ntype_appoint: enum (electrique, autre); \nsurface_capteur:
+        Decimal (m2); \nclasse_energetique_ballon: text; \nfluide_capteur: enum(eau,
+        eau glycolée, air);}\n```\n\n### Isolation\n\n```jsx\n{type: enum(isolation_comble_perdu,
+        isolation_rampants_toiture, isolation_toiture_terrasse, isolation_thermique_par_interieur_ITI,
+        isolation_thermique_par_exterieur_ITE, isolation_plancher_bas);\nintitule:
+        text; \nmarque_isolant: text;\nreference_isolant: text;\nsurface_isolant:
+        Decimal (m2); \nepaisseur_isolant: Decimal (cm); \nresistance_thermique: Decimal
+        (m².K/W);\n}\n```\n\nPour isolation_thermique_par_interieur_ITI, isolation_thermique_par_exterieur_ITE
+        il faut rajouter : \n\n```jsx\n{presence_parement: boolean; \npresence_protection:
+        boolean; \npresence_fixation: boolean;}\n```\n\nPour isolation_plancher_bas,
+        il faut rajouter: \n\n```jsx\n{localisation: text;\nemplacement: enum(sous-face,
+        par le dessus);\n}\n```\n\nPour isolation_toiture_terrasse, il faut rajouter:
+        \n\n```jsx\n{\ntype_isolation_toiture_terrasse: text;\n}\n```\n\n### Menuiseries\n\n```jsx\n{type:
+        ''menuiserie''; \nintitule: text,\ntype_menuiserie: enum(fenetre, porte_fenetre,
+        porte, fenetre_de_toit,..); \ntype_materiaux: enum (PVC, bois, aluminium);
+        \ntype_vitrage: enum(simple,double, triple,...); \ntype_pose: enum(renovation,despose_totale);
+        \nlocalisation: text; \nposition_paroie: enum(nu_interieur, nu_exterieur,
+        tunnel); \nuw: decimal (W/m2.K); \nsw: decimal\n}\n```\n\ndans le cadre d’une
+        porte \n\n```jsx\n{ud: W/m2.K} à la place du uw et sw\n```\n\n# Système chauffage\n\n###
+        poele à bois :\n\n```jsx\n{type: ''poele''; \ntype_combustible: enum(bois,granules);\nintitule:
+        text;\nmarque: text; \nreference: text; \npuissance: Decimal **(kW);** \nremplacement_chaudiere_condensation:
+        boolean;\nETAS: pourcentage **(ɳs)**; \nrendement_energetique: decimal;\nlabel_flamme_verte:
+        boolean;\nemission_monoxyde_carbone: Integer (mg/Nm3);\nemission_composés_organique:
+        Integer (mgC/Nm3);\nemission_particules: Integer (mg/Nm3); \nemission_oxydes_azotes:
+        Integer (mg/Nm3)}\n```\n\n### pompe à chaleur air/eau:\n\n```jsx\n{type:enum(pac_air_eau,
+        pac_eau_eau, pac_air_air, pac_hybride) ; \nintitule: text;\nremplacement_chaudiere_condensation:
+        boolean;\nmarque: text; \nreference: text; \nETAS: Pourcentage; \npuissance:
+        decimal **(kW);**\nregime_temperature: enum(basse, moyenne, haute);\ntype_fluide_frigorigene:
+        text;\nCOP: decimal;\n}\n```\n\n### Chaudière biomasse\n\n```jsx\n{type:''chaudiere_biomasse'';
+        \nintitule: text; \nmarque: text;\nreference: text;\ntype_combustible: enum(buche,granule,copeaux,...);\npresence_note_dimensionnement:
+        boolean; \ntype_chargement: enum(manuel,automatique);\nETAS: pourcentage;
+        \npuissance: decimal (kW);\nremplacement_chaudiere_condensation: boolean;\nlabel_flamme_verte:
+        boolean; \nemission_monoxyde_carbone: Integer (mg/Nm3);\nemission_composés_organique:
+        Integer (mgC/Nm3);\nemission_particules: Integer (mg/Nm3); \nemission_oxydes_azotes:
+        Integer (mg/Nm3);\ntype_silo: text (externeinterne, neuf/existant, textile/maconner);
+        \ncontenance: Decimal (Litre); \nmarque_regulateur: text; \nreference_regulateur:
+        text; \nclasse_regulateur: text}\n\n```\n\n### systeme solaire combine\n\n```jsx\n{type:''systeme_solaire_combine'';
+        \nintitule: text;\nremplacement_chaudiere_condensation: boolean;\nmarque:
+        text; \nreference: text; \nETAS: Pourcentage; \npuissance: decimal **(kW);**\nmarque_capteurs:
+        text; \nreference_capteurs: text; \ntype_capteurs: text; \nsurface_captage:
+        decimal (m2); \nproductivite_capteurs: decimal (W/m2); \nvolume_ballon:decimal
+        (litre);\nprofil_soutirage: enum(M,L,XL,XXL); \nenergie_appoint: (electricite,
+        gaz,...);\n}\n```\n\nvoici le texte du devis anonymise : \n\n\n\n\nRéfléchissez
+        étape par étape.\n\nVous ne répondrez que par un objet JSON qui concatene
+        le JSON général et tous les JSON des gestes présent dans le devis\n  Ne fournissez
+        pas d’explications."},{"role":"user","content":"1.1  dépose et enlèvement
+        d''une chaudière gaz hors condensation                             1,00  U        0,00           0,00\n  1.2  Pompe
+        à chaleur AIR/EAU - moyenne température - Atlantic Alféa Extensa A.I. 8 R32
+        -    1,00  U    8 765,00       8 765,00\n\n       6kW - classe énergétique
+        chauffage A+++ - efficacité énergétique saisonnière chauffage\n       avec
+        sonde extérieure 179 % - SCOP 4.5 - niveau sonore intérieur / extérieur :
+        32/38 dB\n"}]}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.mistral.ai
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Dec 2024 16:45:07 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Ratelimitbysize-Remaining:
+      - '1967234'
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1967234'
+      Ratelimitbysize-Reset:
+      - '59'
+      X-Ratelimitbysize-Limit-Minute:
+      - '2000000'
+      X-Ratelimitbysize-Remaining-Month:
+      - '9997542088'
+      Ratelimitbysize-Query-Cost:
+      - '32766'
+      Ratelimitbysize-Limit:
+      - '2000000'
+      X-Envoy-Upstream-Service-Time:
+      - '5718'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '5719'
+      X-Kong-Proxy-Latency:
+      - '2'
+      X-Kong-Request-Id:
+      - c188ce26ff0f9a368e7e941735f92f3b
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8efeb3f63b165fc5-MRS
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjViMDI3Zjc4YmZjNTQ2MDM4ODEzNGQ0ZDZhNzkxN2ZkIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTczMzg0OTEwMiwibW9kZWwiOiJtaXN0cmFsLWxhcmdlLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiYGBganNvblxue1xuICBcIm1lbnRpb25fZGV2aXNcIjogZmFsc2UsXG4gIFwibnVtZXJvX2RldmlzXCI6IFwiXCIsXG4gIFwicHJvX2Zvcm1lX2p1cmlkaXF1ZVwiOiBcIlwiLFxuICBcImRhdGVfZGV2aXNcIjogXCJcIixcbiAgXCJ2YWxpZGl0ZVwiOiBmYWxzZSxcbiAgXCJkYXRlX2RlYnV0X2NoYW50aWVyXCI6IFwiXCIsXG4gIFwiZGF0ZV9wcmVfdmlzaXRlXCI6IFwiXCIsXG4gIFwiZ2VzdGVzXCI6IFtcbiAgICB7XG4gICAgICBcInR5cGVcIjogXCJwYWNfYWlyX2VhdVwiLFxuICAgICAgXCJpbnRpdHVsZVwiOiBcIlBvbXBlIMOgIGNoYWxldXIgQUlSL0VBVSAtIG1veWVubmUgdGVtcMOpcmF0dXJlIC0gQXRsYW50aWMgQWxmw6lhIEV4dGVuc2EgQS5JLiA4IFIzMlwiLFxuICAgICAgXCJyZW1wbGFjZW1lbnRfY2hhdWRpZXJlX2NvbmRlbnNhdGlvblwiOiBmYWxzZSxcbiAgICAgIFwibWFycXVlXCI6IFwiQXRsYW50aWNcIixcbiAgICAgIFwicmVmZXJlbmNlXCI6IFwiQWxmw6lhIEV4dGVuc2EgQS5JLiA4IFIzMlwiLFxuICAgICAgXCJFVEFTXCI6IDE3OSxcbiAgICAgIFwicHVpc3NhbmNlXCI6IDYuMCxcbiAgICAgIFwicmVnaW1lX3RlbXBlcmF0dXJlXCI6IFwibW95ZW5uZVwiLFxuICAgICAgXCJ0eXBlX2ZsdWlkZV9mcmlnb3JpZ2VuZVwiOiBcIlIzMlwiLFxuICAgICAgXCJDT1BcIjogNC41XG4gICAgfVxuICBdXG59XG5gYGAifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIxODgsInRvdGFsX3Rva2VucyI6MjQ1OCwiY29tcGxldGlvbl90b2tlbnMiOjI3MH19
+  recorded_at: Tue, 10 Dec 2024 16:45:07 GMT
+recorded_with: VCR 6.3.1
