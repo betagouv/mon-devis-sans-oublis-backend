@@ -49,7 +49,11 @@ module Llms
       @result = JSON.parse(response.body)
       content = result.dig("choices", 0, "message", "content")
       content_json_result = content[/(\{.+\})/im, 1]
-      @read_attributes = JSON.parse(content_json_result, symbolize_names: true)
+      @read_attributes = begin
+        JSON.parse(content_json_result, symbolize_names: true)
+      rescue JSON::ParserError
+        raise ResultError, "Parsing JSON inside content: #{content_json_result}"
+      end
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize

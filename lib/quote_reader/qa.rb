@@ -20,15 +20,17 @@ module QuoteReader
     private
 
     def llm_read_attributes
-      if Llms::Mistral.configured?
-        mistral = Llms::Mistral.new(prompt)
-        mistral.chat_completion(text)
+      return unless Llms::Mistral.configured?
 
-        @read_attributes = mistral.read_attributes
-        @result = mistral.result
+      mistral = Llms::Mistral.new(prompt)
+      begin
+        mistral.chat_completion(text)
+      rescue ResultError => e
+        ErrorNotifier.notify(e)
       end
 
-      read_attributes || {}
+      @read_attributes = mistral.read_attributes
+      @result = mistral.result
     end
 
     def prompt
