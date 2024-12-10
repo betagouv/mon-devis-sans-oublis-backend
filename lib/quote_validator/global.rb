@@ -36,7 +36,11 @@ module QuoteValidator
     # V0 on check la présence - attention devrait dépendre du geste, à terme,
     # on pourra utiliser une API pour vérifier la validité
     # Attention, souvent on a le logo mais rarement le numéro RGE.
-    def validate_rge; end
+    def validate_rge
+      @pro = quote[:pro] ||= TrackingHash.new
+      rge_labels = @pro[:labels]
+      @errors << "rge_manquant" if rge_labels.empty?
+    end
 
     # doit valider les mentions administratives associées à l'artisan
     # rubocop:disable Metrics/AbcSize
