@@ -18,8 +18,8 @@ module QuoteValidator
 
     # doit valider les mentions administratives du devis
     def validate_admin
-      # mention devis présente ou non, quote[:devis] est un boolean
-      @errors << "devis_manquant" unless quote[:mention_devis]
+      # mention devis présente ou non, quote[:mention_devis] est un boolean
+      @errors << "devis_manquant" unless quote[:mention_devis] || quote[:devis].present?
       @errors << "numero_devis_manquant" if quote[:numero_devis].present?
 
       validate_dates
@@ -45,7 +45,8 @@ module QuoteValidator
     def validate_pro
       @pro = quote[:pro] ||= TrackingHash.new
       @errors << "pro_raison_sociale_manquant" if @pro[:raison_sociale].blank?
-      @errors << "pro_forme_juridique_manquant" if @pro[:forme_juridique].blank?
+      # on essaie de récupérer la forme juridique pendant l'anonymisation mais aussi avec le LLM.
+      @errors << "pro_forme_juridique_manquant" if @pro[:forme_juridique].blank? && quote[:pro_forme_juridique].blank?
       @errors << "tva_manquant" if @pro[:numero_tva].blank?
       # TODO: check format tva : FR et de 11 chiffres
       # (une clé informatique de 2 chiffres et le numéro SIREN à 9 chiffres de l'entreprise)
