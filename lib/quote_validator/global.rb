@@ -31,7 +31,19 @@ module QuoteValidator
     # date d'emission, date de pré-visite (CEE uniquement ?),
     # validité (par défaut 3 mois -> Juste un warning),
     # Date de début de chantier (CEE uniquement)
-    def validate_dates; end
+    def validate_dates
+      # date_devis
+      @errors << "date_devis_manquant" if quote[:date_devis].blank?
+
+      # date_debut_chantier
+      @warnings << "date_chantier_manquant" if quote[:date_chantier].blank?
+
+      # date_pre_visite
+      @errors << "date_pre_visite_manquant" if quote[:date_pre_visite].blank?
+
+      # validite
+      @warnings << "date_validite_manquant" if !quote[:validite]
+    end
 
     # V0 on check la présence - attention devrait dépendre du geste, à terme,
     # on pourra utiliser une API pour vérifier la validité
