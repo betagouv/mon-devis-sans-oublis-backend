@@ -114,7 +114,7 @@ module QuoteReader
     def self.find_label_numbers(text)
       # Warning : insure caracter before not match the IBAN
       text.scan(
-        %r{(?:\A|.*#{BETWEEN_LABEL_VALUE_REGEX})((?:(?:CPLUS|QB|QPAC|QPV|QS|VPLUS)/|(?:R|E-)?E)\d{5,6})}i
+        %r{(?:\A|.*#{BETWEEN_LABEL_VALUE_REGEX})((?:(?:CPLUS|QB|QPAC|QPV|QS|VPLUS)\s*/\s*|(?:R|E-)?E)\s*\d{5,6})}i
       ).flatten.filter_map { |e| e&.strip }.uniq
     end
 
