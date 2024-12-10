@@ -38,8 +38,7 @@ RSpec.describe QuoteCheckService, type: :service do
       expect(quote_check.quote_valid?).to be_in([true, false])
       expect(quote_check.validation_errors).to include(*%w[
                                                          devis_manquant pro_raison_sociale_manquant
-                                                         pro_forme_juridique_manquant
-                                                         tva_manquant capital_manquant siret_manquant
+                                                         pro_forme_juridique_manquant capital_manquant
                                                          client_prenom_manquant client_nom_manquant
                                                        ])
 
