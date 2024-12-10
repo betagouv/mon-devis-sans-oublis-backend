@@ -24,7 +24,10 @@ RSpec.describe "/api/v1/quote_checks" do
       post api_v1_quote_checks_url, params: { quote_check: quote_check_params }
 
       expect(json.fetch("status")).to eq("invalid")
+
       expect(json.fetch("validation_errors")).to include("devis_manquant")
+      expect(json.fetch("validation_errors")).not_to include("siret_manquant")
+
       expect(json.dig("read_attributes", "pro", "siret")).to eq("12345678900000")
     end
     # rubocop:enable RSpec/MultipleExpectations

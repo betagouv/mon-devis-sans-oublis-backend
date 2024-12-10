@@ -12,7 +12,7 @@ class TrackingHash < Hash
 
   def [](key)
     @keys_accessed.add(key)
-    super
+    super || super(key.to_s)
   end
 
   def keys_accessed
