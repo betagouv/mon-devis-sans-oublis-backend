@@ -21,3 +21,6 @@ guard:
 
 debug:
 	$(DOCKER-RUN) web $(BUNDLE-EXEC) rdbg -A web 12345
+
+doc:
+	$(DOCKER-RUN) web $(BUNDLE-EXEC) rake rswag:specs:swaggerize PATTERN="spec/**/*_doc_spec.rb"
