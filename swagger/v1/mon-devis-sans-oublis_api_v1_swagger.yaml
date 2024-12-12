@@ -1,0 +1,131 @@
+---
+openapi: 3.0.1
+info:
+  title: Mon Devis Sans Oublis API V1
+  version: v1
+paths:
+  "/profiles":
+    get:
+      summary: Récupérer les profils disponibles
+      tags:
+      - Profils
+      responses:
+        '200':
+          description: liste des profiles
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    data:
+                      type: "#/components/schemas/profile"
+                required:
+                - data
+  "/quote_checks":
+    post:
+      summary: Téléverser un devis
+      tags:
+      - Devis
+      parameters: []
+      description: Au retour le devis a été téléversé avec succès.<br>Mais vérifiez
+        selon le statut si le devis a été déjà analysé ou non.<br>Il peut contenir
+        des erreurs dès le téléversement.<br>Si le statut est 'pending', cela signifie
+        que l'analyse est encore en cours.<br>Et qu'il faut boucler sur l'appel /quote_check/:id
+        pour récupérer le devis à jour.
+      responses:
+        '201':
+          description: Devis téléversé
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/quote_check"
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: string
+              format: binary
+        required: true
+  "/quote_checks/{id}":
+    get:
+      summary: Récupérer un Devis
+      tags:
+      - Devis
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Devis trouvé
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/quote_check"
+        '404':
+          description: Devis non trouvé
+components:
+  schemas:
+    profile:
+      type: string
+      enum:
+      - artisan
+      - particulier
+      - mandataire
+      - conseiller
+    quote_check_status:
+      type: string
+      enum:
+      - pending
+      - valid
+      - invalid
+      description: 'pending: analyse en cours | valid: valide | invalid: invalide'
+    quote_check_error:
+      type: string
+      description: code d'erreur
+    quote_check:
+      type: object
+      properties:
+        id:
+          type: string
+          description: UUID unique
+        status:
+          type: string
+        profile:
+          "$ref": "#/components/schemas/profile"
+        valid:
+          type: boolean
+          nullable: true
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/quote_check_error"
+          description: liste des erreurs dans ordre à afficher
+          nullable: true
+        error_messages:
+          type: object
+          additionalProperties:
+            type: string
+            description: code d'erreur => message
+          nullable: true
+      required:
+      - id
+      - status
+      - profile
+servers:
+- url: https://api.staging.mon-devis-sans-oublis.beta.gouv.fr/api/v1
+  description: Staging server
+- url: https://api.mon-devis-sans-oublis.beta.gouv.fr/api/v1
+  description: Production server
+- url: http://localhost:3000/api/v1
+  description: Development server
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000

@@ -7,4 +7,7 @@ Rails.application.routes.draw do
       resources :quote_checks, only: %i[create show]
     end
   end
+
+  mount Rswag::Api::Engine => "/api-docs"
+  mount Rswag::Ui::Engine => "/api-docs"
 end

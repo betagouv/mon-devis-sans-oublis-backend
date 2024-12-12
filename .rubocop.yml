@@ -1,5 +1,8 @@
 inherit_from: .rubocop_todo.yml
 
+inherit_gem:
+  rswag-specs: .rubocop_rspec_alias_config.yml
+
 require:
   - rubocop-rspec
   - rubocop-rails
@@ -19,3 +22,10 @@ Style/Documentation:
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: "double_quotes"
+
+# API Docs
+
+RSpec/NestedGroups:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*_doc_spec.rb'

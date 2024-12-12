@@ -18,6 +18,7 @@ composants DSFR](https://github.com/betagouv/dsfr-view-components)
 * Sentry pour monitorer et être alerté en cas d'erreur ;
 * Matomo pour mesurer et comprendre l'usage via des analytics ;
 * RSpec comme framework de tests ;
+* Rswag comme outil de documentation au format Swagger/ OpenAPI de l'API à travers des tests ;
 * Cucumber et Capybara pour les tests BDD ;
 * Rubocop (RSpec et Rails) pour le linting ;
 * Docker pour avoir un environnement de développement.
@@ -35,27 +36,8 @@ Les fichiers devis sont traités par le `QuoteChecksController` qui les envoient
 
 ## API
 
-via header `Accept` à la valeur `application/json` pour forcer le retour au format JSON et non classique HTML
-
-- GET `/profils` pour lister les profils disponibles
-- POST `/[:profil]/devis/verifier` avec paramètre `quote_file` contenant le fichier
-le type de retour avec erreurs retournées est:
-```
-{
-    "valid": false,
-    "errors": [
-        "file_reading_error",
-        "devis_manquant",
-        "pro_raison_sociale_manquant",
-        "pro_forme_juridique_manquant",
-        "tva_manquant",
-        "capital_manquant",
-        "siret_manquant",
-        "client_prenom_manquant",
-        "client_nom_manquant"
-    ]
-}
-``` 
+- au format REST JSON
+- voir fichier de documentation de l'API  au format OpenAPI Swagger et interface bac à sable interractif sur `/api-docs`
 
 ## Démarrage
 

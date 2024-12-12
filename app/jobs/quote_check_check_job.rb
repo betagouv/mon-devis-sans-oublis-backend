@@ -6,6 +6,6 @@ class QuoteCheckCheckJob < ApplicationJob
 
   def perform(quote_check_id)
     quote_check = QuoteCheck.find(quote_check_id)
-    QuoteCheckCheckService.new(quote_check).check
+    QuoteCheckService.new(quote_check).check
   end
 end

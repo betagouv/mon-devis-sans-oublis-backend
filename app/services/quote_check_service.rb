@@ -4,7 +4,7 @@
 class QuoteCheckService
   attr_reader :quote_check
 
-  def initialize(tempfile_or_quote_check, filename, profile)
+  def initialize(tempfile_or_quote_check, filename = nil, profile = nil)
     @quote_check = if tempfile_or_quote_check.is_a?(QuoteCheck)
                      tempfile_or_quote_check
                    else
