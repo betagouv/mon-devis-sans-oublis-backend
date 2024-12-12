@@ -4,6 +4,8 @@ module Api
   module V1
     # Base controller for API V1
     class BaseController < ActionController::API
+      include Api::V1::HandleErrors
+
       before_action :authorize_request
 
       private

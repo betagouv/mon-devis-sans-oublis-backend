@@ -37,6 +37,16 @@ RSpec.configure do |config|
         #   }
         # },
         schemas: {
+          api_error: {
+            type: :object,
+            properties: {
+              error: { type: :string },
+              message: {
+                type: :array,
+                items: { type: :string }
+              }
+            }
+          },
           profile: {
             type: :string,
             enum: QuoteCheck::PROFILES

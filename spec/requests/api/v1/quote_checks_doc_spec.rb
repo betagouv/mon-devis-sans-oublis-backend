@@ -59,7 +59,15 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
         let(:profile) { "artisan" }
 
         pending "fix why quote_check params are not sent"
+        # See https://github.com/rswag/rswag/issues/316
         # run_test!
+      end
+
+      response "422", "missing params" do
+        let(:file) { fixture_file_upload("quote_files/Devis_test.pdf") }
+        let(:profile) { nil }
+
+        run_test!
       end
 
       response "422", "invalid request" do
