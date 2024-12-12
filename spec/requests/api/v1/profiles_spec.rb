@@ -14,7 +14,7 @@ RSpec.describe "/api/v1/profiles" do
 
     it "returns a complete response" do
       get api_v1_profiles_url
-      expect(json).to include(*QuoteCheck::PROFILES)
+      expect(json.fetch("data")).to include(*QuoteCheck::PROFILES)
     end
   end
 end

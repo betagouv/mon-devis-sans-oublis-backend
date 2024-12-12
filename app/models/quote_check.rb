@@ -4,10 +4,18 @@
 class QuoteCheck < ApplicationRecord
   belongs_to :file, class_name: "QuoteFile"
 
+  STATUSES = %w[pending valid invalid].freeze
+
   PROFILES = %w[artisan particulier mandataire conseiller].freeze
   validates :profile, presence: true, inclusion: { in: PROFILES }
 
   validates :started_at, presence: true
+
+  validate :validation_errors_as_array, if: -> { validation_errors.present? }
+
+  def validation_errors_as_array
+    errors.add(:validation_errors, "must be an array") unless validation_errors.is_a?(Array)
+  end
 
   def status
     return "pending" if finished_at.blank?

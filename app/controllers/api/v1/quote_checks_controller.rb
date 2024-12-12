@@ -7,6 +7,7 @@ module Api
       before_action :quote_check, only: %i[show]
 
       def show
+        # Force to use async way by using show to get other fields
         render json: quote_check_json
       end
 
@@ -23,11 +24,13 @@ module Api
           upload_file.tempfile, upload_file.original_filename, quote_check_params[:profile]
         )
         @quote_check = quote_check_service.quote_check
-        @quote_check = quote_check_service.check # Might be time consuming, TODO: move to background job is needed
+
+        # @quote_check = quote_check_service.check # Might be time consuming, TODO: move to background job is needed
+        QuoteCheckCheckJob.perform_later(@quote_check.id)
 
         QuoteCheckMailer.created(@quote_check).deliver_later
 
-        render json: quote_check_json(@quote_check)
+        render json: quote_check_json(@quote_check), status: :created
       end
       # rubocop:enable Metrics/MethodLength
 
@@ -38,20 +41,28 @@ module Api
       end
 
       def quote_check_params
-        params.require(:quote_check).permit(:file, :profile)
+        params.permit(:file, :profile)
       end
 
+      # rubocop:disable Metrics/MethodLength
       def quote_check_json(quote_check_provided = nil)
         object = quote_check_provided || quote_check
-        object.attributes.merge({
-                                  status: object.status,
-                                  valid: object.quote_valid?,
-                                  errors: object.validation_errors,
-                                  error_messages: object.validation_errors&.index_with do |error_key|
-                                    I18n.t("quote_validator.errors.#{error_key}")
-                                  end
-                                })
+        json_hash = object.attributes.merge({ # Warning: attributes has stringifed keys, so use it too
+                                              "status" => object.status,
+                                              "valid" => object.quote_valid?,
+                                              "errors" => object.validation_errors,
+                                              "error_messages" => object.validation_errors&.index_with do |error_key|
+                                                I18n.t("quote_validator.errors.#{error_key}")
+                                              end
+                                            })
+        return json_hash if Rails.env.development?
+
+        json_hash.slice(
+          "id", "status", "profile",
+          "valid", "errors", "error_messages"
+        )
       end
+      # rubocop:enable Metrics/MethodLength
     end
   end
 end

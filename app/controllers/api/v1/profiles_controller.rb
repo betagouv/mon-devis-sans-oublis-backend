@@ -5,7 +5,7 @@ module Api
     # Controller for Profiles API
     class ProfilesController < BaseController
       def index
-        render json: QuoteCheck::PROFILES
+        render json: { data: QuoteCheck::PROFILES }
       end
     end
   end

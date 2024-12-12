@@ -52,5 +52,9 @@ module MesDevisSansOublis
     config.action_mailer.default_url_options = { host: ENV.fetch("APPLICATION_HOST", nil) }
 
     config.application_name = "Mon Devis Sans Oublis"
+
+    config.openapi_file = lambda { |version|
+      "#{config.application_name.parameterize}_api_#{version.downcase}_swagger.yaml"
+    }
   end
 end

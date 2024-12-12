@@ -2,23 +2,39 @@
 
 FactoryBot.define do
   factory :quote_check do
+    profile { "artisan" }
     file factory: %i[quote_file]
 
-    profile { "artisan" }
-    text { "MyText" }
-    anonymised_text { "MyText" }
+    started_at { Time.zone.now }
+    finished_at { nil } # Default pending status
 
-    naive_attributes { {} }
-    naive_version { "MyString" }
-    qa_attributes { {} }
-    qa_result { {} }
-    qa_version { QuoteReader::Qa::VERSION }
-    read_attributes { {} }
+    trait :finished do
+      text { "MyText" }
+      anonymised_text { "MyText" }
 
-    validation_errors { {} }
-    validation_version { QuoteValidator::Global::VERSION }
+      naive_attributes { {} }
+      naive_version { "MyString" }
+      qa_attributes { {} }
+      qa_result { {} }
+      qa_version { QuoteReader::Qa::VERSION }
+      read_attributes { {} }
 
-    started_at { "2024-11-27 11:33:58" }
-    finished_at { "2024-11-27 11:32:58" }
+      finished_at { 5.minutes.from_now }
+
+      validation_version { QuoteValidator::Global::VERSION }
+      validation_errors { [] }
+    end
+    trait :valid do
+      finished
+
+      validation_version { QuoteValidator::Global::VERSION }
+      validation_errors { [] }
+    end
+    trait :invalid do
+      finished
+
+      validation_version { QuoteValidator::Global::VERSION }
+      validation_errors { ["something"] }
+    end
   end
 end

@@ -58,6 +58,8 @@ gem "active_storage_validations" # Validate ActiveStorage attachments
 gem "good_job" # Postgres-backed job queue
 gem "mime-types"
 gem "pdf-reader"
+gem "rswag-api" # Serves the generated Swagger documentation
+gem "rswag-ui" # Provides the Swagger UI interface
 gem "sib-api-v3-sdk", require: false # Brevo (ex Sendinblue) API
 
 group :development, :test do
@@ -68,6 +70,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "pry-rails"
   gem "rspec-rails"
+  gem "rswag-specs" # Allows API documentation via specs
 end
 
 group :test do
