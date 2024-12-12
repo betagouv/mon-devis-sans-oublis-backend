@@ -156,7 +156,7 @@ module QuoteValidator
       # ≥ 126% si basse T
       # ≥ 111% si Haute T
 
-      error << "cop_chauffage_manquant" if geste[:cop].blank? # TODO: V1 Check if SCOP is required too.
+      error << "cop_chauffage_manquant" if geste[:COP].blank? # TODO: V1 Check if SCOP is required too.
 
       error
     end

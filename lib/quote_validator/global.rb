@@ -125,7 +125,10 @@ module QuoteValidator
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/MethodLength
     def validate_works
-      works = quote[:gestes] || []
+      content = quote.dig("choices", 0, "message", "content")
+      content_json_result = content[/(\{.+\})/im, 1]
+
+      works = content_json_result[:gestes] || []
       isolation = Isolation.new(quote)
       menuiserie = Menuiserie.new(quote)
       chauffage = Chauffage.new(quote)
