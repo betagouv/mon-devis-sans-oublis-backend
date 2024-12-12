@@ -11,6 +11,7 @@ services:
        - '.env.local'
     depends_on:
       - db
+    command: ["bash", "-c", "bundle install && bin/rails db:create && bin/rails db:migrate && bin/rails db:test:prepare && bin/rails s -b 0.0.0.0"]
     stdin_open: true
     tty: true
   db:
