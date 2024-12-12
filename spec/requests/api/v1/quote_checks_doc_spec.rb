@@ -64,6 +64,8 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
       end
 
       response "422", "missing params" do
+        schema "$ref" => "#/components/schemas/api_error"
+
         let(:file) { fixture_file_upload("quote_files/Devis_test.pdf") }
         let(:profile) { nil }
 
@@ -71,6 +73,8 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
       end
 
       response "422", "invalid request" do
+        schema "$ref" => "#/components/schemas/api_error"
+
         let(:file) { fixture_file_upload("quote_files/Devis_test.pdf") }
         let(:profile) { "blabla" }
 
@@ -95,6 +99,8 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
       end
 
       response "404", "Devis non trouvé" do
+        schema "$ref" => "#/components/schemas/api_error"
+
         let(:id) { SecureRandom.uuid }
 
         run_test!

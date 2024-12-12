@@ -43,6 +43,10 @@ paths:
                 "$ref": "#/components/schemas/quote_check"
         '422':
           description: invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/api_error"
       requestBody:
         content:
           multipart/form-data:
@@ -77,6 +81,10 @@ paths:
                 "$ref": "#/components/schemas/quote_check"
         '404':
           description: Devis non trouvé
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/api_error"
 components:
   schemas:
     api_error:

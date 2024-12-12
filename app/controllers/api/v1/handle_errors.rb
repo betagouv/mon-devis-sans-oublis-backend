@@ -17,7 +17,7 @@ module Api
       def api_error(error, message, status)
         render json: {
           error: error,
-          message: message
+          message: Array.wrap(message)
         }, status: status
       end
 
