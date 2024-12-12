@@ -9,7 +9,7 @@ Rswag::Ui.configure do |config|
   # (under openapi_root) as JSON or YAML endpoints, then the list below should
   # correspond to the relative paths for those endpoints.
 
-  config.swagger_endpoint "/api-docs/v1/#{Rails.application.config.openapi_file.call('v1')}",
+  config.openapi_endpoint "/api-docs/v1/#{Rails.application.config.openapi_file.call('v1')}",
                           "#{Rails.application.config.application_name} API V1 Documentation"
 
   # Add Basic Auth in case your API is private

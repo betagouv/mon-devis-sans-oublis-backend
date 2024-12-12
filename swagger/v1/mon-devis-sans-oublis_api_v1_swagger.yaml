@@ -47,9 +47,16 @@ paths:
         content:
           multipart/form-data:
             schema:
-              type: string
-              format: binary
-        required: true
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                profile:
+                  "$ref": "#/components/schemas/profile"
+              required:
+              - file
+              - profile
   "/quote_checks/{id}":
     get:
       summary: Récupérer un Devis
