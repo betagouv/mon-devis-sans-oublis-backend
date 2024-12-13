@@ -127,8 +127,13 @@ module QuoteValidator
     def validate_works
       content = quote.dig("choices", 0, "message", "content")
       content_json_result = content[/(\{.+\})/im, 1]
+      if content_json_result
+        content_json_result = JSON.parse(content_json_result)
+        works = content_json_result[:gestes] || []
+      else
+        works = []
+      end
 
-      works = content_json_result[:gestes] || []
       isolation = Isolation.new(quote)
       menuiserie = Menuiserie.new(quote)
       chauffage = Chauffage.new(quote)
