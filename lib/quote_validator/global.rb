@@ -51,7 +51,7 @@ module QuoteValidator
     def validate_rge
       @pro = quote[:pro] ||= TrackingHash.new
       rge_labels = @pro[:labels]
-      @errors << "rge_manquant" if rge_labels.empty?
+      @errors << "rge_manquant" if rge_labels.nil? || rge_labels.empty?
     end
 
     # doit valider les mentions administratives associées à l'artisan
