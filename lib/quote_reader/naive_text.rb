@@ -27,6 +27,7 @@ module QuoteReader
           labels: self.class.find_label_numbers(text),
           numero_tva: self.class.find_numeros_tva(text).first,
           raison_sociale: self.class.find_raison_sociale(text),
+          rge_number: self.class.find_rge_numbers(text).first,
           siret: self.class.find_sirets(text).first
         },
 
@@ -146,6 +147,10 @@ module QuoteReader
       text[/(#{forme_jurique_raison_sociale_regex})(?:\s+.*)?\Z/, 1] ||
         text[/\A(?:.*\s)?+(#{forme_jurique_raison_sociale_regex}\s+.+)\s+/, 1] ||
         text[/Raison sociale\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
+    end
+
+    def self.find_rge_numbers(text)
+      find_label_numbers(text).select { |label_number| label_number.start_with?(/(?:R|E-)?E?/i) }
     end
 
     def self.find_sirets(text)

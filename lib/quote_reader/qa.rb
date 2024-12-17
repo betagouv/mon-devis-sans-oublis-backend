@@ -10,7 +10,7 @@ module QuoteReader
     def read
       return {} if text.blank?
 
-      @read_attributes = llm_read_attributes
+      llm_read_attributes
     end
 
     def version
@@ -29,8 +29,10 @@ module QuoteReader
         ErrorNotifier.notify(e)
       end
 
-      @read_attributes = mistral.read_attributes
+      @read_attributes = TrackingHash.new(mistral.read_attributes)
       @result = mistral.result
+
+      read_attributes
     end
 
     def prompt

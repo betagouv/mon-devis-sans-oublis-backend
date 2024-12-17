@@ -11,6 +11,7 @@ RSpec.describe QuoteFile do
       quote_file = described_class.find_or_create_file(file, file.original_filename)
 
       expect(quote_file).to be_persisted
+      expect(quote_file.file).to be_attached
 
       quote_file.reload
       expect(quote_file.file).to be_attached
