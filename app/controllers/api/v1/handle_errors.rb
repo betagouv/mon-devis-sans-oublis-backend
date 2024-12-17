@@ -6,10 +6,7 @@ module Api
     module HandleErrors
       extend ActiveSupport::Concern
 
-      include ActionController::HttpAuthentication::Basic::ControllerMethods
-
       included do
-        rescue_from ActionController::HttpAuthentication::Basic::AuthorizationError, with: :handle_unauthorized
         rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
         rescue_from ActiveRecord::RecordInvalid, with: :handle_record_invalid
         rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
@@ -36,8 +33,8 @@ module Api
         api_error("Record not found", exception.message, :not_found)
       end
 
-      def unauthorized(exception)
-        api_error("Unauthorized", exception.message, :unauthorized)
+      def handle_unauthorized(exception = nil)
+        api_error("Unauthorized", exception&.message || "HTTP Basic: Access denied.", :unauthorized)
       end
     end
   end
