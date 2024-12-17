@@ -20,7 +20,7 @@ module QuoteValidator
     def validate_admin
       # mention devis présente ou non, quote[:mention_devis] est un boolean
       @errors << "devis_manquant" unless quote[:mention_devis] || quote[:devis].present?
-      @errors << "numero_devis_manquant" unless quote[:numero_devis].present?
+      @errors << "numero_devis_manquant" if quote[:numero_devis].blank?
 
       validate_dates
       validate_pro
@@ -42,7 +42,7 @@ module QuoteValidator
       @errors << "date_pre_visite_manquant" if quote[:date_pre_visite].blank?
 
       # validite
-      @warnings << "date_validite_manquant" if !quote[:validite]
+      @warnings << "date_validite_manquant" unless quote[:validite]
     end
 
     # V0 on check la présence - attention devrait dépendre du geste, à terme,
@@ -51,7 +51,7 @@ module QuoteValidator
     def validate_rge
       @pro = quote[:pro] ||= TrackingHash.new
       rge_labels = @pro[:labels]
-      @errors << "rge_manquant" if rge_labels.nil? || rge_labels.empty?
+      @errors << "rge_manquant" if rge_labels.blank?
     end
 
     # doit valider les mentions administratives associées à l'artisan
@@ -72,7 +72,7 @@ module QuoteValidator
       @errors << "siret_manquant" if @pro[:siret].blank?
       # beaucoup de confusion entre SIRET (14 chiffres pour identifier un etablissement)
       # et SIREN (9 chiffres pour identifier une entreprise)
-      @errors << "siret_format_erreur" if @pro[:siret]&.gsub(/\s+/, '')&.length != 14 && @pro[:siret]&.length&.positive?
+      @errors << "siret_format_erreur" if @pro[:siret]&.gsub(/\s+/, "")&.length != 14 && @pro[:siret]&.length&.positive?
       validate_pro_address
     end
     # rubocop:enable Metrics/PerceivedComplexity
