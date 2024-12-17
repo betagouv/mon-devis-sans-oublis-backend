@@ -12,7 +12,6 @@ Rswag::Ui.configure do |config|
   config.openapi_endpoint "/api-docs/v1/#{Rails.application.config.openapi_file.call('v1')}",
                           "#{Rails.application.config.application_name} API V1 Documentation"
 
-  # Add Basic Auth in case your API is private
-  # config.basic_auth_enabled = true
-  # config.basic_auth_credentials 'username', 'password'
+  config.basic_auth_enabled = true
+  config.basic_auth_credentials "mdso", ENV.fetch("MDSO_SITE_PASSWORD")
 end

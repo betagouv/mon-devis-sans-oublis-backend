@@ -7,6 +7,7 @@ describe "Devis API" do
     # TODO: i18n?
     post "Téléverser un devis" do
       tags "Devis"
+      security [basic_auth: []]
       # TODO: security [ basic_auth: [] ]
       consumes "multipart/form-data"
       produces "application/json"
@@ -56,10 +57,11 @@ Si le statut est 'pending', cela signifie que l'analyse est encore en cours.
 Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à jour.".gsub("\n", "<br>")
 
         let(:file) { fixture_file_upload("quote_files/Devis_test.pdf") }
+        # See https://github.com/rswag/rswag/issues/316
+        let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
         let(:profile) { "artisan" }
 
         pending "fix why quote_check params are not sent"
-        # See https://github.com/rswag/rswag/issues/316
         # run_test!
       end
 
@@ -68,6 +70,8 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
 
         let(:file) { fixture_file_upload("quote_files/Devis_test.pdf") }
         let(:profile) { nil }
+
+        let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
 
         run_test!
       end
@@ -78,6 +82,8 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
         let(:file) { fixture_file_upload("quote_files/Devis_test.pdf") }
         let(:profile) { "blabla" }
 
+        let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
+
         run_test!
       end
     end
@@ -86,6 +92,7 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
   path "/quote_checks/{id}" do
     get "Récupérer un Devis" do
       tags "Devis"
+      security [basic_auth: []]
       consumes "application/json"
       produces "application/json"
       parameter name: :id, in: :path, type: :string, required: true
@@ -95,6 +102,8 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
 
         let(:id) { create(:quote_check).id }
 
+        let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
+
         run_test!
       end
 
@@ -102,6 +111,8 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
         schema "$ref" => "#/components/schemas/api_error"
 
         let(:id) { SecureRandom.uuid }
+
+        let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
 
         run_test!
       end

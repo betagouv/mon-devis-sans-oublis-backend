@@ -24,18 +24,18 @@ RSpec.configure do |config|
       },
       paths: {},
       components: {
-        # TODO
-        # securitySchemes: {
-        #   basic_auth: {
-        #     type: :http,
-        #     scheme: :basic
-        #   },
-        #   api_key: {
-        #     type: :apiKey,
-        #     name: "api_key",
-        #     in: :query
-        #   }
-        # },
+        securitySchemes: {
+          basic_auth: {
+            type: :http,
+            scheme: :basic
+          }
+          # TODO
+          #   api_key: {
+          #     type: :apiKey,
+          #     name: "api_key",
+          #     in: :query
+          #   }
+        },
         schemas: {
           api_error: {
             type: :object,
