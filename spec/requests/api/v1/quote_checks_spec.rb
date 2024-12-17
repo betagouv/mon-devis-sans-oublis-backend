@@ -47,7 +47,7 @@ RSpec.describe "/api/v1/quote_checks" do
 
     # rubocop:disable RSpec/MultipleExpectations
     it "renders a successful response" do
-      get api_v1_quote_check_url(quote_check), as: :json
+      get api_v1_quote_check_url(quote_check), as: :json, headers: basic_auth_header
       expect(response).to be_successful
       expect(json.fetch("status")).to eq("invalid")
     end
@@ -59,7 +59,7 @@ RSpec.describe "/api/v1/quote_checks" do
 
       # rubocop:disable RSpec/MultipleExpectations
       it "returns a direct error response" do
-        get api_v1_quote_check_url(quote_check), as: :json
+        get api_v1_quote_check_url(quote_check), as: :json, headers: basic_auth_header
         expect(response).to be_successful
         expect(json.fetch("status")).to eq("invalid")
         expect(json.fetch("errors")).to include("file_reading_error")

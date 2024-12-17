@@ -11,7 +11,7 @@ module QuoteValidator
       error << "puissance_manquant" if geste[:puissance].blank?
       error << "marque_isolation_manquant" if geste[:marque].blank?
       error << "reference_isolation_manquant" if geste[:reference].blank?
-      error << "etas_chauffage_manquant" if geste[:ETAS].blank # en %
+      error << "etas_chauffage_manquant" if geste[:ETAS].blank? # en %
 
       # TODO: à challenger
       @warnings << "remplacement_chaudiere_condensation_manquant" unless geste[:remplacement_chaudiere_condensation]

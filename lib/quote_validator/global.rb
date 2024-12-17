@@ -125,28 +125,20 @@ module QuoteValidator
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/MethodLength
     def validate_works
-      content = quote.dig("choices", 0, "message", "content")
-      content_json_result = content[/(\{.+\})/im, 1]
-      if content_json_result
-        content_json_result = JSON.parse(content_json_result)
-        works = content_json_result[:gestes] || []
-      else
-        works = []
-      end
-
       isolation = Isolation.new(quote)
       menuiserie = Menuiserie.new(quote)
       chauffage = Chauffage.new(quote)
       eau_chaude = EauChaude.new(quote)
       ventilation = Ventilation.new(quote)
 
-      @errors += works.flat_map do |geste| # rubocop:disable Metrics/BlockLength
+      gestes = quote[:gestes] || []
+      @errors += gestes.flat_map do |geste| # rubocop:disable Metrics/BlockLength
         case geste[:type]
 
         # ISOLATION
         when "isolation_mur_ite"
           isolation.validate_isolation_ite(geste)
-        when "isolation_combles_perdues"
+        when "isolation_comble_perdu", "isolation_combles_perdues"
           isolation.validate_isolation_combles(geste)
         when "isolation_rampants-toiture"
           isolation.validate_isolation_rampants(geste)
@@ -174,13 +166,13 @@ module QuoteValidator
           chauffage.validate_poele_insert(geste)
         when "systeme_solaire_combine"
           chauffage.validate_systeme_solaire_combine(geste)
-        when "pac"
+        when "pac", "pac_air_eau"
           chauffage.validate_pac(geste)
 
         # EAU CHAUDE SANITAIRE
         when "chauffe_eau_solaire_individuel"
           eau_chaude.validate_cesi(geste)
-        when "chauffe_eau_thermodynamique"
+        when "chauffe_eau_thermo", "chauffe_eau_thermodynamique"
           eau_chaude.validate_chauffe_eau_thermodynamique(geste)
 
         # VENTILATION
