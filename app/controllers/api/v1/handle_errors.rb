@@ -6,6 +6,8 @@ module Api
     module HandleErrors
       extend ActiveSupport::Concern
 
+      include ActionController::HttpAuthentication::Basic::ControllerMethods
+
       included do
         rescue_from ActionController::HttpAuthentication::Basic::AuthorizationError, with: :handle_unauthorized
         rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
