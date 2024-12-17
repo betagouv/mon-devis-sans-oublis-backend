@@ -7,9 +7,10 @@ module Api
       extend ActiveSupport::Concern
 
       included do
+        rescue_from ActionController::HttpAuthentication::Basic::AuthorizationError, with: :handle_unauthorized
+        rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
         rescue_from ActiveRecord::RecordInvalid, with: :handle_record_invalid
         rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
-        rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
       end
 
       private
@@ -31,6 +32,10 @@ module Api
 
       def handle_record_not_found(exception)
         api_error("Record not found", exception.message, :not_found)
+      end
+
+      def unauthorized(exception)
+        api_error("Unauthorized", exception.message, :unauthorized)
       end
     end
   end
