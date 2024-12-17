@@ -148,7 +148,6 @@ module QuoteReader
         text[/Raison sociale\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
     end
 
-
     def self.find_sirets(text)
       text.scan(/\b(\d{3}\s*\d{3}\s*\d{3}\s*\d{5})\b/i).flatten.filter_map { |e| e&.strip }.uniq
     end
