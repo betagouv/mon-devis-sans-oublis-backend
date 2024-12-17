@@ -2,7 +2,7 @@
 
 # Main controller for the application
 class ApplicationController < ActionController::Base
-  before_action :authenticate, if: -> { ENV.key?("MDSO_SITE_PASSWORD") }
+  before_action :authenticate, if: -> { ENV.key?("MDSO_SITE_PASSWORD") && !Rails.env.test? }
 
   protected
 
