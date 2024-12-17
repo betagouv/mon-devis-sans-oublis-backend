@@ -28,6 +28,8 @@ paths:
       summary: Téléverser un devis
       tags:
       - Devis
+      security:
+      - basic_auth: []
       parameters: []
       description: Au retour le devis a été téléversé avec succès.<br>Mais vérifiez
         selon le statut si le devis a été déjà analysé ou non.<br>Il peut contenir
@@ -66,6 +68,8 @@ paths:
       summary: Récupérer un Devis
       tags:
       - Devis
+      security:
+      - basic_auth: []
       parameters:
       - name: id
         in: path
@@ -86,6 +90,10 @@ paths:
               schema:
                 "$ref": "#/components/schemas/api_error"
 components:
+  securitySchemes:
+    basic_auth:
+      type: http
+      scheme: basic
   schemas:
     api_error:
       type: object

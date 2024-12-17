@@ -16,23 +16,23 @@ RSpec.describe "/api/v1/quote_checks" do
     end
 
     it "returns a successful response" do
-      post api_v1_quote_checks_url, params: quote_check_params
+      post api_v1_quote_checks_url, params: quote_check_params, headers: basic_auth_header
       expect(response).to be_successful
     end
 
     it "returns a created response" do
-      post api_v1_quote_checks_url, params: quote_check_params
+      post api_v1_quote_checks_url, params: quote_check_params, headers: basic_auth_header
       expect(response).to have_http_status(:created)
     end
 
     it "returns a pending treatment response" do
-      post api_v1_quote_checks_url, params: quote_check_params
+      post api_v1_quote_checks_url, params: quote_check_params, headers: basic_auth_header
       expect(json.fetch("status")).to eq("pending")
     end
 
     it "creates a QuoteCheck" do
       expect do
-        post api_v1_quote_checks_url, params: quote_check_params
+        post api_v1_quote_checks_url, params: quote_check_params, headers: basic_auth_header
       end.to change(QuoteCheck, :count).by(1)
     end
   end

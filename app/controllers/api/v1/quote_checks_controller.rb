@@ -4,6 +4,7 @@ module Api
   module V1
     # Controller for QuoteChecks API
     class QuoteChecksController < BaseController
+      before_action :authorize_request
       before_action :quote_check, only: %i[show]
 
       def show

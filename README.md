@@ -37,6 +37,7 @@ Les fichiers devis sont traités par le `QuoteChecksController` qui les envoient
 ## API
 
 - au format REST JSON
+- protéger via authentification HTTP Basic avec Bearer hashé
 - voir fichier de documentation de l'API  au format OpenAPI Swagger et interface bac à sable interractif sur `/api-docs`
 - regénération et mise à jour de la documentation à partir des spécifications tests via `make doc`
 
