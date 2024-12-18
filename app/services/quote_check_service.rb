@@ -62,11 +62,25 @@ class QuoteCheckService
     )
   rescue QuoteReader::ReadError
     quote_check.assign_attributes(
-      validation_errors: ["file_reading_error"]
+      validation_errors: ["file_reading_error"],
+      validation_error_details: [{
+        id: "#{quote_check.id}#1",
+        code: "file_reading_error",
+        category: "file",
+        type: "error",
+        title: I18n.t("quote_validator.errors.file_reading_error")
+      }]
     )
   rescue QuoteReader::UnsupportedFileType
     quote_check.assign_attributes(
-      validation_errors: ["unsupported_file_format"]
+      validation_errors: ["unsupported_file_format"],
+      validation_error_details: [{
+        id: "#{quote_check.id}#1",
+        code: "unsupported_file_format",
+        category: "file",
+        type: "error",
+        title: I18n.t("quote_validator.errors.unsupported_file_format")
+      }]
     )
   end
   # rubocop:enable Metrics/MethodLength
@@ -78,6 +92,7 @@ class QuoteCheckService
 
     quote_check.assign_attributes(
       validation_errors: quote_validator.errors,
+      validation_error_details: quote_validator.error_details,
       validation_version: quote_validator.version
     )
   end

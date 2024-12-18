@@ -12,7 +12,6 @@ module Api
         render json: quote_check_json
       end
 
-      # rubocop:disable Metrics/MethodLength
       def create
         upload_file = quote_check_params[:file]
 
@@ -33,7 +32,6 @@ module Api
 
         render json: quote_check_json(@quote_check), status: :created
       end
-      # rubocop:enable Metrics/MethodLength
 
       protected
 
@@ -52,6 +50,7 @@ module Api
                                               "status" => object.status,
                                               "valid" => object.quote_valid?,
                                               "errors" => object.validation_errors,
+                                              "error_details" => object.validation_error_details,
                                               "error_messages" => object.validation_errors&.index_with do |error_key|
                                                 I18n.t("quote_validator.errors.#{error_key}")
                                               end
@@ -60,7 +59,7 @@ module Api
 
         json_hash.slice(
           "id", "status", "profile",
-          "valid", "errors", "error_messages"
+          "valid", "errors", "error_details", "error_messages"
         )
       end
       # rubocop:enable Metrics/MethodLength

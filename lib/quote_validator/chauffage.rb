@@ -14,7 +14,12 @@ module QuoteValidator
       error << "etas_chauffage_manquant" if geste[:ETAS].blank? # en %
 
       # TODO: à challenger
-      @warnings << "remplacement_chaudiere_condensation_manquant" unless geste[:remplacement_chaudiere_condensation]
+      return if geste[:remplacement_chaudiere_condensation]
+
+      add_error("remplacement_chaudiere_condensation_manquant",
+                type: "missing",
+                category: "gestes",
+                value: geste[:intitule])
     end
 
     # rubocop:disable Metrics/AbcSize
