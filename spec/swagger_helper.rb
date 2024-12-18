@@ -60,10 +60,40 @@ RSpec.configure do |config|
               "invalid" => "invalide"
             }.slice(*QuoteCheck::STATUSES).map { |status, description| "#{status}: #{description}" }.join(" | ")
           },
-          quote_check_error: {
+          quote_check_error_category: {
+            type: :string,
+            enum: QuoteValidator::Global.error_categories.keys,
+            description: QuoteValidator::Global.error_categories.map do |category, description|
+              "#{category}: #{description}"
+            end.join(" | ")
+          },
+          quote_check_error_code: {
             type: :string,
             # enum: QuoteCheck::ERRORS, # TODO
             description: "code d'erreur"
+          },
+          quote_check_error_type: {
+            type: :string,
+            enum: QuoteValidator::Global.error_types.keys,
+            description: QuoteValidator::Global.error_types.map do |type, description|
+              "#{type}: #{description}"
+            end.join(" | ")
+          },
+          quote_check_error_details: {
+            type: "object",
+            properties: {
+              id: {
+                type: :string,
+                description: "UUID unique"
+              },
+              category: { "$ref" => "#/components/schemas/quote_check_error_category" },
+              type: { "$ref" => "#/components/schemas/quote_check_error_type" },
+              code: { "$ref" => "#/components/schemas/quote_check_error_code" },
+              title: { type: :string },
+              problem: { type: :string },
+              solution: { type: :string },
+              value: { type: :string }
+            }
           },
           quote_check: {
             type: "object",
@@ -77,8 +107,14 @@ RSpec.configure do |config|
               valid: { type: :boolean, nullable: true },
               errors: {
                 type: :array,
-                items: { "$ref" => "#/components/schemas/quote_check_error" },
+                items: { "$ref" => "#/components/schemas/quote_check_error_code" },
                 description: "liste des erreurs dans ordre à afficher",
+                nullable: true
+              },
+              error_details: {
+                type: :array,
+                items: { "$ref" => "#/components/schemas/quote_check_error_details" },
+                description: "liste des erreurs avec détails dans ordre à afficher",
                 nullable: true
               },
               error_messages: {

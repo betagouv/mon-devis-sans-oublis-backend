@@ -7,20 +7,20 @@ module QuoteValidator
     VERSION = "0.0.1"
 
     def validate!
-      @errors = []
-      @warnings = []
-
-      validate_admin
-      validate_works
-
-      valid?
+      super do
+        validate_admin
+        validate_works
+      end
     end
 
     # doit valider les mentions administratives du devis
     def validate_admin
       # mention devis présente ou non, quote[:mention_devis] est un boolean
-      @errors << "devis_manquant" unless quote[:mention_devis] || quote[:devis].present?
-      @errors << "numero_devis_manquant" if quote[:numero_devis].blank?
+      unless quote[:mention_devis] || quote[:devis].present?
+        add_error("devis_manquant", category: "admin",
+                                    type: "missing")
+      end
+      add_error("numero_devis_manquant", category: "admin", type: "missing") if quote[:numero_devis].blank?
 
       validate_dates
       validate_pro
@@ -33,16 +33,16 @@ module QuoteValidator
     # Date de début de chantier (CEE uniquement)
     def validate_dates
       # date_devis
-      @errors << "date_devis_manquant" if quote[:date_devis].blank?
+      add_error("date_devis_manquant", category: "admin", type: "missing") if quote[:date_devis].blank?
 
       # date_debut_chantier
-      @warnings << "date_chantier_manquant" if quote[:date_chantier].blank?
+      add_error("date_chantier_manquant", category: "admin", type: "missing") if quote[:date_chantier].blank?
 
       # date_pre_visite
-      @errors << "date_pre_visite_manquant" if quote[:date_pre_visite].blank?
+      add_error("date_pre_visite_manquant", category: "admin", type: "missing") if quote[:date_pre_visite].blank?
 
       # validite
-      @warnings << "date_validite_manquant" unless quote[:validite]
+      add_error("date_validite_manquant", category: "admin", type: "missing") unless quote[:validite]
     end
 
     # V0 on check la présence - attention devrait dépendre du geste, à terme,
@@ -51,39 +51,50 @@ module QuoteValidator
     def validate_rge
       @pro = quote[:pro] ||= TrackingHash.new
       rge_labels = @pro[:labels]
-      @errors << "rge_manquant" if rge_labels.blank?
+      add_error("rge_manquant", category: "admin", type: "missing") if rge_labels.blank?
     end
 
     # doit valider les mentions administratives associées à l'artisan
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/PerceivedComplexity
     def validate_pro
       @pro = quote[:pro] ||= TrackingHash.new
-      @errors << "pro_raison_sociale_manquant" if @pro[:raison_sociale].blank?
+
+      add_error("pro_raison_sociale_manquant", category: "admin", type: "missing") if @pro[:raison_sociale].blank?
       # on essaie de récupérer la forme juridique pendant l'anonymisation mais aussi avec le LLM.
-      @errors << "pro_forme_juridique_manquant" if @pro[:forme_juridique].blank? && quote[:pro_forme_juridique].blank?
-      @errors << "tva_manquant" if @pro[:numero_tva].blank?
+      if @pro[:forme_juridique].blank? && quote[:pro_forme_juridique].blank?
+        add_error("pro_forme_juridique_manquant", category: "admin", type: "missing")
+      end
+      add_error("tva_manquant", category: "admin", type: "missing") if @pro[:numero_tva].blank?
       # TODO: check format tva : FR et de 11 chiffres
       # (une clé informatique de 2 chiffres et le numéro SIREN à 9 chiffres de l'entreprise)
 
       # TODO: rajouter une condition si personne physique professionnelle et dans ce cas pas de SIRET nécessaire
-      @errors << "capital_manquant" if @pro[:capital].blank?
-      @errors << "siret_manquant" if @pro[:siret].blank?
+      add_error("capital_manquant", category: "admin", type: "missing") if @pro[:capital].blank?
+      add_error("siret_manquant", category: "admin", type: "missing") if @pro[:siret].blank?
       # beaucoup de confusion entre SIRET (14 chiffres pour identifier un etablissement)
       # et SIREN (9 chiffres pour identifier une entreprise)
-      @errors << "siret_format_erreur" if @pro[:siret]&.gsub(/\s+/, "")&.length != 14 && @pro[:siret]&.length&.positive?
+      if @pro[:siret]&.gsub(/\s+/, "")&.length != 14 && @pro[:siret]&.length&.positive?
+        add_error("siret_format_erreur", category: "admin",
+                                         type: "wrong")
+      end
+
       validate_pro_address
     end
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
 
     # doit valider les mentions administratives associées au client
     def validate_client
       @client = quote[:client] ||= TrackingHash.new
-      @errors << "client_prenom_manquant" if @client[:prenom].blank?
-      @errors << "client_nom_manquant" if @client[:nom].blank?
+
+      add_error("client_prenom_manquant", category: "admin", type: "missing") if @client[:prenom].blank?
+      add_error("client_nom_manquant", category: "admin", type: "missing") if @client[:nom].blank?
+
       validate_client_address
     end
 
@@ -95,7 +106,7 @@ module QuoteValidator
 
       site_address = @client[:adresse_chantier]
       if site_address.blank?
-        @warnings << "chantier_facturation_idem"
+        add_error("chantier_facturation_idem", category: "admin", type: "missing")
       else
         validate_address(site_address, "chantier")
       end
@@ -112,11 +123,11 @@ module QuoteValidator
 
       case type
       when "client"
-        @errors << "client_adresse_manquant"
+        add_error("client_adresse_manquant", category: "admin", type: "missing")
       when "chantier" # ne devrait pas arriver, mais par la suite, faudrait vérifier la justesse de l'adresse
-        @errors << "chantier_adresse_manquant"
+        add_error("chantier_adresse_manquant", category: "admin", type: "missing")
       when "pro"
-        @errors << "pro_adresse_manquant"
+        add_error("pro_adresse_manquant", category: "admin", type: "missing")
       end
     end
 
@@ -124,6 +135,7 @@ module QuoteValidator
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/PerceivedComplexity
     def validate_works
       isolation = Isolation.new(quote)
       menuiserie = Menuiserie.new(quote)
@@ -132,7 +144,7 @@ module QuoteValidator
       ventilation = Ventilation.new(quote)
 
       gestes = quote[:gestes] || []
-      @errors += gestes.flat_map do |geste| # rubocop:disable Metrics/BlockLength
+      gestes_errors = gestes.map do |geste| # rubocop:disable Metrics/BlockLength
         case geste[:type]
 
         # ISOLATION
@@ -191,10 +203,20 @@ module QuoteValidator
           "geste_inconnu"
         end
       end.compact
-      # rubocop:enable Metrics/MethodLength
-      # rubocop:enable Metrics/CyclomaticComplexity
-      # rubocop:enable Metrics/AbcSize
+
+      gestes_errors.each_with_index do |errors, index|
+        errors.each do |error|
+          add_error(error,
+                    category: "gestes",
+                    type: "missing",
+                    value: gestes[index][:intitule])
+        end
+      end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
 
     def version
       self.class::VERSION

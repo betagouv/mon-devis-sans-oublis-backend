@@ -11,10 +11,13 @@ class QuoteCheck < ApplicationRecord
 
   validates :started_at, presence: true
 
-  validate :validation_errors_as_array, if: -> { validation_errors.present? }
+  validate :validation_errors_as_array, if: -> { validation_errors.present? || validation_error_details.present? }
 
   def validation_errors_as_array
-    errors.add(:validation_errors, "must be an array") unless validation_errors.is_a?(Array)
+    errors.add(:validation_errors, "must be an array") if validation_errors && !validation_errors.is_a?(Array)
+    return unless validation_error_details && !validation_error_details.is_a?(Array)
+
+    errors.add(:validation_error_details, "must be an array")
   end
 
   def status

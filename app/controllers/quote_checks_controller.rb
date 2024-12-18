@@ -71,7 +71,9 @@ class QuoteChecksController < ApplicationController
     @quote_check_json = {
       valid: @quote_valid,
       errors: @quote_errors,
-      error_messages: @quote_errors&.index_with { |error_key| I18n.t("quote_validator.errors.#{error_key}") }
+      error_messages: @quote_errors&.index_with { |error_key| I18n.t("quote_validator.errors.#{error_key}") },
+      quote_error_details: @quote_error_details,
+      quote_error_categories: @quote_error_categories
     }
 
     http_status = @quote_valid ? :ok : :unprocessable_entity
@@ -93,5 +95,7 @@ class QuoteChecksController < ApplicationController
     @quote_attributes = quote_check.read_attributes
     @quote_valid = quote_check.quote_valid?
     @quote_errors = quote_check.validation_errors
+    @quote_error_details = quote_check.validation_error_details
+    @quote_error_categories = QuoteValidator::Global.error_categories
   end
 end

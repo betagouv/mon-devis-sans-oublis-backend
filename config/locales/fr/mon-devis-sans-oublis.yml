@@ -14,7 +14,16 @@ fr:
         mandataire: Mandataire
         conseiller: Conseiller
   quote_validator:
+    error_categories:
+      admin: "Mentions administratives"
+      gestes: "Descriptif technique des gestes"
+    error_types:
+      missing: "Information manquante"
+      wrong: "Information erronée"
     errors:
+      file_reading_error: "Erreur lors de la lecture initiale du contenu du fichier."
+      unsupported_file_format: "L'extension et le format du fichier ne sont pas supportés."
+
       devis_manquant: 'La mention explicite "devis" est obligatoire. Les bons de commande et propositions commerciales ne sont pas acceptés.'
       numero_devis_manquant: "Un devis doit avoir un numéro unique."
       date_validite_manquant: "Attention, si la date de validité n'est pas indiquée, elle est de 3 mois par défaut."
@@ -37,7 +46,7 @@ SNC, SAS."
 
       # Information du client : 
       client_prenom_manquant: "Le prénom du client est requis. Attention, le devis doit être établi au nom de la personne ayant fait la demande d’aide."
-      client_nom_manquant: "Le nom du client est requis. Attention, le devis doit être établi au nom de la personne ayant fait la demande d’aide. "
+      client_nom_manquant: "Le nom du client est requis. Attention, le devis doit être établi au nom de la personne ayant fait la demande d’aide."
       client_adresse_manquant: "L'adresse du client doit être indiquée." 
       chantier_adresse_manquant: "Si l'adresse du chantier est différente de l'adresse de facturation, il faut l'indiquer clairement."
       chantier_facturation_idem: "L'adresse de réalisation des travaux n'est pas indiquée. Est-ce bien la même que l'adresse de facturation ?"

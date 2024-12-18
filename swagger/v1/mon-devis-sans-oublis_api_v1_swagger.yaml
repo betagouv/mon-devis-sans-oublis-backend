@@ -118,9 +118,42 @@ components:
       - valid
       - invalid
       description: 'pending: analyse en cours | valid: valide | invalid: invalide'
-    quote_check_error:
+    quote_check_error_category:
+      type: string
+      enum:
+      - admin
+      - gestes
+      description: 'admin: Mentions administratives | gestes: Descriptif technique
+        des gestes'
+    quote_check_error_code:
       type: string
       description: code d'erreur
+    quote_check_error_type:
+      type: string
+      enum:
+      - missing
+      - wrong
+      description: 'missing: Information manquante | wrong: Information erronée'
+    quote_check_error_details:
+      type: object
+      properties:
+        id:
+          type: string
+          description: UUID unique
+        category:
+          "$ref": "#/components/schemas/quote_check_error_category"
+        type:
+          "$ref": "#/components/schemas/quote_check_error_type"
+        code:
+          "$ref": "#/components/schemas/quote_check_error_code"
+        title:
+          type: string
+        problem:
+          type: string
+        solution:
+          type: string
+        value:
+          type: string
     quote_check:
       type: object
       properties:
@@ -137,8 +170,14 @@ components:
         errors:
           type: array
           items:
-            "$ref": "#/components/schemas/quote_check_error"
+            "$ref": "#/components/schemas/quote_check_error_code"
           description: liste des erreurs dans ordre à afficher
+          nullable: true
+        error_details:
+          type: array
+          items:
+            "$ref": "#/components/schemas/quote_check_error_details"
+          description: liste des erreurs avec détails dans ordre à afficher
           nullable: true
         error_messages:
           type: object

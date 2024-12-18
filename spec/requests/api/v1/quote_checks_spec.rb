@@ -45,25 +45,37 @@ RSpec.describe "/api/v1/quote_checks" do
       QuoteCheckCheckJob.new.perform(quote_check.id)
     end
 
+    # rubocop:disable RSpec/ExampleLength
     # rubocop:disable RSpec/MultipleExpectations
     it "renders a successful response" do
       get api_v1_quote_check_url(quote_check), as: :json, headers: basic_auth_header
       expect(response).to be_successful
       expect(json.fetch("status")).to eq("invalid")
+      expect(json.fetch("error_details").first).to include({
+                                                             code: "file_reading_error",
+                                                             type: "error"
+                                                           })
     end
     # rubocop:enable RSpec/MultipleExpectations
+    # rubocop:enable RSpec/ExampleLength
 
     context "with invalid file type" do
       let(:file) { Rails.root.join("spec/fixtures/files/quote_files/Devis_test.png").open }
       let(:quote_file) { create(:quote_file, file: file) }
 
       # rubocop:disable RSpec/MultipleExpectations
+      # rubocop:disable RSpec/ExampleLength
       it "returns a direct error response" do
         get api_v1_quote_check_url(quote_check), as: :json, headers: basic_auth_header
         expect(response).to be_successful
         expect(json.fetch("status")).to eq("invalid")
         expect(json.fetch("errors")).to include("file_reading_error")
+        expect(json.fetch("error_details").first).to include({
+                                                               code: "file_reading_error",
+                                                               type: "error"
+                                                             })
       end
+      # rubocop:enable RSpec/ExampleLength
       # rubocop:enable RSpec/MultipleExpectations
     end
   end
