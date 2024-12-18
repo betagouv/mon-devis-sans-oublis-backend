@@ -12,6 +12,7 @@ module Api
         render json: quote_check_json
       end
 
+      # rubocop:disable Metrics/MethodLength
       def create
         upload_file = quote_check_params[:file]
 
@@ -25,13 +26,14 @@ module Api
         )
         @quote_check = quote_check_service.quote_check
 
-        # @quote_check = quote_check_service.check # Might be time consuming, TODO: move to background job is needed
-        QuoteCheckCheckJob.perform_later(@quote_check.id)
+        QuoteCheckCheckJob.perform_later(@quote_check.id) # Might be time consuming so make it async with background job
+        # @quote_check = QuoteCheckCheckJob.new.perform(@quote_check.id) # Local debug
 
         QuoteCheckMailer.created(@quote_check).deliver_later
 
         render json: quote_check_json(@quote_check), status: :created
       end
+      # rubocop:enable Metrics/MethodLength
 
       protected
 
