@@ -89,6 +89,10 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/api_error"
+produces:
+- application/json
+consumes:
+- application/json
 components:
   securitySchemes:
     basic_auth:

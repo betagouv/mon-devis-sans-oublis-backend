@@ -23,6 +23,8 @@ RSpec.configure do |config|
         version: "v1"
       },
       paths: {},
+      produces: ["application/json"],
+      consumes: ["application/json"],
       components: {
         securitySchemes: {
           basic_auth: {
