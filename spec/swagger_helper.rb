@@ -92,10 +92,11 @@ RSpec.configure do |config|
               type: { "$ref" => "#/components/schemas/quote_check_error_type" },
               code: { "$ref" => "#/components/schemas/quote_check_error_code" },
               title: { type: :string },
-              problem: { type: :string },
-              solution: { type: :string },
+              problem: { type: :string, description: "Réutilisez le title si vide" },
+              solution: { type: :string, description: "peut-être vide" },
               value: { type: :string }
-            }
+            },
+            required: %w[id code]
           },
           quote_check: {
             type: "object",

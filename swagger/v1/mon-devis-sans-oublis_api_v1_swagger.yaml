@@ -154,10 +154,15 @@ components:
           type: string
         problem:
           type: string
+          description: Réutilisez le title si vide
         solution:
           type: string
+          description: peut-être vide
         value:
           type: string
+      required:
+      - id
+      - code
     quote_check:
       type: object
       properties:
@@ -165,7 +170,7 @@ components:
           type: string
           description: UUID unique
         status:
-          type: string
+          "$ref": "#/components/schemas/quote_check_status"
         profile:
           "$ref": "#/components/schemas/profile"
         valid:
