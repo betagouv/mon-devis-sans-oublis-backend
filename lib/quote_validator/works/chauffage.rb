@@ -140,7 +140,7 @@ module QuoteValidator
         validate_chauffage(geste)
 
         # air-eau, eau-eau, air-air, hybride -> TODO Verifier si besoin de l'indication sur le devis
-        add_error("type_pac_manquant", geste) if geste[:type_pac].blank?
+        add_error("type_pac_manquant", geste) if geste[:type].blank?
         add_error("regime_temperature_manquant", geste) if geste[:regime_temperature].blank? # basse, moyenne, haute
         # R410A -  attention, celui ci va être restreint, R32 …
         add_error("type_fluide_frigorigene_manquant", geste) if geste[:type_fluide_frigorigene].blank?
