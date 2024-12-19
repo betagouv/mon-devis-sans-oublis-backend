@@ -147,6 +147,7 @@ puissance: decimal **(kW);**
 regime_temperature: enum(basse, moyenne, haute);
 type_fluide_frigorigene: text;
 COP: decimal;
+SCOP: decimal;
 }
 ```
 
@@ -203,7 +204,7 @@ voici le texte du devis anonymise :
 
 
 Réfléchissez étape par étape.
-Si un attribut n'est pas explicitement indiqué dans le texte, il faut absolument le laisser vide dans le JSON et ne pas l'inventer.
+Si un attribut n'est pas explicitement mentionné dans le texte, il faut absolument le laisser vide dans le JSON et ne pas l'inventer.
 Lorsqu'un champ du JSON est un enum, il faut utiliser uniquement l'une des options possibles.
 
 Vous ne répondrez que par un objet JSON qui concatene le JSON général et tous les JSON des gestes présent dans le devis
