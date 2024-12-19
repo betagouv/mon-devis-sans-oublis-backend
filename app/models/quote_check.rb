@@ -13,11 +13,24 @@ class QuoteCheck < ApplicationRecord
 
   validate :validation_errors_as_array, if: -> { validation_errors.present? || validation_error_details.present? }
 
-  def validation_errors_as_array
-    errors.add(:validation_errors, "must be an array") if validation_errors && !validation_errors.is_a?(Array)
-    return unless validation_error_details && !validation_error_details.is_a?(Array)
+  def frontend_webapp_url
+    return unless id
 
-    errors.add(:validation_error_details, "must be an array")
+    profile_path = case profile
+                   when "artisan" then "artisan"
+                   when "conseiller" then "conseiller"
+                   when "mandataire" then "mandataire"
+                   when "particulier" then "particulier"
+                   else
+                     raise NotImplementedError, "Unknown path for profile: #{profile}"
+                   end
+
+    URI.join(ENV.fetch("FRONTEND_APPLICATION_HOST"), profile_path, "televersement", id)
+  end
+
+  # valid? is already used by the framework
+  def quote_valid?
+    validation_version.present? && validation_errors.blank?
   end
 
   def status
@@ -26,8 +39,10 @@ class QuoteCheck < ApplicationRecord
     validation_errors.blank? ? "valid" : "invalid"
   end
 
-  # valid? is already used by the framework
-  def quote_valid?
-    validation_version.present? && validation_errors.blank?
+  def validation_errors_as_array
+    errors.add(:validation_errors, "must be an array") if validation_errors && !validation_errors.is_a?(Array)
+    return unless validation_error_details && !validation_error_details.is_a?(Array)
+
+    errors.add(:validation_error_details, "must be an array")
   end
 end
