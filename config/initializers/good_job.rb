@@ -7,6 +7,6 @@ if Rails.env.production?
   end
 
   Rails.application.configure do |config|
-    config.good_job.dashboard_default_locale = Rails.application.confi.i18n.default_locale
+    config.good_job.dashboard_default_locale = config.i18n.default_locale
   end
 end
