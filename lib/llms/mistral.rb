@@ -20,6 +20,14 @@ module Llms
       ENV.key?("MISTRAL_API_KEY")
     end
 
+    def self.extract_json(text)
+      text[/(\{.+\})/im, 1]
+    end
+
+    def self.extract_jsx(text)
+      text[/(\{.+\})/im, 1] if text&.match?(/```jsx\n/i)
+    end
+
     # API Docs: https://docs.mistral.ai/api/#tag/chat/operation/chat_completion_v1_chat_completions_post
     # TODO: Better client
     # rubocop:disable Metrics/AbcSize
@@ -50,11 +58,16 @@ module Llms
       content = result.dig("choices", 0, "message", "content")
       raise ResultError, "Content empty" unless content
 
-      content_json_result = content[/(\{.+\})/im, 1]
-      @read_attributes = begin
-        JSON.parse(content_json_result, symbolize_names: true)
-      rescue JSON::ParserError
-        raise ResultError, "Parsing JSON inside content: #{content_json_result}"
+      content_jsx_result = self.class.extract_jsx(content)
+      if content_jsx_result
+        @read_attributes = eval(content_jsx_result.gsub(/: +null/i, ": nil")) # rubocop:disable Security/Eval
+      else
+        content_json_result = self.class.extract_json(content)
+        @read_attributes = begin
+          JSON.parse(content_json_result, symbolize_names: true)
+        rescue JSON::ParserError
+          raise ResultError, "Parsing JSON inside content: #{content_json_result}"
+        end
       end
     end
     # rubocop:enable Metrics/MethodLength
