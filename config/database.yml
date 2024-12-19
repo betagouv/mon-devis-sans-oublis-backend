@@ -11,6 +11,10 @@ development:
 test:
   <<: *default
   database: test
+  username: postgres
+  password: dummy
+  host: db
+  port: 5433
 
 production:
   <<: *default
