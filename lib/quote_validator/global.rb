@@ -135,16 +135,15 @@ module QuoteValidator
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/MethodLength
-    # rubocop:disable Metrics/PerceivedComplexity
     def validate_works
-      isolation = Isolation.new(quote)
-      menuiserie = Menuiserie.new(quote)
-      chauffage = Chauffage.new(quote)
-      eau_chaude = EauChaude.new(quote)
-      ventilation = Ventilation.new(quote)
+      isolation = Works::Isolation.new(quote, error_details:)
+      menuiserie = Works::Menuiserie.new(quote, error_details:)
+      chauffage = Works::Chauffage.new(quote, error_details:)
+      eau_chaude = Works::EauChaude.new(quote, error_details:)
+      ventilation = Works::Ventilation.new(quote, error_details:)
 
       gestes = quote[:gestes] || []
-      gestes_errors = gestes.map do |geste| # rubocop:disable Metrics/BlockLength
+      gestes.each do |geste| # rubocop:disable Metrics/BlockLength
         case geste[:type]
 
         # ISOLATION
@@ -200,20 +199,13 @@ module QuoteValidator
         # AUDIT ENERGETIQUE
 
         else
-          "geste_inconnu"
-        end
-      end.compact
+          e = NotImplementedError.new("Geste inconnu '#{geste[:type]}' is not listed")
+          ErrorNotifier.notify(e)
 
-      gestes_errors.each_with_index do |errors, index|
-        errors.each do |error|
-          add_error(error,
-                    category: "gestes",
-                    type: "missing",
-                    value: gestes[index][:intitule])
+          "geste_inconnu"
         end
       end
     end
-    # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize
