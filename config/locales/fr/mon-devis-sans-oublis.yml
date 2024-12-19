@@ -105,7 +105,7 @@ SNC, SAS."
       marque_eau_chaude_manquant : "La marque du chauffe-eau doit être précisée."
       reference_eau_chaude_manquant: "Le modèle du chauffe-eau doit être précisé."
       volume_manquant: "Le volume (en Litre) du chauffe-eau est manquant."
-      etas_eau_chaude__manquant: "L'éfficacité énergétique saisonière (ETAS) du chauffe eau doit être précisée. Il s'agit d'un pourcentage."
+      etas_eau_chaude_manquant: "L'éfficacité énergétique saisonière (ETAS) du chauffe eau doit être précisée. Il s'agit d'un pourcentage."
       profil_soutirage_manquant: "Le profil de soutirage du chauffe-eau doit être indiqué et est une des options suivantes : M, L, XL ou XXL."
       # validate_cesi
       type_appoint_manquant: "L'énergie d'appoint est-elle électrique ?" # electrique ou autre
