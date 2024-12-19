@@ -8,9 +8,11 @@ module QuoteValidator
     # @param [Hash] quote
     # quote is a hash with the following keys
     # - siret: [String] the SIRET number of the company
-    def initialize(quote_attributes, quote_id = nil)
+    def initialize(quote_attributes, quote_id: nil, error_details: nil)
       @quote = TrackingHash.new(quote_attributes)
+
       @quote_id = quote_id
+      @error_details = error_details
     end
 
     def self.error_categories
@@ -38,8 +40,8 @@ module QuoteValidator
         ErrorNotifier.notify(e)
       end
 
-      @error_details << {
-        id: "#{quote_id}##{@error_details.length + 1}",
+      error_details << {
+        id: "#{quote_id}##{error_details.count + 1}",
         code:,
         category:, type:,
         title: title || I18n.t("quote_validator.errors.#{code}"),
@@ -60,7 +62,7 @@ module QuoteValidator
     end
 
     def validate!
-      @error_details = []
+      @error_details ||= []
 
       yield
 
