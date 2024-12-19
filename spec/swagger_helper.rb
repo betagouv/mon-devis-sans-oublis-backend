@@ -104,7 +104,7 @@ RSpec.configure do |config|
                 type: :string,
                 description: "UUID unique"
               },
-              status: { type: :string },
+              status: { "$ref" => "#/components/schemas/quote_check_status" },
               profile: { "$ref" => "#/components/schemas/profile" },
               valid: { type: :boolean, nullable: true },
               errors: {
