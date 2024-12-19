@@ -3,6 +3,8 @@
 module QuoteValidator
   # Validator for the Quote
   class Base
+    class NotImplementedError < ::NotImplementedError; end
+
     attr_accessor :error_details, :quote, :quote_id, :warnings
 
     # @param [Hash] quote

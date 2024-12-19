@@ -3,6 +3,8 @@
 module QuoteReader
   # Anonymise Quote text
   class Anonymiser
+    class NotImplementedError < ::NotImplementedError; end
+
     FIELDS_TO_ANONYMISE = [
       :adresses, :emails, :ibans, :numeros_tva, :rcss, :sirets, :telephones, :uris,
       { client: %i[adresse_chantier nom prenom] },
@@ -48,7 +50,7 @@ module QuoteReader
         return replace_text_from_attributes(attributes.fetch(field), fields_or_field.fetch(field), text)
       end
 
-      raise NotImplementedError
+      raise NotImplementedError, "#{fields_or_field.class} is not implemented"
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/CyclomaticComplexity
