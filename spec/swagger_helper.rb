@@ -131,6 +131,26 @@ RSpec.configure do |config|
               }
             },
             required: %w[id status profile]
+          },
+          quote_check_feedback: {
+            type: "object",
+            properties: {
+              id: {
+                type: :string,
+                description: "UUID unique"
+              },
+              quote_check_id: { type: :string, nullable: false },
+              validation_error_details_id: { type: :string, nullable: false },
+              is_helpful: { type: :boolean, nullable: false },
+              comment: {
+                type: :string,
+                nullable: true,
+                maxLength: QuoteCheckFeedback.validators_on(:comment).detect do |validator|
+                  validator.is_a?(ActiveModel::Validations::LengthValidator)
+                end&.options&.[](:maximum)
+              }
+            },
+            required: %w[quote_check_id validation_error_details_id is_helpful]
           }
         }
       },

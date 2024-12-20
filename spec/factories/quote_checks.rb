@@ -34,7 +34,13 @@ FactoryBot.define do
       finished
 
       validation_version { QuoteValidator::Global::VERSION }
-      validation_errors { ["something"] }
+      validation_errors { validation_error_details&.map { |error_detail| error_detail.fetch(:code) } || [] }
+      validation_error_details do
+        [{
+          id: "#1",
+          code: "something"
+        }]
+      end
     end
   end
 end

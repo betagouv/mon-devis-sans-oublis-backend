@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_18_144013) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_20_094516) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -137,6 +137,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_18_144013) do
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
   end
 
+  create_table "quote_check_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "quote_check_id", null: false
+    t.string "validation_error_details_id"
+    t.boolean "is_helpful", null: false
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quote_check_id"], name: "index_quote_check_feedbacks_on_quote_check_id"
+  end
+
   create_table "quote_checks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "file_id"
     t.datetime "started_at", null: false
@@ -171,5 +181,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_18_144013) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "quote_check_feedbacks", "quote_checks"
   add_foreign_key "quote_checks", "quote_files", column: "file_id"
 end
