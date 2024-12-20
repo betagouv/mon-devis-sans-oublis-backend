@@ -57,7 +57,7 @@ module QuoteValidator
         # TODO : check valeur R en V1 - R ≥ 3 m².K/W pour les planchers bas sur sous-sol,
         # sur vide sanitaire ou sur passage ouvert
 
-        add_error("isolation_localisation_manquant", geste) if geste[:localisation].blank?
+        add_error("isolation_localisation_plancher_bas_manquant", geste) if geste[:localisation].blank?
       end
 
       protected

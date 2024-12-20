@@ -11,17 +11,17 @@ module QuoteValidator
       # rubocop:disable Metrics/MethodLength
       def validate_ventilation(geste)
         fields = {
-          "type_vmc_manquant" => :type_vmc,
+          "vmc_type_manquant" => :type_vmc,
           # VMC simple flux hygroréable de type A (Hygro A)
           # VMC simple flux hygroréable de type B (Hygro B)
           # VMC double flux avec échangeur
-          "marque_caisson_manquant" => :marque_caisson,
-          "reference_caisson_manquant" => :reference_caisson,
-          "marque_bouche_extraction" => :marque_bouche_extraction,
-          "reference_bouche_extraction" => :reference_bouche_extraction,
-          "nombre_bouche_extraction" => :nombre_bouche_extraction,
-          "classe_caisson_manquant" => :classe_caisson,
-          "puissance" => :puissance # Puissance electrique du moteur en fonction de la config du logement
+          "vmc_marque_caisson_manquant" => :marque_caisson,
+          "vmc_reference_caisson_manquant" => :reference_caisson,
+          "vmc_marque_bouche_extraction" => :marque_bouche_extraction,
+          "vmc_reference_bouche_extraction" => :reference_bouche_extraction,
+          "vmc_nombre_bouche_extraction" => :nombre_bouche_extraction,
+          "vmc_classe_caisson_manquant" => :classe_caisson,
+          "vmc_puissance" => :puissance # Puissance electrique du moteur en fonction de la config du logement
           # exprimé en (W-Th-C) (doit être basse conso)
         }
 

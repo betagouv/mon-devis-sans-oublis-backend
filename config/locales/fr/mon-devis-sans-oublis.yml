@@ -130,7 +130,7 @@ SNC, SAS."
       # validate_isolation_toiture_terrasse
       isolation_type_isolation_toiture_terrasse_manquant: "L'isolation est-elle faite par l'intérieur ou par l'extérieur ?"
       # validate_isolation_plancher_bas
-      isolation_localisation_manquant: "Pour l'isolation des planchers bas, il faut préciser sur quelle pièce cela donne."
+      isolation_localisation_plancher_bas_manquant: "Pour l'isolation des planchers bas, il faut préciser sur quelle pièce cela donne."
 
 
 
@@ -168,14 +168,14 @@ SNC, SAS."
 #################################################
 
 
-      type_vmc_manquant: "Le type de VMC installée est à préciser (exemple : VMC simple flux hygroréable de type A (Hygro A))."
+      vmc_type_manquant: "Le type de VMC installée est à préciser (exemple : VMC simple flux hygroréable de type A (Hygro A))."
         # VMC simple flux hygroréable de type A (Hygro A)
         # VMC simple flux hygroréable de type B (Hygro B)
         # VMC double flux avec échangeur
-      marque_caisson_manquant: "La marque du caisson doit être précisément indiquée."
-      reference_caisson_manquant: "La référence du caisson doit être précisée."
-      marque_bouche_extraction: "La marque des bouches d'extraction doit être explicitement indiquée."
-      reference_bouche_extraction: "La référence des bouches d'extration est manquante."
-      nombre_bouche_extraction: "Il faut indiquer le nombre de bouche d'extraction."
-      classe_caisson_manquant: "Merci de préciser la classe d'efficacité énergétique du caisson."
-      puissance: "La puissance électrique du moteur (exprimée en W-Th-C) doit être précisée. " # Puissance electrique du moteur en fonction de la config du logement - exprimé en (W-Th-C) (doit être basse conso)
+      vmc_marque_caisson_manquant: "La marque du caisson doit être précisément indiquée."
+      vmc_reference_caisson_manquant: "La référence du caisson doit être précisée."
+      vmc_marque_bouche_extraction: "La marque des bouches d'extraction doit être explicitement indiquée."
+      vmc_reference_bouche_extraction: "La référence des bouches d'extration est manquante."
+      vmc_nombre_bouche_extraction: "Il faut indiquer le nombre de bouche d'extraction."
+      vmc_classe_caisson_manquant: "Merci de préciser la classe d'efficacité énergétique du caisson."
+      vmc_puissance: "La puissance électrique du moteur (exprimée en W-Th-C) doit être précisée. " # Puissance electrique du moteur en fonction de la config du logement - exprimé en (W-Th-C) (doit être basse conso)
