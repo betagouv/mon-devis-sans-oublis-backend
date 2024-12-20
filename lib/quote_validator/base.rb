@@ -32,7 +32,10 @@ module QuoteValidator
                   category: nil, type: nil,
                   title: nil,
                   problem: nil, solution: nil,
-                  value: nil)
+                  provided_value: nil,
+                  value: nil) # value is DEPRECATED
+      provided_value ||= value
+
       if category && self.class.error_categories.keys.include?(category)
         e = NotImplementedError.new("Category '#{category}' is not listed")
         ErrorNotifier.notify(e)
@@ -48,7 +51,7 @@ module QuoteValidator
         category:, type:,
         title: title || I18n.t("quote_validator.errors.#{code}"),
         problem:, solution:,
-        value:
+        provided_value:
       }
     end
     # rubocop:enable Metrics/ParameterLists

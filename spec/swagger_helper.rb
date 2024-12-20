@@ -94,7 +94,8 @@ RSpec.configure do |config|
               title: { type: :string },
               problem: { type: :string, description: "Réutilisez le title si vide" },
               solution: { type: :string, description: "peut-être vide" },
-              value: { type: :string }
+              provided_value: { type: :string },
+              value: { type: :string, description: "DEPRECATED" }
             },
             required: %w[id code]
           },
