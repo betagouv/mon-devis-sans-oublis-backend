@@ -21,7 +21,8 @@ module QuoteValidator
           "vmc_reference_bouche_extraction_manquant" => :reference_bouche_extraction,
           "vmc_nombre_bouche_extraction_manquant" => :nombre_bouche_extraction,
           "vmc_classe_caisson_manquant" => :classe_caisson,
-          "vmc_puissance_manquant" => :puissance_absobée_pondéréé_moteur # Puissance electrique du moteur en fonction de la config du logement
+          "vmc_puissance_manquant" => :puissance_absobée_pondéréé_moteur
+          # Puissance electrique du moteur en fonction de la config du logement
           # exprimé en (W-Th-C) (doit être basse conso)
         }
 
@@ -38,7 +39,7 @@ module QuoteValidator
           "vmc_simple_flux_nombre_bouches_entree_dair_manquant" => :nombre_bouches_entree_dair,
           "vmc_simple_flux_marque_bouches_entree_dair_manquant" => :marque_bouches_entree_dair,
           "vmc_simple_flux_reference_bouches_entree_dair_manquant" => :reference_bouches_entree_dair,
-          "vmc_simple_flux_emplacement_bouches_entree_dair_manquant" => :emplacement_bouches_entree_dair,
+          "vmc_simple_flux_emplacement_bouches_entree_dair_manquant" => :emplacement_bouches_entree_dair
         }
 
         # TODO : - Marque et référence et type des bouches d’entrée d’air
@@ -61,7 +62,7 @@ module QuoteValidator
           "vmc_double_flux_marque_bouches_soufflage_manquant" => :marque_bouches_soufflage,
           "vmc_double_flux_reference_bouches_soufflage_manquant" => :reference_bouches_soufflage,
           "vmc_double_flux_emplacement_bouches_soufflage_manquant" => :emplacement_bouches_soufflage,
-          "vmc_double_flux_nombre_bouches_soufflage_manquant" => :nombre_bouches_soufflage,
+          "vmc_double_flux_nombre_bouches_soufflage_manquant" => :nombre_bouches_soufflage
         }
 
         # TODO: V1 :
@@ -82,7 +83,6 @@ module QuoteValidator
                   category: "gestes",
                   value: geste[:intitule])
       end
-      
     end
   end
 end

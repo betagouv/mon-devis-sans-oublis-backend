@@ -34,7 +34,7 @@ module QuoteValidator
         add_error("chaudiere_type_silo_manquant", geste) if geste[:type_silo].blank?
         add_error("chaudiere_contenance_silo_manquant", geste) if geste[:contenance_silo].blank?
         add_error("chaudiere_contenance_silo_trop_petit", geste, type: "wrong") if geste[:contenance_silo].present? &&
-                                                                         geste[:contenance_silo] < 225
+                                                                                   geste[:contenance_silo] < 225
 
         # TODO: V1 : Valeur EtAS :
         # - ≥ 77 % pour les chaudières ≤ 20 kW
@@ -153,7 +153,6 @@ module QuoteValidator
       end
 
       def validate_pac_air_air(geste)
-
         fields = {
           "pac_air_air_scop_manquant" => :SCOP,
           "pac_air_air_puissance_nominale_manquant" => :puissance_nominale

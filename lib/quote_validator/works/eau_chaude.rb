@@ -51,7 +51,8 @@ module QuoteValidator
           # COP de l’equipement mesuré conformément aux condition de la norme EN 16147
           # ≥ à 2,5 pour une installation sur air extrait,
           # ≥ à 2,4 dans les autres cas.
-          "chauffe_eau_thermodynamique_type_installation_manquant" => :type_installation # air exterieur, sur air exrait ou sur air ambiant
+          "chauffe_eau_thermodynamique_type_installation_manquant" => :type_installation
+          # air exterieur, sur air exrait ou sur air ambiant
           # -> Alors préciser la pièce TODO
         }
 
