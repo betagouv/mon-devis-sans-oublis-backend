@@ -202,7 +202,7 @@ energie_appoint: (electricite, gaz,...);
 ### Ventilation
 
 ```jsx
-{type:'vmc'; 
+{type: enum(vmc_simple_flux,vmc_double_flux); 
 intitule: text;
 type_vmc: enum(VMC simple flux hygroréable de type A (Hygro A), VMC simple flux hygroréable de type B (hygro B), VMC double flux avec échangeur);
 marque_caisson: text; 

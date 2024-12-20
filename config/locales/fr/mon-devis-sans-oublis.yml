@@ -195,8 +195,21 @@ fr:
         # VMC double flux avec échangeur
       vmc_marque_caisson_manquant: "La marque du caisson doit être précisément indiquée."
       vmc_reference_caisson_manquant: "La référence du caisson doit être précisée."
-      vmc_marque_bouche_extraction: "La marque des bouches d'extraction doit être explicitement indiquée."
-      vmc_reference_bouche_extraction: "La référence des bouches d'extration est manquante."
-      vmc_nombre_bouche_extraction: "Il faut indiquer le nombre de bouche d'extraction."
+      vmc_marque_bouche_extraction_manquant: "La marque des bouches d'extraction doit être explicitement indiquée."
+      vmc_reference_bouche_extraction_manquant: "La référence des bouches d'extration est manquante."
+      vmc_nombre_bouche_extraction_manquant: "Il faut indiquer le nombre de bouche d'extraction."
       vmc_classe_caisson_manquant: "Merci de préciser la classe d'efficacité énergétique du caisson."
-      vmc_puissance: "La puissance électrique du moteur (exprimée en W-Th-C) doit être précisée. " # Puissance electrique du moteur en fonction de la config du logement - exprimé en (W-Th-C) (doit être basse conso)
+      vmc_puissance_manquant: "La puissance électrique du moteur (exprimée en W-Th-C) doit être précisée. " # Puissance electrique du moteur en fonction de la config du logement - exprimé en (W-Th-C) (doit être basse conso)
+      vmc_simple_flux_nombre_bouches_entree_dair_manquant: "Le nombre de bouches d'entrée d'air doit être indiqué."
+      vmc_simple_flux_marque_bouches_entree_dair_manquant: "La marque des bouches d'entrée d'air est manquante."
+      vmc_simple_flux_reference_bouches_entree_dair_manquant: "Veuillez indiquer la référence des bouches d'entrée d'air."
+      vmc_simple_flux_emplacement_bouches_entree_dair_manquant: "Merci de préciser l'emplacement des bouches d'entrée d'air."
+      vmc_simple_flux_emplacement_bouches_entree_dair_manquant_infos: "Attention de vérifier la présence d’entrées d’air sur les menuiseries des pièces sèches et leur absence sur les menuiseries des pièces humides."
+      vmc_double_flux_marque_bouches_soufflage_manquant: "Il faut indiquer la marque des bouches de soufflage."
+      vmc_double_flux_reference_bouches_soufflage_manquant: "Merci de préciser la référence des bouches de soufflage."
+      vmc_double_flux_emplacement_bouches_soufflage_manquant: "Il est important de préciser l'emplacement des bouches de soufflages."
+      vmc_double_flux_emplacement_bouches_soufflage_manquant_infos: "Attention de vérifier l'absence d'entrées d'air sur toutes les menuiseries."
+      vmc_double_flux_nombre_bouches_soufflage_manquant: "Le nombre de bouches de soufflage doit être précisé."
+
+
+
