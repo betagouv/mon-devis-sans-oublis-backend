@@ -10,11 +10,11 @@ module QuoteValidator
     class Isolation < Base
       # Validation des critères communs aux différentes isolations
       def validate_isolation(geste)
-        add_error("marque_isolation_manquant", geste) if geste[:marque].blank?
-        add_error("reference_isolation_manquant", geste) if geste[:reference].blank?
-        add_error("surface_manquant", geste) if geste[:surface].blank? # TODO : check unité ?
-        add_error("epaisseur_manquant", geste) if geste[:epaisseur].blank? # TODO : check unité ?
-        add_error("r_manquant", geste) if geste[:resistance_thermique].blank?
+        add_error("isolation_marque_manquant", geste) if geste[:marque_isolant].blank?
+        add_error("isolation_reference_manquant", geste) if geste[:reference_isolant].blank?
+        add_error("isolation_surface_manquant", geste) if geste[:surface_isolant].blank? # TODO : check unité ?
+        add_error("isolation_epaisseur_manquant", geste) if geste[:epaisseur_isolant].blank? # TODO : check unité ?
+        add_error("isolation_r_manquant", geste) if geste[:resistance_thermique].blank?
 
         # TODO : V1 - vérifier les normes
       end
@@ -40,7 +40,7 @@ module QuoteValidator
         validate_isolation(geste)
 
         # TODO : check valeur R en V1 - R ≥ 4,5 m².K/W ou R ≥ 6,5 m².K/W si MAR
-        add_error("type_isolation_toiture_terrasse_manquant", geste) if geste[:type_isolation_toiture_terrasse].blank?
+        add_error("isolation_type_isolation_toiture_terrasse_manquant", geste) if geste[:type_isolation_toiture_terrasse].blank?
       end
 
       def validate_isolation_iti(geste)
@@ -57,7 +57,7 @@ module QuoteValidator
         # TODO : check valeur R en V1 - R ≥ 3 m².K/W pour les planchers bas sur sous-sol,
         # sur vide sanitaire ou sur passage ouvert
 
-        add_error("localisation_manquant", geste) if geste[:localisation].blank?
+        add_error("isolation_localisation_manquant", geste) if geste[:localisation].blank?
       end
 
       protected
