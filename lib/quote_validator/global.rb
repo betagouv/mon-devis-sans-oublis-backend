@@ -147,15 +147,15 @@ module QuoteValidator
         case geste[:type]
 
         # ISOLATION
-        when "isolation_mur_ite"
+        when "isolation_thermique_par_exterieur_ITE"
           isolation.validate_isolation_ite(geste)
         when "isolation_comble_perdu", "isolation_combles_perdues"
           isolation.validate_isolation_combles(geste)
-        when "isolation_rampants-toiture"
+        when "isolation_rampants_toiture"
           isolation.validate_isolation_rampants(geste)
         when "isolation_toiture_terrasse"
           isolation.validate_isolation_toiture_terrasse(geste)
-        when "isolation_mur_iti"
+        when "isolation_thermique_par_interieur_ITI"
           isolation.validate_isolation_iti(geste)
         when "isolation_plancher_bas"
           isolation.validate_isolation_plancher_bas(geste)
