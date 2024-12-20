@@ -1,0 +1,6 @@
+{
+    "buildpacks": [],
+    "scripts": {
+      "prebuild": "./llm_local/prebuild.sh"
+    }
+  }
