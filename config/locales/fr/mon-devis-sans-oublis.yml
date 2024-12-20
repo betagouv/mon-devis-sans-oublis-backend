@@ -56,46 +56,46 @@ SNC, SAS."
 ####              CHAUFFAGE                  ####
 #################################################
 
-      puissance_manquant: "La puissance du matériel doit être indiquée en KW."
-      marque_chauffage_manquant: "La marque du matériel installé doit être indiquée."
-      reference_chauffage_manquant: "Le modèle installé doit être clairement identifiable."
-      etas_chauffage_manquant: "L'efficacité énergétique saisonnière (ETAS) du système de chauffage est manquante. Il s'agit d'un pourcentage."
-      remplacement_chaudiere_condensation_manquant: "Lors d'un remplacement, il faut préciser si le système existant est (ou n’est pas) une chaudière à condensation."
+      chauffage_puissance_manquant: "La puissance du matériel doit être indiquée en KW."
+      chauffage_marque_manquant: "La marque du matériel installé doit être indiquée."
+      chauffage_reference_manquant: "Le modèle installé doit être clairement identifiable."
+      chauffage_etas_manquant: "L'efficacité énergétique saisonnière (ETAS) du système de chauffage est manquante. Il s'agit d'un pourcentage."
+      chauffage_remplacement_chaudiere_condensation_manquant: "Lors d'un remplacement, il faut préciser si le système existant est (ou n’est pas) une chaudière à condensation."
       # validate_chaudiere_biomasse
-      type_combustible_chaudiere_manquant: "Il faut indiquer le combustible utilisé par la chaudière, par exemple : bûches, granulés ou copeaux." # buche, granulé, copeaux ...
-      type_chargement_manquant: "Veuillez indiquer si le chargement est manuel ou automatique" # manuelle ou auto
-      type_silo_manquant: "Il est important de décrir précisément le silo (externe ou interne, neuf ou existant, textile ou maçonné." # externe/interne, neuf/existant, Textile/maconner
-      contenance_silo_manquant: "La contenance du silo n'est pas indiquée dans le document."
-      contenance_silo_trop_petit: "Le volume du silo doit être supérieur ou égal à 225 litres."
-      emission_CO_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissions de monoxyde de carbone (CO) rapportée à 10% d’O2 (en mg/Nm3)." # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
-      emission_COG_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissions de composés organiques volatiles (COG) rapportée à 10% d’O2 (en mg/Nm3)." # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
-      emission_particule_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissionsde particules (en mg/Nm3)." # Emission de particules (mg/Nm3)
-      emission_nox_chaudiere_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissionsd’oxydes d’azote (NOx) rapporté à 10% d’O2 (en mg/Nm3)." # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
-      marque_regulateur_manquant: "La marque du régulateur utilisé n'est pas indiquée."
-      reference_regulateur_manquant: "Le modèle du régulateur installé n'est pas indiqué."
-      classe_regulateur_manquant: "Le régulateur doit être de classe IV et cela doit être indiqué."
+      chaudiere_type_combustible_manquant: "Il faut indiquer le combustible utilisé par la chaudière, par exemple : bûches, granulés ou copeaux." # buche, granulé, copeaux ...
+      chaudiere_type_chargement_manquant: "Veuillez indiquer si le chargement est manuel ou automatique" # manuelle ou auto
+      chaudiere_type_silo_manquant: "Il est important de décrir précisément le silo (externe ou interne, neuf ou existant, textile ou maçonné." # externe/interne, neuf/existant, Textile/maconner
+      chaudiere_contenance_silo_manquant: "La contenance du silo n'est pas indiquée dans le document."
+      chaudiere_contenance_silo_trop_petit: "Le volume du silo doit être supérieur ou égal à 225 litres."
+      chaudiere_emission_CO_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissions de monoxyde de carbone (CO) rapportée à 10% d’O2 (en mg/Nm3)." # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
+      chaudiere_emission_COG_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissions de composés organiques volatiles (COG) rapportée à 10% d’O2 (en mg/Nm3)." # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
+      chaudiere_emission_particule_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissionsde particules (en mg/Nm3)." # Emission de particules (mg/Nm3)
+      chaudiere_emission_nox_manquant: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissionsd’oxydes d’azote (NOx) rapporté à 10% d’O2 (en mg/Nm3)." # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
+      chaudiere_marque_regulateur_manquant: "La marque du régulateur utilisé n'est pas indiquée."
+      chaudiere_reference_regulateur_manquant: "Le modèle du régulateur installé n'est pas indiqué."
+      chaudiere_classe_regulateur_manquant: "Le régulateur doit être de classe IV et cela doit être indiqué."
       # validate_poele_insert
-      type_combustible_poele_manquant: "Il faut indiquer le combustible utilisé par le poele ou l'insert - bois, bûches ou granulés."
-      rendement_energetique_manquant: "Le rendement énergétique, valeur en pourcentage %."
-      emission_CO_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissions de monoxyde de carbone (CO) rapportée à 10% d’O2 (en mg/Nm3)." # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
-      emission_COG_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissions de composés organiques volatiles (COG) rapportée à 10% d’O2 (en mg/Nm3)." # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
-      emission_particule_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissionsde particules (en mg/Nm3)." # Emission de particules (mg/Nm3)
-      emission_nox_poele_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissionsd’oxydes d’azote (NOx) rapporté à 10% d’O2 (en mg/Nm3)." # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
+      poele_type_combustible_manquant: "Il faut indiquer le combustible utilisé par le poele ou l'insert - bois, bûches ou granulés."
+      poele_rendement_energetique_manquant: "Le rendement énergétique, valeur en pourcentage %."
+      poele_emission_CO_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissions de monoxyde de carbone (CO) rapportée à 10% d’O2 (en mg/Nm3)." # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
+      poele_emission_COG_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissions de composés organiques volatiles (COG) rapportée à 10% d’O2 (en mg/Nm3)." # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
+      poele_emission_particule_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissionsde particules (en mg/Nm3)." # Emission de particules (mg/Nm3)
+      poele_emission_nox_manquant: "Lorsque le poele ou l'insert n'a pas le label flamme verte, il faut indiquer les émissionsd’oxydes d’azote (NOx) rapporté à 10% d’O2 (en mg/Nm3)." # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
       # validate_systeme_solaire_combine
-      marque_capteurs_manquant: "La marque exacte du système doit être mentionnée."
-      reference_capteurs_manquant: "La référence exacte du système doit être mentionnée."
-      type_capteurs_manquant: "Le type de capteurs utilisés doit être mentionné."
+      ssc_marque_capteurs_manquant: "La marque exacte du système doit être mentionnée."
+      ssc_reference_capteurs_manquant: "La référence exacte du système doit être mentionnée."
+      ssc_type_capteurs_manquant: "Le type de capteurs utilisés doit être mentionné."
       # TODO Pas toujours les mêmes en fonction des aides !!
-      type_capteurs_manquant_infos: "Capteurs thermique à circulation de liquide ou d'air, hybrides thermiques et électriques à circulation de liquide"
-      surface_captage_manquant: "La surface de captage en m2 doit être indiquée."
-      productivite_capteurs_manquant: "" # W/m2
-      volume_ballon_manquant: "Le volume du ou des ballons associés doit être indiqué en Litre." #(peut être associé à plusieurs ballons)
-      energie_appoint_manquant: "Quelle énergie d'appoint est utilisée ? (électricité, gaz,...)" # electricité, gaz...
+      ssc_type_capteurs_manquant_infos: "Capteurs thermique à circulation de liquide ou d'air, hybrides thermiques et électriques à circulation de liquide"
+      ssc_surface_captage_manquant: "La surface de captage en m2 doit être indiquée."
+      ssc_productivite_capteurs_manquant: "" # W/m2
+      ssc_volume_ballon_manquant: "Le volume du ou des ballons associés doit être indiqué en Litre." #(peut être associé à plusieurs ballons)
+      ssc_energie_appoint_manquant: "Quelle énergie d'appoint est utilisée ? (électricité, gaz,...)" # electricité, gaz...
       # validate_pac
-      type_pac_manquant: "Il faut indiquer clairement dans l'intitulé le type de Pompe à chaleur installée (air-eau, eau-eau, hybride...)" # air-eau, eau-eau, air-air, hybride 
-      regime_temperature_manquant: "Le régime de la pompe à chaleur peut être Basse température, Moyenne température ou Haute température." # basse, moyenne, haute
-      type_fluide_frigorigene_manquant: "Quel est le liquide frigorigène utilisé dans la pompe à chaleur (ex: R32)" # R410A -  attention, celui ci va être restreint, R32 …
-      cop_chauffage_manquant: "Le coefficient de performance de la Pompe à chaleur doit être indiqué. Il n'y a pas d'unité."
+      pac_type_manquant: "Il faut indiquer clairement dans l'intitulé le type de Pompe à chaleur installée (air-eau, eau-eau, hybride...)" # air-eau, eau-eau, air-air, hybride 
+      pac_regime_temperature_manquant: "Le régime de la pompe à chaleur peut être Basse température, Moyenne température ou Haute température." # basse, moyenne, haute
+      pac_type_fluide_frigorigene_manquant: "Quel est le liquide frigorigène utilisé dans la pompe à chaleur (ex: R32)" # R410A -  attention, celui ci va être restreint, R32 …
+      pac_cop_chauffage_manquant: "Le coefficient de performance de la Pompe à chaleur doit être indiqué. Il n'y a pas d'unité."
 
 
 #################################################
