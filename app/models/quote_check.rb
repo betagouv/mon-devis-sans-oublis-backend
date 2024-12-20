@@ -25,7 +25,7 @@ class QuoteCheck < ApplicationRecord
                      raise NotImplementedError, "Unknown path for profile: #{profile}"
                    end
 
-    URI.join(ENV.fetch("FRONTEND_APPLICATION_HOST"), profile_path, "televersement", id)
+    URI.join(ENV.fetch("FRONTEND_APPLICATION_HOST"), profile_path, "televersement", id).to_s
   end
 
   # valid? is already used by the framework
