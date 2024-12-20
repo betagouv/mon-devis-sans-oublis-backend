@@ -112,6 +112,8 @@ fr:
       pac_regime_temperature_manquant: "Le régime de la pompe à chaleur peut être Basse température, Moyenne température ou Haute température." # basse, moyenne, haute
       pac_type_fluide_frigorigene_manquant: "Quel est le liquide frigorigène utilisé dans la pompe à chaleur (ex: R32)" # R410A -  attention, celui ci va être restreint, R32 …
       pac_cop_chauffage_manquant: "Le coefficient de performance de la Pompe à chaleur doit être indiqué. Il n'y a pas d'unité."
+      pac_air_air_puissance_nominale_manquant: "La puissance nominale (Pnom) de la pompe à chaleur doit être indiquée."
+      pac_air_air_scop_manquant: "Le coefficient de performance saisonnier (SCOP) de la Pompe à chaleur doit être indiqué. Il n'y a pas d'unité."
 
 
 #################################################

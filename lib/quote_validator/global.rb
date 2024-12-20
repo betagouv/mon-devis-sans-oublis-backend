@@ -179,6 +179,8 @@ module QuoteValidator
           chauffage.validate_systeme_solaire_combine(geste)
         when "pac", "pac_air_eau"
           chauffage.validate_pac(geste)
+        when "pac_air_air"
+          chaffage.validate_pac_air_air(geste)
 
         # EAU CHAUDE SANITAIRE
         when "chauffe_eau_solaire_individuel"

@@ -152,6 +152,18 @@ module QuoteValidator
         add_error("pac_cop_chauffage_manquant", geste) if geste[:COP].blank? # TODO: V1 Check if SCOP is required too.
       end
 
+      def validate_pac_air_air(geste)
+
+        fields = {
+          "pac_air_air_scop_manquant" => :SCOP,
+          "pac_air_air_puissance_nominale_manquant" => :puissance_nominale
+        }
+
+        fields.each do |error_message, field|
+          add_error(error_message, geste) if geste[field].blank?
+        end
+      end
+
       protected
 
       def add_error(code, geste, type: "missing")
