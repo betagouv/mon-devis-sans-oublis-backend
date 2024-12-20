@@ -22,7 +22,6 @@ RSpec.describe "/api/v1/quote_checks/:quote_check_id/feedbacks" do
     it "returns a successful response" do
       post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
                                                                              headers: basic_auth_header
-      Rails.root.join("error.html").write(response.body) # @@@
       expect(response).to be_successful
     end
 
