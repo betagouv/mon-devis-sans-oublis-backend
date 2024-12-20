@@ -40,7 +40,9 @@ module QuoteValidator
         validate_isolation(geste)
 
         # TODO : check valeur R en V1 - R ≥ 4,5 m².K/W ou R ≥ 6,5 m².K/W si MAR
-        add_error("isolation_type_isolation_toiture_terrasse_manquant", geste) if geste[:type_isolation_toiture_terrasse].blank?
+        return if geste[:type_isolation_toiture_terrasse].present?
+
+        add_error("isolation_type_isolation_toiture_terrasse_manquant", geste)
       end
 
       def validate_isolation_iti(geste)

@@ -11,14 +11,15 @@ module QuoteValidator
       # validation des critères communs à toutes les menuiseries
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/CyclomaticComplexity
-      def validate_menuiserie(geste, error)
+      def validate_menuiserie(geste, _error)
         add_error("menuiserie_marque_manquant", geste) if geste[:marque].blank?
         add_error("menuiserie_reference_manquant", geste) if geste[:reference].blank?
         add_error("menuiserie_type_materiau_manquant", geste) if geste[:type_materiau].blank? # bois, alu, pvc ...
         add_error("menuiserie_type_vitrage_manquant", geste) if geste[:type_vitrage].blank? # simple - double vitrage
         add_error("menuiserie_type_pose_manquant", geste) if geste[:type_pose].blank? # renovation ou depose totale
         add_error("menuiserie_localisation_manquant", geste) if geste[:localisation].blank?
-        add_error("menuiserie_position_paroie_manquant", geste) if geste[:position_paroie].blank? # nu intérieur, nu extérieur, tunnel ...
+        add_error("menuiserie_position_paroie_manquant", geste) if geste[:position_paroie].blank?
+        # nu intérieur, nu extérieur, tunnel ...
       end
       # rubocop:enable Metrics/CyclomaticComplexity
       # rubocop:enable Metrics/AbcSize
@@ -74,7 +75,6 @@ module QuoteValidator
                   category: "gestes",
                   value: geste[:intitule])
       end
-      
     end
   end
 end
