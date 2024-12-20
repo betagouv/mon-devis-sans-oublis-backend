@@ -10,11 +10,11 @@ module QuoteValidator
     class EauChaude < Base
       def validate_eau_chaude(geste)
         fields = {
-          "marque_eau_chaude_manquant" => :marque,
-          "reference_eau_chaude_manquant" => :reference,
-          "volume_manquant" => :volume,
-          "etas_eau_chaude_manquant" => :ETAS,
-          "profil_soutirage_manquant" => :profil_soutirage
+          "eau_chaude_marque_manquant" => :marque,
+          "eau_chaude_reference_manquant" => :reference,
+          "eau_chaude_volume_manquant" => :volume,
+          "eau_chaude_etas_manquant" => :ETAS,
+          "eau_chaude_profil_soutirage_manquant" => :profil_soutirage
         }
 
         fields.each do |error_message, field|
@@ -27,11 +27,11 @@ module QuoteValidator
         validate_eau_chaude(geste)
 
         fields = {
-          "type_appoint_manquant" => :type_appoint, # electrique ou autre
-          "surface_capteur_manquant" => :surface_capteur, # TODO: V1 > 2m2 en metropole pour MPR
-          "classe_energetique_ballon_manquant" => :classe_energetique_ballon,
+          "cesi_type_appoint_manquant" => :type_appoint, # electrique ou autre
+          "cesi_surface_capteur_manquant" => :surface_capteur, # TODO: V1 > 2m2 en metropole pour MPR
+          "cesi_classe_energetique_ballon_manquant" => :classe_energetique_ballon,
           # TODO: V1 minimum Classe C si volume ≤ 500L
-          "fluide_manquant" => :fluide # eau, eau glucolée ou air
+          "cesi_fluide_manquant" => :fluide # eau, eau glucolée ou air
         }
 
         # TODO: V1 : Capteur hybrides produisant elec et chaleur exclus CEE uniquement ?
@@ -47,11 +47,11 @@ module QuoteValidator
         validate_eau_chaude(geste)
 
         fields = {
-          "cop_eau_chaude_manquant" => :COP,
+          "chauffe_eau_thermodynamique_cop_manquant" => :COP,
           # COP de l’equipement mesuré conformément aux condition de la norme EN 16147
           # ≥ à 2,5 pour une installation sur air extrait,
           # ≥ à 2,4 dans les autres cas.
-          "type_installation_manquant" => :type_installation # air exterieur, sur air exrait ou sur air ambiant
+          "chauffe_eau_thermodynamique_type_installation_manquant" => :type_installation # air exterieur, sur air exrait ou sur air ambiant
           # -> Alors préciser la pièce TODO
         }
 

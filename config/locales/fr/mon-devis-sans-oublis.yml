@@ -102,19 +102,19 @@ SNC, SAS."
 ####         EAU CHAUDE SANITAIRE            ####
 #################################################
 
-      marque_eau_chaude_manquant : "La marque du chauffe-eau doit être précisée."
-      reference_eau_chaude_manquant: "Le modèle du chauffe-eau doit être précisé."
-      volume_manquant: "Le volume (en Litre) du chauffe-eau est manquant."
-      etas_eau_chaude_manquant: "L'éfficacité énergétique saisonière (ETAS) du chauffe eau doit être précisée. Il s'agit d'un pourcentage."
-      profil_soutirage_manquant: "Le profil de soutirage du chauffe-eau doit être indiqué et est une des options suivantes : M, L, XL ou XXL."
+      eau_chaude_marque_manquant : "La marque du chauffe-eau doit être précisée."
+      eau_chaude_reference_manquant: "Le modèle du chauffe-eau doit être précisé."
+      eau_chaude_volume_manquant: "Le volume (en Litre) du chauffe-eau est manquant."
+      eau_chaude_etas_manquant: "L'éfficacité énergétique saisonière (ETAS) du chauffe eau doit être précisée. Il s'agit d'un pourcentage."
+      eau_chaude_profil_soutirage_manquant: "Le profil de soutirage du chauffe-eau doit être indiqué et est une des options suivantes : M, L, XL ou XXL."
       # validate_cesi
-      type_appoint_manquant: "L'énergie d'appoint est-elle électrique ?" # electrique ou autre
-      surface_capteur_manquant: "La surface des capteurs en m2 doit être précisée." # TODO: V1 > 2m2 en metropole pour MPR
-      classe_energetique_ballon_manquant: "La classe énergétique du ballon d'eau chaude doit être précisée." # TODO: V1 minimum Classe C si volume ≤ 500L
-      fluide_manquant: "Quel fluide est utilisé pour le chauffe-eau solaire, eau, eau glucolée ou air." # eau, eau glucolée ou air
+      cesi_type_appoint_manquant: "L'énergie d'appoint est-elle électrique ?" # electrique ou autre
+      cesi_surface_capteur_manquant: "La surface des capteurs en m2 doit être précisée." # TODO: V1 > 2m2 en metropole pour MPR
+      cesi_classe_energetique_ballon_manquant: "La classe énergétique du ballon d'eau chaude doit être précisée." # TODO: V1 minimum Classe C si volume ≤ 500L
+      cesi_fluide_manquant: "Quel fluide est utilisé pour le chauffe-eau solaire, eau, eau glucolée ou air." # eau, eau glucolée ou air
       # validate_chauffe_eau_thermodynamique
-      cop_eau_chaude_manquant: "Le coefficient de performance de l'équipement mesuré conformément aux condition de la norme EN 16147."
-      type_installation_manquant: "Le chauffe-eau thermodynamique est-il sur air extérieur, sur air extrait ou sur air ambiant?" # air exterieur, sur air exrait ou sur air ambiant
+      chauffe_eau_thermodynamique_cop_manquant: "Le coefficient de performance de l'équipement mesuré conformément aux condition de la norme EN 16147."
+      chauffe_eau_thermodynamique_type_installation_manquant: "Le chauffe-eau thermodynamique est-il sur air extérieur, sur air extrait ou sur air ambiant?" # air exterieur, sur air exrait ou sur air ambiant
 
 
 #################################################
