@@ -106,6 +106,7 @@ RSpec.configure do |config|
                 type: :string,
                 description: "UUID unique"
               },
+              parent_id: { type: :string, nullable: true },
               status: { "$ref" => "#/components/schemas/quote_check_status" },
               profile: { "$ref" => "#/components/schemas/profile" },
               valid: { type: :boolean, nullable: true },

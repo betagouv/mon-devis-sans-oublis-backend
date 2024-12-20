@@ -12,6 +12,7 @@ module Api
         render json: quote_check_json
       end
 
+      # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/MethodLength
       def create
         upload_file = quote_check_params[:file]
@@ -22,7 +23,8 @@ module Api
         end
 
         quote_check_service = QuoteCheckService.new(
-          upload_file.tempfile, upload_file.original_filename, quote_check_params[:profile]
+          upload_file.tempfile, upload_file.original_filename, quote_check_params[:profile],
+          parent_id: quote_check_params[:parent_id]
         )
         @quote_check = quote_check_service.quote_check
 
@@ -34,6 +36,7 @@ module Api
         render json: quote_check_json(@quote_check), status: :created
       end
       # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/AbcSize
 
       protected
 
@@ -42,7 +45,7 @@ module Api
       end
 
       def quote_check_params
-        params.permit(:file, :profile)
+        params.permit(:file, :profile, :parent_id)
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -61,7 +64,8 @@ module Api
 
         json_hash.slice(
           "id", "status", "profile",
-          "valid", "errors", "error_details", "error_messages"
+          "valid", "errors", "error_details", "error_messages",
+          "parent_id"
         )
       end
       # rubocop:enable Metrics/MethodLength

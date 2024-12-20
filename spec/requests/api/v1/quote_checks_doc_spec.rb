@@ -18,7 +18,8 @@ describe "Devis API" do
             type: :string,
             format: :binary
           },
-          profile: { "$ref" => "#/components/schemas/profile" }
+          profile: { "$ref" => "#/components/schemas/profile" },
+          parent_id: { type: :string, nullable: true }
         },
         required: %w[file profile]
       }
