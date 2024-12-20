@@ -4,6 +4,8 @@
 class QuoteCheck < ApplicationRecord
   belongs_to :file, class_name: "QuoteFile"
 
+  has_many :feedbacks, class_name: "QuoteCheckFeedback", dependent: :destroy
+
   STATUSES = %w[pending valid invalid].freeze
 
   PROFILES = %w[artisan particulier mandataire conseiller].freeze

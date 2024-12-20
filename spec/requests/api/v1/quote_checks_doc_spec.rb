@@ -8,7 +8,6 @@ describe "Devis API" do
     post "Téléverser un devis" do
       tags "Devis"
       security [basic_auth: []]
-      # TODO: security [ basic_auth: [] ]
       consumes "multipart/form-data"
       produces "application/json"
 
