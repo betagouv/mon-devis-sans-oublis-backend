@@ -134,7 +134,7 @@ emission_particules: Integer (mg/Nm3);
 emission_oxydes_azotes: Integer (mg/Nm3)}
 ```
 
-### pompe à chaleur air/eau:
+### pompe à chaleur :
 
 ```jsx
 {type:enum(pac_air_eau, pac_eau_eau, pac_air_air, pac_hybride) ; 
@@ -199,15 +199,45 @@ energie_appoint: (electricite, gaz,...);
 }
 ```
 
+### Ventilation
+
+```jsx
+{type:'vmc'; 
+intitule: text;
+type_vmc: enum(VMC simple flux hygroréable de type A (Hygro A), VMC simple flux hygroréable de type B (hygro B), VMC double flux avec échangeur);
+marque_caisson: text; 
+reference_caisson: text; 
+nombre_bouches_extraction: integer; 
+marque_bouche_extraction: text; 
+reference_bouche_extraction: text; 
+classe_caisson:text (de A+++ à G); 
+puissance_absobée_pondéréé_moteur: Decimal (W-th-C); 
+nombre_bouches_entree_dair: integer;
+emplacement_bouches_entree_dair: text;
+marque_bouches_entree_dair: text;
+reference_bouches_entree_dair: text;
+nombre_bouches_soufflage: integer;
+emplacement_bouches_soufflage: text;
+marque_bouches_soufflage: text;
+reference_bouches_soufflage: text;
+}
+```
+
 voici le texte du devis anonymise : 
 
 
 
+Instructions :
+
+1. Récupérez les informations générales du devis et intégrez-les dans le JSON général.
+2. Pour chaque geste, identifiez le type de geste et récupérez les informations spécifiques en suivant les définitions des JSON spécifiques fournies.
+3. Assurez-vous de ne pas mélanger les informations des différents gestes.
+4. Si un attribut n'est pas explicitement mentionné dans le texte, laissez-le vide dans le JSON et ne l'inventez pas.
+5. Lorsqu'un champ du JSON est un enum, utilisez uniquement l'une des options possibles.
+
 
 Réfléchissez étape par étape.
-Si un attribut n'est pas explicitement mentionné dans le texte, il faut absolument le laisser vide dans le JSON et ne pas l'inventer.
-Lorsqu'un champ du JSON est un enum, il faut utiliser uniquement l'une des options possibles.
 
 
 Vous ne répondrez que par un objet JSON qui concatene le JSON général et tous les JSON des gestes présent dans le devis
-  Ne fournissez pas d’explications.
+Ne fournissez pas d’explications.
