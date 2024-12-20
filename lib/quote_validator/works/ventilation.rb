@@ -17,11 +17,11 @@ module QuoteValidator
           # VMC double flux avec échangeur
           "vmc_marque_caisson_manquant" => :marque_caisson,
           "vmc_reference_caisson_manquant" => :reference_caisson,
-          "vmc_marque_bouche_extraction" => :marque_bouche_extraction,
-          "vmc_reference_bouche_extraction" => :reference_bouche_extraction,
-          "vmc_nombre_bouche_extraction" => :nombre_bouche_extraction,
+          "vmc_marque_bouche_extraction_manquant" => :marque_bouche_extraction,
+          "vmc_reference_bouche_extraction_manquant" => :reference_bouche_extraction,
+          "vmc_nombre_bouche_extraction_manquant" => :nombre_bouche_extraction,
           "vmc_classe_caisson_manquant" => :classe_caisson,
-          "vmc_puissance" => :puissance # Puissance electrique du moteur en fonction de la config du logement
+          "vmc_puissance_manquant" => :puissance_absobée_pondéréé_moteur # Puissance electrique du moteur en fonction de la config du logement
           # exprimé en (W-Th-C) (doit être basse conso)
         }
 
@@ -34,7 +34,12 @@ module QuoteValidator
       def validate_vmc_simple_flux(geste)
         validate_ventilation(geste)
 
-        fields = {}
+        fields = {
+          "vmc_simple_flux_nombre_bouches_entree_dair_manquant" => :nombre_bouches_entree_dair,
+          "vmc_simple_flux_marque_bouches_entree_dair_manquant" => :marque_bouches_entree_dair,
+          "vmc_simple_flux_reference_bouches_entree_dair_manquant" => :reference_bouches_entree_dair,
+          "vmc_simple_flux_emplacement_bouches_entree_dair_manquant" => :emplacement_bouches_entree_dair,
+        }
 
         # TODO : - Marque et référence et type des bouches d’entrée d’air
         # Nombre et emplacement (pour rappel uniquement dans les pièces seches)
@@ -52,7 +57,12 @@ module QuoteValidator
       def validate_vmc_double_flux(geste)
         validate_ventilation(geste)
 
-        fields = {}
+        fields = {
+          "vmc_double_flux_marque_bouches_soufflage_manquant" => :marque_bouches_soufflage,
+          "vmc_double_flux_reference_bouches_soufflage_manquant" => :reference_bouches_soufflage,
+          "vmc_double_flux_emplacement_bouches_soufflage_manquant" => :emplacement_bouches_soufflage,
+          "vmc_double_flux_nombre_bouches_soufflage_manquant" => :nombre_bouches_soufflage,
+        }
 
         # TODO: V1 :
         # Marque et référence  nombre et emplace des bouches de soufflage
@@ -63,6 +73,16 @@ module QuoteValidator
           add_error(error_message, geste) if geste[field].blank?
         end
       end
+
+      protected
+
+      def add_error(code, geste)
+        super(code,
+                  type: "missing",
+                  category: "gestes",
+                  value: geste[:intitule])
+      end
+      
     end
   end
 end
