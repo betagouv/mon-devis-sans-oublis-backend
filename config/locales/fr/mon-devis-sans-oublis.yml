@@ -122,15 +122,15 @@ SNC, SAS."
 #################################################
 
 
-      marque_isolation_manquant: "La marque du materiel d'isolation est manquante."
-      reference_isolation_manquant: "La référence de l'installation est obligatoire."
-      surface_manquant: "La surface isolée doit être précisée."
-      epaisseur_manquant: "L'épaisseur de l'isolant doit être précisée en cm."
-      r_manquant: "La résistance thermique de l'installation doit être précisée et est définie en m2.K/W." # Decimal (m².K/W)
+      isolation_marque_manquant: "La marque du materiel d'isolation est manquante."
+      isolation_reference_manquant: "La référence de l'installation est obligatoire."
+      isolation_surface_manquant: "La surface isolée doit être précisée."
+      isolation_epaisseur_manquant: "L'épaisseur de l'isolant doit être précisée en cm."
+      isolation_r_manquant: "La résistance thermique de l'installation doit être précisée et est définie en m2.K/W." # Decimal (m².K/W)
       # validate_isolation_toiture_terrasse
-      type_isolation_toiture_terrasse_manquant: "L'isolation est-elle faite par l'intérieur ou par l'extérieur ?"
+      isolation_type_isolation_toiture_terrasse_manquant: "L'isolation est-elle faite par l'intérieur ou par l'extérieur ?"
       # validate_isolation_plancher_bas
-      localisation_manquant: "Pour l'isolation des planchers bas, il faut préciser sur quelle pièce cela donne."
+      isolation_localisation_manquant: "Pour l'isolation des planchers bas, il faut préciser sur quelle pièce cela donne."
 
 
 
@@ -139,28 +139,28 @@ SNC, SAS."
 #################################################
 
 
-      marque_menuiserie_manquant: "Il faut indiquer précisément la marque de la menuiserie installée"
-      reference_menuiserie_manquant: "La référence de la menuiserie doit être indiquée."
-      type_materiau_manquant: "Il faut indiquer le matériau des montants : bois, alu, pvc ..." # bois, alu, pvc ...
-      type_vitrage_manquant: "Le vitrage est-il un simple ou un double vitrage ?" # simple - double vitrage
-      type_pose_manquant: "Il est important d'indiquer le type de pose, en rénovation ou en dépose totale." # renovation ou depose totale
-      localisation_manquant: "Pour une menuiserie, il faut indiquer dans quelle pièce elle est installée."
-      position_paroie_manquant: "Merci d'indiquer la position de la menuiserie, en nu intérieur, nu extérieur ou tunnel par exemple." # nu intérieur, nu extérieur, tunnel ...
+      menuiserie_marque_manquant: "Il faut indiquer précisément la marque de la menuiserie installée"
+      menuiserie_reference_manquant: "La référence de la menuiserie doit être indiquée."
+      menuiserie_type_materiau_manquant: "Il faut indiquer le matériau des montants : bois, alu, pvc ..." # bois, alu, pvc ...
+      menuiserie_type_vitrage_manquant: "Le vitrage est-il un simple ou un double vitrage ?" # simple - double vitrage
+      menuiserie_type_pose_manquant: "Il est important d'indiquer le type de pose, en rénovation ou en dépose totale." # renovation ou depose totale
+      menuiserie_localisation_manquant: "Pour une menuiserie, il faut indiquer dans quelle pièce elle est installée."
+      menuiserie_position_paroie_manquant: "Merci d'indiquer la position de la menuiserie, en nu intérieur, nu extérieur ou tunnel par exemple." # nu intérieur, nu extérieur, tunnel ...
       # validate_menuiserie_fenetre
-      uw_fenetre_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la fenêtre doit être indiqué."
-      uw_fenetre_manquant_infos: "Le coefficient Uw mesure la performance thermique globale d'une fenêtre, incluant le vitrage et le cadre."
-      sw_fentre_manquant: "Le facteur solaire de la fenêtre doit être clairement indiqué. Il va de 0 (pas de chaleur transmise) à 1 (toute la chaleur est transmise)."
-      sw_fenetre_manquant_infos: "Le Sw indique la capacité d'une fenêtre à laisser entrer la chaleur solaire. Il représente la proportion d’énergie solaire transmise à travers la fenêtre."
+      menuiserie_uw_fenetre_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la fenêtre doit être indiqué."
+      menuiserie_uw_fenetre_manquant_infos: "Le coefficient Uw mesure la performance thermique globale d'une fenêtre, incluant le vitrage et le cadre."
+      menuiserie_sw_fentre_manquant: "Le facteur solaire de la fenêtre doit être clairement indiqué. Il va de 0 (pas de chaleur transmise) à 1 (toute la chaleur est transmise)."
+      menuiserie_sw_fenetre_manquant_infos: "Le Sw indique la capacité d'une fenêtre à laisser entrer la chaleur solaire. Il représente la proportion d’énergie solaire transmise à travers la fenêtre."
       # validate_menuiserie_fenetre_toit
-      uw_fenetre_toit_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la fenêtre de toit doit être indiqué."
-      uw_fenetre_toit_manquant_infos: "Le coefficient Uw mesure la performance thermique globale de la fenêtre de toit, incluant le vitrage et le cadre."
-      sw_fenetre_toit_manquant: "Le facteur solaire de la fenêtre doit être clairement indiqué. Il va de 0 (pas de chaleur transmise) à 1 (toute la chaleur est transmise)."
-      sw_fenetre_toit_manquant_infos: "Le Sw indique la capacité d'une fenêtre de toit à laisser entrer la chaleur solaire. Il représente la proportion d’énergie solaire transmise à travers la fenêtre de toit."
+      menuiserie_uw_fenetre_toit_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la fenêtre de toit doit être indiqué."
+      menuiserie_uw_fenetre_toit_manquant_infos: "Le coefficient Uw mesure la performance thermique globale de la fenêtre de toit, incluant le vitrage et le cadre."
+      menuiserie_sw_fenetre_toit_manquant: "Le facteur solaire de la fenêtre doit être clairement indiqué. Il va de 0 (pas de chaleur transmise) à 1 (toute la chaleur est transmise)."
+      menuiserie_sw_fenetre_toit_manquant_infos: "Le Sw indique la capacité d'une fenêtre de toit à laisser entrer la chaleur solaire. Il représente la proportion d’énergie solaire transmise à travers la fenêtre de toit."
       # validate_menuiserie_porte
-      ud_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la porte ou de la porte-fenêtre doit être indiqué."
+      menuiserie_ud_porte_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la porte ou de la porte-fenêtre doit être indiqué."
       # validate_menuiserie_volet_isolant
-      deltar_manquant: "Le gain de résistance thermique (en W/m2⋅K) suite à l'installation du volet isolant est à indiquer précisément."
-      deltar_manquant_infos: "Le ΔR représente l’augmentation de la résistance thermique (R) d’un élément de construction après rénovation."
+      menuiserie_deltar_volet_manquant: "Le gain de résistance thermique (en W/m2⋅K) suite à l'installation du volet isolant est à indiquer précisément."
+      menuiserie_deltar_volet_manquant_infos: "Le ΔR représente l’augmentation de la résistance thermique (R) d’un élément de construction après rénovation."
 
 
 #################################################

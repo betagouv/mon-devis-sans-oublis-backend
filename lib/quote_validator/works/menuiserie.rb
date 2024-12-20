@@ -12,13 +12,13 @@ module QuoteValidator
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/CyclomaticComplexity
       def validate_menuiserie(geste, error)
-        error << "marque_menuiserie_manquant" if geste[:marque].blank?
-        error << "reference_menuiserie_manquant" if geste[:reference].blank?
-        error << "type_materiau_manquant" if geste[:type_materiau].blank? # bois, alu, pvc ...
-        error << "type_vitrage_manquant" if geste[:type_vitrage].blank? # simple - double vitrage
-        error << "type_pose_manquant" if geste[:type_pose].blank? # renovation ou depose totale
-        error << "localisation_manquant" if geste[:localisation].blank?
-        error << "position_paroie_manquant" if geste[:position_paroie].blank? # nu intérieur, nu extérieur, tunnel ...
+        add_error("menuiserie_marque_manquant", geste) if geste[:marque].blank?
+        add_error("menuiserie_reference_manquant", geste) if geste[:reference].blank?
+        add_error("menuiserie_type_materiau_manquant", geste) if geste[:type_materiau].blank? # bois, alu, pvc ...
+        add_error("menuiserie_type_vitrage_manquant", geste) if geste[:type_vitrage].blank? # simple - double vitrage
+        add_error("menuiserie_type_pose_manquant", geste) if geste[:type_pose].blank? # renovation ou depose totale
+        add_error("menuiserie_localisation_manquant", geste) if geste[:localisation].blank?
+        add_error("menuiserie_position_paroie_manquant", geste) if geste[:position_paroie].blank? # nu intérieur, nu extérieur, tunnel ...
       end
       # rubocop:enable Metrics/CyclomaticComplexity
       # rubocop:enable Metrics/AbcSize
@@ -27,8 +27,8 @@ module QuoteValidator
         error = []
 
         validate_menuiserie(geste, error)
-        error << "uw_fenetre_manquant" if geste[:uw].blank?
-        error << "sw_fenetre_manquant" if geste[:sw].blank?
+        add_error("menuiserie_uw_fenetre_manquant", geste) if geste[:uw].blank?
+        add_error("menuiserie_sw_fenetre_manquant", geste) if geste[:sw].blank?
         # V1, check valeurs : Uw ≤ 1,3 W/m².K et Sw ≥ 0,3 OU Uw ≤ 1,7 W/m².K et Sw ≥ 0,36
 
         error
@@ -38,8 +38,8 @@ module QuoteValidator
         error = []
 
         validate_menuiserie(geste, error)
-        error << "uw_fenetre_toit_manquant" if geste[:uw].blank?
-        error << "sw_fenetre_toit_manquant" if geste[:sw].blank?
+        add_error("menuiserie_uw_fenetre_toit_manquant", geste) if geste[:uw].blank?
+        add_error("menuiserie_sw_fenetre_toit_manquant", geste) if geste[:sw].blank?
         # V1, check valeurs : (Uw ≤ 1,5 W/m².K et Sw ≤ 0,36 )
 
         error
@@ -49,7 +49,7 @@ module QuoteValidator
         error = []
 
         validate_menuiserie(geste, error)
-        error << "ud_manquant" if geste[:ud].blank? # TODO : Que CEE ?
+        add_error("menuiserie_ud_porte_manquant", geste) if geste[:ud].blank? # TODO : Que CEE ?
         # v1, check valeurs : Ud ≤ 1,7 W/m².K
 
         error
@@ -60,11 +60,21 @@ module QuoteValidator
 
         validate_menuiserie(geste, error)
 
-        error << "deltar_manquant" if geste[:deltaR].blank? # TODO: Que CEE ?
+        add_error("menuiserie_deltar_volet_manquant", geste) if geste[:deltaR].blank? # TODO: Que CEE ?
         # v1, check valeurs :La résistance thermique additionnelle DeltaR (DeltaR ≥ 0,22 m².K/W)
 
         error
       end
+
+      protected
+
+      def add_error(code, geste)
+        super(code,
+                  type: "missing",
+                  category: "gestes",
+                  value: geste[:intitule])
+      end
+      
     end
   end
 end
