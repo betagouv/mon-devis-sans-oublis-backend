@@ -105,6 +105,9 @@ paths:
                   format: binary
                 profile:
                   "$ref": "#/components/schemas/profile"
+                parent_id:
+                  type: string
+                  nullable: true
               required:
               - file
               - profile
@@ -217,6 +220,9 @@ components:
         id:
           type: string
           description: UUID unique
+        parent_id:
+          type: string
+          nullable: true
         status:
           "$ref": "#/components/schemas/quote_check_status"
         profile:

@@ -3,8 +3,10 @@
 # QuoteCheck represents a submission of a quote to be checked.
 class QuoteCheck < ApplicationRecord
   belongs_to :file, class_name: "QuoteFile"
+  belongs_to :parent, class_name: "QuoteFile", optional: true
 
   has_many :feedbacks, class_name: "QuoteCheckFeedback", dependent: :destroy
+  has_many :children, class_name: "QuoteFile", foreign_key: :parent_id, inverse_of: :parent, dependent: :nullify
 
   STATUSES = %w[pending valid invalid].freeze
 

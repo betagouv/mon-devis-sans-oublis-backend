@@ -34,6 +34,22 @@ RSpec.describe "/api/v1/quote_checks" do
         post api_v1_quote_checks_url, params: quote_check_params, headers: basic_auth_header
       end.to change(QuoteCheck, :count).by(1)
     end
+
+    context "with parent_id" do
+      let(:quote_check) { create(:quote_check) }
+      let(:quote_check_params) do
+        {
+          file: file,
+          profile: "artisan",
+          parent_id: quote_check.id
+        }
+      end
+
+      it "returns the parent_id" do
+        post api_v1_quote_checks_url, params: quote_check_params, headers: basic_auth_header
+        expect(json.fetch("parent_id")).to eq(quote_check.id)
+      end
+    end
   end
 
   describe "GET /api/v1/quote_checks/:id" do
