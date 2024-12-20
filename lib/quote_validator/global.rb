@@ -180,7 +180,7 @@ module QuoteValidator
         when "pac", "pac_air_eau"
           chauffage.validate_pac(geste)
         when "pac_air_air"
-          chaffage.validate_pac_air_air(geste)
+          chauffage.validate_pac_air_air(geste)
 
         # EAU CHAUDE SANITAIRE
         when "chauffe_eau_solaire_individuel"
