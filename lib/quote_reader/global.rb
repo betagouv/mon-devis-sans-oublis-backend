@@ -33,14 +33,26 @@ module QuoteReader
       @naive_attributes = naive_reader.read
       @naive_version = naive_reader.version
 
-      @anonymised_text = Anonymiser.new(text).anonymised_text
+      extended_attributes = ExtendedData.new(@naive_attributes).extended_attributes
+      @anonymised_text = Anonymiser.new(text).anonymised_text(
+        deep_merge_if_absent(
+          @naive_attributes,
+          extended_attributes
+        )
+      )
 
       qa_reader = Qa.new(anonymised_text)
       @qa_attributes = qa_reader.read || {}
       @qa_result = qa_reader.result
       @qa_version = qa_reader.version
 
-      @read_attributes = deep_merge_if_absent(naive_attributes, qa_attributes)
+      @read_attributes = deep_merge_if_absent(
+        deep_merge_if_absent(
+          naive_attributes,
+          extended_attributes
+        ),
+        qa_attributes
+      )
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
@@ -51,6 +63,8 @@ module QuoteReader
       hash1.merge(hash2) do |_key, old_val, new_val|
         if old_val.is_a?(Hash) && new_val.is_a?(Hash)
           deep_merge_if_absent(old_val, new_val)
+        elsif old_val.is_a?(Array) && new_val.is_a?(Array)
+          old_val + new_val
         else
           old_val.nil? ? new_val : old_val
         end

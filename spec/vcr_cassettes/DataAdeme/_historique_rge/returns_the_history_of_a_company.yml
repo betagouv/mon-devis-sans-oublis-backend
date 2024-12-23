@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://data.ademe.fr/data-fair/api/v1/datasets/historique-rge/lines?qs=siret:12345678900000
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - data.ademe.fr
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 23 Dec 2024 15:40:26 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '33'
+      Connection:
+      - keep-alive
+      X-Powered-By:
+      - Express
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Resource:
+      - '{"type":"datasets","id":"historique-rge","title":"Historique%20des%20entreprises%20RGE%20depuis%202014"}'
+      X-Owner:
+      - '{"type":"organization","id":"g1pKfMqaE"}'
+      X-Operation:
+      - '{"class":"read","id":"readLines","track":"readDataAPI"}'
+      Last-Modified:
+      - Mon, 23 Dec 2024 04:04:23 GMT
+      Cache-Control:
+      - must-revalidate, public, max-age=300
+      Etag:
+      - W/"21-2J59EOE12+2khuKa9EOcemGRsF8"
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Cache-Status:
+      - REVALIDATED
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total": 0,
+          "results": []
+        }
+  recorded_at: Mon, 23 Dec 2024 15:40:26 GMT
+recorded_with: VCR 6.3.1

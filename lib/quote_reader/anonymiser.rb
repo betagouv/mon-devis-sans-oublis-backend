@@ -56,10 +56,10 @@ module QuoteReader
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize
 
-    def anonymised_text
+    def anonymised_text(attributes = nil)
       return nil if @raw_text.nil?
 
-      attributes = QuoteReader::NaiveText.new(@raw_text).read
+      attributes ||= QuoteReader::NaiveText.new(@raw_text).read
       replace_text_from_attributes(attributes, FIELDS_TO_ANONYMISE, @raw_text)
     end
   end
