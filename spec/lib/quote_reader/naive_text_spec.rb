@@ -47,7 +47,7 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
           devis: "Devis",
           client: {
             nom: "Doe",
-            prenom: "Doe",
+            prenom: nil,
             adresse_chantier: "43"
           },
           pro: {

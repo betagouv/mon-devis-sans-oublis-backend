@@ -18,7 +18,7 @@ module QuoteReader
         client: {
           adresse_chantier: self.class.find_adresse_chantier(text),
           nom: self.class.find_nom(text),
-          prenom: self.class.find_nom(text)
+          prenom: nil # Necessary for Anonymisation ?
         },
         pro: {
           adresse: self.class.find_adresse_pro(text),
@@ -35,6 +35,11 @@ module QuoteReader
         adresses: self.class.find_adresses(text),
         emails: self.class.find_emails(text),
         ibans: self.class.find_ibans(text),
+        labels: self.class.find_label_numbers(text),
+        names: [
+          self.class.find_nom(text),
+          self.class.find_raison_sociale(text)
+        ],
         numeros_tva: self.class.find_numeros_tva(text),
         rcss: self.class.find_rcss(text),
         sirets: self.class.find_sirets(text),
