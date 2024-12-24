@@ -48,6 +48,7 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
           client: {
             nom: "Doe",
             prenom: nil,
+            adresse: "42",
             adresse_chantier: "43"
           },
           pro: {

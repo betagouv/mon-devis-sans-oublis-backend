@@ -16,9 +16,10 @@ module QuoteReader
         devis: self.class.find_mention_devis(text),
         numero_devis: self.class.find_numero_devis(text),
         client: {
+          adresse: self.class.find_adresses(text).first,
           adresse_chantier: self.class.find_adresse_chantier(text),
           nom: self.class.find_nom(text),
-          prenom: nil # Necessary for Anonymisation ?
+          prenom: self.class.find_prenom(text) # Necessary for Anonymisation ?
         },
         pro: {
           adresse: self.class.find_adresse_pro(text),
@@ -56,7 +57,7 @@ module QuoteReader
 
     NUMBER_REFERENCE_REGEX = /n?[.°]/i
 
-    BETWEEN_LABEL_VALUE_REGEX = /\s+(?:#{NUMBER_REFERENCE_REGEX})?\s*(?::\s*)?/i
+    BETWEEN_LABEL_VALUE_REGEX = /\s*(?:#{NUMBER_REFERENCE_REGEX})?\s*(?::\s*)?/i
     EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
     FORME_JURIDIQUE_REGEX = /
     (?:                   # Begin group for legal forms
@@ -80,26 +81,26 @@ module QuoteReader
     URI_REGEX = %r{(?:https?|ftp)://(?:www\.)?[^\s/$.?#].[^\s]*|www\.[^\s/$.?#].[^\s]*}i
 
     def self.find_adresses(text)
-      (text.scan(/Adresse\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i).flatten +
+      (text.scan(/Adresse#{BETWEEN_LABEL_VALUE_REGEX}(#{FRENCH_CHARACTER_REGEX}+)/i).flatten +
         text.scan(/(#{FRENCH_ADDRESS_REGEX})/i).flatten).filter_map { |e| e&.strip }.uniq
     end
 
     def self.find_adresse_chantier(text)
-      text[/Adresse chantier\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1] ||
+      text[/Adresse chantier#{BETWEEN_LABEL_VALUE_REGEX}(#{FRENCH_CHARACTER_REGEX}+)/i, 1].presence ||
         find_adresses(text).first
     end
 
     def self.find_adresse_pro(text)
-      text[/Adresse Pro\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1] ||
+      text[/Adresse Pro#{BETWEEN_LABEL_VALUE_REGEX}(#{FRENCH_CHARACTER_REGEX}+)/i, 1].presence ||
         find_adresses(text).first
     end
 
     def self.find_assurance(text)
-      text[/Assurance(?:\s+décennale)?#{BETWEEN_LABEL_VALUE_REGEX}((?:[#{FRENCH_CHARACTER_REGEX}:]+\s+)+(?:#{NUMBER_REFERENCE_REGEX}\s*)?(?:contrat\s+#{FRENCH_CHARACTER_REGEX}*\s*\d+)?)/i, 1] # rubocop:disable Layout/LineLength
+      text[/Assurance(?:\s+décennale)?#{BETWEEN_LABEL_VALUE_REGEX}((?:[#{FRENCH_CHARACTER_REGEX}:]+\s+)+(?:#{NUMBER_REFERENCE_REGEX}\s*)?(?:contrat\s+#{FRENCH_CHARACTER_REGEX}*\s*\d+)?)/i, 1].presence # rubocop:disable Layout/LineLength
     end
 
     def self.find_capital(text)
-      text[/(?:Capitale?|capilâide)(?:\s+de)?#{BETWEEN_LABEL_VALUE_REGEX}(\d+(?: \d{3})*)\s*€/i, 1]
+      text[/(?:Capitale?|capilâide)(?:\s+de)?#{BETWEEN_LABEL_VALUE_REGEX}(\d+(?: \d{3})*)\s*€/i, 1].presence
     end
 
     def self.find_emails(text)
@@ -107,7 +108,7 @@ module QuoteReader
     end
 
     def self.find_forme_juridique(text)
-      text[/\b(#{FORME_JURIDIQUE_REGEX})\b/, 1]
+      text[/\b(#{FORME_JURIDIQUE_REGEX})\b/, 1].presence
     end
 
     def self.find_ibans(text)
@@ -119,7 +120,7 @@ module QuoteReader
     def self.find_label_numbers(text)
       # Warning : insure caracter before not match the IBAN
       text.scan(
-        %r{(?:\A|.*#{BETWEEN_LABEL_VALUE_REGEX})((?:(?:CPLUS|QB|QPAC|QPV|QS|VPLUS)\s*/\s*|(?:R|E-)?E)\s*\d{5,6})}i
+        %r{(?:\A|.*?#{BETWEEN_LABEL_VALUE_REGEX})((?:(?:CPLUS|QB|QPAC|QPV|QS|VPLUS)\s*/\s*|(?:R|E-)?E)\s*\d{5,6})}i
       ).flatten.filter_map { |e| e&.strip }.uniq
     end
 
@@ -128,11 +129,11 @@ module QuoteReader
     end
 
     def self.find_nom(text)
-      text[/Nom\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
+      text[/Nom#{BETWEEN_LABEL_VALUE_REGEX}(#{FRENCH_CHARACTER_REGEX}+)/i, 1].presence
     end
 
     def self.find_numero_devis(text)
-      text[/DEVIS\s+N.?\s*(#{FRENCH_CHARACTER_REGEX}*\d{4,})/i, 1]
+      text[/DEVIS\s+N.?\s*(#{FRENCH_CHARACTER_REGEX}*\d{4,})/i, 1].presence
     end
 
     def self.find_numeros_tva(text)
@@ -140,18 +141,18 @@ module QuoteReader
     end
 
     def self.find_prenom(text)
-      french_first_names = %w[Jean Marie Jacques Claire Pierre Sophie Amélie Luc Léa Élodie Chloé Théo]
+      french_first_names = %w[Jean Marie Jacques Claire Pierre Sophie Amélie Luc Léa Élodie Chloé Théo Martin]
 
-      french_first_names.detect { |first_name| text[/(#{first_name})/i, 1] } ||
-        text[/Prénom\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
+      french_first_names.detect { |first_name| text[/(#{first_name})/i, 1].presence } ||
+        text[/Prénom#{BETWEEN_LABEL_VALUE_REGEX}(#{FRENCH_CHARACTER_REGEX}+)/i, 1].presence
     end
 
     def self.find_raison_sociale(text)
       forme_jurique_raison_sociale_regex = /#{FORME_JURIDIQUE_REGEX}\s+.+|.+\s+#{FORME_JURIDIQUE_REGEX}/i
 
-      text[/(#{forme_jurique_raison_sociale_regex})(?:\s+.*)?\Z/, 1] ||
-        text[/\A(?:.*\s)?+(#{forme_jurique_raison_sociale_regex}\s+.+)\s+/, 1] ||
-        text[/Raison sociale\s*:\s*(#{FRENCH_CHARACTER_REGEX}+)/i, 1]
+      text[/(#{forme_jurique_raison_sociale_regex})(?:\s+.*)?\Z/, 1].presence ||
+        text[/\A(?:.*\s)?+(#{forme_jurique_raison_sociale_regex}\s+.+)\s+/, 1].presence ||
+        text[/Raison sociale#{BETWEEN_LABEL_VALUE_REGEX}(#{FRENCH_CHARACTER_REGEX}+)/i, 1].presence
     end
 
     def self.find_rge_numbers(text)

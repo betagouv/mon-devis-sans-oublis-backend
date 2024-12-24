@@ -8,7 +8,7 @@
 <% if defined?(@quote_valid) %>
   <hr />
 
-  <h1>Résultat vérification du Devis : <%= @quote_valid ? 'Valide' : 'Invalide' %></h1>
+  <h1>Résultat vérification du Devis : <%= @quote_valid ? 'Valide ✅' : 'Invalide ❌' %></h1>
   <pre><%= @quote_error_details&.join("\n") %></pre>
 <% end %>
 
