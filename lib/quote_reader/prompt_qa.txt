@@ -94,9 +94,9 @@ type_isolation_toiture_terrasse: text;
 ### Menuiseries
 
 ```jsx
-{type: 'menuiserie'; 
+{type: enum(menuiserie_fenetre, menuiserie_fenetre_toit, menuiserie_porte, menuiserie_volet_isolant); 
 intitule: text,
-type_menuiserie: enum(fenetre, porte_fenetre, porte, fenetre_de_toit,..); 
+type_menuiserie: enum(fenetre, porte_fenetre, porte, fenetre_de_toit, volet_isolant); 
 type_materiaux: enum (PVC, bois, aluminium); 
 type_vitrage: enum(simple,double, triple,...); 
 type_pose: enum(renovation,despose_totale); 

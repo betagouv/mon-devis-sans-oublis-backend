@@ -180,7 +180,7 @@ module QuoteValidator
           chauffage.validate_poele_insert(geste)
         when "systeme_solaire_combine"
           chauffage.validate_systeme_solaire_combine(geste)
-        when "pac", "pac_air_eau"
+        when "pac", "pac_air_eau", "pac_hybride", "pac_eau_eau"
           chauffage.validate_pac(geste)
         when "pac_air_air"
           chauffage.validate_pac_air_air(geste)
