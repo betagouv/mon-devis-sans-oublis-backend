@@ -3,7 +3,7 @@
 require "swagger_helper"
 
 describe "Devis API" do
-  path "/quote_checks/{quote_check_id}/feedbacks" do
+  path "/quote_checks/{quote_check_id}/error_details/{error_details_id}/feedbacks" do
     # TODO: i18n?
     post "Déposer un retour" do
       tags "Devis"
@@ -12,10 +12,10 @@ describe "Devis API" do
       produces "application/json"
 
       parameter name: :quote_check_id, in: :path, type: :string
+      parameter name: :error_details_id, in: :path, type: :string
       parameter name: :quote_check_feedback, in: :body, schema: {
         type: :object,
         properties: {
-          validation_error_details_id: { type: :string, nullable: false },
           is_helpful: { type: :boolean, nullable: false },
           comment: {
             type: :string,
@@ -25,11 +25,12 @@ describe "Devis API" do
             end&.options&.[](:maximum)
           }
         },
-        required: %w[validation_error_details_id is_helpful]
+        required: %w[is_helpful]
       }
 
       let(:quote_check) { create(:quote_check, :invalid) }
       let(:quote_check_id) { quote_check.id }
+      let(:error_details_id) { quote_check.validation_error_details.first.fetch("id") }
       let(:quote_check_feedback) do
         build(:quote_check_feedback, quote_check: quote_check).attributes
       end
@@ -46,7 +47,11 @@ describe "Devis API" do
       response "422", "missing params" do
         schema "$ref" => "#/components/schemas/api_error"
 
-        let(:quote_check_feedback) { build(:quote_check_feedback).attributes.merge("is_helpful" => nil) }
+        let(:quote_check_feedback) do
+          build(:quote_check_feedback).attributes
+                                      .except("validation_error_details_id")
+                                      .merge("is_helpful" => nil)
+        end
 
         let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
 
