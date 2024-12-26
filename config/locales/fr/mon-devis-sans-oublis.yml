@@ -16,6 +16,7 @@ fr:
   quote_validator:
     error_categories:
       admin: "Mentions administratives"
+      file: "Fichier"
       gestes: "Descriptif technique des gestes"
     error_types:
       missing: "Information manquante"
