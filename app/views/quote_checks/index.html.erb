@@ -27,7 +27,7 @@
             <td><pre><%= JSON.pretty_generate quote_check.read_attributes %></pre></td>
             <td><pre><%= JSON.pretty_generate quote_check.validation_errors %></pre></td>
             <td><pre><%= JSON.pretty_generate quote_check.qa_result %></pre></td>
-            <td style="font-size: 6px"><pre><%= JSON.pretty_generate quote_check.anonymised_text %></pre></td>
+            <td style="font-size: 6px"><pre><%= anonymised_text %></pre></td>
         </tr>
     <% end %>
     </tbody>

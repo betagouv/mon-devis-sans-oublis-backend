@@ -18,6 +18,11 @@
   <h1>Attributs détecté du Devis :</h1>
   <pre><%= JSON.pretty_generate @quote_attributes %></pre>
 
+  <% if @quote_check&.anonymised_text.present? %>
+    <h1>Texte anonymisé du Devis :</h1>
+    <pre><%= @quote_check&.anonymised_text %></pre>
+  <% end %>
+
   <% if @quote_check&.text.present? %>
     <h1>Texte du Devis :</h1>
     <pre><%= @quote_check&.text %></pre>
