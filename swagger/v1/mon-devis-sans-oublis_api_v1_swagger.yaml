@@ -3,6 +3,11 @@ openapi: 3.0.1
 info:
   title: Mon Devis Sans Oublis API V1
   version: v1
+  description: |
+    **Général champs:**
+    - les champs optionnels sont nullables voir peuvent ne pas être présents dans le payload
+    - `id` : considérer comme un string unique
+    - type enum : comme des strings
 paths:
   "/profiles":
     get:
@@ -255,6 +260,7 @@ components:
           description: peut-être vide
         provided_value:
           type: string
+          description: peut-être vide, ou ligne du geste correspondant
         value:
           type: string
           description: DEPRECATED

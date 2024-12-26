@@ -20,7 +20,13 @@ RSpec.configure do |config|
       openapi: "3.0.1",
       info: {
         title: "#{Rails.application.config.application_name} API V1",
-        version: "v1"
+        version: "v1",
+        description: <<~DESC
+          **Général champs:**
+          - les champs optionnels sont nullables voir peuvent ne pas être présents dans le payload
+          - `id` : considérer comme un string unique
+          - type enum : comme des strings
+        DESC
       },
       paths: {},
       produces: ["application/json"],
@@ -94,7 +100,7 @@ RSpec.configure do |config|
               title: { type: :string },
               problem: { type: :string, description: "Réutilisez le title si vide" },
               solution: { type: :string, description: "peut-être vide" },
-              provided_value: { type: :string },
+              provided_value: { type: :string, description: "peut-être vide, ou ligne du geste correspondant" },
               value: { type: :string, description: "DEPRECATED" }
             },
             required: %w[id code]
