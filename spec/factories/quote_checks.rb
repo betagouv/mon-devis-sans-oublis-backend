@@ -37,7 +37,7 @@ FactoryBot.define do
       validation_errors { validation_error_details&.map { |error_detail| error_detail.fetch(:code) } || [] }
       validation_error_details do
         [{
-          id: "#1",
+          id: "1",
           code: "something"
         }]
       end

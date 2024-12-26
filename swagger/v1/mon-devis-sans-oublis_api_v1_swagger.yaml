@@ -68,6 +68,52 @@ paths:
               required:
               - validation_error_details_id
               - is_helpful
+  "/quote_checks/{quote_check_id}/error_details/{error_details_id}/feedbacks":
+    post:
+      summary: Déposer un retour
+      tags:
+      - Devis
+      security:
+      - basic_auth: []
+      parameters:
+      - name: quote_check_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: error_details_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Retour téléversé
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/quote_check_feedback"
+        '422':
+          description: missing params
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/api_error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                is_helpful:
+                  type: boolean
+                  nullable: false
+                comment:
+                  type: string
+                  nullable: true
+                  maxLength: 1000
+              required:
+              - is_helpful
   "/quote_checks":
     post:
       summary: Téléverser un devis

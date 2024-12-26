@@ -46,7 +46,7 @@ module QuoteValidator
       end
 
       error_details << {
-        id: "#{quote_id}##{error_details.count + 1}",
+        id: [quote_id, error_details.count + 1].compact.join("-"),
         code:,
         category:, type:,
         title: title || I18n.t("quote_validator.errors.#{code}"),

@@ -6,6 +6,12 @@ Rails.application.routes.draw do
       resources :profiles, only: %i[index]
       resources :quote_checks, only: %i[create show] do
         resources :feedbacks, only: %i[create], controller: "quote_check_feedbacks"
+        resources :quote_check_validation_error_details,
+                  path: "error_details",
+                  as: :validation_error_details,
+                  only: %i[] do
+          resources :feedbacks, only: %i[create], controller: "quote_check_feedbacks"
+        end
       end
     end
   end
