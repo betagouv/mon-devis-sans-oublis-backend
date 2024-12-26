@@ -220,9 +220,10 @@ components:
       type: string
       enum:
       - admin
+      - file
       - gestes
-      description: 'admin: Mentions administratives | gestes: Descriptif technique
-        des gestes'
+      description: 'admin: Mentions administratives | file: Fichier | gestes: Descriptif
+        technique des gestes'
     quote_check_error_code:
       type: string
       description: code d'erreur

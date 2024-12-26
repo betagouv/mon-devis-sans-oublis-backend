@@ -53,6 +53,13 @@ class QuoteCheckService
     )
     quote_reader.read
 
+    unless quote_reader.text&.strip.presence
+      add_error("file_reading_error",
+                category: "file",
+                type: "error")
+      return
+    end
+
     quote_check.assign_attributes(
       text: quote_reader.text,
       anonymised_text: quote_reader.anonymised_text,
@@ -64,27 +71,13 @@ class QuoteCheckService
       read_attributes: quote_reader.read_attributes
     )
   rescue QuoteReader::ReadError
-    quote_check.assign_attributes(
-      validation_errors: ["file_reading_error"],
-      validation_error_details: [{
-        id: "#{quote_check.id}#1",
-        code: "file_reading_error",
-        category: "file",
-        type: "error",
-        title: I18n.t("quote_validator.errors.file_reading_error")
-      }]
-    )
+    add_error("file_reading_error",
+              category: "file",
+              type: "error")
   rescue QuoteReader::UnsupportedFileType
-    quote_check.assign_attributes(
-      validation_errors: ["unsupported_file_format"],
-      validation_error_details: [{
-        id: "#{quote_check.id}#1",
-        code: "unsupported_file_format",
-        category: "file",
-        type: "error",
-        title: I18n.t("quote_validator.errors.unsupported_file_format")
-      }]
-    )
+    add_error("unsupported_file_format",
+              category: "file",
+              type: "error")
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
@@ -99,4 +92,21 @@ class QuoteCheckService
       validation_version: quote_validator.version
     )
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def add_error(code,
+                category: nil, type: nil,
+                title: nil)
+    quote_check.validation_errors ||= []
+    quote_check.validation_errors << code
+
+    quote_check.validation_error_details ||= []
+    quote_check.validation_error_details << {
+      id: [quote_check.id, quote_check.validation_error_details.count + 1].compact.join("-"),
+      code:,
+      category:, type:,
+      title: title || I18n.t("quote_validator.errors.#{code}")
+    }
+  end
+  # rubocop:enable Metrics/AbcSize
 end
