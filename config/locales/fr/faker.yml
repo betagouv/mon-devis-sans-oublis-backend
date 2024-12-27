@@ -1,0 +1,7 @@
+fr:
+  faker:
+    internet:
+      safe_domain_suffix:
+        - dev
+        - local
+        - test

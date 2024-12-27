@@ -5,7 +5,7 @@ require "swagger_helper"
 describe "Devis API" do
   path "/quote_checks/{quote_check_id}/feedbacks" do
     # TODO: i18n?
-    post "Déposer un retour" do
+    post "Déposer un retour global ou sur error detail" do
       tags "Devis"
       security [basic_auth: []]
       consumes "application/json"
@@ -13,44 +13,93 @@ describe "Devis API" do
 
       parameter name: :quote_check_id, in: :path, type: :string
       parameter name: :quote_check_feedback, in: :body, schema: {
-        type: :object,
-        properties: {
-          validation_error_details_id: { type: :string, nullable: false },
-          is_helpful: { type: :boolean, nullable: false },
-          comment: {
-            type: :string,
-            nullable: true,
-            maxLength: QuoteCheckFeedback.validators_on(:comment).detect do |validator|
-              validator.is_a?(ActiveModel::Validations::LengthValidator)
-            end&.options&.[](:maximum)
+        oneOf: [
+          {
+            type: :object,
+            properties: {
+              rating: { type: :integer, nullable: false, description: "de 0 à 5 (trés satisfait) inclus" },
+              email: { type: :string, nullable: true },
+              comment: {
+                type: :string,
+                nullable: true,
+                maxLength: QuoteCheckFeedback.validators_on(:comment).detect do |validator|
+                  validator.is_a?(ActiveModel::Validations::LengthValidator)
+                end&.options&.[](:maximum)
+              }
+            },
+            required: %w[rating]
+          },
+          {
+            type: :object,
+            properties: {
+              validation_error_details_id: { type: :string, nullable: false },
+              is_helpful: { type: :boolean, nullable: false },
+              comment: {
+                type: :string,
+                nullable: true,
+                maxLength: QuoteCheckFeedback.validators_on(:comment).detect do |validator|
+                  validator.is_a?(ActiveModel::Validations::LengthValidator)
+                end&.options&.[](:maximum)
+              }
+            },
+            required: %w[validation_error_details_id is_helpful]
           }
-        },
-        required: %w[validation_error_details_id is_helpful]
+        ]
       }
 
       let(:quote_check) { create(:quote_check, :invalid) }
       let(:quote_check_id) { quote_check.id }
-      let(:quote_check_feedback) do
-        build(:quote_check_feedback, quote_check: quote_check).attributes
+
+      context "with global feedback" do
+        let(:quote_check_feedback) do
+          build(:quote_check_feedback, :global, quote_check: quote_check).attributes
+        end
+
+        response "201", "Retour téléversé" do
+          schema "$ref" => "#/components/schemas/quote_check_feedback"
+
+          # See https://github.com/rswag/rswag/issues/316
+          let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
+
+          run_test!
+        end
+
+        response "422", "missing params" do
+          schema "$ref" => "#/components/schemas/api_error"
+
+          let(:quote_check_feedback) { build(:quote_check_feedback, :global).attributes.merge("rating" => nil) }
+
+          let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
+
+          run_test!
+        end
       end
 
-      response "201", "Retour téléversé" do
-        schema "$ref" => "#/components/schemas/quote_check_feedback"
+      context "with error detail only feedback" do
+        let(:quote_check_feedback) do
+          build(:quote_check_feedback, :error_detail, quote_check: quote_check).attributes
+        end
 
-        # See https://github.com/rswag/rswag/issues/316
-        let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
+        response "201", "Retour téléversé" do
+          schema "$ref" => "#/components/schemas/quote_check_feedback"
 
-        run_test!
-      end
+          # See https://github.com/rswag/rswag/issues/316
+          let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
 
-      response "422", "missing params" do
-        schema "$ref" => "#/components/schemas/api_error"
+          run_test!
+        end
 
-        let(:quote_check_feedback) { build(:quote_check_feedback).attributes.merge("is_helpful" => nil) }
+        response "422", "missing params" do
+          schema "$ref" => "#/components/schemas/api_error"
 
-        let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
+          let(:quote_check_feedback) do
+            build(:quote_check_feedback, :error_detail).attributes.merge("is_helpful" => nil)
+          end
 
-        run_test!
+          let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
+
+          run_test!
+        end
       end
     end
   end
