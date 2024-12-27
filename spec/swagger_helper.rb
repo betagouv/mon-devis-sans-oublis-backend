@@ -163,6 +163,33 @@ RSpec.configure do |config|
               }
             },
             required: %w[quote_check_id]
+          },
+
+          stats: {
+            type: "object",
+            properties: {
+              quote_checks_count: { type: :integer },
+              average_quote_check_errors_count: {
+                type: :number,
+                description: "nombre moyen d'erreurs par analyse, arrondi au décimal supérieur",
+                nullable: true
+              },
+              average_quote_check_cost: {
+                type: :number,
+                description: "coût moyen d'une analyse en Euro (€), arrondi au centime supérieur",
+                nullable: true
+              },
+              unique_visitors_count: {
+                type: :integer,
+                description: "nombre de visiteurs uniques dans le temps", nullable: true
+              }
+            },
+            required: %w[
+              quote_checks_count
+              average_quote_check_errors_count
+              average_quote_check_cost
+              unique_visitors_count
+            ]
           }
         }
       },

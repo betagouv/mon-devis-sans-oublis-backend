@@ -13,6 +13,7 @@ Rails.application.routes.draw do
           resources :feedbacks, only: %i[create], controller: "quote_check_feedbacks"
         end
       end
+      resources :stats, only: %i[index]
     end
   end
 
