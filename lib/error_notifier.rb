@@ -6,4 +6,12 @@ class ErrorNotifier
     Sentry.capture_exception(error) if defined?(Sentry)
     Rails.logger.error(error)
   end
+
+  def self.set_context(name, attributes)
+    return unless defined?(Sentry)
+
+    Sentry.configure_scope do |scope|
+      scope.set_context(name, attributes)
+    end
+  end
 end

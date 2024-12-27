@@ -34,6 +34,8 @@ class QuoteCheckService
   end
 
   def check
+    ErrorNotifier.set_context(:quote_check, { id: quote_check.id })
+
     read_quote
     validate_quote if quote_check.validation_errors.blank?
 
