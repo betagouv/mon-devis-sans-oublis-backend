@@ -66,7 +66,7 @@ paths:
                     nullable: false
                     description: de 0 à 5 (trés satisfait) inclus
                   email:
-                    type: boolean
+                    type: string
                     nullable: true
                   comment:
                     type: string
@@ -204,6 +204,18 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/api_error"
+  "/stats":
+    get:
+      summary: Récupérer les stats
+      tags:
+      - Stats
+      responses:
+        '200':
+          description: liste des stats
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/stats"
 produces:
 - application/json
 consumes:
@@ -348,6 +360,28 @@ components:
           maxLength: 1000
       required:
       - quote_check_id
+    stats:
+      type: object
+      properties:
+        quote_checks_count:
+          type: integer
+        average_quote_check_errors_count:
+          type: number
+          description: nombre moyen d'erreurs par analyse
+          nullable: true
+        average_quote_check_cost:
+          type: number
+          description: coût moyen d'une analyse en Euro (€)
+          nullable: true
+        unique_visitors_count:
+          type: integer
+          description: nombre de visiteurs uniques dans le temps
+          nullable: true
+      required:
+      - quote_checks_count
+      - average_quote_check_errors_count
+      - average_quote_check_cost
+      - unique_visitors_count
 servers:
 - url: https://api.staging.mon-devis-sans-oublis.beta.gouv.fr/api/v1
   description: Staging server

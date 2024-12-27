@@ -16,6 +16,16 @@ module Llms
       @prompt = prompt
     end
 
+    # Returns the cost in € with VAT
+    PROMPT_TOKEN_COST = 0.0018 / 1000 * 1.2
+    COMPLETION_TOKEN_COST = 0.0054 / 1000 * 1.2
+    def self.usage_cost_price(prompt_tokens: 0, completion_tokens: 0)
+      # Rounded to the last started thousand
+      price = ((prompt_tokens.to_f / 1000).ceil * 1000 * PROMPT_TOKEN_COST).ceil(2) +
+              ((completion_tokens.to_f / 1000).ceil * 1000 * COMPLETION_TOKEN_COST).ceil(2)
+      price.ceil(2)
+    end
+
     def self.configured?
       ENV.key?("MISTRAL_API_KEY")
     end

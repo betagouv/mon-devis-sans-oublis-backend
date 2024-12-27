@@ -6,6 +6,15 @@ RSpec.describe Llms::Mistral, type: :service do
   let(:prompt) { Rails.root.join("lib/quote_reader/prompt_qa.txt").read }
   let(:mistral) { described_class.new(prompt) }
 
+  describe ".usage_cost_price" do
+    it "returns the cost in €" do
+      expect(described_class.usage_cost_price(
+               prompt_tokens: 252_620,
+               completion_tokens: 21_037
+             )).to eq(0.7)
+    end
+  end
+
   describe "#chat_completion" do
     let(:text) do
       <<~TEXT
