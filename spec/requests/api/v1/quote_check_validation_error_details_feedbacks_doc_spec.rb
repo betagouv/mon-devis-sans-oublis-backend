@@ -32,7 +32,7 @@ describe "Devis API" do
       let(:quote_check_id) { quote_check.id }
       let(:error_details_id) { quote_check.validation_error_details.first.fetch("id") }
       let(:quote_check_feedback) do
-        build(:quote_check_feedback, quote_check: quote_check).attributes
+        build(:quote_check_feedback, :error_detail, quote_check: quote_check).attributes
       end
 
       response "201", "Retour téléversé" do

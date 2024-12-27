@@ -147,8 +147,13 @@ RSpec.configure do |config|
                 description: "UUID unique"
               },
               quote_check_id: { type: :string, nullable: false },
-              validation_error_details_id: { type: :string, nullable: false },
-              is_helpful: { type: :boolean, nullable: false },
+              validation_error_details_id: {
+                type: :string,
+                nullable: true,
+                description: "requis pour feedback error detail"
+              },
+              is_helpful: { type: :boolean, nullable: true, description: "requis pour feedback error detail" },
+              rating: { type: :integer, nullable: true, description: "requis pour feedback global hors error detail" },
               comment: {
                 type: :string,
                 nullable: true,
@@ -157,7 +162,7 @@ RSpec.configure do |config|
                 end&.options&.[](:maximum)
               }
             },
-            required: %w[quote_check_id validation_error_details_id is_helpful]
+            required: %w[quote_check_id]
           }
         }
       },

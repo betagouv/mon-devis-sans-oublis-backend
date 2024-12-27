@@ -11,45 +11,91 @@ RSpec.describe "/api/v1/quote_checks/:quote_check_id/feedbacks" do
   let(:json) { response.parsed_body }
 
   describe "POST /api/v1/quote_checks/:quote_check_id/feedbacks" do
-    let(:quote_check_feedback_params) do
-      {
-        validation_error_details_id: validation_error_details_id,
-        is_helpful: false,
-        comment: "FAUX"
-      }
-    end
+    context "with global feedback" do
+      let(:quote_check_feedback_params) do
+        {
+          rating: 2,
+          email: "no-reply@example.com",
+          comment: "FAUX"
+        }
+      end
 
-    it "returns a successful response" do
-      post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
-                                                                             headers: basic_auth_header
-      expect(response).to be_successful
-    end
-
-    it "returns a created response" do
-      post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
-                                                                             headers: basic_auth_header
-      expect(response).to have_http_status(:created)
-    end
-
-    it "returns the QuoteCheckFeedback" do
-      post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
-                                                                             headers: basic_auth_header
-      expect(json.fetch("quote_check_id")).to eq(quote_check_id)
-    end
-
-    it "creates a QuoteCheckFeedback" do
-      expect do
+      it "returns a successful response" do
         post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
                                                                                headers: basic_auth_header
-      end.to change(QuoteCheckFeedback, :count).by(1)
+        expect(response).to be_successful
+      end
+
+      it "returns a created response" do
+        post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
+                                                                               headers: basic_auth_header
+        expect(response).to have_http_status(:created)
+      end
+
+      it "returns the QuoteCheckFeedback" do
+        post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
+                                                                               headers: basic_auth_header
+        expect(json.fetch("quote_check_id")).to eq(quote_check_id)
+      end
+
+      it "creates a QuoteCheckFeedback" do
+        expect do
+          post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
+                                                                                 headers: basic_auth_header
+        end.to change(QuoteCheckFeedback, :count).by(1)
+      end
+
+      context "with wrong rating" do # rubocop:disable RSpec/NestedGroups
+        it "returns a unprocessable entity response" do
+          post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id),
+               params: quote_check_feedback_params.merge(rating: -1),
+               headers: basic_auth_header
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
     end
 
-    context "with wrong error details id" do
-      it "returns a unprocessable entity response" do
-        post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id),
-             params: quote_check_feedback_params.merge(validation_error_details_id: "wrong"),
-             headers: basic_auth_header
-        expect(response).to have_http_status(:unprocessable_entity)
+    context "with detail feedback" do
+      let(:quote_check_feedback_params) do
+        {
+          validation_error_details_id: validation_error_details_id,
+          is_helpful: false,
+          comment: "FAUX"
+        }
+      end
+
+      it "returns a successful response" do
+        post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
+                                                                               headers: basic_auth_header
+        expect(response).to be_successful
+      end
+
+      it "returns a created response" do
+        post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
+                                                                               headers: basic_auth_header
+        expect(response).to have_http_status(:created)
+      end
+
+      it "returns the QuoteCheckFeedback" do
+        post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
+                                                                               headers: basic_auth_header
+        expect(json.fetch("quote_check_id")).to eq(quote_check_id)
+      end
+
+      it "creates a QuoteCheckFeedback" do
+        expect do
+          post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
+                                                                                 headers: basic_auth_header
+        end.to change(QuoteCheckFeedback, :count).by(1)
+      end
+
+      context "with wrong error details id" do # rubocop:disable RSpec/NestedGroups
+        it "returns a unprocessable entity response" do
+          post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id),
+               params: quote_check_feedback_params.merge(validation_error_details_id: "wrong"),
+               headers: basic_auth_header
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
       end
     end
   end

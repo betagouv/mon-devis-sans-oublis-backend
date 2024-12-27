@@ -12,7 +12,10 @@ module Api
         @quote_check_feedback = quote_check.feedbacks.create!(quote_check_feedback_params)
 
         render json: @quote_check_feedback.attributes.slice(
-          "id", "quote_check_id", "validation_error_details_id", "is_helpful", "comment"
+          "id", "quote_check_id",
+          "rating", "email", # Global feedback
+          "validation_error_details_id", "is_helpful", # Error detail feedback
+          "comment"
         ), status: :created
       end
 
@@ -23,7 +26,11 @@ module Api
       end
 
       def quote_check_feedback_params
-        raw_params = params.permit(:validation_error_details_id, :is_helpful, :comment)
+        raw_params = params.permit(
+          :rating, :email, # Global feedback
+          :validation_error_details_id, :is_helpful, # Error detail feedback
+          :comment
+        )
         return raw_params unless defined?(@validation_error_details)
 
         raw_params.merge(validation_error_details_id: @validation_error_details.fetch("id"))

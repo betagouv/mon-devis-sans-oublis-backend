@@ -30,7 +30,7 @@ paths:
                 - data
   "/quote_checks/{quote_check_id}/feedbacks":
     post:
-      summary: Déposer un retour
+      summary: Déposer un retour global ou sur error detail
       tags:
       - Devis
       security:
@@ -58,21 +58,37 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                validation_error_details_id:
-                  type: string
-                  nullable: false
-                is_helpful:
-                  type: boolean
-                  nullable: false
-                comment:
-                  type: string
-                  nullable: true
-                  maxLength: 1000
-              required:
-              - validation_error_details_id
-              - is_helpful
+              oneOf:
+              - type: object
+                properties:
+                  rating:
+                    type: integer
+                    nullable: false
+                    description: de 0 à 5 (trés satisfait) inclus
+                  email:
+                    type: boolean
+                    nullable: true
+                  comment:
+                    type: string
+                    nullable: true
+                    maxLength: 1000
+                required:
+                - rating
+              - type: object
+                properties:
+                  validation_error_details_id:
+                    type: string
+                    nullable: false
+                  is_helpful:
+                    type: boolean
+                    nullable: false
+                  comment:
+                    type: string
+                    nullable: true
+                    maxLength: 1000
+                required:
+                - validation_error_details_id
+                - is_helpful
   "/quote_checks/{quote_check_id}/error_details/{error_details_id}/feedbacks":
     post:
       summary: Déposer un retour
@@ -316,18 +332,22 @@ components:
           nullable: false
         validation_error_details_id:
           type: string
-          nullable: false
+          nullable: true
+          description: requis pour feedback error detail
         is_helpful:
           type: boolean
-          nullable: false
+          nullable: true
+          description: requis pour feedback error detail
+        rating:
+          type: integer
+          nullable: true
+          description: requis pour feedback global hors error detail
         comment:
           type: string
           nullable: true
           maxLength: 1000
       required:
       - quote_check_id
-      - validation_error_details_id
-      - is_helpful
 servers:
 - url: https://api.staging.mon-devis-sans-oublis.beta.gouv.fr/api/v1
   description: Staging server
