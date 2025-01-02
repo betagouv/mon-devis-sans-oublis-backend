@@ -1,3 +1,21 @@
+GIT
+  remote: https://github.com/cucumber/cucumber-ruby.git
+  revision: a468bc682eec68ef5b5660a17c4c0e7e52cfc67b
+  ref: a468bc6
+  specs:
+    cucumber (9.2.0)
+      builder (~> 3.2)
+      cucumber-ci-environment (> 9, < 11)
+      cucumber-core (> 13, < 14)
+      cucumber-cucumber-expressions (~> 17.0)
+      cucumber-gherkin (> 24, < 28)
+      cucumber-html-formatter (> 20.3, < 22)
+      cucumber-messages (> 19, < 26)
+      diff-lcs (~> 1.5)
+      mini_mime (~> 1.1)
+      multi_test (~> 1.1)
+      sys-uname (~> 1.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -114,18 +132,6 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    cucumber (9.2.0)
-      builder (~> 3.2)
-      cucumber-ci-environment (> 9, < 11)
-      cucumber-core (> 13, < 14)
-      cucumber-cucumber-expressions (~> 17.0)
-      cucumber-gherkin (> 24, < 28)
-      cucumber-html-formatter (> 20.3, < 22)
-      cucumber-messages (> 19, < 25)
-      diff-lcs (~> 1.5)
-      mini_mime (~> 1.1)
-      multi_test (~> 1.1)
-      sys-uname (~> 1.2)
     cucumber-ci-environment (10.0.1)
     cucumber-core (13.0.3)
       cucumber-gherkin (>= 27, < 28)
@@ -471,6 +477,7 @@ DEPENDENCIES
   brakeman
   bundler-audit
   capybara
+  cucumber!
   cucumber-rails
   debug
   dotenv-rails
