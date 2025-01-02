@@ -13,5 +13,5 @@ Rswag::Ui.configure do |config|
                           "#{Rails.application.config.application_name} API V1 Documentation"
 
   config.basic_auth_enabled = true
-  config.basic_auth_credentials "mdso", ENV.fetch("MDSO_SITE_PASSWORD")
+  config.basic_auth_credentials "mdso", ENV.fetch("MDSO_SITE_PASSWORD", "password")
 end

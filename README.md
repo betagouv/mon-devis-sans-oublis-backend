@@ -13,6 +13,7 @@ Ce repo est le code source pour faire tourner la plateforme [Mon Devis Sans Oubl
 composants DSFR](https://github.com/betagouv/dsfr-view-components)
 * PostgreSQL comme base de données pour stocker les données ;
 * Mistral.ai comme solution de LLM pour interroger les devis ;
+* l'API Data de l'ADEME pour croiser les données d'entreprises qualifiées ;
 * des annuaires officiels de professionnels pour croiser des données ;
 * ~~[Publi.codes](https://publi.codes/) pour un moteur de validation basé sur des règles~~ (plus utilisé pour le moment) ;
 * Sentry pour monitorer et être alerté en cas d'erreur ;
