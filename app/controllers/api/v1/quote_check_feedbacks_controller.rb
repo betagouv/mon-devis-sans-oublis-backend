@@ -11,15 +11,22 @@ module Api
       def create
         @quote_check_feedback = quote_check.feedbacks.create!(quote_check_feedback_params)
 
-        render json: @quote_check_feedback.attributes.slice(
-          "id", "quote_check_id",
-          "rating", "email", # Global feedback
-          "validation_error_details_id", "is_helpful", # Error detail feedback
-          "comment"
-        ), status: :created
+        render json: feedback_json(@quote_check_feedback), status: :created
       end
 
       protected
+
+      def feedback_json(quote_check_feedback)
+        attributes = %w[id quote_check_id comment]
+
+        attributes += if quote_check_feedback.global?
+                        %w[rating email] # Global feedback
+                      else
+                        %w[validation_error_details_id is_helpful] # Error detail feedback
+                      end
+
+        quote_check_feedback.attributes.slice(*attributes)
+      end
 
       def quote_check
         @quote_check ||= QuoteCheck.find(params[:quote_check_id])
