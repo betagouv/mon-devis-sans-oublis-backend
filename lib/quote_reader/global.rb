@@ -21,7 +21,7 @@ module QuoteReader
 
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
-    def read
+    def read(llm: nil)
       if content_type != "application/pdf"
         raise QuoteReader::UnsupportedFileType,
               "File type #{content_type} not supported"
@@ -42,7 +42,7 @@ module QuoteReader
       )
 
       qa_reader = Qa.new(anonymised_text)
-      @qa_attributes = qa_reader.read || {}
+      @qa_attributes = qa_reader.read(llm:) || {}
       @qa_result = qa_reader.result
       @qa_version = qa_reader.version
 

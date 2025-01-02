@@ -6,6 +6,7 @@ require "uri"
 
 module Llms
   # Mistral API client
+  # following OpenAI API structure
   class Mistral
     class ResultError < StandardError; end
 
@@ -42,14 +43,14 @@ module Llms
     # TODO: Better client
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
-    def chat_completion(text)
+    def chat_completion(text, model: "mistral-large-latest")
       uri = URI("https://api.mistral.ai/v1/chat/completions")
       headers = {
         "Content-Type" => "application/json",
         "Authorization" => "Bearer #{@api_key}"
       }
       body = {
-        model: "mistral-large-latest",
+        model:,
         messages: [
           { role: "user", content: prompt },
           { role: "user", content: text }

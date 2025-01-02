@@ -3,14 +3,15 @@
 module QuoteReader
   # Read Quote text to extract Quote attributes by asking questions via LLM prompt online services
   class Qa < Text
+    DEFAULT_LLM = "mistral"
     VERSION = "0.0.1"
 
     attr_reader :read_attributes, :result
 
-    def read
+    def read(llm: nil)
       return {} if text.blank?
 
-      llm_read_attributes
+      llm_read_attributes(llm || DEFAULT_LLM)
     end
 
     def version
@@ -19,13 +20,14 @@ module QuoteReader
 
     private
 
-    def llm_read_attributes
-      return unless Llms::Mistral.configured?
+    def llm_read_attributes(llm) # rubocop:disable Metrics/MethodLength
+      llm_klass = "Llms::#{llm.capitalize}".constantize
+      return unless llm_klass.configured?
 
-      mistral = Llms::Mistral.new(prompt)
+      mistral = llm_klass.new(prompt)
       begin
         mistral.chat_completion(text)
-      rescue Llms::Mistral::ResultError => e
+      rescue llm_klass::ResultError => e
         ErrorNotifier.notify(e)
       end
 
