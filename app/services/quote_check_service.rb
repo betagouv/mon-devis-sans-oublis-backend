@@ -33,10 +33,10 @@ class QuoteCheckService
     end
   end
 
-  def check
+  def check(llm: nil)
     ErrorNotifier.set_context(:quote_check, { id: quote_check.id })
 
-    read_quote
+    read_quote(llm:)
     validate_quote if quote_check.validation_errors.blank?
 
     quote_check.update!(finished_at: Time.current)
@@ -48,12 +48,12 @@ class QuoteCheckService
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
-  def read_quote
+  def read_quote(llm: nil)
     quote_reader = QuoteReader::Global.new(
       quote_check.file.content,
       quote_check.file.content_type
     )
-    quote_reader.read
+    quote_reader.read(llm: llm)
 
     unless quote_reader.text&.strip.presence
       add_error("file_reading_error",
@@ -64,12 +64,16 @@ class QuoteCheckService
 
     quote_check.assign_attributes(
       text: quote_reader.text,
+
       anonymised_text: quote_reader.anonymised_text,
+
       naive_attributes: quote_reader.naive_attributes,
       naive_version: quote_reader.naive_version,
+
       qa_attributes: quote_reader.qa_attributes,
       qa_result: quote_reader.qa_result,
       qa_version: quote_reader.qa_version,
+
       read_attributes: quote_reader.read_attributes
     )
   rescue QuoteReader::ReadError

@@ -5,19 +5,20 @@ require "json"
 require "uri"
 
 module Llms
-  # Ollama API client
-  class Ollama
+  # Albert API client : following OpenAI API structure
+  # Documentation https://github.com/etalab-ia/albert-api
+  class Albert
     class ResultError < StandardError; end
 
-    attr_reader :ollama_host, :prompt, :read_attributes, :result
+    attr_reader :prompt, :read_attributes, :result
 
     def initialize(prompt)
-      @ollama_host = ENV.fetch("OLLAMA_HOST")
+      @api_key = ENV.fetch("ALBERT_API_KEY")
       @prompt = prompt
     end
 
     def self.configured?
-      ENV.key?("OLLAMA_HOST")
+      ENV.key?("ALBERT_API_KEY")
     end
 
     def self.extract_json(text)
@@ -28,19 +29,26 @@ module Llms
       text[/(\{.+\})/im, 1] if text&.match?(/```jsx\n/i)
     end
 
-    # API Docs: https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-completion
+    # API Docs: https://docs.mistral.ai/api/#tag/chat/operation/chat_completion_v1_chat_completions_post
     # TODO: Better client
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
-    def chat_completion(text)
-      uri = URI("#{ollama_host}/api/generate")
+    def chat_completion(text, model: "AgentPublic/llama3-instruct-8b")
+      uri = URI("https://albert.api.etalab.gouv.fr/v1/chat/completions")
+      headers = {
+        "Content-Type" => "application/json",
+        "Authorization" => "Bearer #{@api_key}"
+      }
       body = {
-        model: "llama3.2",
-        prompt: "#{prompt}\n\n\n\n#{text}"
+        model:,
+        messages: [
+          { role: "user", content: prompt },
+          { role: "user", content: text }
+        ]
       }
 
-      response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: Rails.env.production?) do |http|
-        request = Net::HTTP::Post.new(uri)
+      response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+        request = Net::HTTP::Post.new(uri, headers)
         request.body = body.to_json
         http.request(request)
       end
@@ -48,7 +56,7 @@ module Llms
       raise ResultError, "Error: #{response.code} - #{response.message}" unless response.is_a?(Net::HTTPSuccess)
 
       @result = JSON.parse(response.body)
-      content = result.dig(0, "response")
+      content = result.dig("choices", 0, "message", "content")
       raise ResultError, "Content empty" unless content
 
       content_jsx_result = self.class.extract_jsx(content)
