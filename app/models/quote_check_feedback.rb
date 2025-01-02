@@ -26,7 +26,7 @@ class QuoteCheckFeedback < ApplicationRecord
   private
 
   def check_validation_error_details_id
-    return if quote_check&.validation_error_details&.any? { |ved| ved.fetch("id") == validation_error_details_id }
+    return if quote_check&.validation_error_details&.any? { it.fetch("id") == validation_error_details_id }
 
     errors.add(:validation_error_details_id, "is invalid")
   end

@@ -82,7 +82,7 @@ module QuoteReader
 
     def self.find_adresses(text)
       (text.scan(/Adresse#{BETWEEN_LABEL_VALUE_REGEX}(#{FRENCH_CHARACTER_REGEX}+)/i).flatten +
-        text.scan(/(#{FRENCH_ADDRESS_REGEX})/i).flatten).filter_map { |e| e&.strip }.uniq
+        text.scan(/(#{FRENCH_ADDRESS_REGEX})/i).flatten).filter_map { it&.strip }.uniq
     end
 
     def self.find_adresse_chantier(text)
@@ -104,7 +104,7 @@ module QuoteReader
     end
 
     def self.find_emails(text)
-      text.scan(/\b(#{EMAIL_REGEX})\b/i).flatten.filter_map { |e| e&.strip }.uniq
+      text.scan(/\b(#{EMAIL_REGEX})\b/i).flatten.filter_map { it&.strip }.uniq
     end
 
     def self.find_forme_juridique(text)
@@ -114,14 +114,14 @@ module QuoteReader
     def self.find_ibans(text)
       text.scan(
         /(?:IBAN|RIB)#{BETWEEN_LABEL_VALUE_REGEX}(FR\d{2}\s?(?:\d{4}\s?){2,5}#{FRENCH_CHARACTER_REGEX}?\d{2})/i
-      ).flatten.filter_map { |e| e&.strip }.uniq
+      ).flatten.filter_map { it&.strip }.uniq
     end
 
     def self.find_label_numbers(text)
       # Warning : insure caracter before not match the IBAN
       text.scan(
         %r{(?:\A|.*?#{BETWEEN_LABEL_VALUE_REGEX})((?:(?:CPLUS|QB|QPAC|QPV|QS|VPLUS)\s*/\s*|(?:R|E-)?E)\s*\d{5,6})}i
-      ).flatten.filter_map { |e| e&.strip }.uniq
+      ).flatten.filter_map { it&.strip }.uniq
     end
 
     def self.find_mention_devis(text)
@@ -137,13 +137,13 @@ module QuoteReader
     end
 
     def self.find_numeros_tva(text)
-      text.scan(/\bFR[A-Z0-9]{2}\d{9}\b/i).flatten.filter_map { |e| e&.strip }.uniq
+      text.scan(/\bFR[A-Z0-9]{2}\d{9}\b/i).flatten.filter_map { it&.strip }.uniq
     end
 
     def self.find_prenom(text)
       french_first_names = %w[Jean Marie Jacques Claire Pierre Sophie Amélie Luc Léa Élodie Chloé Théo Martin]
 
-      french_first_names.detect { |first_name| text[/(#{first_name})/i, 1].presence } ||
+      french_first_names.detect { text[/(#{it})/i, 1].presence } ||
         text[/Prénom#{BETWEEN_LABEL_VALUE_REGEX}(#{FRENCH_CHARACTER_REGEX}+)/i, 1].presence
     end
 
@@ -160,21 +160,21 @@ module QuoteReader
     end
 
     def self.find_sirets(text)
-      text.scan(/\b(\d{3}\s*\d{3}\s*\d{3}\s*\d{5})\b/i).flatten.filter_map { |e| e&.strip }.uniq
+      text.scan(/\b(\d{3}\s*\d{3}\s*\d{3}\s*\d{5})\b/i).flatten.filter_map { it&.strip }.uniq
     end
 
     def self.find_telephones(text)
       text.scan(
         /(?:T[eé]l\.?(?:[eé]phone)#{BETWEEN_LABEL_VALUE_REGEX})?(#{PHONE_REGEX})/i
-      ).flatten.filter_map { |e| e&.strip }.uniq
+      ).flatten.filter_map { it&.strip }.uniq
     end
 
     def self.find_rcss(text)
-      text.scan(/\b(#{RCS_REGEX})\b/i).flatten.filter_map { |e| e&.strip }.uniq
+      text.scan(/\b(#{RCS_REGEX})\b/i).flatten.filter_map { it&.strip }.uniq
     end
 
     def self.find_uris(text)
-      text.scan(/\b(#{URI_REGEX})\b/i).flatten.filter_map { |e| e&.strip }.uniq
+      text.scan(/\b(#{URI_REGEX})\b/i).flatten.filter_map { it&.strip }.uniq
     end
   end
   # rubocop:enable Metrics/ClassLength

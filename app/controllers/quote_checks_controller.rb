@@ -88,7 +88,7 @@ class QuoteChecksController < ApplicationController
 
   def profile
     @profile ||= @quote_check&.profile ||
-                 (params[:profile].present? && QuoteCheck::PROFILES.detect { |profile| profile == params[:profile] })
+                 (params[:profile].present? && QuoteCheck::PROFILES.detect { it == params[:profile] })
   end
 
   def set_quote_check_results

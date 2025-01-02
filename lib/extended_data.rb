@@ -25,7 +25,7 @@ class ExtendedData
         from_sirets: results
       },
 
-      adresses: results.map { |result| "#{result['adresse']}, #{result['code_postal']} #{result['commune']}" }.uniq,
+      adresses: results.map { "#{it['adresse']}, #{it['code_postal']} #{it['commune']}" }.uniq,
       emails: results.pluck("email").uniq,
       labels: results.pluck("code_qualification").uniq,
       noms: results.pluck("nom_entreprise").uniq,
@@ -39,8 +39,8 @@ class ExtendedData
   def sirets
     return [] unless attributes.key?(:sirets)
 
-    attributes[:sirets].map { |siret| siret.strip.gsub(/[^\d]/, "") }
-                       .group_by { |item| item }
+    attributes[:sirets].map { it.strip.gsub(/[^\d]/, "") }
+                       .group_by { it }
                        .sort_by { |_, group| -group.size }
                        .map(&:first)
   end
