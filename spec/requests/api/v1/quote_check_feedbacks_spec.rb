@@ -32,10 +32,19 @@ RSpec.describe "/api/v1/quote_checks/:quote_check_id/feedbacks" do
         expect(response).to have_http_status(:created)
       end
 
-      it "returns the QuoteCheckFeedback" do
+      it "returns the QuoteCheckFeedback" do # rubocop:disable RSpec/ExampleLength
         post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
                                                                                headers: basic_auth_header
-        expect(json.fetch("quote_check_id")).to eq(quote_check_id)
+        expect(json).to include(
+          "quote_check_id" => quote_check_id,
+          "rating" => 2
+        )
+      end
+
+      it "does not return detail fields" do
+        post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
+                                                                               headers: basic_auth_header
+        expect(json).not_to be_key("validation_error_details_id")
       end
 
       it "creates a QuoteCheckFeedback" do
@@ -76,10 +85,19 @@ RSpec.describe "/api/v1/quote_checks/:quote_check_id/feedbacks" do
         expect(response).to have_http_status(:created)
       end
 
-      it "returns the QuoteCheckFeedback" do
+      it "returns the QuoteCheckFeedback" do # rubocop:disable RSpec/ExampleLength
         post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
                                                                                headers: basic_auth_header
-        expect(json.fetch("quote_check_id")).to eq(quote_check_id)
+        expect(json).to include(
+          "quote_check_id" => quote_check_id,
+          "validation_error_details_id" => validation_error_details_id
+        )
+      end
+
+      it "does not return global fields" do
+        post api_v1_quote_check_feedbacks_url(quote_check_id: quote_check_id), params: quote_check_feedback_params,
+                                                                               headers: basic_auth_header
+        expect(json).not_to be_key("rating")
       end
 
       it "creates a QuoteCheckFeedback" do

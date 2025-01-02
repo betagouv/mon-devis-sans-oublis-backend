@@ -41,8 +41,7 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
         TEXT
       end
 
-      # rubocop:disable RSpec/ExampleLength
-      it "fills the attributes" do
+      it "fills the attributes" do # rubocop:disable RSpec/ExampleLength
         expect(attributes).to include(
           devis: "Devis",
           client: {
@@ -63,15 +62,13 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
           }
         )
       end
-      # rubocop:enable RSpec/ExampleLength
     end
   end
 
   # rubocop:disable RSpec/MultipleExpectations
 
   describe ".find_adresses" do
-    # rubocop:disable RSpec/ExampleLength
-    it "returns the adresse" do
+    it "returns the adresse" do # rubocop:disable RSpec/ExampleLength
       expect(
         described_class.find_adresses("17 rue de l'union 94140 ALFORTVILLE")
       ).to eq(["17 rue de l'union 94140 ALFORTVILLE"])
@@ -79,7 +76,6 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
         described_class.find_adresses("17 rue de l'union\n94140 ALFORTVILLE")
       ).to eq(["17 rue de l'union\n94140 ALFORTVILLE"])
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 
   describe ".find_adresse_chantier" do
@@ -192,8 +188,7 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
   end
 
   describe ".find_label_numbers" do
-    # rubocop:disable RSpec/ExampleLength
-    it "returns the label_numbers" do
+    it "returns the label_numbers" do # rubocop:disable RSpec/ExampleLength
       expect(described_class.find_label_numbers("QB/74612")).to eq(["QB/74612"])
       expect(described_class.find_label_numbers("QS/51778")).to eq(["QS/51778"])
       expect(described_class.find_label_numbers("QPV/59641")).to eq(["QPV/59641"])
@@ -202,7 +197,6 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
       expect(described_class.find_label_numbers("CPLUS/67225")).to eq(["CPLUS/67225"])
       expect(described_class.find_label_numbers("VPLUS/49707")).to eq(["VPLUS/49707"])
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 
   describe ".find_sirets" do

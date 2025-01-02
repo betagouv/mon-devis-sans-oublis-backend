@@ -26,9 +26,8 @@ RSpec.describe Llms::Mistral, type: :service do
       TEXT
     end
 
-    # rubocop:disable RSpec/ExampleLength
     # rubocop:disable RSpec/MultipleExpectations
-    it "returns a successful complete response", :vcr do
+    it "returns a successful complete response", :vcr do # rubocop:disable RSpec/ExampleLength
       read_attributes = mistral.chat_completion(text)
 
       expect(read_attributes.dig(:gestes, -1)).to include(
@@ -39,6 +38,5 @@ RSpec.describe Llms::Mistral, type: :service do
       expect(mistral.read_attributes).to be(read_attributes)
     end
     # rubocop:enable RSpec/MultipleExpectations
-    # rubocop:enable RSpec/ExampleLength
   end
 end

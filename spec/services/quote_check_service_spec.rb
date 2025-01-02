@@ -26,9 +26,8 @@ RSpec.describe QuoteCheckService, type: :service do
   describe "#check" do
     subject(:quote_check) { described_class.new(tempfile, filename, profile).check }
 
-    # rubocop:disable RSpec/ExampleLength
     # rubocop:disable RSpec/MultipleExpectations
-    it "returns the completed quote check" do
+    it "returns the completed quote check" do # rubocop:disable RSpec/ExampleLength
       quote_check = described_class.new(tempfile, filename, profile).check
 
       expect(quote_check).to be_a(QuoteCheck)
@@ -47,7 +46,6 @@ RSpec.describe QuoteCheckService, type: :service do
              )).to eq("12345678900000")
     end
     # rubocop:enable RSpec/MultipleExpectations
-    # rubocop:enable RSpec/ExampleLength
 
     context "when the file is not a PDF" do
       let(:tempfile) { fixture_file_upload("quote_files/Devis_test.png", "image/png") }

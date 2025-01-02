@@ -4,9 +4,8 @@ require "rails_helper"
 
 RSpec.describe QuoteFile do
   describe ".find_or_create_file" do
-    # rubocop:disable RSpec/ExampleLength
     # rubocop:disable RSpec/MultipleExpectations
-    it "saves the file" do
+    it "saves the file" do # rubocop:disable RSpec/ExampleLength
       file = fixture_file_upload("quote_files/Devis_test.pdf", "application/pdf")
       quote_file = described_class.find_or_create_file(file, file.original_filename)
 
@@ -18,7 +17,6 @@ RSpec.describe QuoteFile do
       expect(quote_file.content).not_to be_blank
     end
     # rubocop:enable RSpec/MultipleExpectations
-    # rubocop:enable RSpec/ExampleLength
 
     it "does not save the same file twice" do
       file = fixture_file_upload("quote_files/Devis_test.pdf", "application/pdf")
