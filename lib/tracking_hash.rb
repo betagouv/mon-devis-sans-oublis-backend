@@ -14,7 +14,7 @@ class TrackingHash < Hash
       self[key] = if value.is_a?(Hash)
                     TrackingHash.new(value)
                   elsif value.is_a?(Array)
-                    value.map { |subvalue| TrackingHash.new(subvalue) }
+                    value.map { TrackingHash.new(it) }
                   else
                     value
                   end
