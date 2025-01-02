@@ -367,11 +367,11 @@ components:
           type: integer
         average_quote_check_errors_count:
           type: number
-          description: nombre moyen d'erreurs par analyse
+          description: nombre moyen d'erreurs par analyse, arrondi au décimal supérieur
           nullable: true
         average_quote_check_cost:
           type: number
-          description: coût moyen d'une analyse en Euro (€)
+          description: coût moyen d'une analyse en Euro (€), arrondi au centime supérieur
           nullable: true
         unique_visitors_count:
           type: integer
