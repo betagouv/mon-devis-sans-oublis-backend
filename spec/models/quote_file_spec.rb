@@ -12,8 +12,7 @@ RSpec.describe QuoteFile do
       expect(quote_file).to be_persisted
       expect(quote_file.file).to be_attached
 
-      quote_file.reload
-      expect(quote_file.file).to be_attached
+      expect(described_class.find(quote_file.id).file.attached?).to be_truthy # rubocop:disable RSpec/PredicateMatcher
       expect(quote_file.content).not_to be_blank
     end
     # rubocop:enable RSpec/MultipleExpectations
