@@ -6,14 +6,12 @@ require "uri"
 
 module Llms
   # Ollama API client
-  class Ollama
-    class ResultError < StandardError; end
-
+  class Ollama < Base
     attr_reader :ollama_host, :prompt, :read_attributes, :result
 
     def initialize(prompt)
+      super
       @ollama_host = ENV.fetch("OLLAMA_HOST")
-      @prompt = prompt
     end
 
     def self.configured?

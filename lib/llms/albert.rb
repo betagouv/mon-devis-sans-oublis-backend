@@ -7,14 +7,12 @@ require "uri"
 module Llms
   # Albert API client : following OpenAI API structure
   # Documentation https://github.com/etalab-ia/albert-api
-  class Albert
-    class ResultError < StandardError; end
-
+  class Albert < Base
     attr_reader :prompt, :read_attributes, :result
 
     def initialize(prompt)
+      super
       @api_key = ENV.fetch("ALBERT_API_KEY")
-      @prompt = prompt
     end
 
     def self.configured?
