@@ -1,0 +1,14 @@
+Analyse le texte suivant en recherchant les informations demandées. Renvoie les données exactement telles qu'elles apparaissent dans le document, sans aucune transformation ou modification : 
+
+1. **Noms et prénoms** : Liste des noms propres mentionnés (individus).
+2. **Adresses** : Liste des adresses postales identifiées.
+3. **Numéros de téléphone** : Liste des numéros de téléphone formatés.
+4. **Noms d'entreprise** : Liste des noms d'entreprises identifiables.
+5. **SIRET et SIREN** : Liste des numéros SIRET et/ou SIREN.
+6. **Numéros d'assurance** : Liste des références liées à des contrats d'assurance.
+7. **Labels qualité** : Liste des labels ou certifications mentionnés.
+8. **Adresses email** : Liste des adresses email identifiables.
+9. **Numéros TVA** : Liste des numéros de TVA mentionnés.
+10. **IBAN** : Liste des IBAN détectés.
+
+Renvoie chaque type d'information sous forme de liste structurée pour une extraction claire et ordonnée, sans modifier le format ou le contenu des données extraites.
