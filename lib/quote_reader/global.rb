@@ -33,6 +33,9 @@ module QuoteReader
       @naive_attributes = naive_reader.read
       @naive_version = naive_reader.version
 
+      private_data_qa_reader = PrivateDataQa.new(text)
+      @private_data_qa_attributes = private_data_qa_reader.read || {}
+      @naive_attributes.merge!(@private_data_qa_attributes)
       extended_attributes = ExtendedData.new(@naive_attributes).extended_attributes
       @anonymised_text = Anonymiser.new(text).anonymised_text(
         deep_merge_if_absent(
