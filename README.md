@@ -12,7 +12,10 @@ Ce repo est le code source pour faire tourner la plateforme [Mon Devis Sans Oubl
 * le [DSFR](https://www.systeme-de-design.gouv.fr/) pour réutiliser les éléments graphiques officiels via la [librairie de
 composants DSFR](https://github.com/betagouv/dsfr-view-components)
 * PostgreSQL comme base de données pour stocker les données ;
-* Mistral.ai comme solution de LLM pour interroger les devis ;
+*  des solutions de LLM pour interroger les devis, via la boîte à outils [LangChain](https://rubydoc.info/gems/langchainrb)
+*** Albert API d'Etalab
+*** Mistral.ai : données publiques et/ou anonymisées
+*** Ollama : un modèle Llama local
 * l'API Data de l'ADEME pour croiser les données d'entreprises qualifiées ;
 * des annuaires officiels de professionnels pour croiser des données ;
 * ~~[Publi.codes](https://publi.codes/) pour un moteur de validation basé sur des règles~~ (plus utilisé pour le moment) ;

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "net/http"
 require "json"
+require "net/http"
 require "uri"
 
 module Llms
@@ -29,14 +29,6 @@ module Llms
       ENV.key?("MISTRAL_API_KEY")
     end
 
-    def self.extract_json(text)
-      text[/(\{.+\})/im, 1]
-    end
-
-    def self.extract_jsx(text)
-      text[/(\{.+\})/im, 1] if text&.match?(/```jsx\n/i)
-    end
-
     # API Docs: https://docs.mistral.ai/api/#tag/chat/operation/chat_completion_v1_chat_completions_post
     # TODO: Better client
     # rubocop:disable Metrics/AbcSize
@@ -50,7 +42,7 @@ module Llms
       body = {
         model:,
         messages: [
-          { role: "user", content: prompt },
+          { role: "system", content: prompt },
           { role: "user", content: text }
         ]
       }
