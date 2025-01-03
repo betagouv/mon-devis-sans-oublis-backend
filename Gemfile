@@ -56,6 +56,7 @@ gem "dsfr-view-components"
 gem "active_storage-postgresql" # Store file in database
 gem "active_storage_validations" # Validate ActiveStorage attachments
 gem "good_job" # Postgres-backed job queue
+gem "langchainrb" # Framework around LLMs
 gem "mime-types"
 gem "pdf-reader"
 gem "rswag-api" # Serves the generated Swagger documentation
