@@ -32,6 +32,19 @@ class QuoteCheck < ApplicationRecord
     URI.join("#{ENV.fetch('FRONTEND_APPLICATION_HOST')}/", "#{profile_path}/", "televersement/", id).to_s
   end
 
+  def qa_llm
+    case qa_result&.dig("id")
+    when /\Achatcmpl-/
+      "Albert"
+    else
+      "Mistral" if qa_model&.start_with?("mistral-")
+    end
+  end
+
+  def qa_model
+    qa_result&.dig("model")
+  end
+
   # valid? is already used by the framework
   def quote_valid?
     validation_version.present? && validation_errors.blank?

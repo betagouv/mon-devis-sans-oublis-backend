@@ -55,8 +55,9 @@ gem "dsfr-view-components"
 # Mon Devis Sans Oublis custom gems
 gem "active_storage-postgresql" # Store file in database
 gem "active_storage_validations" # Validate ActiveStorage attachments
+gem "faraday" # Required for langchainrb
 gem "good_job" # Postgres-backed job queue
-gem "langchainrb" # Framework around LLMs
+gem "langchainrb", ">= 0.19" # Framework around LLMs
 gem "mime-types"
 gem "pdf-reader"
 gem "rswag-api" # Serves the generated Swagger documentation

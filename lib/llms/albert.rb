@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "net/http"
 require "json"
+require "net/http"
 require "uri"
 
 require_relative "base"
@@ -21,19 +21,16 @@ module Llms
       ENV.key?("ALBERT_API_KEY")
     end
 
-    def self.extract_json(text)
-      text[/(\{.+\})/im, 1]
-    end
-
-    def self.extract_jsx(text)
-      text[/(\{.+\})/im, 1] if text&.match?(/```jsx\n/i)
-    end
-
     # API Docs: https://docs.mistral.ai/api/#tag/chat/operation/chat_completion_v1_chat_completions_post
     # TODO: Better client
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
-    def chat_completion(text, model: "AgentPublic/llama3-instruct-8b")
+    # model:
+    # - meta-llama/Meta-Llama-3.1-8B-Instruct
+    # - meta-llama/Meta-Llama-3.1-70B-Instruct
+    # - AgentPublic/llama3-instruct-8b (default)
+    # - AgentPublic/Llama-3.1-8B-Instruct
+    def chat_completion(text, model: "meta-llama/Meta-Llama-3.1-70B-Instruct")
       uri = URI("https://albert.api.etalab.gouv.fr/v1/chat/completions")
       headers = {
         "Content-Type" => "application/json",
@@ -42,7 +39,7 @@ module Llms
       body = {
         model:,
         messages: [
-          { role: "user", content: prompt },
+          { role: "system", content: prompt },
           { role: "user", content: text }
         ]
       }
