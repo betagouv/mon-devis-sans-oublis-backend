@@ -4,6 +4,8 @@ require "net/http"
 require "json"
 require "uri"
 
+require_relative "base"
+
 module Llms
   # Albert API client : following OpenAI API structure
   # Documentation https://github.com/etalab-ia/albert-api

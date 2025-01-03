@@ -2,7 +2,7 @@
 <%= form_tag new_quote_check_path(profile: @quote_check&.profile || @profile), multipart: true do %>
   <p><%= file_field_tag :quote_file %></p>
   <p><%= select_tag :llm, options_for_select(
-    ["Mistral", "Albert"].map { |llm| [llm, llm] },
+    Rails.application.config.llms_configured.map { |llm| [llm, llm] },
     params[:llm] || QuoteReader::Qa::DEFAULT_LLM
   ), class: "fr-select" %></p>
   <%= hidden_field_tag :profile, @profile %>
