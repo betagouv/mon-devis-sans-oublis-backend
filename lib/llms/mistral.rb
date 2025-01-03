@@ -7,14 +7,12 @@ require "uri"
 module Llms
   # Mistral API client
   # following OpenAI API structure
-  class Mistral
-    class ResultError < StandardError; end
-
+  class Mistral < Base
     attr_reader :prompt, :read_attributes, :result
 
     def initialize(prompt)
+      super
       @api_key = ENV.fetch("MISTRAL_API_KEY")
-      @prompt = prompt
     end
 
     # Returns the cost in € with VAT
