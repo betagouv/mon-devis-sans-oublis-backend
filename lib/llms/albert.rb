@@ -12,7 +12,7 @@ module Llms
   class Albert < Base
     attr_reader :prompt, :read_attributes, :result
 
-    def initialize(prompt)
+    def initialize(prompt, result_format: :json)
       super
       @api_key = ENV.fetch("ALBERT_API_KEY")
     end
@@ -56,17 +56,7 @@ module Llms
       content = result.dig("choices", 0, "message", "content")
       raise ResultError, "Content empty" unless content
 
-      content_jsx_result = self.class.extract_jsx(content)
-      if content_jsx_result
-        @read_attributes = eval(content_jsx_result.gsub(/: +null/i, ": nil")) # rubocop:disable Security/Eval
-      else
-        content_json_result = self.class.extract_json(content)
-        @read_attributes = begin
-          JSON.parse(content_json_result, symbolize_names: true)
-        rescue JSON::ParserError
-          raise ResultError, "Parsing JSON inside content: #{content_json_result}"
-        end
-      end
+      extract_result(content)
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize

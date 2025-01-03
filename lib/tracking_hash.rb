@@ -2,6 +2,8 @@
 
 # TrackingHash is a subclass of Hash that tracks the keys that are accessed.
 class TrackingHash < Hash
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/MethodLength
   def initialize(constructor = {})
     super()
@@ -14,13 +16,15 @@ class TrackingHash < Hash
       self[key] = if value.is_a?(Hash)
                     TrackingHash.new(value)
                   elsif value.is_a?(Array)
-                    value.map { TrackingHash.new(it) }
+                    value.map { it.is_a?(Hash) ? TrackingHash.new(it) : it }
                   else
                     value
                   end
     end
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def [](key)
     @keys_accessed.add(key)
