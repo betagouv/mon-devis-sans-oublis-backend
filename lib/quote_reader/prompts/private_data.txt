@@ -1,0 +1,16 @@
+Analyse le texte suivant en recherchant les informations demandées. Renvoie les données exactement telles qu'elles apparaissent dans le document, sans aucune transformation ou modification : 
+
+1. **noms** : Liste des Noms et prénoms propres mentionnés (individus).
+2. **adresses** : Liste des adresses postales identifiées.
+3. **telephones** : Liste des numéros de téléphone formatés.
+4. **raison_sociales** : Liste des noms d'entreprises identifiables.
+5. **sirets** : Liste des numéros SIRET et/ou SIREN.
+5. **rcss** : Liste des numéros RCS.
+6. **insurances** : Liste des numéros et références liées à des contrats d'assurance.
+7. **labels** : Liste des labels ou certifications mentionnés.
+8. **emails** : Liste des adresses email identifiables.
+9. **numeros_tva** : Liste des numéros de TVA mentionnés.
+10. **ibans** : Liste des IBAN détectés.
+11. **uris** : Liste des URL et site internet détectés.
+
+Renvoie chaque type d'information sous forme de liste sur une ligne avec valeurs séparées par un slash "/" pour une extraction claire et ordonnée, sans modifier le format ou le contenu des données extraites.

@@ -38,7 +38,7 @@ module QuoteReader
     end
 
     def prompt
-      Rails.root.join("lib/quote_reader/prompt_qa.txt").read
+      Rails.root.join("lib/quote_reader/prompts/qa.txt").read
     end
   end
 end
