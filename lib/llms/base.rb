@@ -24,7 +24,7 @@ module Llms
     end
 
     def chat_completion(text)
-       raise NotImplementedError
+      raise NotImplementedError
     end
   end
 end
