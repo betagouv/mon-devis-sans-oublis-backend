@@ -50,7 +50,8 @@ module QuoteValidator
         code:,
         category:, type:,
         title: title || I18n.t("quote_validator.errors.#{code}"),
-        problem:, solution:,
+        problem:,
+        solution: solution || I18n.t("quote_validator.errors.#{code}_infos", default: nil),
         provided_value:
       }
     end
