@@ -8,6 +8,8 @@ module QuoteReader
     FIELDS_TO_ANONYMISE = [
       :adresses, :emails, :ibans, :insurances, :labels, :noms,
       :numeros_tva, :raison_sociales, :rcss, :sirets, :telephones, :uris,
+      :client_noms, :pro_noms,
+      :client_adresses, :pro_adresses,
       { client: %i[adresse adresse_chantier nom prenom] },
       { pro: %i[adresse capital forme_juridique labels numero_tva raison_sociale rge_number siret] }
     ].freeze

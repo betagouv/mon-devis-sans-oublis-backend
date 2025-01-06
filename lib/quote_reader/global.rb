@@ -9,6 +9,7 @@ module QuoteReader
                 :text,
                 :anonymised_text,
                 :naive_attributes, :naive_version,
+                :private_data_qa_attributes, :private_data_qa_result, :private_data_qa_version,
                 :qa_attributes, :qa_result, :qa_version,
                 :read_attributes
 
@@ -35,6 +36,9 @@ module QuoteReader
 
       private_data_qa_reader = PrivateDataQa.new(text)
       @private_data_qa_attributes = private_data_qa_reader.read || {}
+      @private_data_qa_result = private_data_qa_reader.result
+      @private_data_qa_version = private_data_qa_reader.version
+
       @naive_attributes.merge!(@private_data_qa_attributes)
       extended_attributes = ExtendedData.new(@naive_attributes).extended_attributes
       @anonymised_text = Anonymiser.new(text).anonymised_text(
