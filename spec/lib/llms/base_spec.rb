@@ -11,11 +11,13 @@ RSpec.describe Llms::Base, type: :service do
 
           1. **noms** : Dupont Franck
 
-          2. **adresses** : 5 rue de l'union, 06300 NICE / 8 Rue du Vinaigrier, 94300 Vincennes
+          2. **rien** :
+
+          3. **adresses** : 5 rue de l'union, 06300 NICE / 8 Rue du Vinaigrier, 94300 Vincennes
         TEXT
       )
 
-      expect(numbered_list.dig(1, :value)).to eq([
+      expect(numbered_list.dig(2, :value)).to eq([
                                                    "5 rue de l'union, 06300 NICE",
                                                    "8 Rue du Vinaigrier, 94300 Vincennes"
                                                  ])

@@ -26,6 +26,7 @@
             <td><pre><%= JSON.pretty_generate(quote_check.qa_attributes).gsub("\n", "<br>").html_safe %></pre></td>
             <td><pre><%= JSON.pretty_generate quote_check.read_attributes %></pre></td>
             <td><pre><%= JSON.pretty_generate quote_check.validation_errors %></pre></td>
+            <td><pre><%= JSON.pretty_generate quote_check.private_data_qa_result %></pre></td>
             <td><pre><%= JSON.pretty_generate quote_check.qa_result %></pre></td>
             <td style="font-size: 6px"><pre><%= anonymised_text %></pre></td>
         </tr>

@@ -42,6 +42,13 @@
   <% end %>
   <pre><%= JSON.pretty_generate @quote_check.naive_attributes %></pre>
 
+  <%= link_to "#private_data_qa_attributes" do %>
+    <h3 id="private_data_qa_attributes">private_data_qa_attributes</h3>
+  <% end %>
+  <pre><%= JSON.pretty_generate @quote_check.private_data_qa_attributes %></pre>
+
+  <hr />
+
   <h1>LLM : <code><%= @quote_check.qa_llm %></code></h1>
   <h2>Model : <code><%= @quote_check.qa_model %></code></h2>
 
@@ -51,6 +58,11 @@
   <pre><%= JSON.pretty_generate @quote_check.qa_attributes %></pre>
 
   <hr />
+
+  <%= link_to "#private_data_qa_result" do %>
+    <h3 id="private_data_qa_result">private_data_qa_result</h3>
+  <% end %>
+  <pre><%= JSON.pretty_generate @quote_check.private_data_qa_result %></pre>
 
   <%= link_to "#qa_result" do %>
     <h3 id="qa_result">qa_result</h3>

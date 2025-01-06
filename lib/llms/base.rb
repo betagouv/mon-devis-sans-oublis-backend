@@ -21,8 +21,9 @@ module Llms
       raise NotImplementedError
     end
 
-    def self.extract_numbered_list(text)
-      pattern = /^(?<number>\d+)\.\s.*?\*\*(?<title>.*?)\*\*\s*:\s*(?<value>.*)$/
+    # rubocop:disable Metrics/AbcSize
+    def self.extract_numbered_list(text) # rubocop:disable Metrics/MethodLength
+      pattern = /^(?<number>\d+)\.\s.*?\*\*(?<title>.*?)\*\*\s*: *(?<value>.*)$/
       matches = text.scan(pattern)
 
       matches.map do |match|
@@ -31,10 +32,12 @@ module Llms
         {
           number: Integer(match[0]),
           label: match[1],
-          value: match[2].split(/\s*#{detected_separator}\s*/)
+          value: match[2].gsub(/\(?Non (mentionné|disponible)\)?/i, "")
+                         .presence&.split(/\s*#{detected_separator}\s*/)
         }
       end.sort_by { it.fetch(:number) } # rubocop:disable Style/MultilineBlockChain
     end
+    # rubocop:enable Metrics/AbcSize
 
     def self.extract_json(text)
       text[/(\{.+\})/im, 1]

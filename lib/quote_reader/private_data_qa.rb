@@ -19,7 +19,7 @@ module QuoteReader
 
     private
 
-    def llm_read_attributes
+    def llm_read_attributes # rubocop:disable Metrics/MethodLength
       return unless Llms::Albert.configured?
 
       llm = Llms::Albert.new(prompt, result_format: :numbered_list)
@@ -32,7 +32,20 @@ module QuoteReader
       @read_attributes = TrackingHash.new(llm.read_attributes)
       @result = llm.result
 
-      read_attributes
+      @read_attributes = @read_attributes.merge(
+        client: {
+          adresse: @read_attributes.dig(:client_adresses, 0),
+          nom: @read_attributes.dig(:client_noms, 0),
+          prenom: nil
+        },
+        pro: {
+          adresse: @read_attributes.dig(:pro_adresses, 0),
+          numero_tva: @read_attributes.dig(:numeros_tva, 0),
+          raison_sociale: @read_attributes.dig(:raison_sociales, 0)
+        }
+      )
+
+      @read_attributes
     end
 
     def prompt
