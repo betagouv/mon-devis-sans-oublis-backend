@@ -66,7 +66,8 @@ module Api
         json_hash.slice(
           "id", "status", "profile",
           "valid", "errors", "error_details", "error_messages",
-          "parent_id"
+          "parent_id",
+          "filename"
         )
       end
       # rubocop:enable Metrics/MethodLength
