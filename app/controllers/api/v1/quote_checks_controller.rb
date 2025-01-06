@@ -58,7 +58,8 @@ module Api
                                               "error_details" => object.validation_error_details,
                                               "error_messages" => object.validation_errors&.index_with do |error_key|
                                                 I18n.t("quote_validator.errors.#{error_key}")
-                                              end
+                                              end,
+                                              "filename" => object.filename
                                             })
         return json_hash if Rails.env.development?
 

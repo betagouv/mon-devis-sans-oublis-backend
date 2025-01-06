@@ -17,6 +17,8 @@ class QuoteCheck < ApplicationRecord
 
   validate :validation_errors_as_array, if: -> { validation_errors.present? || validation_error_details.present? }
 
+  delegate :filename, to: :file, allow_nil: true
+
   def frontend_webapp_url
     return unless id
 

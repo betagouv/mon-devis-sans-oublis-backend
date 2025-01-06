@@ -114,6 +114,7 @@ RSpec.configure do |config|
               },
               parent_id: { type: :string, nullable: true },
               status: { "$ref" => "#/components/schemas/quote_check_status" },
+              filename: { type: :string, nullable: true },
               profile: { "$ref" => "#/components/schemas/profile" },
               valid: { type: :boolean, nullable: true },
               errors: {
