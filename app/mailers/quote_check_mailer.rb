@@ -10,7 +10,7 @@ class QuoteCheckMailer < ApplicationMailer
     mail(
       to: recipients.first,
       cc: recipients[1..],
-      subject: "Nouveau devis soumis #{quote_check.id}"
+      subject: subject("Nouveau devis soumis #{quote_check.id}")
     )
   end
 end
