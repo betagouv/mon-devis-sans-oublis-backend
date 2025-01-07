@@ -64,9 +64,9 @@ module QuoteValidator
 
       protected
 
-      def add_error(code, geste)
+      def add_error(code, geste, type: "missing")
         super(code,
-                  type: "missing",
+                  type:,
                   category: "gestes",
                   provided_value: geste[:intitule])
       end
