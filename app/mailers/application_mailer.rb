@@ -7,11 +7,8 @@ class ApplicationMailer < ActionMailer::Base
   def subject(text)
     subject_parts = ["[#{Rails.application.config.application_name}]"]
 
-    if ENV.key?("APP_ENV") && ENV["APP_ENV"] != "production"
-      subject_parts << "[#{ENV.fetch('APP_ENV')}]"
-    elsif !Rails.env.production?
-      subject_parts << "[#{Rails.env}]"
-    end
+    specific_env = [Rails.application.config.app_env, Rails.env] - ["production"]
+    subject_parts << "[#{specific_env}]" if specific_env
 
     subject_parts << text
 
