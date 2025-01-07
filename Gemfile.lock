@@ -104,6 +104,7 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     afm (0.2.2)
     ast (2.4.2)
+    baran (0.1.12)
     base64 (0.2.0)
     benchmark (0.4.0)
     bigdecimal (3.1.9)
@@ -132,6 +133,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    csv (3.3.2)
     cucumber-ci-environment (10.0.1)
     cucumber-core (13.0.3)
       cucumber-gherkin (>= 27, < 28)
@@ -175,6 +177,12 @@ GEM
       railties (>= 5.0.0)
     faker (3.5.1)
       i18n (>= 1.8.11, < 2)
+    faraday (2.12.2)
+      faraday-net_http (>= 2.0, < 3.5)
+      json
+      logger
+    faraday-net_http (3.4.0)
+      net-http (>= 0.5.0)
     ffi (1.17.1-aarch64-linux-gnu)
     ffi (1.17.1-arm64-darwin)
     ffi (1.17.1-x86_64-linux-gnu)
@@ -191,12 +199,14 @@ GEM
       fugit (>= 1.11.0)
       railties (>= 6.1.0)
       thor (>= 1.0.0)
-    guard (2.19.0)
+    guard (2.19.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
+      logger (~> 1.6)
       lumberjack (>= 1.0.12, < 2.0)
       nenv (~> 0.1)
       notiffany (~> 0.0)
+      ostruct (~> 0.6)
       pry (>= 0.13.0)
       shellany (~> 0.0)
       thor (>= 0.18.1)
@@ -226,9 +236,14 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.9.1)
-    json-schema (5.1.1)
-      addressable (~> 2.8)
-      bigdecimal (~> 3.1)
+    json-schema (4.3.1)
+      addressable (>= 2.8)
+    langchainrb (0.19.2)
+      baran (~> 0.1.9)
+      json-schema (~> 4)
+      matrix
+      pragmatic_segmenter (~> 0.3.0)
+      zeitwerk (~> 2.5)
     language_server-protocol (3.17.0.3)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -255,6 +270,8 @@ GEM
     msgpack (1.7.5)
     multi_test (1.1.0)
     nenv (0.3.0)
+    net-http (0.6.0)
+      uri
     net-imap (0.5.4)
       date
       net-protocol
@@ -273,6 +290,7 @@ GEM
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    ostruct (0.6.1)
     pagy (6.5.0)
     parallel (1.26.3)
     parser (3.3.6.0)
@@ -285,6 +303,7 @@ GEM
       ruby-rc4
       ttfunk
     pg (1.5.9)
+    pragmatic_segmenter (0.3.24)
     pry (0.15.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -441,6 +460,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.6.0)
+    uri (1.0.2)
     useragent (0.16.11)
     vcr (6.3.1)
       base64
@@ -477,6 +497,7 @@ DEPENDENCIES
   brakeman
   bundler-audit
   capybara
+  csv
   cucumber!
   cucumber-rails
   debug
@@ -484,13 +505,16 @@ DEPENDENCIES
   dsfr-view-components
   factory_bot_rails
   faker
+  faraday
   good_job
   guard
   guard-cucumber
   guard-rspec
   importmap-rails
   jbuilder
+  langchainrb (>= 0.19)
   mime-types
+  ostruct
   pdf-reader
   pg
   pry-rails

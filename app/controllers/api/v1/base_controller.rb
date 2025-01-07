@@ -12,7 +12,10 @@ module Api
 
       def authorize_request
         authenticate_with_http_basic do |username, password|
-          return true if username == "mdso" && password == ENV.fetch("MDSO_SITE_PASSWORD")
+          if username == "mdso" &&
+             password == ENV.fetch("MDSO_API_PASSWORD") { ENV.fetch("MDSO_SITE_PASSWORD") }
+            return true
+          end
         end
 
         handle_unauthorized

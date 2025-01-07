@@ -26,6 +26,7 @@ module QuoteValidator
     end
 
     # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/ParameterLists
     def add_error(code,
@@ -50,12 +51,14 @@ module QuoteValidator
         code:,
         category:, type:,
         title: title || I18n.t("quote_validator.errors.#{code}"),
-        problem:, solution:,
+        problem:,
+        solution: solution || I18n.t("quote_validator.errors.#{code}_infos", default: nil),
         provided_value:
       }
     end
     # rubocop:enable Metrics/ParameterLists
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize
 
     def errors

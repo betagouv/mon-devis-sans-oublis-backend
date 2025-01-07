@@ -62,6 +62,13 @@ gem "rswag-api" # Serves the generated Swagger documentation
 gem "rswag-ui" # Provides the Swagger UI interface
 gem "sib-api-v3-sdk", require: false # Brevo (ex Sendinblue) API
 
+# Required for langchainrb
+gem "csv" # Since Ruby > 3.4.0
+gem "faraday"
+gem "langchainrb", ">= 0.19" # Framework around LLMs
+
+gem "ostruct" # Since Ruby > 3.4.0
+
 group :development, :test do
   gem "brakeman"
   gem "bundler-audit"

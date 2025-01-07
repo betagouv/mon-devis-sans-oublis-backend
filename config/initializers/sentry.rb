@@ -10,6 +10,6 @@ if defined?(Sentry)
     # We recommend adjusting this value in production.
     config.traces_sample_rate = 0.5
 
-    config.environment = ENV.fetch("SENTRY_ENVIRONMENT", ENV.fetch("RAILS_ENV"))
+    config.environment = ENV.fetch("SENTRY_ENVIRONMENT", Rails.application.config.app_env)
   end
 end

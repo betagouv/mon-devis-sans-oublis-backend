@@ -1,42 +1,39 @@
 # frozen_string_literal: true
 
-require "net/http"
 require "json"
+require "langchain"
+require "net/http"
 require "uri"
 
 module Llms
   # Ollama API client
-  class Ollama
-    class ResultError < StandardError; end
-
+  class Ollama < Base
     attr_reader :ollama_host, :prompt, :read_attributes, :result
 
     def initialize(prompt)
+      super
       @ollama_host = ENV.fetch("OLLAMA_HOST")
-      @prompt = prompt
     end
 
     def self.configured?
       ENV.key?("OLLAMA_HOST")
     end
 
-    def self.extract_json(text)
-      text[/(\{.+\})/im, 1]
-    end
-
-    def self.extract_jsx(text)
-      text[/(\{.+\})/im, 1] if text&.match?(/```jsx\n/i)
-    end
-
     # API Docs: https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-completion
     # TODO: Better client
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
-    def chat_completion(text)
-      uri = URI("#{ollama_host}/api/generate")
+    def chat_completion(text, model: "llama3.2")
+      messages = [
+        { role: "system", content: prompt },
+        { role: "user", content: text }
+      ]
+
+      uri = URI("#{ollama_host}/api/chat")
       body = {
-        model: "llama3.2",
-        prompt: "#{prompt}\n\n\n\n#{text}"
+        model: model,
+        messages:,
+        stream: false
       }
 
       response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: Rails.env.production?) do |http|
@@ -47,7 +44,7 @@ module Llms
 
       raise ResultError, "Error: #{response.code} - #{response.message}" unless response.is_a?(Net::HTTPSuccess)
 
-      @result = JSON.parse(response.body)
+      @result = JSON.parse(response.body.force_encoding("UTF-8"))
       content = result.dig(0, "response")
       raise ResultError, "Content empty" unless content
 

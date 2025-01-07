@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Llms::Mistral, type: :service do
-  let(:prompt) { Rails.root.join("lib/quote_reader/prompt_qa.txt").read }
+  let(:prompt) { Rails.root.join("lib/quote_reader/prompts/qa.txt").read }
   let(:mistral) { described_class.new(prompt) }
 
   describe ".usage_cost_price" do

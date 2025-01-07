@@ -13,6 +13,7 @@ RSpec.describe TrackingHash, type: :service do
     it "works like an indifferent Hash" do
       expect(described_class.new(a: 1)["a"]).to eq 1
       expect(described_class.new("a" => 1)[:a]).to eq 1
+      expect(described_class.new("a" => [1])[:a]).to eq [1]
     end
     # rubocop:enable RSpec/MultipleExpectations
 

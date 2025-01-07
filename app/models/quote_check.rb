@@ -17,6 +17,8 @@ class QuoteCheck < ApplicationRecord
 
   validate :validation_errors_as_array, if: -> { validation_errors.present? || validation_error_details.present? }
 
+  delegate :filename, to: :file, allow_nil: true
+
   def frontend_webapp_url
     return unless id
 
@@ -30,6 +32,19 @@ class QuoteCheck < ApplicationRecord
                    end
 
     URI.join("#{ENV.fetch('FRONTEND_APPLICATION_HOST')}/", "#{profile_path}/", "televersement/", id).to_s
+  end
+
+  def qa_llm
+    case qa_result&.dig("id")
+    when /\Achatcmpl-/
+      "Albert"
+    else
+      "Mistral" if qa_model&.start_with?("mistral-")
+    end
+  end
+
+  def qa_model
+    qa_result&.dig("model")
   end
 
   # valid? is already used by the framework

@@ -70,6 +70,10 @@ class QuoteCheckService
       naive_attributes: quote_reader.naive_attributes,
       naive_version: quote_reader.naive_version,
 
+      private_data_qa_attributes: quote_reader.private_data_qa_attributes,
+      private_data_qa_result: quote_reader.private_data_qa_result,
+      private_data_qa_version: quote_reader.private_data_qa_version,
+
       qa_attributes: quote_reader.qa_attributes,
       qa_result: quote_reader.qa_result,
       qa_version: quote_reader.qa_version,

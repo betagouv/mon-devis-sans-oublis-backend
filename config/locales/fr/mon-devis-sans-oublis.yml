@@ -195,7 +195,7 @@ fr:
       # validate_menuiserie_fenetre
       menuiserie_uw_fenetre_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la fenêtre n'est pas indiqué"
       menuiserie_uw_fenetre_manquant_infos: "Le coefficient Uw mesure la performance thermique globale d'une fenêtre, incluant le vitrage et le cadre."
-      menuiserie_sw_fenetre_manquant: "Le facteur solaire de la fenêtre n'est pas indiqué dans le document"
+      menuiserie_sw_fenetre_manquant: "Le facteur solaire de la fenêtre n'est pas indiqué dans le document."
       menuiserie_sw_fenetre_manquant_infos: "Le Sw va de 0 (pas de chaleur transmise) à 1 (toute la chaleur est transmise). Il indique la capacité d'une fenêtre à laisser entrer la chaleur solaire. Il représente la proportion d’énergie solaire transmise à travers la fenêtre."
       # validate_menuiserie_fenetre_toit
       menuiserie_uw_fenetre_toit_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la fenêtre de toit n'est pas indiqué"

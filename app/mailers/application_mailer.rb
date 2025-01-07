@@ -5,11 +5,12 @@ class ApplicationMailer < ActionMailer::Base
   layout "mailer"
 
   def subject(text)
-    subject_parts = [
-      "[#{Rails.application.config.application_name}]",
-      text
-    ]
-    subject_parts << " [#{Rails.env}]" unless Rails.env.production?
+    subject_parts = ["[#{Rails.application.config.application_name}]"]
+
+    specific_env = ([Rails.application.config.app_env, Rails.env] - ["production"]).first
+    subject_parts << "[#{specific_env}]" if specific_env
+
+    subject_parts << text
 
     subject_parts.join(" ")
   end
