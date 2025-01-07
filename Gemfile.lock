@@ -514,6 +514,7 @@ DEPENDENCIES
   jbuilder
   langchainrb (>= 0.19)
   mime-types
+  ostruct
   pdf-reader
   pg
   pry-rails

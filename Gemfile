@@ -67,6 +67,8 @@ gem "csv" # Since Ruby > 3.4.0
 gem "faraday"
 gem "langchainrb", ">= 0.19" # Framework around LLMs
 
+gem "ostruct" # Since Ruby > 3.4.0
+
 group :development, :test do
   gem "brakeman"
   gem "bundler-audit"
