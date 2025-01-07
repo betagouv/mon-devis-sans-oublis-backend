@@ -39,14 +39,16 @@ module QuoteReader
       @private_data_qa_result = private_data_qa_reader.result
       @private_data_qa_version = private_data_qa_reader.version
 
-      @naive_attributes.merge!(@private_data_qa_attributes)
-      extended_attributes = ExtendedData.new(@naive_attributes).extended_attributes
-      @anonymised_text = Anonymiser.new(text).anonymised_text(
-        deep_merge_if_absent(
-          @naive_attributes,
-          extended_attributes
-        )
+      private_attributes = deep_merge_if_absent(
+        @naive_attributes,
+        @private_data_qa_attributes
       )
+
+      private_extended_attributes = deep_merge_if_absent(
+        private_attributes,
+        ExtendedData.new(private_attributes).extended_attributes
+      )
+      @anonymised_text = Anonymiser.new(text).anonymised_text(private_extended_attributes)
 
       qa_reader = Qa.new(anonymised_text)
       @qa_attributes = qa_reader.read(llm:) || {}
@@ -54,10 +56,7 @@ module QuoteReader
       @qa_version = qa_reader.version
 
       @read_attributes = deep_merge_if_absent(
-        deep_merge_if_absent(
-          naive_attributes,
-          extended_attributes
-        ),
+        private_extended_attributes,
         qa_attributes
       )
     end
