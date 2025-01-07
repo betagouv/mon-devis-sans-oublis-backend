@@ -7,6 +7,8 @@ require "llms/ollama"
 # Custom configuration for Mon Devis Sans Oublis
 # added beside common Rails configuration
 Rails.application.configure do
+  config.app_env = ENV.fetch("APP_ENV", Rails.env)
+
   config.application_name = "Mon Devis Sans Oublis"
 
   config.openapi_file = lambda { |version|
