@@ -62,6 +62,10 @@ DATABASE_URL='postgresql://postgres:dummy@localhost:5433' bin/rails server -b 0.
 Tout l'environnement est configuré pour et depuis [Docker](https://www.docker.com/). Des
 commandes utiles sont fournies dans le [Makefile](./Makefile).
 
+## Back office
+
+Un tableau de suivis des devis soumis est disponible sur [/mdso/admin](http://localhost:3000/mdso/admin) sous mot de passe hors développement.
+
 ## Tâches asynchrones
 
 Elles sont listées dans la base de données PostgreSQL via le librairie `good_job`.

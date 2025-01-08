@@ -69,6 +69,10 @@ gem "langchainrb", ">= 0.19" # Framework around LLMs
 
 gem "ostruct" # Since Ruby > 3.4.0
 
+# Back Office
+gem "activeadmin"
+gem "sassc-rails"
+
 group :development, :test do
   gem "brakeman"
   gem "bundler-audit"

@@ -19,6 +19,17 @@ class QuoteCheck < ApplicationRecord
 
   delegate :filename, to: :file, allow_nil: true
 
+  # Returns a float number in €
+  def cost
+    return unless qa_result&.key?("usage")
+
+    usage = qa_result.fetch("usage")
+    Llms::Mistral.usage_cost_price(
+      completion_tokens: usage.fetch("completion_tokens"),
+      prompt_tokens: usage.fetch("prompt_tokens")
+    )
+  end
+
   def frontend_webapp_url
     return unless id
 
@@ -56,6 +67,14 @@ class QuoteCheck < ApplicationRecord
     return "pending" if finished_at.blank?
 
     validation_errors.blank? ? "valid" : "invalid"
+  end
+
+  # Sum of prompt and completion tokens
+  def tokens_count
+    return unless qa_attributes&.key?("token_count")
+
+    usage = qa_result.fetch("usage")
+    usage.fetch("prompt_tokens") + usage.fetch("completion_tokens")
   end
 
   def validation_errors_as_array
