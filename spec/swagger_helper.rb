@@ -153,11 +153,11 @@ RSpec.configure do |config|
                 nullable: true,
                 description: "requis pour feedback error detail"
               },
-              is_helpful: { type: :boolean, nullable: true, description: "requis pour feedback error detail" },
               rating: { type: :integer, nullable: true, description: "requis pour feedback global hors error detail" },
               comment: {
                 type: :string,
                 nullable: true,
+                description: "requis pour feedback error detail",
                 maxLength: QuoteCheckFeedback.validators_on(:comment).detect do |validator|
                   validator.is_a?(ActiveModel::Validations::LengthValidator)
                 end&.options&.[](:maximum)

@@ -33,7 +33,6 @@ describe "Devis API" do
             type: :object,
             properties: {
               validation_error_details_id: { type: :string, nullable: false },
-              is_helpful: { type: :boolean, nullable: false },
               comment: {
                 type: :string,
                 nullable: true,
@@ -42,7 +41,7 @@ describe "Devis API" do
                 end&.options&.[](:maximum)
               }
             },
-            required: %w[validation_error_details_id is_helpful]
+            required: %w[validation_error_details_id comment]
           }
         ]
       }
@@ -93,7 +92,7 @@ describe "Devis API" do
           schema "$ref" => "#/components/schemas/api_error"
 
           let(:quote_check_feedback) do
-            build(:quote_check_feedback, :error_detail).attributes.merge("is_helpful" => nil)
+            build(:quote_check_feedback, :error_detail).attributes.merge("comment" => nil)
           end
 
           let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName

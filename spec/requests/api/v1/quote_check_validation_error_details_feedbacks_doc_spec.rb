@@ -16,16 +16,15 @@ describe "Devis API" do
       parameter name: :quote_check_feedback, in: :body, schema: {
         type: :object,
         properties: {
-          is_helpful: { type: :boolean, nullable: false },
           comment: {
             type: :string,
-            nullable: true,
+            nullable: false,
             maxLength: QuoteCheckFeedback.validators_on(:comment).detect do |validator|
               validator.is_a?(ActiveModel::Validations::LengthValidator)
             end&.options&.[](:maximum)
           }
         },
-        required: %w[is_helpful]
+        required: %w[comment]
       }
 
       let(:quote_check) { create(:quote_check, :invalid) }
@@ -50,7 +49,7 @@ describe "Devis API" do
         let(:quote_check_feedback) do
           build(:quote_check_feedback).attributes
                                       .except("validation_error_details_id")
-                                      .merge("is_helpful" => nil)
+                                      .merge("comment" => nil)
         end
 
         let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName

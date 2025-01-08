@@ -68,7 +68,6 @@ RSpec.describe "/api/v1/quote_checks/:quote_check_id/feedbacks" do
       let(:quote_check_feedback_params) do
         {
           validation_error_details_id: validation_error_details_id,
-          is_helpful: false,
           comment: "FAUX"
         }
       end

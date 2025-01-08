@@ -79,16 +79,13 @@ paths:
                   validation_error_details_id:
                     type: string
                     nullable: false
-                  is_helpful:
-                    type: boolean
-                    nullable: false
                   comment:
                     type: string
                     nullable: true
                     maxLength: 1000
                 required:
                 - validation_error_details_id
-                - is_helpful
+                - comment
   "/quote_checks/{quote_check_id}/error_details/{error_details_id}/feedbacks":
     post:
       summary: Déposer un retour
@@ -126,15 +123,12 @@ paths:
             schema:
               type: object
               properties:
-                is_helpful:
-                  type: boolean
-                  nullable: false
                 comment:
                   type: string
-                  nullable: true
+                  nullable: false
                   maxLength: 1000
               required:
-              - is_helpful
+              - comment
   "/quote_checks":
     post:
       summary: Téléverser un devis
@@ -349,10 +343,6 @@ components:
           type: string
           nullable: true
           description: requis pour feedback error detail
-        is_helpful:
-          type: boolean
-          nullable: true
-          description: requis pour feedback error detail
         rating:
           type: integer
           nullable: true
@@ -360,6 +350,7 @@ components:
         comment:
           type: string
           nullable: true
+          description: requis pour feedback error detail
           maxLength: 1000
       required:
       - quote_check_id
