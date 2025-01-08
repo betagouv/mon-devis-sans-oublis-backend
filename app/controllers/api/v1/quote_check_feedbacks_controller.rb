@@ -22,7 +22,7 @@ module Api
         attributes += if quote_check_feedback.global?
                         %w[rating email] # Global feedback
                       else
-                        %w[validation_error_details_id is_helpful] # Error detail feedback
+                        %w[validation_error_details_id] # Error detail feedback
                       end
 
         quote_check_feedback.attributes.slice(*attributes)
@@ -35,7 +35,7 @@ module Api
       def quote_check_feedback_params
         raw_params = params.permit(
           :rating, :email, # Global feedback
-          :validation_error_details_id, :is_helpful, # Error detail feedback
+          :validation_error_details_id, # Error detail feedback
           :comment
         )
         return raw_params unless defined?(@validation_error_details)

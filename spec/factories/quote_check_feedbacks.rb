@@ -6,7 +6,6 @@ FactoryBot.define do
 
     trait :error_detail do
       validation_error_details_id { quote_check.validation_error_details.sample.fetch("id") }
-      is_helpful { [true, false].sample }
     end
     trait :global do
       rating { rand(0..5) }

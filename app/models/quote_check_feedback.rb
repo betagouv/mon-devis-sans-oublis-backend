@@ -12,7 +12,7 @@ class QuoteCheckFeedback < ApplicationRecord
 
   # Detail feedback
   validates :validation_error_details_id, presence: true, if: -> { rating.blank? }
-  validates :is_helpful, inclusion: { in: [true, false] }, if: -> { !global? }
+  validates :comment, presence: true, if: -> { !global? }
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   validates :comment, length: { maximum: 1_000 }

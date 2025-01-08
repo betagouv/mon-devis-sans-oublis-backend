@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_06_134626) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_08_104807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -140,7 +140,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_134626) do
   create_table "quote_check_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "quote_check_id", null: false
     t.string "validation_error_details_id"
-    t.boolean "is_helpful"
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

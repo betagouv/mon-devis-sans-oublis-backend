@@ -13,7 +13,6 @@ RSpec.describe "/api/v1/quote_checks/:quote_check_id/error_details/:validation_e
   describe "POST /api/v1/quote_checks/:quote_check_id/error_details/:validation_error_detail_id/feedbacks" do
     let(:quote_check_feedback_params) do
       {
-        is_helpful: false,
         comment: "FAUX"
       }
     end
