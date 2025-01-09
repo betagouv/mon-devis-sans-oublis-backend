@@ -180,6 +180,11 @@ RSpec.configure do |config|
                 description: "coût moyen d'une analyse en Euro (€), arrondi au centime supérieur",
                 nullable: true
               },
+              average_quote_check_processing_time: {
+                type: :number,
+                description: "temps moyen de traitement d'une analyse en secondes, arrondi supérieur",
+                nullable: true
+              },
               unique_visitors_count: {
                 type: :integer,
                 description: "nombre de visiteurs uniques dans le temps", nullable: true

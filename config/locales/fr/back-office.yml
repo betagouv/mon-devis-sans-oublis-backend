@@ -1,0 +1,4 @@
+fr:
+  time:
+    formats:
+      back_office: "%d/%m/%Y %H:%M"

@@ -9,11 +9,25 @@ FactoryBot.define do
     finished_at { nil } # Default pending status
 
     trait :finished do
-      text { "MyText" }
-      anonymised_text { "MyText" }
+      text do
+        <<~TEXT
+          Mon Devis contenu
+          SIRET 12345678900000
+
+          - Installation Chauffe-eau
+        TEXT
+      end
+      anonymised_text do
+        <<~TEXT
+          Mon Devis contenu
+          SIRET SIRETSIRETSIRE
+
+          - Installation Chauffe-eau
+        TEXT
+      end
 
       naive_attributes { {} }
-      naive_version { "MyString" }
+      naive_version { QuoteReader::NaiveText::VERSION }
       qa_attributes { {} }
       qa_result { {} }
       qa_version { QuoteReader::Qa::VERSION }
@@ -38,7 +52,8 @@ FactoryBot.define do
       validation_error_details do
         [{
           id: "1",
-          code: "something"
+          code: "chauffage_etas_manquant",
+          provided_value: "Installation Chauffe-eau"
         }]
       end
     end

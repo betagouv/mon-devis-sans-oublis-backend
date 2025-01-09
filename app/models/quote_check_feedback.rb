@@ -23,6 +23,18 @@ class QuoteCheckFeedback < ApplicationRecord
     validation_error_details_id.blank?
   end
 
+  def provided_value
+    validation_error_details&.dig("provided_value")
+  end
+
+  def validation_error_details
+    return unless validation_error_details_id
+
+    quote_check.validation_error_details.find do
+      it.fetch("id") == validation_error_details_id
+    end
+  end
+
   private
 
   def check_validation_error_details_id

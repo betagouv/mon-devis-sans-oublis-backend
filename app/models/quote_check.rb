@@ -45,6 +45,12 @@ class QuoteCheck < ApplicationRecord
     URI.join("#{ENV.fetch('FRONTEND_APPLICATION_HOST')}/", "#{profile_path}/", "televersement/", id).to_s
   end
 
+  def processing_time
+    return unless finished_at
+
+    finished_at - started_at
+  end
+
   def qa_llm
     case qa_result&.dig("id")
     when /\Achatcmpl-/
@@ -71,10 +77,9 @@ class QuoteCheck < ApplicationRecord
 
   # Sum of prompt and completion tokens
   def tokens_count
-    return unless qa_attributes&.key?("token_count")
+    return unless qa_result&.key?("usage")
 
-    usage = qa_result.fetch("usage")
-    usage.fetch("prompt_tokens") + usage.fetch("completion_tokens")
+    qa_result.fetch("usage").fetch("total_tokens")
   end
 
   def validation_errors_as_array

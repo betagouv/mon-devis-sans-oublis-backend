@@ -70,9 +70,9 @@ module QuoteReader
         if old_val.is_a?(Hash) && new_val.is_a?(Hash)
           deep_merge_if_absent(old_val, new_val)
         elsif old_val.is_a?(Array) && new_val.is_a?(Array)
-          old_val + new_val
+          (old_val + new_val).presence
         else
-          old_val.nil? ? new_val : old_val
+          (old_val.nil? ? new_val : old_val).presence
         end
       end
     end
