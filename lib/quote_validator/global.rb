@@ -38,13 +38,13 @@ module QuoteValidator
 
       # date_debut_chantier
       date_chantier = quote[:date_chantier] || quote[:date_debut_chantier]
-      add_error("date_chantier_manquant", category: "admin", type: "missing") if date_chantier.blank?
+      add_error("date_chantier_manquant", category: "admin", type: "warning") if date_chantier.blank?
 
       # date_pre_visite
-      add_error("date_pre_visite_manquant", category: "admin", type: "missing") if quote[:date_pre_visite].blank?
+      add_error("date_pre_visite_manquant", category: "admin", type: "warning") if quote[:date_pre_visite].blank?
 
       # validite
-      add_error("date_validite_manquant", category: "admin", type: "missing") unless quote[:validite]
+      add_error("date_validite_manquant", category: "admin", type: "warning") unless quote[:validite]
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -109,7 +109,7 @@ module QuoteValidator
 
       site_address = @client[:adresse_chantier]
       if site_address.blank?
-        add_error("chantier_facturation_idem", category: "admin", type: "missing")
+        add_error("chantier_facturation_idem", category: "admin", type: "warning")
       else
         validate_address(site_address, "chantier")
       end
