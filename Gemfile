@@ -74,6 +74,7 @@ group :development, :test do
   gem "bundler-audit"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]
+  gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "pry-rails"
   gem "rspec-rails"
@@ -83,7 +84,6 @@ end
 group :test do
   gem "capybara"
   gem "cucumber-rails", require: false
-  gem "dotenv-rails"
   gem "faker", require: false
   gem "guard"
   gem "guard-cucumber"
