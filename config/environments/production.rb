@@ -28,6 +28,11 @@ Rails.application.configure do
 
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
+  config.assets.css_compressor = false # Avoid compiling error with ActiveAdmin:
+  # see https://stackoverflow.com/a/70665740
+  # SassC::SyntaxError: Error: Custom property values may not be empty. (SassC::SyntaxError)
+  # on line 4:375078 of stdin
+  # >> ckbox]:checked+label:before{--data-uri-svg:url("data:image/sv
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
