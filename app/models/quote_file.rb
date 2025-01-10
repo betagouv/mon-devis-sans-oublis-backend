@@ -60,6 +60,10 @@ class QuoteFile < ApplicationRecord
     }
   end
 
+  def extension
+    filename&.split(".")&.last
+  end
+
   def local_path
     ActiveStorage::Blob.service.path_for(file.key) if file
   end

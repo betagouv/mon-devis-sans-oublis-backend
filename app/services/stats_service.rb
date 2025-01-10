@@ -10,6 +10,7 @@ class StatsService
     {
       quote_checks_count:,
       average_quote_check_errors_count:,
+      average_quote_check_processing_time:,
       average_quote_check_cost:,
       unique_visitors_count:
     }
@@ -18,10 +19,10 @@ class StatsService
   protected
 
   def average_quote_check_cost
-    quote_checks_qith_qa = QuoteCheck.where.not(qa_result: nil)
-    return nil if quote_checks_qith_qa.count.zero?
+    quote_checks_with_qa = QuoteCheck.where.not(qa_result: nil)
+    return nil if quote_checks_with_qa.count.zero?
 
-    costs = quote_checks_qith_qa.select(:qa_result).flat_map(&:cost)
+    costs = quote_checks_with_qa.select(:qa_result).flat_map(&:cost)
     (costs.sum.to_f / costs.size).ceil(2)
   end
 
@@ -30,6 +31,15 @@ class StatsService
 
     total_errors_count = QuoteCheck.where.not(validation_errors: nil).pluck(:validation_errors).sum(&:size)
     (total_errors_count.to_f / QuoteCheck.count).ceil(1)
+  end
+
+  # In seconds
+  def average_quote_check_processing_time
+    quote_checks_finished = QuoteCheck.where.not(finished_at: nil)
+    return nil if quote_checks_finished.count.zero?
+
+    total_processing_time = quote_checks_finished.select(:finished_at, :started_at).sum { it.processing_time }
+    (total_processing_time.to_f / quote_checks_finished.count).ceil
   end
 
   def quote_checks_count

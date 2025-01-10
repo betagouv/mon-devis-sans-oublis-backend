@@ -2,10 +2,10 @@
 
 FactoryBot.define do
   factory :quote_file do
-    filename { "MyString" }
-    hexdigest { "file_fixture quote.pdf" }
+    filename { "Mon Devis.pdf" }
+    sequence(:hexdigest) { "file_fixture quote.pdf #{it}" }
     content_type { "application/pdf" }
-    uploaded_at { "2024-11-26 19:35:07" }
+    uploaded_at { Time.zone.now }
 
     after(:build) do |quote_file|
       data = Rails.root.join("spec/fixtures/files/quote_files/Devis_test.pdf").open

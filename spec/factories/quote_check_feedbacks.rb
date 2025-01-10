@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "faker"
+
 FactoryBot.define do
   factory :quote_check_feedback do
     quote_check { association(:quote_check, :invalid) }

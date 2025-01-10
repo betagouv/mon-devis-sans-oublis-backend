@@ -12,6 +12,7 @@ RSpec.describe "QuoteChecksController" do
       it "creates a QuoteCheck" do
         post "/#{profile}/devis/verifier", params: { quote_file: }
 
+        puts "@@@ response.body: #{response.body}" # TODO: Remove this DEBUG line
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.body).to include("12345678900000") # SIRET from the Devis
       end
