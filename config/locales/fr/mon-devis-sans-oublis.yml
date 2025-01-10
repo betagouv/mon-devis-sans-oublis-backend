@@ -48,12 +48,15 @@ fr:
       pro_adresse_manquant: "L'adresse du siège social est manquante"
       rge_manquant: "Le numéro de certification RGE du professionnel est manquant"
       rge_manquant_infos: "Pour obtenir des aides, le professionel doit avoir le label RGE du geste en question. Merci de préciser le numéro de certification."
+      pro_assurance_manquant: "Assurance professionnelle souscrite manquante"
+      pro_assurance_manquant_infos: "Assurance professionnelle souscrite avec le N° de la police d'assurance, le type (décennale, biennale ...), les coordonnées de l'assureur ou du garant et la couverture géographique du contrat ou de la garantie."
 
       # Information du client : 
       client_prenom_manquant: "Le prénom du client est manquant" 
       client_prenom_manquant_infos: "Mise en garde : le devis doit être établi au nom et prénom de la personne ayant fait la demande d’aide."
       client_nom_manquant: "Le nom du client est manquant"
       client_nom_manquant_infos: "Mise en garde : le devis doit être établi au nom et prénom de la personne ayant fait la demande d’aide."
+      client_civilite_manquant: "La civilité du client est manquante"
       client_adresse_manquant: "L'adresse du client est manquante" 
       chantier_adresse_manquant: "Si l'adresse du chantier est différente de l'adresse de facturation, il faut l'indiquer clairement."
       chantier_facturation_idem: "L'adresse de réalisation des travaux n'est pas indiquée. Est-ce bien la même que l'adresse de facturation ?"
