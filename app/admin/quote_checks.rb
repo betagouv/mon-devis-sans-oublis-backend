@@ -104,7 +104,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
         end
       end
 
-      tab "Attributs récupérés" do
+      tab "Attributs détectés" do
         panel "Gestes" do
           if (gestes = resource.read_attributes&.dig("gestes")&.index_by { it["type"] })
             attributes_table_for gestes do
@@ -133,6 +133,21 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
             end
           end
         end
+      end
+
+      tab "Attributs via par Mistral" do
+        pre JSON.pretty_generate(resource.qa_attributes)
+      end
+
+      tab "Attributs via par Albert" do
+        pre JSON.pretty_generate(resource.private_data_qa_attributes)
+
+        h1 "Résultat brut"
+        pre JSON.pretty_generate(resource.private_data_qa_result)
+      end
+
+      tab "Attributs via méthode naïve hors ligne privé" do
+        pre JSON.pretty_generate(resource.naive_attributes)
       end
 
       tab "Texte Anonymisé" do
