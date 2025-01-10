@@ -97,6 +97,7 @@ module QuoteValidator
 
       add_error("client_prenom_manquant", category: "admin", type: "missing") if @client[:prenom].blank?
       add_error("client_nom_manquant", category: "admin", type: "missing") if @client[:nom].blank?
+      add_error("client_civilite_manquant", category: "admin", type: "missing") if @client[:civilite].blank? 
 
       validate_client_address
     end

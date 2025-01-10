@@ -54,6 +54,7 @@ fr:
       client_prenom_manquant_infos: "Mise en garde : le devis doit être établi au nom et prénom de la personne ayant fait la demande d’aide."
       client_nom_manquant: "Le nom du client est manquant"
       client_nom_manquant_infos: "Mise en garde : le devis doit être établi au nom et prénom de la personne ayant fait la demande d’aide."
+      client_civilite_manquant: "La civilité du client est manquante"
       client_adresse_manquant: "L'adresse du client est manquante" 
       chantier_adresse_manquant: "Si l'adresse du chantier est différente de l'adresse de facturation, il faut l'indiquer clairement."
       chantier_facturation_idem: "L'adresse de réalisation des travaux n'est pas indiquée. Est-ce bien la même que l'adresse de facturation ?"
