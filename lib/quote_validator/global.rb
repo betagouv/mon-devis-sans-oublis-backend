@@ -84,6 +84,8 @@ module QuoteValidator
                                          type: "wrong")
       end
 
+      add_error("pro_assurance_manquant", category: "admin", type: "missing") if @pro[:assurance].blank?
+
       validate_pro_address
     end
     # rubocop:enable Metrics/PerceivedComplexity
