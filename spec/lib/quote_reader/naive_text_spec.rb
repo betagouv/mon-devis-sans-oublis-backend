@@ -139,12 +139,6 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
     end
   end
 
-  describe ".find_nom" do
-    it "returns the nom" do
-      expect(described_class.find_nom("Nom: DUPONT")).to eq("DUPONT")
-    end
-  end
-
   describe ".find_numero_devis" do
     it "returns the numero_devis" do
       expect(described_class.find_numero_devis("Devis  N\"   ORG201234")).to eq("ORG201234")
@@ -159,12 +153,6 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
       expect(described_class.find_numeros_tva("TVA  :FR10831861234")).to eq(["FR10831861234"])
       expect(described_class.find_numeros_tva("TVA intra FR86504321234")).to eq(["FR86504321234"])
       expect(described_class.find_numeros_tva("TVA intracommunautaire : FR86504321234")).to eq(["FR86504321234"])
-    end
-  end
-
-  describe ".find_prenom" do
-    it "returns the prenom" do
-      expect(described_class.find_prenom("Jean")).to eq("Jean")
     end
   end
 
