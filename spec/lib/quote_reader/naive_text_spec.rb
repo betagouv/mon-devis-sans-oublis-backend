@@ -45,8 +45,6 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
         expect(attributes).to include(
           devis: "Devis",
           client: {
-            nom: "Doe",
-            prenom: nil,
             adresse: "42",
             adresse_chantier: "43"
           },

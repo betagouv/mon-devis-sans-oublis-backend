@@ -125,7 +125,6 @@ module QuoteReader
       text[/devis/i] if text
     end
 
-
     def self.find_numero_devis(text)
       text[/DEVIS\s+N.?\s*(#{FRENCH_CHARACTER_REGEX}*\d{4,})/i, 1].presence
     end
@@ -133,7 +132,6 @@ module QuoteReader
     def self.find_numeros_tva(text)
       text.scan(/\bFR[A-Z0-9]{2}\d{9}\b/i).flatten.filter_map { it&.strip }.uniq
     end
-
 
     def self.find_raison_sociale(text)
       forme_jurique_raison_sociale_regex = /#{FORME_JURIDIQUE_REGEX}\s+.+|.+\s+#{FORME_JURIDIQUE_REGEX}/i

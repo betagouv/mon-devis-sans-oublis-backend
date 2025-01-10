@@ -12,7 +12,7 @@ module Llms
   class Albert < Base
     attr_reader :prompt, :read_attributes, :result
 
-    DEFAULT_MODEL = ENV.fetch("ALBERT_MODEL", model)
+    DEFAULT_MODEL = ENV.fetch("ALBERT_MODEL", "meta-llama/Meta-Llama-3.1-70B-Instruct")
 
     def initialize(prompt, model:, result_format: :json)
       super

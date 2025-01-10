@@ -19,6 +19,7 @@ module QuoteReader
 
     private
 
+    # rubocop:disable Metrics/AbcSize
     def llm_read_attributes # rubocop:disable Metrics/MethodLength
       return unless Llms::Albert.configured?
 
@@ -43,13 +44,14 @@ module QuoteReader
           adresse: @read_attributes.dig(:pro_adresses, 0),
           numero_tva: @read_attributes.dig(:numeros_tva, 0),
           raison_sociale: @read_attributes.dig(:raison_sociales, 0),
-          forme_juridique: @read_attributes.dig(:forme_juridiques,0), 
-          assurance: @read_attributes.dig(:insurances,0)
+          forme_juridique: @read_attributes.dig(:forme_juridiques, 0),
+          assurance: @read_attributes.dig(:insurances, 0)
         }
       )
 
       @read_attributes
     end
+    # rubocop:enable Metrics/AbcSize
 
     def prompt
       Rails.root.join("lib/quote_reader/prompts/private_data.txt").read
