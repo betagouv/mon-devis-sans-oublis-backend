@@ -17,9 +17,7 @@ module QuoteReader
         numero_devis: self.class.find_numero_devis(text),
         client: {
           adresse: self.class.find_adresses(text).first,
-          adresse_chantier: self.class.find_adresse_chantier(text),
-          nom: self.class.find_nom(text),
-          prenom: self.class.find_prenom(text) # Necessary for Anonymisation ?
+          adresse_chantier: self.class.find_adresse_chantier(text)
         },
         pro: {
           adresse: self.class.find_adresse_pro(text),
@@ -38,7 +36,6 @@ module QuoteReader
         ibans: self.class.find_ibans(text),
         labels: self.class.find_label_numbers(text),
         names: [
-          self.class.find_nom(text),
           self.class.find_raison_sociale(text)
         ],
         numeros_tva: self.class.find_numeros_tva(text),
@@ -128,9 +125,6 @@ module QuoteReader
       text[/devis/i] if text
     end
 
-    def self.find_nom(text)
-      text[/Nom#{BETWEEN_LABEL_VALUE_REGEX}(#{FRENCH_CHARACTER_REGEX}+)/i, 1].presence
-    end
 
     def self.find_numero_devis(text)
       text[/DEVIS\s+N.?\s*(#{FRENCH_CHARACTER_REGEX}*\d{4,})/i, 1].presence
@@ -140,12 +134,6 @@ module QuoteReader
       text.scan(/\bFR[A-Z0-9]{2}\d{9}\b/i).flatten.filter_map { it&.strip }.uniq
     end
 
-    def self.find_prenom(text)
-      french_first_names = %w[Jean Marie Jacques Claire Pierre Sophie Amélie Luc Léa Élodie Chloé Théo Martin]
-
-      french_first_names.detect { text[/(#{it})/i, 1].presence } ||
-        text[/Prénom#{BETWEEN_LABEL_VALUE_REGEX}(#{FRENCH_CHARACTER_REGEX}+)/i, 1].presence
-    end
 
     def self.find_raison_sociale(text)
       forme_jurique_raison_sociale_regex = /#{FORME_JURIDIQUE_REGEX}\s+.+|.+\s+#{FORME_JURIDIQUE_REGEX}/i
