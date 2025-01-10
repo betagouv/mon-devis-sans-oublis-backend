@@ -20,7 +20,7 @@ module QuoteValidator
         add_error("devis_manquant", category: "admin",
                                     type: "missing")
       end
-      add_error("numero_devis_manquant", category: "admin", type: "missing") if quote[:numero_devis].blank?
+      add_error("numero_devis_manquant", category: "admin", type: "warning") if quote[:numero_devis].blank?
 
       validate_dates
       validate_pro
