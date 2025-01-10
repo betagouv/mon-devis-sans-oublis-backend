@@ -13,6 +13,7 @@ module Llms
     def initialize(prompt)
       super
       @api_key = ENV.fetch("MISTRAL_API_KEY")
+      @model = ENV.fetch("MISTRAL_MODEL", "mistral-large-latest")
     end
 
     # Returns the cost in € with VAT
@@ -33,7 +34,7 @@ module Llms
     # TODO: Better client
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
-    def chat_completion(text, model: "mistral-large-latest")
+    def chat_completion(text, model: @model)
       uri = URI("https://api.mistral.ai/v1/chat/completions")
       headers = {
         "Content-Type" => "application/json",

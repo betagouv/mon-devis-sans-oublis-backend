@@ -20,7 +20,7 @@ module QuoteValidator
         add_error("devis_manquant", category: "admin",
                                     type: "missing")
       end
-      add_error("numero_devis_manquant", category: "admin", type: "missing") if quote[:numero_devis].blank?
+      add_error("numero_devis_manquant", category: "admin", type: "warning") if quote[:numero_devis].blank?
 
       validate_dates
       validate_pro
@@ -84,6 +84,8 @@ module QuoteValidator
                                          type: "wrong")
       end
 
+      add_error("pro_assurance_manquant", category: "admin", type: "missing") if @pro[:assurance].blank?
+
       validate_pro_address
     end
     # rubocop:enable Metrics/PerceivedComplexity
@@ -97,6 +99,7 @@ module QuoteValidator
 
       add_error("client_prenom_manquant", category: "admin", type: "missing") if @client[:prenom].blank?
       add_error("client_nom_manquant", category: "admin", type: "missing") if @client[:nom].blank?
+      add_error("client_civilite_manquant", category: "admin", type: "missing") if @client[:civilite].blank?
 
       validate_client_address
     end

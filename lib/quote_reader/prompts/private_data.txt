@@ -12,8 +12,9 @@ Analyse le texte suivant en recherchant les informations demandées. Renvoie les
 9. **numeros_tva** : Liste des numéros de TVA mentionnés.
 10. **ibans** : Liste des IBAN détectés.
 11. **uris** : Liste des URL et site internet détectés.
-12. **client_noms** : Liste des Noms et prénoms propres des clients particuliers mentionnés (individus).
-13. **client_adresses** : Liste des adresses postales identifiées des clients particuliers mentionnés.
-14. **pro_adresses** : Liste des adresses postales identifiées des prestataires professionelles mentionnés.
-
-Renvoie chaque type d'information sous forme de liste sur une ligne avec valeurs séparées par un slash "/" pour une extraction claire et ordonnée, sans modifier le format ou le contenu des données extraites.
+12. **client_noms** : Liste des Noms propres des clients particuliers mentionnés (individus).
+13. **client_prenoms** : Liste des prénoms des clients particuliers mentionnés (individus).
+14. **client_civilite** : Liste des civilités des clients particuliers mentionnés (individus).
+15. **client_adresses** : Liste des adresses postales identifiées des clients particuliers mentionnés.
+16. **pro_adresses** : Liste des adresses postales identifiées des prestataires professionels mentionnés.
+17. **forme_juridiques**: Liste des forme juridiques identifiées des prestataires professionnels mentionnés.
