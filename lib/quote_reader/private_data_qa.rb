@@ -36,12 +36,14 @@ module QuoteReader
         client: {
           adresse: @read_attributes.dig(:client_adresses, 0),
           nom: @read_attributes.dig(:client_noms, 0),
-          prenom: nil
+          prenom: @read_attributes.dig(:client_prenoms, 0),
+          civilite: @read_attributes.dig(:client_civilite, 0)
         },
         pro: {
           adresse: @read_attributes.dig(:pro_adresses, 0),
           numero_tva: @read_attributes.dig(:numeros_tva, 0),
-          raison_sociale: @read_attributes.dig(:raison_sociales, 0)
+          raison_sociale: @read_attributes.dig(:raison_sociales, 0),
+          forme_juridique: @read_attributes.dig(:forme_juridiques,0)
         }
       )
 
