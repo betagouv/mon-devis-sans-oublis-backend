@@ -15,6 +15,7 @@ module Llms
     def initialize(prompt, result_format: :json)
       super
       @api_key = ENV.fetch("ALBERT_API_KEY")
+      @model = ENV.fetch('ALBERT_MODEL', "meta-llama/Meta-Llama-3.1-70B-Instruct")
     end
 
     def self.configured?
@@ -30,7 +31,7 @@ module Llms
     # - meta-llama/Meta-Llama-3.1-70B-Instruct
     # - AgentPublic/llama3-instruct-8b (default)
     # - AgentPublic/Llama-3.1-8B-Instruct
-    def chat_completion(text, model: "meta-llama/Meta-Llama-3.1-70B-Instruct")
+    def chat_completion(text, model: @model)
       uri = URI("https://albert.api.etalab.gouv.fr/v1/chat/completions")
       headers = {
         "Content-Type" => "application/json",
