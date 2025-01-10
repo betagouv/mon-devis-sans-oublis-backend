@@ -61,7 +61,7 @@ class QuoteFile < ApplicationRecord
   end
 
   def extension
-    filename&.split(".")&.last
+    File.extname(filename.to_s)&.delete_prefix(".") if filename
   end
 
   def local_path

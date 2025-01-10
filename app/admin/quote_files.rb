@@ -19,14 +19,14 @@ ActiveAdmin.register QuoteFile do
     id_column
 
     column :filename do
-      link_to it.filename, view_file_admin_quote_file_path(it, format: it.file.extension),
+      link_to it.filename, view_file_admin_quote_file_path(it, format: it.extension),
               target: "_blank", rel: "noopener"
     end
     column :content_type
     column :created_at
 
     actions defaults: true do
-      link_to "Voir le fichier", view_file_admin_quote_file_path(it, format: it.file.extension),
+      link_to "Voir le fichier", view_file_admin_quote_file_path(it, format: it.extension),
               class: "button", target: "_blank", rel: "noopener"
     end
   end
