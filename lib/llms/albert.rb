@@ -12,10 +12,12 @@ module Llms
   class Albert < Base
     attr_reader :prompt, :read_attributes, :result
 
-    def initialize(prompt, result_format: :json)
+    DEFAULT_MODEL = ENV.fetch("ALBERT_MODEL", model)
+
+    def initialize(prompt, model:, result_format: :json)
       super
       @api_key = ENV.fetch("ALBERT_API_KEY")
-      @model = ENV.fetch('ALBERT_MODEL', "meta-llama/Meta-Llama-3.1-70B-Instruct")
+      @model = model
     end
 
     def self.configured?
@@ -31,14 +33,14 @@ module Llms
     # - meta-llama/Meta-Llama-3.1-70B-Instruct
     # - AgentPublic/llama3-instruct-8b (default)
     # - AgentPublic/Llama-3.1-8B-Instruct
-    def chat_completion(text, model: @model)
+    def chat_completion(text, model: nil)
       uri = URI("https://albert.api.etalab.gouv.fr/v1/chat/completions")
       headers = {
         "Content-Type" => "application/json",
         "Authorization" => "Bearer #{@api_key}"
       }
       body = {
-        model:,
+        model: model || @model || DEFAULT_MODEL,
         messages: [
           { role: "system", content: prompt },
           { role: "user", content: text }
