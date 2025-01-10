@@ -28,7 +28,7 @@ Rails.application.configure do
 
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
-  config.assets.css_compressor = false # Avoid compiling error with ActiveAdmin:
+  config.assets.css_compressor = false # Avoid compiling error with ActiveAdmin: # TODO: FIXME
   # see https://stackoverflow.com/a/70665740
   # SassC::SyntaxError: Error: Custom property values may not be empty. (SassC::SyntaxError)
   # on line 4:375078 of stdin
