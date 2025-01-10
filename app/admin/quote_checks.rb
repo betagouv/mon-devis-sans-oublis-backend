@@ -3,6 +3,8 @@
 ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
   actions :index, :show
 
+  includes :file, :feedbacks
+
   config.filters = false
   config.sort_order = "created_at_desc"
 
