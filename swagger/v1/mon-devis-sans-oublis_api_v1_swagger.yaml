@@ -382,12 +382,12 @@ components:
       - average_quote_check_cost
       - unique_visitors_count
 servers:
+- url: http://localhost:3000/api/v1
+  description: Development server
 - url: https://api.staging.mon-devis-sans-oublis.beta.gouv.fr/api/v1
   description: Staging server
 - url: https://api.mon-devis-sans-oublis.beta.gouv.fr/api/v1
   description: Production server
-- url: http://localhost:3000/api/v1
-  description: Development server
 - url: https://{defaultHost}
   variables:
     defaultHost:

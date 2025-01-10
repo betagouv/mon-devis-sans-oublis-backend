@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require "uri"
+
+# Extract host and port if provided
+def host_with_port(url)
+  uri = URI.parse(url)
+  "#{uri.host}#{":#{uri.port}" if uri.port}"
+rescue URI::InvalidURIError
+  nil
+end
+
+APPLICATION_HOST = host_with_port(ENV.fetch("APPLICATION_HOST", "localhost:3000"))
 
 # Via Rswag gems
 RSpec.configure do |config|
@@ -214,10 +225,10 @@ RSpec.configure do |config|
         },
         if ENV.key?("APPLICATION_HOST") # current host
           {
-            url: "http#{Rails.env.development? ? '' : 's'}://#{ENV.fetch('APPLICATION_HOST')}",
+            url: "http#{Rails.env.development? ? '' : 's'}://#{APPLICATION_HOST}",
             variables: {
               defaultHost: {
-                default: ENV.fetch("APPLICATION_HOST", "localhost:3000")
+                default: APPLICATION_HOST
               }
             }
           }
@@ -226,11 +237,12 @@ RSpec.configure do |config|
           url: "http#{Rails.env.development? ? '' : 's'}://{defaultHost}",
           variables: {
             defaultHost: {
-              default: ENV.fetch("APPLICATION_HOST", "localhost:3000")
+              default: APPLICATION_HOST
             }
           }
         }
-      ].compact.uniq { |server| server[:url] }
+      ].compact.uniq { host_with_port(it[:url]) }
+                         .sort_by { |server| host_with_port(server[:url]) == APPLICATION_HOST ? 0 : 1 }
     }
   }
 
