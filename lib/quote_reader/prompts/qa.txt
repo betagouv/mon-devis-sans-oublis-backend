@@ -20,6 +20,7 @@ validite: boolean;
 date_debut_chantier: date; 
 
 date_pre_visite: date; 
+ligne_specifique_cout_main_doeuvre: boolean;
 gestes : [{geste1},{geste2}...]
 
 } 
