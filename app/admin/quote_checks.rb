@@ -47,8 +47,10 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
     end
 
     column "Persona", :profile
-
     column "Nb de token", &:tokens_count
+    column "temps traitement" do
+      "#{it.processing_time.ceil(1)}s"
+    end
 
     actions defaults: false do
       link_to "Voir le détail", admin_quote_check_path(it), class: "button"
@@ -79,6 +81,10 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
 
       row "Correction" do
         link_to "Devis #{it.id}", it.frontend_webapp_url
+      end
+
+      row "temps traitement" do
+        "#{resource.processing_time.ceil(1)}s"
       end
     end
 
