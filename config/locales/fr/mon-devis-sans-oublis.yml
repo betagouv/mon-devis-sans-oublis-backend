@@ -13,6 +13,42 @@ fr:
         particulier: Particulier
         mandataire: Mandataire
         conseiller: Conseiller
+  quote_checks:
+    metadata: # Update API Doc if keys updated
+      aides:
+        - MaPrimeRénov' par geste
+        - MaPrimeRénov' parcours accompagné
+        - CEE
+        - Eco prêt à taux 0
+        - Aide locale
+      gestes:
+        - group: "Chauffage"
+          values:
+            - Chaudière à granulés
+            - Chaudière à bûches
+            - Chauffage solaire combiné
+            - Foyer fermé, insert
+            - Poêle à granulés
+            - Poêle à bûches
+            - Pompe à chaleur air / eau
+            - Pompes à chaleur géothermique
+        - group: Eau chaude sanitaire
+          values:
+            - Chauffe-eau solaire individuel
+            - Chauffe-eau thermodynamique
+        - group: Isolation
+          values:
+            - Isolation des murs par l'extérieur
+            - Isolation des murs par l'intérieur
+            - Isolation de la toiture en pente - plafond de combles
+            - Isolation de la toiture-terrasse
+            - Isolation plancher bas (que CEE)
+        - group: Menuiserie
+          values:
+            - Remplacement des fenêtres ou porte-fenêtres
+        - group: Ventilation
+          values:
+            - Ventilation Mécanique Double-Flux
   quote_validator:
     error_categories:
       admin: "Mentions administratives"

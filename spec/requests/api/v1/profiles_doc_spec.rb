@@ -12,7 +12,7 @@ describe "Profiles API" do
         schema type: :object,
                properties: {
                  data: {
-                   type: "array",
+                   type: :array,
                    data: { type: "#/components/schemas/profile" }
                  }
                },

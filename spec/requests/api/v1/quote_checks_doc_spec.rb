@@ -3,6 +3,35 @@
 require "swagger_helper"
 
 describe "Devis API" do
+  path "/quote_checks/metadata" do
+    get "Récupérer les metadata possibles" do
+      tags "Devis"
+      produces "application/json"
+
+      response "200", "liste des metadata possibles" do
+        schema type: :object,
+               properties: {
+                 aides: {
+                   type: :array,
+                   data: { type: :string }
+                 },
+                 gestes: {
+                   type: :array,
+                   data: {
+                     type: :object,
+                     properties: {
+                       group: { type: :string },
+                       values: { type: :array, data: { type: :string } }
+                     }
+                   }
+                 }
+               },
+               required: %w[aides gestes]
+        run_test!
+      end
+    end
+  end
+
   path "/quote_checks" do
     # TODO: i18n?
     post "Téléverser un devis" do
