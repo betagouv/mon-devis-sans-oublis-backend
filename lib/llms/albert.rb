@@ -14,7 +14,7 @@ module Llms
 
     DEFAULT_MODEL = ENV.fetch("ALBERT_MODEL", "meta-llama/Meta-Llama-3.1-70B-Instruct")
 
-    def initialize(prompt, model:, result_format: :json)
+    def initialize(prompt, model: nil, result_format: :json)
       super
       @api_key = ENV.fetch("ALBERT_API_KEY")
       @model = model
