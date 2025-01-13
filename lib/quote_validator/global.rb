@@ -26,6 +26,7 @@ module QuoteValidator
       validate_pro
       validate_client
       validate_rge
+      validate_prix
     end
 
     # date d'emission, date de pré-visite (CEE uniquement ?),
@@ -134,6 +135,25 @@ module QuoteValidator
       end
     end
 
+    def validate_prix 
+      # Valider qu'on a une séparation matériaux et main d'oeuvre 
+      add_error("cout_main_doeuvre_manquant", category: "admin", type:"missing") unless quote[:ligne_specifique_cout_main_doeuvre]
+      
+      # Valider qu'on a le prix total HT / TTC 
+      # Valider qu'on a le montant de TVA pour chacun des taux 
+
+    end
+    def validate_prix_geste geste
+      # Valider qu'on a le prix HT sur chaque geste et son taux de TVA 
+        # { 
+        #   prix_ht: decimal; 
+        #   prix_unitaire_ht: decimal;
+        #   taux_tva: percentage
+        #   prix_ttc: decimal
+        # } 
+        add_error("geste_prix_ht_manquant", category: "gestes", type: "missing", provided_value: geste[:intitule])
+    end
+
     # doit valider les critères techniques associés aux gestes présents dans le devis
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/CyclomaticComplexity
@@ -146,7 +166,9 @@ module QuoteValidator
       ventilation = Works::Ventilation.new(quote, error_details:)
 
       gestes = quote[:gestes] || []
+      geste_reconnu = true
       gestes.each do |geste| # rubocop:disable Metrics/BlockLength
+        geste_reconnu = true
         case geste[:type]
 
         # ISOLATION
@@ -204,10 +226,14 @@ module QuoteValidator
         # AUDIT ENERGETIQUE
 
         else
+          geste_reconnu = false
           e = NotImplementedError.new("Geste inconnu '#{geste[:type]}' is not listed")
           ErrorNotifier.notify(e)
 
           "geste_inconnu"
+        end
+        if geste_reconnu
+          validate_prix_geste(geste)
         end
       end
     end
