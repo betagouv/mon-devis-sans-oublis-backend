@@ -17,7 +17,6 @@ module Llms
     def initialize(prompt, model: nil, result_format: :json)
       super
       @api_key = ENV.fetch("ALBERT_API_KEY")
-      @model = model
     end
 
     def self.configured?
