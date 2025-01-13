@@ -47,6 +47,7 @@ describe "Devis API" do
             type: :string,
             format: :binary
           },
+          metadata: { "$ref" => "#/components/schemas/quote_check_metadata", nullable: true },
           profile: { "$ref" => "#/components/schemas/profile" },
           parent_id: { type: :string, nullable: true }
         },
@@ -75,7 +76,7 @@ describe "Devis API" do
       #   "$ref" => "#/components/schemas/profile"
       # }, required: true
 
-      let(:quote_check) { { file: file, profile: profile } }
+      let(:quote_check) { { file: file, profile: profile, metadata: metadata } }
 
       response "201", "Devis téléversé" do
         schema "$ref" => "#/components/schemas/quote_check"
@@ -89,6 +90,7 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
         # See https://github.com/rswag/rswag/issues/316
         let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
         let(:profile) { "artisan" }
+        let(:metadata) { nil }
 
         pending "fix why quote_check params are not sent"
         # run_test!
@@ -99,6 +101,7 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
 
         let(:file) { fixture_file_upload("quote_files/Devis_test.pdf") }
         let(:profile) { nil }
+        let(:metadata) { nil }
 
         let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
 
@@ -110,6 +113,19 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
 
         let(:file) { fixture_file_upload("quote_files/Devis_test.pdf") }
         let(:profile) { "blabla" }
+        let(:metadata) { nil }
+
+        let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
+
+        run_test!
+      end
+
+      response "422", "invalid request for metadata" do
+        schema "$ref" => "#/components/schemas/api_error"
+
+        let(:file) { fixture_file_upload("quote_files/Devis_test.pdf") }
+        let(:profile) { "artisan" }
+        let(:metadata) { { toto: "tata " } }
 
         let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
 

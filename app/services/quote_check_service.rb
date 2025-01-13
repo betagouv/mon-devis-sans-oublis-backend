@@ -5,13 +5,17 @@ class QuoteCheckService
   attr_reader :quote_check
 
   def initialize(
-    tempfile_or_quote_check, filename = nil, profile = nil,
-    parent_id: nil
+    tempfile_or_quote_check, filename = nil,
+    profile = nil,
+    metadata: nil, parent_id: nil
   )
     @quote_check = if tempfile_or_quote_check.is_a?(QuoteCheck)
                      tempfile_or_quote_check
                    else
-                     QuoteCheckUploadService.new(tempfile_or_quote_check, filename, profile, parent_id:).upload
+                     QuoteCheckUploadService.new(
+                       tempfile_or_quote_check, filename, profile,
+                       metadata:, parent_id:
+                     ).upload
                    end
   end
 

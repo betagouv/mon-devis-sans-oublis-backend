@@ -23,7 +23,9 @@ module Api
         end
 
         quote_check_service = QuoteCheckService.new(
-          upload_file.tempfile, upload_file.original_filename, quote_check_params[:profile],
+          upload_file.tempfile, upload_file.original_filename,
+          quote_check_params[:profile],
+          metadata: quote_check_params[:metadata],
           parent_id: quote_check_params[:parent_id]
         )
         @quote_check = quote_check_service.quote_check
@@ -49,7 +51,7 @@ module Api
       end
 
       def quote_check_params
-        params.permit(:file, :profile, :parent_id)
+        params.permit(:file, :metadata, :profile, :parent_id)
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -68,7 +70,7 @@ module Api
         return json_hash if Rails.env.development?
 
         json_hash.slice(
-          "id", "status", "profile",
+          "id", "status", "profile", "metadata",
           "valid", "errors", "error_details", "error_messages",
           "parent_id",
           "filename"

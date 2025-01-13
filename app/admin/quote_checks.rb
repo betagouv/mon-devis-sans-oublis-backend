@@ -23,7 +23,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
     end
 
     column "Gestes demandés" do
-      "SOON" # TODO: Back Office
+      it.metadata&.dig("gestes")&.join("\n")
     end
 
     column "Gestes détectés" do
@@ -31,7 +31,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
     end
 
     column "Aides demandées" do
-      "SOON" # TODO: Back Office
+      it.metadata&.dig("aides")&.join("\n")
     end
 
     column "Nb erreurs" do
@@ -68,7 +68,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       row :profile, label: "Persona"
 
       row "Gestes demandés" do
-        "SOON" # TODO: Back Office
+        it.metadata&.dig("gestes")&.join("\n")
       end
 
       row "Gestes détectés" do
@@ -76,7 +76,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       end
 
       row "Aides demandées" do
-        "SOON" # TODO: Back Office
+        it.metadata&.dig("aides")&.join("\n")
       end
 
       row "Correction" do
