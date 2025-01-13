@@ -49,7 +49,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
     column "Persona", :profile
     column "Nb de token", &:tokens_count
     column "temps traitement" do
-      "#{it.processing_time.ceil(1)}s"
+      "#{it.processing_time.ceil(1)}s" if it.processing_time
     end
 
     actions defaults: false do
@@ -84,7 +84,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       end
 
       row "temps traitement" do
-        "#{resource.processing_time.ceil(1)}s"
+        "#{resource.processing_time.ceil(1)}s" if resource.processing_time
       end
     end
 
