@@ -5,6 +5,24 @@ require "rails_helper"
 RSpec.describe "/api/v1/quote_checks" do
   let(:json) { response.parsed_body }
 
+  describe "GET /api/v1/quote_checks/metadata" do
+    it "returns a successful response" do
+      get metadata_api_v1_quote_checks_url
+      expect(response).to be_successful
+    end
+
+    # rubocop:disable RSpec/MultipleExpectations
+    it "returns the metadata" do # rubocop:disable RSpec/ExampleLength
+      get metadata_api_v1_quote_checks_url
+      expect(json.fetch("aides")).to include("CEE")
+      expect(json.fetch("gestes")).to include({
+                                                "group" => "Menuiserie",
+                                                "values" => ["Remplacement des fenêtres ou porte-fenêtres"]
+                                              })
+    end
+    # rubocop:enable RSpec/MultipleExpectations
+  end
+
   describe "POST /api/v1/quote_checks" do
     let(:file) { fixture_file_upload("quote_files/Devis_test.pdf") }
     let(:quote_check_params) do

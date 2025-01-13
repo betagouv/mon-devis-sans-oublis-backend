@@ -129,6 +129,37 @@ paths:
                   maxLength: 1000
               required:
               - comment
+  "/quote_checks/metadata":
+    get:
+      summary: Récupérer les metadata possibles
+      tags:
+      - Devis
+      responses:
+        '200':
+          description: liste des metadata possibles
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  aides:
+                    type: array
+                    data:
+                      type: string
+                  gestes:
+                    type: array
+                    data:
+                      type: object
+                      properties:
+                        group:
+                          type: string
+                        values:
+                          type: array
+                          data:
+                            type: string
+                required:
+                - aides
+                - gestes
   "/quote_checks":
     post:
       summary: Téléverser un devis
