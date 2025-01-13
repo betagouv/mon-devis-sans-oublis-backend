@@ -4,7 +4,7 @@ module Api
   module V1
     # Controller for QuoteChecks API
     class QuoteChecksController < BaseController
-      before_action :authorize_request
+      before_action :authorize_request, except: :metadata
       before_action :quote_check, only: %i[show]
 
       def show
@@ -37,6 +37,10 @@ module Api
       end
       # rubocop:enable Metrics/MethodLength
       # rubocop:enable Metrics/AbcSize
+
+      def metadata
+        render json: I18n.t("quote_checks.metadata").to_json
+      end
 
       protected
 

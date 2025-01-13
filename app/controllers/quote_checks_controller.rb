@@ -2,7 +2,7 @@
 
 # Controller for the Quotes resource
 class QuoteChecksController < ApplicationController
-  before_action :authenticate, only: %i[index show edit update], if: -> { !Rails.env.development? }
+  before_action :authenticate, except: %i[profiles], if: -> { !Rails.env.development? }
   before_action :quote_check, only: %i[show edit update]
   before_action :profile, only: %i[new show]
 
