@@ -9,8 +9,9 @@ module Llms
 
     RESULT_FORMATS = %i[numbered_list json].freeze
 
-    def initialize(prompt, result_format: :json)
+    def initialize(prompt, model: nil, result_format: :json)
       @prompt = prompt
+      @model = model
 
       raise ArgumentError, "Invalid result format: #{result_format}" unless RESULT_FORMATS.include?(result_format)
 
