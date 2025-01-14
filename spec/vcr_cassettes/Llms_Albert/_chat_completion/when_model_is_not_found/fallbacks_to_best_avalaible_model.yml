@@ -1,0 +1,126 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://albert.api.etalab.gouv.fr/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"my_brain","messages":[{"role":"system","content":"Bonjour"},{"role":"user","content":"Quel
+        est le sens de la vie ? au format JSON {\"choix1\": \"text\"}"}]}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <ALBERT_API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - albert.api.etalab.gouv.fr
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx/1.27.0
+      Date:
+      - Tue, 14 Jan 2025 09:23:34 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+    body:
+      encoding: ASCII-8BIT
+      string: '{"detail":"Model not found."}'
+  recorded_at: Tue, 14 Jan 2025 09:23:34 GMT
+- request:
+    method: get
+    uri: https://albert.api.etalab.gouv.fr/v1/models
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <ALBERT_API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - albert.api.etalab.gouv.fr
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.27.0
+      Date:
+      - Tue, 14 Jan 2025 09:23:34 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+    body:
+      encoding: ASCII-8BIT
+      string: '{"object":"list","data":[{"id":"meta-llama/Llama-3.1-8B-Instruct","created":1736846614,"object":"model","owned_by":"vllm","max_context_length":46000,"type":"text-generation","status":"available","aliases":["AgentPublic/Llama-3.1-8B-Instruct","AgentPublic/llama3-instruct-8b","meta-llama/Meta-Llama-3.1-8B-Instruct"]},{"id":"intfloat/multilingual-e5-large","created":1736846615,"object":"model","owned_by":"huggingface-text-embeddings-inference","max_context_length":512,"type":"text-embeddings-inference","status":"available","aliases":[]},{"id":"openai/whisper-large-v3","created":1736846615,"object":"model","owned_by":"whisper-openai-api","max_context_length":null,"type":"automatic-speech-recognition","status":"available","aliases":[]},{"id":"google/gemma-2-9b-it","created":1736846614,"object":"model","owned_by":"vllm","max_context_length":4096,"type":"text-generation","status":"available","aliases":[]},{"id":"PleIAs/Cassandre-RAG","created":1736846614,"object":"model","owned_by":"vllm","max_context_length":8128,"type":"text-generation","status":"available","aliases":[]},{"id":"BAAI/bge-reranker-v2-m3","created":1736846615,"object":"model","owned_by":"huggingface-text-embeddings-inference","max_context_length":8192,"type":"text-classification","status":"available","aliases":[]},{"id":"AgentPublic/llama3-instruct-guillaumetell","created":1736846614,"object":"model","owned_by":"vllm","max_context_length":8192,"type":"text-generation","status":"available","aliases":[]},{"id":"BAAI/bge-m3","created":1736846615,"object":"model","owned_by":"huggingface-text-embeddings-inference","max_context_length":8192,"type":"text-embeddings-inference","status":"available","aliases":[]}]}'
+  recorded_at: Tue, 14 Jan 2025 09:23:34 GMT
+- request:
+    method: post
+    uri: https://albert.api.etalab.gouv.fr/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"meta-llama/Llama-3.1-8B-Instruct","messages":[{"role":"system","content":"Bonjour"},{"role":"user","content":"Quel
+        est le sens de la vie ? au format JSON {\"choix1\": \"text\"}"}]}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <ALBERT_API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - albert.api.etalab.gouv.fr
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.27.0
+      Date:
+      - Tue, 14 Jan 2025 09:23:38 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXQtODUzZGY2NjU1ZTFhNGZmNmI1ZGIzMWM2Y2RiNjljNTEiLCJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwibWVzc2FnZSI6eyJjb250ZW50IjoiVW5lIHF1ZXN0aW9uIHBoaWxvc29waGlxdWUgY2xhc3NpcXVlICFcblxuVm9pY2kgcXVlbHF1ZXMgcsOpcG9uc2VzIHBvc3NpYmxlcyBhdSBzZW5zIGRlIGxhIHZpZSwgZGFucyB1biBmb3JtYXQgSlNPTiA6XG5cbmBgYGpzb25cbntcbiAgXCJQbGFpc2lyIGV0IHNhdGlzZmFjdGlvblwiOiBcIlRyb3V2ZXIgbGUgYm9uaGV1ciBldCBsYSBzYXRpc2ZhY3Rpb24gZGFucyBsYSB2aWUsIGVuIHN1aXZhbnQgc2VzIHBhc3Npb25zIGV0IHNlcyB2YWxldXJzLlwiLFxuICBcIkNyb2lzc2FuY2UgZXQgYXBwcmVudGlzc2FnZVwiOiBcIkFwcHJlbmRyZSwgZ3JhbmRpciBldCBzZSBkw6l2ZWxvcHBlciB0b3V0IGF1IGxvbmcgZGUgbGEgdmllLCBwb3VyIGF0dGVpbmRyZSBzb24gcGxlaW4gcG90ZW50aWVsLlwiLFxuICBcIlJlbGF0aW9uIGV0IGFtb3VyXCI6IFwiQ29uc3RydWlyZSBkZXMgcmVsYXRpb25zIHByb2ZvbmRlcyBldCBkZXMgbGllbnMgZCdhbW91ciBhdmVjIGxlcyBhdXRyZXMsIHBvdXIgcGFydGFnZXIgbCdleHDDqXJpZW5jZSBodW1haW5lLlwiLFxuICBcIlNlcnZpY2UgZXQgY29udHJpYnV0aW9uXCI6IFwiQ29udHJpYnVlciDDoCBsYSBzb2Npw6l0w6kgZXQgYXUgbW9uZGUsIGVuIGZhaXNhbnQgZHUgYmllbiBldCBlbiBhaWRhbnQgbGVzIGF1dHJlcy5cIixcbiAgXCJMaWJlcnTDqSBldCBhdXRvbm9taWVcIjogXCJWaXZyZSBzYSB2aWUgZGUgbWFuacOocmUgYXV0b25vbWUgZXQgbGlicmUsIGVuIGZhaXNhbnQgc2VzIGNob2l4IGV0IGVuIHN1aXZhbnQgc2VzIHLDqnZlcy5cIixcbiAgXCJTcGlyaXR1YWxpdMOpIGV0IHRyYW5zY2VuZGFuY2VcIjogXCJUcm91dmVyIHVuIHNlbnMgcGx1cyBwcm9mb25kIMOgIGxhIHZpZSwgZW4gY29ubmVjdGFudCBhdmVjIHF1ZWxxdWUgY2hvc2UgcXVpIGTDqXBhc3NlIGxlIG1vbmRlIG1hdMOpcmllbC5cIlxufVxuYGBgXG5cbk5vdGV6IHF1ZSBjZXMgcsOpcG9uc2VzIG5lIHNvbnQgcGFzIG11dHVlbGxlbWVudCBleGNsdXNpdmVzLCBldCBxdWUgbGEgcsOpcG9uc2Ugw6AgbGEgcXVlc3Rpb24gXCJxdWVsIGVzdCBsZSBzZW5zIGRlIGxhIHZpZSA/XCIgcGV1dCB2YXJpZXIgZW4gZm9uY3Rpb24gZGUgY2hhcXVlIGluZGl2aWR1IGV0IGRlIHNhIHByb3ByZSBleHDDqXJpZW5jZS4iLCJyZWZ1c2FsIjpudWxsLCJyb2xlIjoiYXNzaXN0YW50IiwiYXVkaW8iOm51bGwsImZ1bmN0aW9uX2NhbGwiOm51bGwsInRvb2xfY2FsbHMiOltdfSwic3RvcF9yZWFzb24iOm51bGx9XSwiY3JlYXRlZCI6MTczNjg0NjYxNCwibW9kZWwiOiJtZXRhLWxsYW1hL0xsYW1hLTMuMS04Qi1JbnN0cnVjdCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInNlcnZpY2VfdGllciI6bnVsbCwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6Mjc5LCJwcm9tcHRfdG9rZW5zIjo1NiwidG90YWxfdG9rZW5zIjozMzUsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOm51bGwsInByb21wdF90b2tlbnNfZGV0YWlscyI6bnVsbH0sInNlYXJjaF9yZXN1bHRzIjpbXSwicHJvbXB0X2xvZ3Byb2JzIjpudWxsfQ==
+  recorded_at: Tue, 14 Jan 2025 09:23:38 GMT
+recorded_with: VCR 6.3.1

@@ -13,6 +13,7 @@ module Llms
     attr_reader :prompt, :read_attributes, :result
 
     DEFAULT_MODEL = ENV.fetch("ALBERT_MODEL", "meta-llama/Meta-Llama-3.1-70B-Instruct")
+    HOST = "https://albert.api.etalab.gouv.fr/v1"
 
     def initialize(prompt, model: nil, result_format: :json)
       super
@@ -26,18 +27,15 @@ module Llms
     # API Docs: https://docs.mistral.ai/api/#tag/chat/operation/chat_completion_v1_chat_completions_post
     # TODO: Better client
     # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/MethodLength
     # model:
     # - meta-llama/Meta-Llama-3.1-8B-Instruct
     # - meta-llama/Meta-Llama-3.1-70B-Instruct
     # - AgentPublic/llama3-instruct-8b (default)
     # - AgentPublic/Llama-3.1-8B-Instruct
-    def chat_completion(text, model: nil)
-      uri = URI("https://albert.api.etalab.gouv.fr/v1/chat/completions")
-      headers = {
-        "Content-Type" => "application/json",
-        "Authorization" => "Bearer #{@api_key}"
-      }
+    def chat_completion(text, model: nil, model_fallback: true)
+      uri = URI("#{HOST}/chat/completions")
       body = {
         model: model || @model || DEFAULT_MODEL,
         messages: [
@@ -52,6 +50,13 @@ module Llms
         http.request(request)
       end
 
+      # Auto switch model if not found
+      if response.code == "404" && model_fallback
+        backup_model = (self.class.sort_models(
+          models.map { |m| m.fetch("id") }
+        ) - [model].compact).first
+        return chat_completion(text, model: backup_model) if backup_model
+      end
       raise ResultError, "Error: #{response.code} - #{response.message}" unless response.is_a?(Net::HTTPSuccess)
 
       @result = JSON.parse(response.body)
@@ -61,7 +66,14 @@ module Llms
       extract_result(content)
     end
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize
+
+    def models
+      uri = URI("#{HOST}/models")
+      body = Net::HTTP.get(uri, headers)
+      JSON.parse(body).fetch("data")
+    end
 
     def model
       result&.fetch("model")
@@ -69,6 +81,15 @@ module Llms
 
     def usage
       result&.fetch("usage")
+    end
+
+    private
+
+    def headers
+      {
+        "Content-Type" => "application/json",
+        "Authorization" => "Bearer #{@api_key}"
+      }
     end
   end
 end

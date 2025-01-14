@@ -13,5 +13,7 @@ VCR.configure do |config|
   config.ignore_localhost = true
   config.debug_logger = File.open("log/vcr_debug.log", "w")
 
+  # Filter sensitive data
+  config.filter_sensitive_data("<ALBERT_API_KEY>") { ENV.fetch("ALBERT_API_KEY") }
   config.filter_sensitive_data("<MISTRAL_API_KEY>") { ENV.fetch("MISTRAL_API_KEY") }
 end
