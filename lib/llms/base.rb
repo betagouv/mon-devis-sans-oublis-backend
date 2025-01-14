@@ -59,6 +59,19 @@ module Llms
       end
     end
 
+    def self.sort_models(models)
+      models.sort_by do |model|
+        # Extract the size (e.g., "8B", "70B") and convert to an integer
+        size = model.match(/-(\d+)B-/i)&.to_a&.last.to_i
+
+        # Prioritize meta-llama models (-1 for meta-llama, 0 for others)
+        priority = model.include?("meta-llama") ? -1 : 0
+
+        # Sort by priority first, then by size in descending order (negative size)
+        [priority, -size]
+      end
+    end
+
     def chat_completion(text)
       raise NotImplementedError
     end
@@ -67,7 +80,7 @@ module Llms
     def extract_result(content) # rubocop:disable Metrics/MethodLength
       case result_format
       when :numbered_list
-        @read_attributes = nilify_empty_values(
+        @read_attributes = self.class.nilify_empty_values(
           self.class.extract_numbered_list(content).to_h { [it.fetch(:label), it.fetch(:value)] }
         )
       else # :json
@@ -77,7 +90,7 @@ module Llms
         else
           content_json_result = self.class.extract_json(content)
           @read_attributes = begin
-            nilify_empty_values(
+            self.class.nilify_empty_values(
               JSON.parse(content_json_result, symbolize_names: true)
             )
           rescue JSON::ParserError
