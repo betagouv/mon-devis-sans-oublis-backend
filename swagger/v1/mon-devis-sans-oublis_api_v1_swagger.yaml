@@ -181,7 +181,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/quote_check"
         '422':
-          description: invalid request
+          description: invalid request for metadata
           content:
             application/json:
               schema:
@@ -195,6 +195,9 @@ paths:
                 file:
                   type: string
                   format: binary
+                metadata:
+                  "$ref": "#/components/schemas/quote_check_metadata"
+                  nullable: true
                 profile:
                   "$ref": "#/components/schemas/profile"
                 parent_id:
@@ -267,6 +270,41 @@ components:
       - particulier
       - mandataire
       - conseiller
+    quote_check_metadata:
+      type: object
+      properties:
+        aides:
+          type: array
+          items:
+            type: string
+            enum:
+            - MaPrimeRénov' par geste
+            - MaPrimeRénov' parcours accompagné
+            - CEE
+            - Eco prêt à taux 0
+            - Aide locale
+        gestes:
+          type: array
+          items:
+            type: string
+            enum:
+            - Chaudière à granulés
+            - Chaudière à bûches
+            - Chauffage solaire combiné
+            - Foyer fermé, insert
+            - Poêle à granulés
+            - Poêle à bûches
+            - Pompe à chaleur air / eau
+            - Pompes à chaleur géothermique
+            - Chauffe-eau solaire individuel
+            - Chauffe-eau thermodynamique
+            - Isolation des murs par l'extérieur
+            - Isolation des murs par l'intérieur
+            - Isolation de la toiture en pente - plafond de combles
+            - Isolation de la toiture-terrasse
+            - Isolation plancher bas (que CEE)
+            - Remplacement des fenêtres ou porte-fenêtres
+            - Ventilation Mécanique Double-Flux
     quote_check_status:
       type: string
       enum:
@@ -333,6 +371,9 @@ components:
           "$ref": "#/components/schemas/quote_check_status"
         filename:
           type: string
+          nullable: true
+        metadata:
+          "$ref": "#/components/schemas/quote_check_metadata"
           nullable: true
         profile:
           "$ref": "#/components/schemas/profile"
