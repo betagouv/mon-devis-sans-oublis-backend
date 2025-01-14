@@ -7,6 +7,10 @@ module QuoteValidator
 
     attr_accessor :error_details, :quote, :quote_id, :warnings
 
+    def self.geste_index(quote_id, geste_index)
+      [quote_id, "geste", geste_index + 1].compact.join("-")
+    end
+
     # @param [Hash] quote
     # quote is a hash with the following keys
     # - siret: [String] the SIRET number of the company
@@ -27,12 +31,14 @@ module QuoteValidator
 
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/ParameterLists
     def add_error(code,
                   category: nil, type: nil,
                   title: nil,
                   problem: nil, solution: nil,
+                  geste: nil,
                   provided_value: nil,
                   value: nil) # value is DEPRECATED
       provided_value ||= value
@@ -48,16 +54,18 @@ module QuoteValidator
 
       error_details << {
         id: [quote_id, error_details.count + 1].compact.join("-"),
+        geste_id: geste && self.class.geste_index(quote_id, quote.fetch("gestes")&.index(geste)),
         code:,
         category:, type:,
         title: title || I18n.t("quote_validator.errors.#{code}"),
         problem:,
         solution: solution || I18n.t("quote_validator.errors.#{code}_infos", default: nil),
         provided_value:
-      }
+      }.compact
     end
     # rubocop:enable Metrics/ParameterLists
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize
 

@@ -68,6 +68,7 @@ module QuoteValidator
         super(code,
                   type:,
                   category: "gestes",
+                  geste:,
                   provided_value: geste[:intitule])
       end
     end

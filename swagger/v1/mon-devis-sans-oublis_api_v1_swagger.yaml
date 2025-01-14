@@ -335,6 +335,9 @@ components:
         id:
           type: string
           description: UUID unique
+        geste_id:
+          type: string
+          nullable: true
         category:
           "$ref": "#/components/schemas/quote_check_error_category"
         type:
@@ -379,6 +382,16 @@ components:
           "$ref": "#/components/schemas/profile"
         valid:
           type: boolean
+          nullable: true
+        gestes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              intitule:
+                type: string
           nullable: true
         errors:
           type: array

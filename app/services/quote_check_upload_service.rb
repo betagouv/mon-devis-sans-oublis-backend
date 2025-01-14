@@ -23,11 +23,11 @@ class QuoteCheckUploadService
 
     @quote_check = QuoteCheck.create!(
       file: quote_file,
-      profile: profile,
+      profile:,
       started_at: Time.current,
 
-      metadata: metadata,
-      parent_id: parent_id
+      metadata:,
+      parent_id:
     )
   end
 end

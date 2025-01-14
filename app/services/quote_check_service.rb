@@ -97,7 +97,10 @@ class QuoteCheckService
   # rubocop:enable Metrics/AbcSize
 
   def validate_quote
-    quote_validator = QuoteValidator::Global.new(quote_check.read_attributes)
+    quote_validator = QuoteValidator::Global.new(
+      quote_check.read_attributes,
+      quote_id: quote_check.id
+    )
     quote_validator.validate!
 
     quote_check.assign_attributes(
