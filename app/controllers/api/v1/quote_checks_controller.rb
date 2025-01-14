@@ -72,7 +72,8 @@ module Api
           "id", "status", "profile", "metadata",
           "valid", "errors", "error_details", "error_messages",
           "parent_id",
-          "filename"
+          "filename",
+          "gestes"
         ).compact
       end
       # rubocop:enable Metrics/MethodLength
