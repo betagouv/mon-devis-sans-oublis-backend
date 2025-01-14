@@ -3,14 +3,18 @@
 # This class is responsible for creating the quote by the upload.
 class QuoteCheckUploadService
   attr_reader :tempfile, :filename, :profile,
-              :parent_id,
+              :metadata, :parent_id,
               :quote_check
 
-  def initialize(tempfile, filename, profile, parent_id: nil)
+  def initialize(
+    tempfile, filename, profile,
+    metadata: nil, parent_id: nil
+  )
     @tempfile = tempfile
     @filename = filename
     @profile = profile
 
+    @metadata = metadata
     @parent_id = parent_id
   end
 
@@ -22,6 +26,7 @@ class QuoteCheckUploadService
       profile: profile,
       started_at: Time.current,
 
+      metadata: metadata,
       parent_id: parent_id
     )
   end

@@ -70,6 +70,17 @@ RSpec.configure do |config|
             type: :string,
             enum: QuoteCheck::PROFILES
           },
+          quote_check_metadata: {
+            type: :object,
+            properties: I18n.t("quote_checks.metadata").to_h do |key, values|
+              enum = values.first.is_a?(Hash) ? values.flat_map { |it| it.fetch(:values) } : values
+
+              [key, {
+                type: :array,
+                items: { type: :string, enum: }
+              }]
+            end
+          },
           quote_check_status: {
             type: :string,
             enum: QuoteCheck::STATUSES,
@@ -126,6 +137,7 @@ RSpec.configure do |config|
               parent_id: { type: :string, nullable: true },
               status: { "$ref" => "#/components/schemas/quote_check_status" },
               filename: { type: :string, nullable: true },
+              metadata: { "$ref" => "#/components/schemas/quote_check_metadata", nullable: true },
               profile: { "$ref" => "#/components/schemas/profile" },
               valid: { type: :boolean, nullable: true },
               errors: {

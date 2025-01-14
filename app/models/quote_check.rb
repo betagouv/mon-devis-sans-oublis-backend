@@ -10,11 +10,14 @@ class QuoteCheck < ApplicationRecord
 
   STATUSES = %w[pending valid invalid].freeze
 
+  before_validation :format_metadata
+
   PROFILES = %w[artisan particulier mandataire conseiller].freeze
   validates :profile, presence: true, inclusion: { in: PROFILES }
 
   validates :started_at, presence: true
 
+  validate :metadata_data
   validate :validation_errors_as_array, if: -> { validation_errors.present? || validation_error_details.present? }
 
   delegate :filename, to: :file, allow_nil: true
@@ -88,4 +91,35 @@ class QuoteCheck < ApplicationRecord
 
     errors.add(:validation_error_details, "must be an array")
   end
+
+  def format_metadata
+    self.metadata = metadata&.presence
+    return unless metadata
+
+    self.metadata = JSON.parse(metadata) if metadata.is_a?(String)
+    self.metadata = metadata.transform_values(&:presence).compact # Remove empty values
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  def metadata_data # rubocop:disable Metrics/MethodLength
+    return unless metadata
+
+    metadata_values = I18n.t("quote_checks.metadata").with_indifferent_access
+    metadata.each do |key, values|
+      next unless values
+
+      errors.add(:metadata, "clé #{key} non autorisée") unless metadata_values.key?(key)
+
+      key_values = metadata_values.fetch(key)
+      key_values = key_values.flat_map { it.fetch(:values) } if key_values.first.is_a?(Hash)
+      values.each do |value|
+        errors.add(:metadata, "valeur #{value} non autorisée pour #{key}") unless key_values.include?(value)
+      end
+    end
+  end
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
 end
