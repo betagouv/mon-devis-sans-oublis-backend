@@ -142,11 +142,11 @@ module QuoteValidator
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/MethodLength
     def validate_works
-      isolation = Works::Isolation.new(quote, error_details:)
-      menuiserie = Works::Menuiserie.new(quote, error_details:)
-      chauffage = Works::Chauffage.new(quote, error_details:)
-      eau_chaude = Works::EauChaude.new(quote, error_details:)
-      ventilation = Works::Ventilation.new(quote, error_details:)
+      isolation = Works::Isolation.new(quote, quote_id:, error_details:)
+      menuiserie = Works::Menuiserie.new(quote, quote_id:, error_details:)
+      chauffage = Works::Chauffage.new(quote, quote_id:, error_details:)
+      eau_chaude = Works::EauChaude.new(quote, quote_id:, error_details:)
+      ventilation = Works::Ventilation.new(quote, quote_id:, error_details:)
 
       gestes = quote[:gestes] || []
       gestes.each do |geste| # rubocop:disable Metrics/BlockLength

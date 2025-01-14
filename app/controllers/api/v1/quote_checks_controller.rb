@@ -44,7 +44,45 @@ module Api
         render json: I18n.t("quote_checks.metadata").to_json
       end
 
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength
+      def self.quote_check_json(quote_check = nil)
+        json_hash = quote_check.attributes.merge({ # Warning: attributes has stringifed keys, so use it too
+                                                   "status" => quote_check.status,
+                                                   "valid" => quote_check.quote_valid?,
+                                                   "errors" => quote_check.validation_errors,
+                                                   "error_details" => quote_check.validation_error_details,
+                                                   "error_messages" => quote_check.validation_errors&.index_with do |error_key|
+                                                     I18n.t("quote_validator.errors.#{error_key}")
+                                                   end,
+                                                   "filename" => quote_check.filename,
+
+                                                   "gestes" => quote_check.read_attributes.fetch("gestes", nil)
+                                                                &.map&.with_index do |geste, geste_index|
+                                                                  geste.slice("intitule").merge(
+                                                                    "id" => QuoteValidator::Base.geste_index(
+                                                                      quote_check.id, geste_index
+                                                                    )
+                                                                  )
+                                                                end
+                                                 })
+        return json_hash if Rails.env.development?
+
+        json_hash.slice(
+          "id", "status", "profile", "metadata",
+          "valid", "errors", "error_details", "error_messages",
+          "parent_id",
+          "filename"
+        ).compact
+      end
+      # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/AbcSize
+
       protected
+
+      def quote_check_json(quote_check_provided = nil)
+        self.class.quote_check_json(quote_check_provided || quote_check)
+      end
 
       def quote_check
         @quote_check ||= QuoteCheck.find(params[:id])
@@ -53,30 +91,6 @@ module Api
       def quote_check_params
         params.permit(:file, :metadata, :profile, :parent_id)
       end
-
-      # rubocop:disable Metrics/MethodLength
-      def quote_check_json(quote_check_provided = nil)
-        object = quote_check_provided || quote_check
-        json_hash = object.attributes.merge({ # Warning: attributes has stringifed keys, so use it too
-                                              "status" => object.status,
-                                              "valid" => object.quote_valid?,
-                                              "errors" => object.validation_errors,
-                                              "error_details" => object.validation_error_details,
-                                              "error_messages" => object.validation_errors&.index_with do |error_key|
-                                                I18n.t("quote_validator.errors.#{error_key}")
-                                              end,
-                                              "filename" => object.filename
-                                            })
-        return json_hash if Rails.env.development?
-
-        json_hash.slice(
-          "id", "status", "profile", "metadata",
-          "valid", "errors", "error_details", "error_messages",
-          "parent_id",
-          "filename"
-        )
-      end
-      # rubocop:enable Metrics/MethodLength
     end
   end
 end
