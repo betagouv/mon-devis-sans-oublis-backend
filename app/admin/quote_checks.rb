@@ -19,7 +19,8 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
     end
 
     column "Correction" do
-      link_to "Devis #{it.id}", it.frontend_webapp_url
+      link_to "Devis #{it.id}", it.frontend_webapp_url,
+              target: "_blank", rel: "noopener"
     end
 
     column "Gestes demandés" do
@@ -84,7 +85,8 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       end
 
       row "Correction" do
-        link_to "Devis #{it.id}", it.frontend_webapp_url
+        link_to "Devis #{it.id}", it.frontend_webapp_url,
+                target: "_blank", rel: "noopener"
       end
 
       row "temps traitement" do

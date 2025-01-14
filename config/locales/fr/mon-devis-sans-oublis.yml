@@ -1,4 +1,8 @@
 fr:
+  activerecord:
+    models:
+      quote_check: "Devis"
+      quote_file: "Fichier"
   global:
     sponsor: "Ministère\nde la transition\nécologique"
     service_name: "Mon Devis Sans Oublis"
