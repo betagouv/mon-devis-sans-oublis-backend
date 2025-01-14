@@ -116,6 +116,7 @@ RSpec.configure do |config|
                 type: :string,
                 description: "UUID unique"
               },
+              geste_id: { type: :string, nullable: true },
               category: { "$ref" => "#/components/schemas/quote_check_error_category" },
               type: { "$ref" => "#/components/schemas/quote_check_error_type" },
               code: { "$ref" => "#/components/schemas/quote_check_error_code" },
@@ -140,6 +141,17 @@ RSpec.configure do |config|
               metadata: { "$ref" => "#/components/schemas/quote_check_metadata", nullable: true },
               profile: { "$ref" => "#/components/schemas/profile" },
               valid: { type: :boolean, nullable: true },
+              gestes: {
+                type: :array,
+                items: {
+                  type: :object,
+                  properties: {
+                    id: { type: :string },
+                    intitule: { type: :string }
+                  }
+                },
+                nullable: true
+              },
               errors: {
                 type: :array,
                 items: { "$ref" => "#/components/schemas/quote_check_error_code" },
