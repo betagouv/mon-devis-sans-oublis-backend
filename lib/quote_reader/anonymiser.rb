@@ -31,7 +31,7 @@ module QuoteReader
         tmp_anonymised_text = text
         values.each do |value|
           tmp_anonymised_text = tmp_anonymised_text.gsub(
-            /#{value}/i,
+            /#{RegExp.escape(value)}/i,
             (fields_or_field.to_s.singularize.upcase * 10)[0...value.size]
           )
         end
