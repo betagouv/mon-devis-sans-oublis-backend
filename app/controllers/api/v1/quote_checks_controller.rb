@@ -57,7 +57,7 @@ module Api
                                                    end,
                                                    "filename" => quote_check.filename,
 
-                                                   "gestes" => quote_check.read_attributes.fetch("gestes", nil)
+                                                   "gestes" => quote_check.read_attributes&.fetch("gestes", nil) # rubocop:disable Style/SafeNavigationChainLength
                                                                 &.map&.with_index do |geste, geste_index|
                                                                   geste.slice("intitule").merge(
                                                                     "id" => QuoteValidator::Base.geste_index(
