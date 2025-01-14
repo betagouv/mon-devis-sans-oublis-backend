@@ -24,17 +24,20 @@ module Llms
 
     # rubocop:disable Metrics/AbcSize
     def self.extract_numbered_list(text) # rubocop:disable Metrics/MethodLength
-      pattern = /^(?<number>\d+)\.\s.*?\*\*(?<title>.*?)\*\*\s*: *(?<value>.*)$/
-      matches = text.scan(pattern)
-
-      matches.map do |match|
-        detected_separator = ["/", ","].detect { match[2].include? it } || ","
+      parts = text.split(/^\s*\d+\.\s+/).keep_if { it.start_with?("**") }
+      parts.each_with_index.map do |part, index|
+        match = part.match(/^\*\*(?<label>.*?)\*\*\s*: *\n*(?:\s*-\s*)?(?<value>.*)$/m)
+        detected_separator = [
+          /\n+\s*-\s*/,
+          %r{/},
+          /,/
+        ].detect { match[:value].match? it } || ","
 
         {
-          number: Integer(match[0]),
-          label: match[1],
-          value: match[2].gsub(/\(?Non (mentionné|disponible)\)?/i, "")
-                         .presence&.split(/\s*#{detected_separator}\s*/)
+          number: Integer(index + 1),
+          label: match[:label],
+          value: match[:value].gsub(/\(?Non (mentionné|disponible)\)?/i, "")
+                              .presence&.split(/\s*#{detected_separator}\s*/)&.map(&:strip)
         }
       end.sort_by { it.fetch(:number) } # rubocop:disable Style/MultilineBlockChain
     end
