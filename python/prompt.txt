@@ -1,0 +1,6 @@
+Voici le texte d’un devis de rénovation énergétique. C’est à la base un pdf. Les gestes de travaux sont souvent dans un tableau.
+Je dois récupérer les données structurées pour les vérifier ensuite. 
+
+Peux-tu me donner les informations suivantes : 
+
+Siret : C’est l’identifiant de l’entreprise qui est une suite de 14 chiffres. Attention, il faut faut pas le remplir si l’artisan a mis le SIREN à la place (qui est lui composé d’une suite de 9 chiffres) Si tu identifie un SIREN à 9 chiffre, il faut mettre siret_format_erreur à true et ne pas remplir siret.
