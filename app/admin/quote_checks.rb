@@ -47,7 +47,9 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
     end
 
     column "Persona", :profile
-    column "Nb de token", &:tokens_count
+    column "Nb de token" do
+      number_with_delimiter(it.tokens_count, delimiter: " ")
+    end
     column "temps traitement" do
       "#{it.processing_time.ceil(1)}s" if it.processing_time
     end
@@ -64,7 +66,9 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
                 target: "_blank", rel: "noopener"
       end
 
-      row :tokens_count, "Nb de token"
+      row :tokens_count, "Nb de token" do
+        number_with_delimiter(it.tokens_count, delimiter: " ")
+      end
       row :profile, label: "Persona"
 
       row "Gestes demandés" do
