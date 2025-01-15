@@ -43,8 +43,8 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       it.feedbacks.any?
     end
 
-    column "Date upload" do
-      it.file.created_at
+    column "Date soumission" do
+      it.started_at
     end
 
     column "Persona", :profile
