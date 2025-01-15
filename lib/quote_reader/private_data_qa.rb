@@ -31,7 +31,7 @@ module QuoteReader
       end
 
       @read_attributes = TrackingHash.new(
-        TrackingHash.nilify_empty_values(llm.read_attributes, compact: true)
+        TrackingHash.nilify_empty_values(llm.read_attributes)
       )
       @result = llm.result
 

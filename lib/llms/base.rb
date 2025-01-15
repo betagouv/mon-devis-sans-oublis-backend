@@ -84,8 +84,7 @@ module Llms
       case result_format
       when :numbered_list
         @read_attributes = TrackingHash.nilify_empty_values(
-          self.class.extract_numbered_list(content).to_h { [it.fetch(:label), it.fetch(:value)] },
-          compact: true
+          self.class.extract_numbered_list(content).to_h { [it.fetch(:label), it.fetch(:value)] }
         )
       else # :json
         content_jsx_result = self.class.extract_jsx(content)
@@ -95,8 +94,7 @@ module Llms
           content_json_result = self.class.extract_json(content)
           @read_attributes = begin
             TrackingHash.nilify_empty_values(
-              JSON.parse(content_json_result, symbolize_names: true),
-              compact: true
+              JSON.parse(content_json_result, symbolize_names: true)
             )
           rescue JSON::ParserError
             raise ResultError, "Parsing JSON inside content: #{content_json_result}"
