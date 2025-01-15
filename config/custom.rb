@@ -10,7 +10,7 @@ Rails.application.configure do
   config.app_env = ENV.fetch("APP_ENV", Rails.env)
 
   config.application_name = "Mon Devis Sans Oublis"
-  config.application_version = ENV.fetch("CONTAINER_VERSION", `git rev-parse HEAD`.chomp)
+  config.application_version = ENV.fetch("CONTAINER_VERSION", (`git rev-parse HEAD`.chomp rescue "unknown")) # rubocop:disable Style/RescueModifier
 
   config.openapi_file = lambda { |version|
     "#{config.application_name.parameterize}_api_#{version.downcase}_swagger.yaml"
