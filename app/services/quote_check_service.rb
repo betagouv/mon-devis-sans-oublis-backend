@@ -85,7 +85,7 @@ class QuoteCheckService
       qa_result: quote_reader.qa_result,
       qa_version: quote_reader.qa_version,
 
-      read_attributes: quote_reader.read_attributes
+      read_attributes: TrackingHash.nilify_empty_values(quote_reader.read_attributes, compact: true)
     )
   rescue QuoteReader::ReadError
     add_error("file_reading_error",
