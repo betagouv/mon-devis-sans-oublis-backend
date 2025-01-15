@@ -29,6 +29,7 @@ module Llms
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/PerceivedComplexity
     # model:
     # - meta-llama/Meta-Llama-3.1-8B-Instruct
     # - meta-llama/Meta-Llama-3.1-70B-Instruct
@@ -65,6 +66,7 @@ module Llms
 
       extract_result(content)
     end
+    # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize

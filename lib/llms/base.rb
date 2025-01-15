@@ -23,6 +23,8 @@ module Llms
     end
 
     # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
     def self.extract_numbered_list(text) # rubocop:disable Metrics/MethodLength
       parts = text.split(/^\s*\d+\.\s+/).keep_if { it.start_with?("**") }
       parts.each_with_index.map do |part, index|
@@ -41,6 +43,8 @@ module Llms
         }
       end.sort_by { it.fetch(:number) } # rubocop:disable Style/MultilineBlockChain
     end
+    # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize
 
     def self.extract_json(text)
