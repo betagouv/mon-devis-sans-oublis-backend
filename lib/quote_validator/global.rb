@@ -153,7 +153,8 @@ module QuoteValidator
         case geste[:type]
 
         # ISOLATION
-        when "isolation_thermique_par_exterieur_ITE"
+        when "isolation_thermique_par_exterieur_ITE",
+             /^isolation_thermique_par_exterieur_/i # LLM invented
           isolation.validate_isolation_ite(geste)
         when "isolation_comble_perdu", "isolation_combles_perdues"
           isolation.validate_isolation_combles(geste)
@@ -161,7 +162,8 @@ module QuoteValidator
           isolation.validate_isolation_rampants(geste)
         when "isolation_toiture_terrasse"
           isolation.validate_isolation_toiture_terrasse(geste)
-        when "isolation_thermique_par_interieur_ITI"
+        when "isolation_thermique_par_interieur_ITI",
+             /^isolation_thermique_par_interieur_/i # LLM invented
           isolation.validate_isolation_iti(geste)
         when "isolation_plancher_bas"
           isolation.validate_isolation_plancher_bas(geste)
@@ -183,7 +185,8 @@ module QuoteValidator
           chauffage.validate_poele_insert(geste)
         when "systeme_solaire_combine"
           chauffage.validate_systeme_solaire_combine(geste)
-        when "pac", "pac_air_eau", "pac_hybride", "pac_eau_eau"
+        when "pac", "pac_air_eau", "pac_hybride", "pac_eau_eau",
+             "pompe_a_chaleur" # LLM invented
           chauffage.validate_pac(geste)
         when "pac_air_air"
           chauffage.validate_pac_air_air(geste)
