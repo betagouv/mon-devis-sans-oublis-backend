@@ -198,7 +198,8 @@ module QuoteValidator
           eau_chaude.validate_chauffe_eau_thermodynamique(geste)
 
         # VENTILATION
-        when "vmc_simple_flux"
+        when "vmc_simple_flux",
+          "ventilation" # LLM invented
           ventilation.validate_vmc_simple_flux(geste)
         when "vmc_double_flux"
           ventilation.validate_vmc_double_flux(geste)
