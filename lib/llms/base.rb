@@ -43,8 +43,8 @@ module Llms
         }
       end.sort_by { it.fetch(:number) } # rubocop:disable Style/MultilineBlockChain
     end
-    # rubocop:disable Metrics/PerceivedComplexity
-    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize
 
     def self.extract_json(text)
