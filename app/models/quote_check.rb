@@ -10,6 +10,7 @@ class QuoteCheck < ApplicationRecord
 
   STATUSES = %w[pending valid invalid].freeze
 
+  after_initialize :set_application_version
   before_validation :format_metadata
 
   PROFILES = %w[artisan particulier mandataire conseiller].freeze
@@ -76,6 +77,10 @@ class QuoteCheck < ApplicationRecord
     return "pending" if finished_at.blank?
 
     validation_errors.blank? ? "valid" : "invalid"
+  end
+
+  def set_application_version
+    self.application_version = Rails.application.config.application_version
   end
 
   # Sum of prompt and completion tokens
