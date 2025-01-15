@@ -18,6 +18,14 @@ module Llms
       @result_format = result_format
     end
 
+    def self.clean_value(text)
+      # rubocop:disable Style/SafeNavigationChainLength
+      text&.strip
+          &.gsub(/\(?(?:Non (?:mentionnée?s?|disponibles?)|Aucune?s? .+ n'est mentionnée?s?\.?|Inconnue?s? \(pas de [^\)]+\))\)?/i, "") # rubocop:disable Layout/LineLength
+          &.presence
+      # rubocop:enable Style/SafeNavigationChainLength
+    end
+
     def self.configured?
       raise NotImplementedError
     end
@@ -38,8 +46,7 @@ module Llms
         {
           number: Integer(index + 1),
           label: match[:label],
-          value: match[:value].gsub(/\(?Non (mentionné|disponible)\)?/i, "")
-                              .presence&.split(/\s*#{detected_separator}\s*/)&.map(&:strip)
+          value: clean_value(match[:value])&.split(/\s*#{detected_separator}\s*/)&.map(&:strip)
         }
       end.sort_by { it.fetch(:number) } # rubocop:disable Style/MultilineBlockChain
     end
