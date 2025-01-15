@@ -3,7 +3,10 @@ FROM ruby:3.4-slim
 EXPOSE 3000
 
 RUN apt-get update && apt-get upgrade -y && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev nodejs npm
+    apt-get install --no-install-recommends -y \
+        build-essential git \
+        libpq-dev libyaml-dev \
+        nodejs npm
 
 # do the bundle install in another directory with the strict essential
 # (Gemfile and Gemfile.lock) to allow further steps to be cached
