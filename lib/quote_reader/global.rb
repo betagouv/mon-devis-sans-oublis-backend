@@ -51,9 +51,14 @@ module QuoteReader
       @anonymised_text = Anonymiser.new(text).anonymised_text(private_extended_attributes)
 
       qa_reader = Qa.new(anonymised_text)
-      @qa_attributes = qa_reader.read(llm:) || {}
-      @qa_result = qa_reader.result
-      @qa_version = qa_reader.version
+      begin
+        @qa_attributes = qa_reader.read(llm:) || {}
+      rescue ResultError => e
+        raise e
+      ensure
+        @qa_result = qa_reader.result
+        @qa_version = qa_reader.version
+      end
 
       @read_attributes = deep_merge_if_absent(
         private_extended_attributes,
