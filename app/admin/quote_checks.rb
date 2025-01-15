@@ -61,7 +61,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
   end
 
   show do # rubocop:disable Metrics/BlockLength
-    attributes_table do
+    attributes_table do # rubocop:disable Metrics/BlockLength
       row "Nom de fichier" do
         link_to resource.filename, view_file_admin_quote_file_path(resource.file, format: resource.file.extension),
                 target: "_blank", rel: "noopener"
