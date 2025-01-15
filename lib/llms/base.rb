@@ -55,17 +55,6 @@ module Llms
       text[/(\{.+\})/im, 1] if text&.match?(/```jsx\n/i)
     end
 
-    def self.nilify_empty_values(value)
-      case value
-      when Hash
-        value.transform_values { nilify_empty_values(it) }
-      when Array
-        value.map { nilify_empty_values(it) }
-      when value.presence
-        value
-      end
-    end
-
     def self.sort_models(models)
       models.sort_by do |model|
         # Extract the size (e.g., "8B", "70B") and convert to an integer
@@ -87,8 +76,9 @@ module Llms
     def extract_result(content) # rubocop:disable Metrics/MethodLength
       case result_format
       when :numbered_list
-        @read_attributes = self.class.nilify_empty_values(
-          self.class.extract_numbered_list(content).to_h { [it.fetch(:label), it.fetch(:value)] }
+        @read_attributes = TrackingHash.nilify_empty_values(
+          self.class.extract_numbered_list(content).to_h { [it.fetch(:label), it.fetch(:value)] },
+          compact: true
         )
       else # :json
         content_jsx_result = self.class.extract_jsx(content)
@@ -97,8 +87,9 @@ module Llms
         else
           content_json_result = self.class.extract_json(content)
           @read_attributes = begin
-            self.class.nilify_empty_values(
-              JSON.parse(content_json_result, symbolize_names: true)
+            TrackingHash.nilify_empty_values(
+              JSON.parse(content_json_result, symbolize_names: true),
+              compact: true
             )
           rescue JSON::ParserError
             raise ResultError, "Parsing JSON inside content: #{content_json_result}"

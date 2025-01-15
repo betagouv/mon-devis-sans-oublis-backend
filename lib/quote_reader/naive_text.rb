@@ -43,7 +43,7 @@ module QuoteReader
         sirets: self.class.find_sirets(text),
         telephones: self.class.find_telephones(text),
         uris: self.class.find_uris(text)
-      }
+      }.transform_values(&:presence).compact
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
