@@ -52,16 +52,19 @@ module QuoteValidator
         ErrorNotifier.notify(e)
       end
 
-      error_details << {
-        id: [quote_id, error_details.count + 1].compact.join("-"),
-        geste_id: geste && self.class.geste_index(quote_id, quote.fetch("gestes")&.index(geste)),
-        code:,
-        category:, type:,
-        title: title || I18n.t("quote_validator.errors.#{code}"),
-        problem:,
-        solution: solution || I18n.t("quote_validator.errors.#{code}_infos", default: nil),
-        provided_value:
-      }.compact
+      error_details << TrackingHash.nilify_empty_values(
+        {
+          id: [quote_id, error_details.count + 1].compact.join("-"),
+          geste_id: geste && self.class.geste_index(quote_id, quote.fetch("gestes")&.index(geste)),
+          code:,
+          category:, type:,
+          title: title || I18n.t("quote_validator.errors.#{code}"),
+          problem:,
+          solution: solution || I18n.t("quote_validator.errors.#{code}_infos", default: nil),
+          provided_value:
+        },
+        compact: true
+      )
     end
     # rubocop:enable Metrics/ParameterLists
     # rubocop:enable Metrics/MethodLength
