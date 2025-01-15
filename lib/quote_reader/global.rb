@@ -53,8 +53,6 @@ module QuoteReader
       qa_reader = Qa.new(anonymised_text)
       begin
         @qa_attributes = qa_reader.read(llm:) || {}
-      rescue ResultError => e
-        raise e
       ensure
         @qa_result = qa_reader.result
         @qa_version = qa_reader.version
