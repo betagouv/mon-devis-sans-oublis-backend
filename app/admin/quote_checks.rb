@@ -92,6 +92,14 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       row "temps traitement" do
         "#{resource.processing_time.ceil(1)}s" if resource.processing_time
       end
+
+      row "version application" do
+        if resource.application_version && resource.application_version != "unknown"
+          link_to resource.application_version,
+                  "https://github.com/betagouv/mon-devis-sans-oublis-backend/tree/#{resource.application_version}",
+                  target: "_blank", rel: "noopener"
+        end
+      end
     end
 
     tabs do # rubocop:disable Metrics/BlockLength
