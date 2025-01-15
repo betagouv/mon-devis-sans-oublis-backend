@@ -179,6 +179,10 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       tab "Texte brut" do
         pre resource.text
       end
+
+      tab "Retour API" do
+        pre JSON.pretty_generate(Api::V1::QuoteChecksController.quote_check_json(resource))
+      end
     end
   end
 end
