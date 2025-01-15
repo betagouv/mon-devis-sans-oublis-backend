@@ -52,8 +52,8 @@ module Api
                                                    "valid" => quote_check.quote_valid?,
                                                    "errors" => quote_check.validation_errors,
                                                    "error_details" => quote_check.validation_error_details,
-                                                   "error_messages" => quote_check.validation_errors&.index_with do |error_key|
-                                                     I18n.t("quote_validator.errors.#{error_key}")
+                                                   "error_messages" => quote_check.validation_errors&.index_with do
+                                                     I18n.t("quote_validator.errors.#{it}")
                                                    end,
                                                    "filename" => quote_check.filename,
 
