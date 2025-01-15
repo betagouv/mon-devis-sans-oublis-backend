@@ -3,6 +3,39 @@
 require "rails_helper"
 
 RSpec.describe TrackingHash, type: :service do
+  describe ".nilify_empty_values" do
+    # rubocop:disable RSpec/ExampleLength
+    # rubocop:disable RSpec/MultipleExpectations
+    it "removes empty values" do
+      expect(described_class.nilify_empty_values(nil)).to be_nil
+      expect(described_class.nilify_empty_values({})).to eq({})
+      expect(described_class.nilify_empty_values([])).to eq([])
+
+      expect(described_class.nilify_empty_values(
+               {
+                 a: { b: nil, c: "c", d: { e: nil, f: [nil, "f", ""], g: "" }, h: "", i: { j: "" } }
+               }
+             )).to eq(
+               {
+                 a: { b: nil, c: "c", d: { e: nil, f: [nil, "f", nil], g: nil }, h: nil, i: { j: nil } }
+               }
+             )
+
+      expect(described_class.nilify_empty_values(
+               {
+                 a: { b: nil, c: "c", d: { e: nil, f: [nil, "f", ""], g: "" }, h: "", i: { j: "" } }
+               },
+               compact: true
+             )).to eq(
+               {
+                 a: { c: "c", d: { f: ["f"] }, i: {} }
+               }
+             )
+    end
+    # rubocop:enable RSpec/MultipleExpectations
+    # rubocop:enable RSpec/ExampleLength
+  end
+
   describe "#[]" do
     it "works like a Hash" do
       hash = described_class.new(a: 1)

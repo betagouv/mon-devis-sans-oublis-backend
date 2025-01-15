@@ -58,9 +58,12 @@ module QuoteReader
         @qa_version = qa_reader.version
       end
 
-      @read_attributes = deep_merge_if_absent(
-        private_extended_attributes,
-        qa_attributes
+      @read_attributes = TrackingHash.nilify_empty_values(
+        deep_merge_if_absent(
+          private_extended_attributes,
+          qa_attributes
+        ),
+        compact: true
       )
     end
     # rubocop:enable Metrics/MethodLength
