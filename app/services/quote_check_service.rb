@@ -43,7 +43,10 @@ class QuoteCheckService
     read_quote(llm:)
     validate_quote if quote_check.validation_errors.blank?
 
-    quote_check.update!(finished_at: Time.current)
+    quote_check.update!(
+      application_version: Rails.application.config.application_version,
+      finished_at: Time.current
+    )
 
     quote_check
   end
