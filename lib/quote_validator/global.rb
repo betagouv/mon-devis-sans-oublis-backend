@@ -2,8 +2,7 @@
 
 module QuoteValidator
   # Validator for the Quote
-  # rubocop:disable Metrics/ClassLength
-  class Global < Base
+  class Global < Base # rubocop:disable Metrics/ClassLength
     VERSION = "0.0.1"
 
     def validate!
@@ -229,5 +228,4 @@ module QuoteValidator
       self.class::VERSION
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end

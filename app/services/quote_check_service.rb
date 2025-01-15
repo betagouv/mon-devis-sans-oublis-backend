@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # This class is responsible for checking the quote and returning the result.
-class QuoteCheckService
+class QuoteCheckService # rubocop:disable Metrics/ClassLength
   attr_reader :quote_check
 
   def initialize(

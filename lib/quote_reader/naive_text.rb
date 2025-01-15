@@ -2,8 +2,7 @@
 
 module QuoteReader
   # Read Quote text to extract Quote attributes Naively
-  # rubocop:disable Metrics/ClassLength
-  class NaiveText < Text
+  class NaiveText < Text # rubocop:disable Metrics/ClassLength
     VERSION = "0.0.1"
 
     # rubocop:disable Metrics/AbcSize
@@ -163,5 +162,4 @@ module QuoteReader
       text.scan(/\b(#{URI_REGEX})\b/i).flatten.filter_map { it&.strip }.uniq
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end
