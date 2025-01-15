@@ -3,7 +3,16 @@
 require "rails_helper"
 
 RSpec.describe Llms::Base, type: :service do
-  describe "extract_numbered_list" do
+  describe ".clean_value" do
+    it "removes empty mentions" do # rubocop:disable RSpec/MultipleExpectations
+      expect(described_class.clean_value(" Non mentionné ")).to be_nil
+      expect(described_class.clean_value("Non disponible")).to be_nil
+      expect(described_class.clean_value("Aucun IBAN n'est mentionné.")).to be_nil
+      expect(described_class.clean_value("Inconnu (pas de nom de client)")).to be_nil
+    end
+  end
+
+  describe ".extract_numbered_list" do
     context "when the text is made of one liners" do
       let(:text) do
         <<~TEXT
