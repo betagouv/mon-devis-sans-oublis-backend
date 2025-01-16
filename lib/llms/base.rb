@@ -21,6 +21,7 @@ module Llms
     def self.clean_value(text)
       # rubocop:disable Style/SafeNavigationChainLength
       text&.strip
+          &.gsub(/^Aucune?s?$/i, "")
           &.gsub(/\(?(?:Non (?:mentionnée?s?|disponibles?)|Aucune?s? .+ n'est mentionnée?s?\.?|Inconnue?s? \(pas de [^\)]+\))\)?/i, "") # rubocop:disable Layout/LineLength
           &.presence
       # rubocop:enable Style/SafeNavigationChainLength
