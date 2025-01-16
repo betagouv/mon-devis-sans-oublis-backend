@@ -10,12 +10,9 @@ services:
     env_file:
        - '.env.development'
     environment:
-      - DATABASE_URL='postgresql://postgres:dummy@db:5433'
+      - DATABASE_URL=postgresql://postgres:dummy@db:5433
     depends_on:
       - db
-    command: ["bash", "-c", "bundle install && bin/rails db:create && bin/rails db:migrate && bin/rails db:test:prepare && bin/rails s -b 0.0.0.0"]
-    stdin_open: true
-    tty: true
   db:
     image: postgres:15
     environment:
