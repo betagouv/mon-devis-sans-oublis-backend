@@ -140,7 +140,17 @@ module QuoteValidator
       add_error("cout_main_doeuvre_manquant", category: "admin", type:"missing") unless quote[:ligne_specifique_cout_main_doeuvre]
       
       # Valider qu'on a le prix total HT / TTC 
-      # Valider qu'on a le montant de TVA pour chacun des taux 
+      add_error("prix_total_ttc_manquant", category: "admin", type:"missing") if quote[:prix_total_ttc].blank?
+      add_error("rix_total_ht_manquant", category: "admin", type:"missing") if quote[:prix_total_ht].blank?
+      # Valider qu'on a le montant de TVA pour chacun des taux
+      # {taux_tva: percentage;
+      # prix_ht_total: decimal; 
+      # montant_tva_total: decimal
+      # } 
+      tvas = quote[:tva] || []
+      tvas.each do |tva|
+
+      end
 
     end
     def validate_prix_geste geste

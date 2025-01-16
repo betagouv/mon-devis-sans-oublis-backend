@@ -239,6 +239,7 @@ taux_tva: percentage
 prix_ttc: decimal
 } 
 ```
+je tiens à préciser que l'intitulé doit permettre à l'utilisateur de savoir de quelle ligne du devis il s'agit surtout lorsque plusieurs travaux similaires sont prévus (exemple des fenêtres)
 
 Pour chaque taux de TVA, merci d'extraire les données suivantes sans faire de calcul mais en vérifiant qu'ils sont bien explicitement indiqués : 
 ```jsx
