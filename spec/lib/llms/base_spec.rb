@@ -66,5 +66,30 @@ RSpec.describe Llms::Base, type: :service do
                                                    ])
       end
     end
+
+    context "when the text is made of multi liners with a different separator" do
+      let(:text) do
+        <<~TEXT
+          Voici les données demandées :
+
+          **1. Noms** :#{' '}
+          - DUPOND D
+
+          **2. Adresses** :#{' '}
+          - 4 montée de la barre, 12345 LAND
+
+          **3. Forme juridiques** :#{' '}
+          - EI (Entreprise Individuelle)",
+                  "
+        TEXT
+      end
+
+      it "returns a list of numbered items" do
+        numbered_list = described_class.extract_numbered_list(text)
+        expect(numbered_list.dig(1, :value)).to eq([
+                                                     "4 montée de la barre, 12345 LAND"
+                                                   ])
+      end
+    end
   end
 end
