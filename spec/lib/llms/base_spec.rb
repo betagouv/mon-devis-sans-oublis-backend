@@ -4,13 +4,18 @@ require "rails_helper"
 
 RSpec.describe Llms::Base, type: :service do
   describe ".clean_value" do
+    # rubocop:disable RSpec/ExampleLength
     it "removes empty mentions" do # rubocop:disable RSpec/MultipleExpectations
       expect(described_class.clean_value(" Non mentionné ")).to be_nil
       expect(described_class.clean_value("Non disponible")).to be_nil
       expect(described_class.clean_value("Aucun IBAN n'est mentionné.")).to be_nil
+      expect(described_class.clean_value("Aucun IBAN mentionné.")).to be_nil
+      expect(described_class.clean_value("Aucun label mentionné")).to be_nil
       expect(described_class.clean_value("Inconnu (pas de nom de client)")).to be_nil
       expect(described_class.clean_value("Aucune")).to be_nil
+      expect(described_class.clean_value("aucune mention")).to be_nil
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 
   describe ".extract_numbered_list" do
