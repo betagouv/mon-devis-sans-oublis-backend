@@ -21,10 +21,10 @@ module QuoteReader
                                                             pro: {
                                                               adresse: self.class.find_adresse_pro(text),
                                                               capital: self.class.find_capital(text),
-                                                              forme_juridique: self.class.find_forme_juridique(text),
+                                                              # forme_juridique: self.class.find_forme_juridique(text),
                                                               labels: self.class.find_label_numbers(text),
                                                               numero_tva: self.class.find_numeros_tva(text).first,
-                                                              raison_sociale: self.class.find_raison_sociale(text),
+                                                              # raison_sociale: self.class.find_raison_sociale(text),
                                                               rge_number: self.class.find_rge_numbers(text).first,
                                                               siret: self.class.find_sirets(text).first
                                                             },
@@ -116,7 +116,7 @@ module QuoteReader
     def self.find_label_numbers(text)
       # Warning : insure caracter before not match the IBAN
       text.scan(
-        %r{(?:\A|.*?#{BETWEEN_LABEL_VALUE_REGEX})((?:(?:CPLUS|QB|QPAC|QPV|QS|VPLUS)\s*/\s*|(?:R|E-)?E)\s*\d{5,6})}i
+        %r{(?:\A|.*?#{BETWEEN_LABEL_VALUE_REGEX})((?:(?:CPLUS|QB|QPAC|QPV|QS|VPLUS)\s*/\s*|(?:R|E-)?E)\s*\d{5,6})(?!\n)}i
       ).flatten.filter_map { it&.strip }.uniq
     end
 
