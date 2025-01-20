@@ -38,6 +38,8 @@ module Llms
       parts = text.split(/^\s*\d+\.\s+/).keep_if { it.start_with?("**") }
       parts.each_with_index.map do |part, index|
         match = part.match(/^\*\*(?<label>.*?)\*\*\s*: *\n*(?:\s*-\s*)?(?<value>.*)$/m)
+        raise ResultError, "Parsing numbered list inside part: #{part}" unless match
+
         detected_separator = [
           /\n+\s*-\s*/,
           %r{/},
