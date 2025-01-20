@@ -35,23 +35,33 @@ module Llms
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     def self.extract_numbered_list(text) # rubocop:disable Metrics/MethodLength
-      parts = text.split(/^\s*\d+\.\s+/).keep_if { it.start_with?("**") }
+      parts = text.split(/^\n(?:\*\*\s*)?\d+\.\s+/)[1..]
       parts.each_with_index.map do |part, index|
-        match = part.match(/^\*\*(?<label>.*?)\*\*\s*: *\n*(?:\s*-\s*)?(?<value>.*)$/m)
-        raise ResultError, "Parsing numbered list inside part: #{part}" unless match
+        match = part.match(/^(?:\*\*\s*)?(?:\d+\.)?(?<label>.*?)(?:\s+\*\*)?\s*: *(?<value>\n*(?:\s*-\s*)?.*)$/m)
+        next unless match[:label]&.gsub("**", "")
 
+        raise ResultError, "Parsing numbered list inside match: #{match.to_a}" unless match
+
+        is_address_search = match[:label].include?("dresse")
         detected_separator = [
-          /\n+\s*-\s*/,
+          /\n+\s*-\s*/m,
           %r{/},
-          /,/
-        ].detect { match[:value].match? it } || ","
+          is_address_search ? nil : /,/,
+          /\n/
+        ].compact.detect { match[:value].match?(it) }
+        next if index.zero? && !detected_separator
+
+        unless detected_separator
+          raise ResultError,
+                "Parsing numbered list without separator inside match: #{match.to_a}"
+        end
 
         {
           number: Integer(index + 1),
-          label: match[:label],
-          value: clean_value(match[:value])&.split(/\s*#{detected_separator}\s*/)&.map(&:strip)
+          label: match[:label]&.gsub("**", ""),
+          value: match[:value]&.split(/\s*#{detected_separator}\s*/)&.filter_map { clean_value(it&.strip) }
         }
-      end.sort_by { it.fetch(:number) } # rubocop:disable Style/MultilineBlockChain
+      end.compact.sort_by { it.fetch(:number) } # rubocop:disable Style/MultilineBlockChain
     end
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
