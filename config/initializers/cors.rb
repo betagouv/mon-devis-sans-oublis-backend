@@ -18,7 +18,8 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 
     resource "/api/*",
              headers: :any,
-             methods: %i[get post put patch delete options head],
-             credentials: Rails.env.production?
+             methods: %i[get post put patch delete options head]
+    # TODO: Re-enable me security issue
+    # credentials: Rails.env.production?
   end
 end
