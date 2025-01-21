@@ -5,7 +5,13 @@ class UriExtended
   # Extract host and port if provided
   def self.host_with_port(url)
     uri = URI.parse(url)
-    "#{uri.host}#{":#{uri.port}" if uri.port}"
+
+    port_part = if (uri.scheme == "http" && uri.port != 80) ||
+                   (uri.scheme == "https" && uri.port != 443)
+                  ":#{uri.port}"
+                end
+
+    "#{uri.host}#{port_part}"
   rescue URI::InvalidURIError
     nil
   end
