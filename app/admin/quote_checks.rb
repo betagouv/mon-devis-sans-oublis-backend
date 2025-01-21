@@ -8,18 +8,22 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
   config.filters = false
   config.sort_order = "created_at_desc"
 
-  member_action :recheck, method: :post do
-    quote_check = QuoteCheck.find(params[:id])
+  unless Rails.application.config.app_env == "production"
+    member_action :recheck, method: :post do
+      quote_check = QuoteCheck.find(params[:id])
 
-    QuoteCheckCheckJob.perform_later(quote_check.id)
+      QuoteCheckCheckJob.perform_later(quote_check.id)
 
-    flash[:success] = "Le devis est en cours de retraitement." # rubocop:disable Rails/I18nLocaleTexts
-    redirect_to admin_quote_check_path(quote_check)
+      flash[:success] = "Le devis est en cours de retraitement." # rubocop:disable Rails/I18nLocaleTexts
+      redirect_to admin_quote_check_path(quote_check)
+    end
   end
 
-  action_item :recheck, only: :show do
-    unless resource.status == "pending"
-      link_to "Re-vérifier à nouveau", recheck_admin_quote_check_path(resource), method: :post
+  unless Rails.application.config.app_env == "production"
+    action_item :recheck, only: :show do
+      unless resource.status == "pending"
+        link_to "Re-vérifier à nouveau", recheck_admin_quote_check_path(resource), method: :post
+      end
     end
   end
 
