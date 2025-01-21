@@ -242,7 +242,7 @@ module QuoteValidator
         # AUDIT ENERGETIQUE
 
         when "", nil
-          pass
+          next
 
         else
           geste_reconnu = false
