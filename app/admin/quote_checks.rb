@@ -18,7 +18,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
   end
 
   action_item :recheck, only: :show do
-    unless resource.status != "pending"
+    unless resource.status == "pending"
       link_to "Re-vérifier à nouveau", recheck_admin_quote_check_path(resource), method: :post
     end
   end
