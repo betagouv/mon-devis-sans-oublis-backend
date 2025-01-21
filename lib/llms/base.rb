@@ -59,7 +59,7 @@ module Llms
 
         {
           number: Integer(index + 1),
-          label: match[:label]&.gsub("**", ""),
+          label: match[:label]&.gsub("**", "")&.downcase&.strip.presence, # rubocop:disable Style/SafeNavigationChainLength
           value: match[:value]&.split(/\s*#{detected_separator}\s*/)&.filter_map { clean_value(it&.strip) }
         }
       end.compact.sort_by { it.fetch(:number) } # rubocop:disable Style/MultilineBlockChain
