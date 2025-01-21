@@ -48,7 +48,8 @@ module Llms
           /\n+\s*-\s*/m,
           %r{/},
           is_address_search ? nil : /,/,
-          /\n/
+          /\n/,
+          /\*\*:\s/
         ].compact.detect { match[:value].match?(it) }
         next if index.zero? && !detected_separator
 
