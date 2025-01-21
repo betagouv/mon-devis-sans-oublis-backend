@@ -39,9 +39,9 @@ module Llms
       parts = text.split(/^\n(?:\*\*\s*)?\d+\.\s+/)[1..]
       parts.each_with_index.map do |part, index|
         match = part.match(/^(?:\*\*\s*)?(?:\d+\.)?(?<label>.*?)(?:\s+\*\*)?\s*: *(?<value>\n*(?:\s*-\s*)?.*)$/m)
-        next unless match[:label]&.gsub("**", "")
-
         raise ResultError, "Parsing numbered list inside match: #{match.to_a}" unless match
+
+        next if match[:label]&.gsub("**", "").blank?
 
         is_address_search = match[:label].include?("dresse")
         detected_separator = [
