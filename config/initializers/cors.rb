@@ -2,11 +2,18 @@
 
 require_relative "../../lib/uri_extended"
 
-frontend_origins = UriExtended.host_with_port(ENV.fetch("FRONTEND_APPLICATION_HOST", "http://localhost:3000"))
+frontend_origins = if Rails.env.production?
+                     [
+                       UriExtended.host_with_port(ENV.fetch("FRONTEND_APPLICATION_HOST")),
+                       Rails.application.config.app_env == "staging" ? "localhost" : nil
+                     ].compact
+                   else
+                     "*"
+                   end
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins Rails.env.production? ? frontend_origins : "*"
+    origins(*Array.wrap(frontend_origins))
 
     resource "/api/*",
              headers: :any,
