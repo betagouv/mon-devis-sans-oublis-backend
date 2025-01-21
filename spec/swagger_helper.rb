@@ -257,8 +257,8 @@ RSpec.configure do |config|
             }
           }
         }
-      ].compact.uniq { host_with_port(it[:url]) }
-                         .sort_by { |server| host_with_port(server[:url]) == APPLICATION_HOST ? 0 : 1 }
+      ].compact.uniq { UriExtended.host_with_port(it[:url]) }
+                         .sort_by { |server| UriExtended.host_with_port(server[:url]) == APPLICATION_HOST ? 0 : 1 }
     }
   }
 
