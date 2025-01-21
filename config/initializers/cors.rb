@@ -2,15 +2,14 @@
 
 require_relative "../../lib/uri_extended"
 
-# frontend_origins = if Rails.env.production?
-#                      [
-#                        UriExtended.host_with_port(ENV.fetch("FRONTEND_APPLICATION_HOST")),
-#                        Rails.application.config.app_env == "staging" ? "localhost" : nil
-#                      ].compact
-#                    else
-#                      "*"
-#                    end
-frontend_origins = "*" # TODO: Remove me security issue
+frontend_origins = [
+  if Rails.env.production?
+    UriExtended.host_with_port(ENV.fetch("FRONTEND_APPLICATION_HOST"))
+  else
+    "*"
+  end
+]
+frontend_origins << %r{\Ahttp://localhost(:\d+)?\z} if Rails.application.config.app_env == "staging"
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
@@ -18,8 +17,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 
     resource "/api/*",
              headers: :any,
-             methods: %i[get post put patch delete options head]
-    # TODO: Re-enable me security issue
-    # credentials: Rails.env.production?
+             methods: %i[get post put patch delete options head],
+             credentials: Rails.env.production?
   end
 end
