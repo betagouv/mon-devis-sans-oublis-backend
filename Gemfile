@@ -68,6 +68,7 @@ gem "faraday"
 gem "langchainrb", ">= 0.19" # Framework around LLMs
 
 gem "ostruct" # Since Ruby > 3.4.0
+gem "rack-cors"
 
 # Back Office
 gem "activeadmin"

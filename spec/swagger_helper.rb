@@ -3,15 +3,7 @@
 require "rails_helper"
 require "uri"
 
-# Extract host and port if provided
-def host_with_port(url)
-  uri = URI.parse(url)
-  "#{uri.host}#{":#{uri.port}" if uri.port}"
-rescue URI::InvalidURIError
-  nil
-end
-
-APPLICATION_HOST = host_with_port(ENV.fetch("APPLICATION_HOST", "localhost:3000"))
+APPLICATION_HOST = UriExtended.host_with_port(ENV.fetch("APPLICATION_HOST", "localhost:3000"))
 
 # Via Rswag gems
 RSpec.configure do |config|
