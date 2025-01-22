@@ -50,6 +50,7 @@ module Llms
         request.body = body.to_json
         http.request(request)
       end
+      raise TimeoutError if response.code == "504"
 
       # Auto switch model if not found
       if response.code == "404" && model_fallback
@@ -65,6 +66,8 @@ module Llms
       raise ResultError, "Content empty" unless content
 
       extract_result(content)
+    rescue Net::ReadTimeout => e
+      raise TimeoutError, e
     end
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/MethodLength
