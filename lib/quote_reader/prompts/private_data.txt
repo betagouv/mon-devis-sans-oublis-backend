@@ -9,17 +9,18 @@ Rôle : Vous êtes un expert en lecture de devis et vous devez récupérer les d
 - **sirets** : Liste des numéros SIRET et/ou SIREN.
 - **rcss** : Liste des numéros RCS.
 - **insurances** : Liste des numéros et références liées à des contrats d'assurance.
-- **labels** : Liste des labels ou certifications mentionnés tel que les numéros de label RGE.
+- **numero_rge** : Liste des numéros des labels ou certifications RGE mentionnés.
 - **emails** : Liste des adresses email identifiables.
 - **numeros_tva** : Liste des numéros de TVA mentionnés.
 - **ibans** : Liste des IBAN détectés.
 - **uris** : Liste des URL et site internet détectés.
 - **client_noms** : Liste des Noms propres des clients particuliers mentionnés (individus).
 - **client_prenoms** : Liste des prénoms des clients particuliers mentionnés (individus).
-- **client_civilite** : Liste des civilités des clients particuliers mentionnés (individus).
+- **client_civilite** : Liste des civilités des clients particuliers mentionnés (individus) - cela peut être par exemple M, Mr,M., Mme, Monsieur, Madame ...
 - **client_adresses** : Liste des adresses postales identifiées des clients particuliers mentionnés.
 - **pro_adresses** : Liste des adresses postales identifiées des prestataires professionels mentionnés.
 - **forme_juridiques**: Liste des forme juridiques identifiées des prestataires professionnels mentionnés.
+- **capital_social**: Liste de capital social identifiés des prestataires professionnels mentionnés.
 
 Instructions :
 
