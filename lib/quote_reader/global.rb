@@ -35,9 +35,12 @@ module QuoteReader
       @naive_version = naive_reader.version
 
       private_data_qa_reader = PrivateDataQa.new(text)
-      @private_data_qa_attributes = private_data_qa_reader.read || {}
-      @private_data_qa_result = private_data_qa_reader.result
-      @private_data_qa_version = private_data_qa_reader.version
+      begin
+        @private_data_qa_attributes = private_data_qa_reader.read || {}
+      ensure
+        @private_data_qa_result = private_data_qa_reader.result
+        @private_data_qa_version = private_data_qa_reader.version
+      end
 
       private_attributes = deep_merge_if_absent(
         @naive_attributes,

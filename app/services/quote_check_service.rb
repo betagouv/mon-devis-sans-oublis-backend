@@ -37,20 +37,24 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def check(llm: nil)
+  # rubocop:disable Metrics/AbcSize
+  def check(llm: nil) # rubocop:disable Metrics/MethodLength
     ErrorNotifier.set_context(:quote_check, { id: quote_check.id })
 
-    reset_validation
-    read_quote(llm:)
-    validate_quote if quote_check.validation_errors.blank?
-
-    quote_check.update!(
-      application_version: Rails.application.config.application_version,
-      finished_at: Time.current
-    )
+    begin
+      reset_check
+      read_quote(llm:)
+      validate_quote if quote_check.validation_errors.blank?
+      quote_check.finished_at = Time.current
+    ensure
+      quote_check.update!(
+        application_version: Rails.application.config.application_version
+      )
+    end
 
     quote_check
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
@@ -78,6 +82,7 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
       quote_check.file.content,
       quote_check.file.content_type
     )
+
     begin
       quote_reader.read(llm: llm)
 
@@ -85,7 +90,6 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
         add_error("file_reading_error",
                   category: "file",
                   type: "error")
-        return
       end
     rescue QuoteReader::ReadError
       add_error("file_reading_error",
@@ -95,32 +99,35 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
       add_error("unsupported_file_format",
                 category: "file",
                 type: "error")
+    ensure
+      quote_check.assign_attributes(
+        text: quote_reader.text,
+
+        anonymised_text: quote_reader.anonymised_text,
+
+        naive_attributes: quote_reader.naive_attributes,
+        naive_version: quote_reader.naive_version,
+
+        private_data_qa_attributes: quote_reader.private_data_qa_attributes,
+        private_data_qa_result: quote_reader.private_data_qa_result,
+        private_data_qa_version: quote_reader.private_data_qa_version,
+
+        qa_attributes: quote_reader.qa_attributes,
+        qa_result: quote_reader.qa_result,
+        qa_version: quote_reader.qa_version,
+
+        read_attributes: quote_reader.read_attributes
+      )
     end
-
-    quote_check.assign_attributes(
-      text: quote_reader.text,
-
-      anonymised_text: quote_reader.anonymised_text,
-
-      naive_attributes: quote_reader.naive_attributes,
-      naive_version: quote_reader.naive_version,
-
-      private_data_qa_attributes: quote_reader.private_data_qa_attributes,
-      private_data_qa_result: quote_reader.private_data_qa_result,
-      private_data_qa_version: quote_reader.private_data_qa_version,
-
-      qa_attributes: quote_reader.qa_attributes,
-      qa_result: quote_reader.qa_result,
-      qa_version: quote_reader.qa_version,
-
-      read_attributes: quote_reader.read_attributes
-    )
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
 
-  def reset_validation
+  # Reset results but keep attributes
+  def reset_check
     quote_check.assign_attributes(
+      finished_at: nil,
+
       validation_errors: nil,
       validation_error_details: nil,
       validation_version: nil
