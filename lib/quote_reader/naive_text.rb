@@ -13,29 +13,29 @@ module QuoteReader
       @read_attributes = TrackingHash.nilify_empty_values({
                                                             # 1. Quote informations
                                                             devis: self.class.find_mention_devis(text),
-                                                            numero_devis: self.class.find_numero_devis(text),
+                                                            # numero_devis: self.class.find_numero_devis(text),
                                                             client: {
-                                                              adresse: self.class.find_adresses(text).first,
-                                                              adresse_chantier: self.class.find_adresse_chantier(text)
+                                                              # adresse: self.class.find_adresses(text).first,
+                                                              # adresse_chantier: self.class.find_adresse_chantier(text)
                                                             },
                                                             pro: {
-                                                              adresse: self.class.find_adresse_pro(text),
-                                                              capital: self.class.find_capital(text),
-                                                              forme_juridique: self.class.find_forme_juridique(text),
-                                                              labels: self.class.find_label_numbers(text),
+                                                              # adresse: self.class.find_adresse_pro(text),
+                                                              # capital: self.class.find_capital(text),
+                                                              # forme_juridique: self.class.find_forme_juridique(text),
+                                                              # labels: self.class.find_label_numbers(text),
                                                               numero_tva: self.class.find_numeros_tva(text).first,
-                                                              raison_sociale: self.class.find_raison_sociale(text),
-                                                              rge_number: self.class.find_rge_numbers(text).first,
+                                                              # raison_sociale: self.class.find_raison_sociale(text),
+                                                              # rge_number: self.class.find_rge_numbers(text).first,
                                                               siret: self.class.find_sirets(text).first
                                                             },
 
                                                             # 2. Generic personal and professional informations
-                                                            adresses: self.class.find_adresses(text),
+                                                            # adresses: self.class.find_adresses(text),
                                                             emails: self.class.find_emails(text),
                                                             ibans: self.class.find_ibans(text),
-                                                            labels: self.class.find_label_numbers(text),
+                                                            # labels: self.class.find_label_numbers(text),
                                                             names: [
-                                                              self.class.find_raison_sociale(text)
+                                                              # self.class.find_raison_sociale(text)
                                                             ],
                                                             numeros_tva: self.class.find_numeros_tva(text),
                                                             rcss: self.class.find_rcss(text),
@@ -117,7 +117,7 @@ module QuoteReader
     def self.find_label_numbers(text)
       # Warning : insure caracter before not match the IBAN
       text.scan(
-        %r{(?:\A|.*?#{BETWEEN_LABEL_VALUE_REGEX})((?:(?:CPLUS|QB|QPAC|QPV|QS|VPLUS)#{SPACE_WITHOUT_NEWLINE_REGEX}/#{SPACE_WITHOUT_NEWLINE_REGEX}|(?:R|E-)?E)#{SPACE_WITHOUT_NEWLINE_REGEX}\d{5,6})}i # rubocop:disable Layout/LineLength
+        %r{(?:\A|.*?#{BETWEEN_LABEL_VALUE_REGEX})((?:(?:CPLUS|QB|QPAC|QPV|QS|VPLUS)#{SPACE_WITHOUT_NEWLINE_REGEX}/#{SPACE_WITHOUT_NEWLINE_REGEX}|(?:R|E-)?E)#{SPACE_WITHOUT_NEWLINE_REGEX}\d{5,6})(?!\n)}i # rubocop:disable Layout/LineLength
       ).flatten.filter_map { it&.strip }.uniq
     end
 

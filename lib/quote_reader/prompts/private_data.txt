@@ -1,4 +1,4 @@
-Analyse le texte suivant en recherchant les informations demandées. Renvoie les données exactement telles qu'elles apparaissent dans le document, sans aucune transformation ou modification : 
+Analyse le texte suivant en recherchant les informations demandées. Renvoie les données exactement telles qu'elles apparaissent dans le document, sans aucune transformation ou modification, si pas de réponse, renvoi null : 
 
 1. **noms** : Liste des Noms et prénoms propres mentionnés (individus).
 2. **adresses** : Liste des adresses postales identifiées.
@@ -7,7 +7,7 @@ Analyse le texte suivant en recherchant les informations demandées. Renvoie les
 5. **sirets** : Liste des numéros SIRET et/ou SIREN.
 5. **rcss** : Liste des numéros RCS.
 6. **insurances** : Liste des numéros et références liées à des contrats d'assurance.
-7. **labels** : Liste des labels ou certifications mentionnés.
+7. **labels** : Liste des labels ou certifications mentionnés tel que les numéros de label RGE.
 8. **emails** : Liste des adresses email identifiables.
 9. **numeros_tva** : Liste des numéros de TVA mentionnés.
 10. **ibans** : Liste des IBAN détectés.
