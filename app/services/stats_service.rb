@@ -22,8 +22,8 @@ class StatsService
     quote_checks_with_qa = QuoteCheck.where.not(qa_result: nil)
     return nil if quote_checks_with_qa.count.zero?
 
-    costs = quote_checks_with_qa.select(:qa_result).flat_map(&:cost)
-    (costs.sum.to_f / costs.size).ceil(2)
+    costs = quote_checks_with_qa.select(:qa_result).flat_map(&:cost).compact
+    (costs.sum.to_f / costs.size).ceil(2) if costs.any?
   end
 
   def average_quote_check_errors_count
