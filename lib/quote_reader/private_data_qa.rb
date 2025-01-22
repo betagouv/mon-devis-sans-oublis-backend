@@ -52,8 +52,8 @@ module QuoteReader
             numero_tva: @read_attributes.dig(:numeros_tva, 0),
             raison_sociale: @read_attributes.dig(:raison_sociales, 0),
             forme_juridique: @read_attributes.dig(:forme_juridiques, 0),
-            assurance: @read_attributes.dig(:insurances, 0), 
-            capital: @read_attributes.dig(:capital_social, 0), 
+            assurance: @read_attributes.dig(:insurances, 0),
+            capital: @read_attributes.dig(:capital_social, 0),
             rge_labels: @read_attributes&.fetch(:numero_rge, [])
           }.compact
         )&.compact
