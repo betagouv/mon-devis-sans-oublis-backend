@@ -27,7 +27,7 @@ class ExtendedData
 
       adresses: results.map { "#{it['adresse']}, #{it['code_postal']} #{it['commune']}" }.uniq,
       emails: results.pluck("email").uniq,
-      labels: results.pluck("code_qualification").uniq,
+      rge_labels: results.pluck("code_qualification").uniq,
       noms: results.pluck("nom_entreprise").uniq,
       telephones: results.pluck("telephone").uniq,
       uris: results.pluck("site_internet").uniq
