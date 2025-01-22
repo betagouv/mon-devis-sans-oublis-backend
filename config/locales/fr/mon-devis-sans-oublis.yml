@@ -118,9 +118,9 @@ fr:
       chaudiere_type_combustible_manquant_infos: "Le type de combustible peut être par exemple : bûches, granulés ou copeaux." # buche, granulé, copeaux ...
       chaudiere_type_chargement_manquant: "Le type de chargement de la chaudière est manquant"
       chaudiere_type_chargement_manquant_infos: "Veuillez indiquer si le chargement est manuel ou automatique" # manuelle ou auto
-      chaudiere_type_silo_manquant: "Le type de Silo n'est pas indiqué dans le document"
+      chaudiere_type_silo_manquant: "Le type de Silo n'est pas indiqué"
       chaudiere_type_silo_manquant_infos: "Il est important de décrire précisément le silo (externe ou interne, neuf ou existant, textile ou maçonné." # externe/interne, neuf/existant, Textile/maconner
-      chaudiere_contenance_silo_manquant: "La contenance du silo n'est pas indiquée dans le document"
+      chaudiere_contenance_silo_manquant: "La contenance du silo n'est pas indiquée"
       chaudiere_contenance_silo_trop_petit: "Le volume du silo doit être supérieur ou égal à 225 litres"
       chaudiere_emission_CO_manquant: "Il manque l'émission de monoxyde de carbone de la chaudière" # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
       chaudiere_emission_CO_manquant_infos: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissions de monoxyde de carbone (CO) rapportée à 10% d’O2 (en mg/Nm3)."
@@ -155,11 +155,11 @@ fr:
       ssc_surface_captage_manquant: "La surface de captage en m2 doit être indiquée"
       ssc_productivite_capteurs_manquant: "La productivité des capteurs doit être indiquée"
       ssc_productivite_capteurs_manquant_infos: "La productivité est en W/m2" # W/m2
-      ssc_volume_ballon_manquant: "Le volume du ou des ballons associés n'est pas indiqué dans le document" #(peut être associé à plusieurs ballons)
+      ssc_volume_ballon_manquant: "Le volume du ou des ballons associés n'est pas indiqué" #(peut être associé à plusieurs ballons)
       ssc_energie_appoint_manquant: "L'énergie d'appoint utilisée n'est pas indiquée"
       ssc_energie_appoint_manquant_infos: "Quelle énergie d'appoint est utilisée par le système ? (électricité, gaz,...)" # electricité, gaz...
       # validate_pac
-      pac_type_manquant: "Le type de Pompe à chaleur installée n'est pas indiqué dans le document"
+      pac_type_manquant: "Le type de Pompe à chaleur installée n'est pas indiqué"
       pac_type_manquant_infos: "Voici quelques exemples de pompes à chaleur possibles : (air-eau, eau-eau, hybride, géothermique...)" # air-eau, eau-eau, air-air, hybride 
       pac_regime_temperature_manquant: "Le régime de température de la pompe à chaleur doit être indiqué"
       pac_regime_temperature_manquant: "Le régime de la pompe à chaleur peut être Basse température, Moyenne température ou Haute température." # basse, moyenne, haute
@@ -176,23 +176,23 @@ fr:
 #################################################
 
       eau_chaude_marque_manquant : "La marque du chauffe-eau est manquante"
-      eau_chaude_reference_manquant: "Le modèle du chauffe-eau n'est pas indiqué dans le document"
+      eau_chaude_reference_manquant: "Le modèle du chauffe-eau n'est pas indiqué"
       eau_chaude_volume_manquant: "Le volume du chauffe-eau est manquant"
       eau_chaude_volume_manquant_infos: "Le volume du chauffe-eau doit être indiqué en Litre."
       eau_chaude_etas_manquant: "L'efficacité énergétique saisonière (ETAS) du chauffe eau est manquante"
       eau_chaude_etas_manquant_infos: "L'ETAS est un pourcentage."
-      eau_chaude_profil_soutirage_manquant: "Le profil de soutirage du chauffe-eau n'est pas indiqué dans le document"
+      eau_chaude_profil_soutirage_manquant: "Le profil de soutirage du chauffe-eau n'est pas indiqué"
       eau_chaude_profil_soutirage_manquant: " Le profil de soutirage est une des options suivantes : M, L, XL ou XXL."
       # validate_cesi
       cesi_type_appoint_manquant: "L'énergie d'appoint du chauffe-eau n'est pas indiquée" # electrique ou autre
       cesi_type_appoint_manquant_infos: "Quelle énergie d'appoint est utilisée par le chauffe-eau solaire individuel ?"
-      cesi_surface_capteur_manquant: "La surface des capteurs n'est pas indiquée dans le document"
+      cesi_surface_capteur_manquant: "La surface des capteurs n'est pas indiquée"
       cesi_surface_capteur_manquant_infos: "La surface des capteurs doit être précisée en m2." # TODO: V1 > 2m2 en metropole pour MPR
       cesi_classe_energetique_ballon_manquant: "La classe énergétique du ballon d'eau chaude est manquante" # TODO: V1 minimum Classe C si volume ≤ 500L
       cesi_fluide_manquant: "Le fluide utilisé pour le chauffe-eau solaire est manquant"
       cesi_fluide_manquant_infos: "Voici les fluides possibles : eau, eau glucolée ou air." # eau, eau glucolée ou air
       # validate_chauffe_eau_thermodynamique
-      chauffe_eau_thermodynamique_cop_manquant: "Le coefficient de performance de l'équipement n'est pas indiqué dans le document"
+      chauffe_eau_thermodynamique_cop_manquant: "Le coefficient de performance de l'équipement n'est pas indiqué"
       chauffe_eau_thermodynamique_cop_manquant_infos: "Le COP doit être mesuré conformément aux condition de la norme EN 16147."
       chauffe_eau_thermodynamique_type_installation_manquant: "Le type d'installation du chauffe-eau thermodynamique n'est pas indiqué" 
       chauffe_eau_thermodynamique_type_installation_manquant_infos: " Le chauffe-eau thermodynamique est-il sur air extérieur, sur air extrait ou sur air ambiant?" # air exterieur, sur air exrait ou sur air ambiant
@@ -205,10 +205,10 @@ fr:
 
       isolation_marque_manquant: "La marque du materiel d'isolation est manquante"
       isolation_reference_manquant: "La référence de l'isolant est manquante"
-      isolation_surface_manquant: "La surface isolée n'est pas indiquée dans le document"
+      isolation_surface_manquant: "La surface isolée n'est pas indiquée"
       isolation_epaisseur_manquant: "L'épaisseur de l'isolant est manquante"
       isolation_epaisseur_manquant_infos: "L'épaisseur totale de l'isolant doit être précisée en cm."
-      isolation_r_manquant: "La résistance thermique de l'installation n'est pas indiquée dans le document" 
+      isolation_r_manquant: "La résistance thermique de l'installation n'est pas indiquée" 
       isolation_r_manquant_infos: "La résistance thermique (R) de l'installation doit être précisée et est définie en m2.K/W." # Decimal (m².K/W)
       # validate_isolation_toiture_terrasse
       isolation_type_isolation_toiture_terrasse_manquant: "Le type de l'isolation de la toiture-terrasse est manquant" 
@@ -230,7 +230,7 @@ fr:
       menuiserie_type_materiau_manquant_infos: "Les montants peuvent être par exemple en bois, alu,pvc ..." # bois, alu, pvc ...
       menuiserie_type_vitrage_manquant: "Le type de vitrage est manquant"
       menuiserie_type_vitrage_manquant_infos: "Le vitrage est-il un simple ou un double vitrage ?" # simple - double vitrage
-      menuiserie_type_pose_manquant: "Le type de pose de la menuiserie n'est pas indiqué dans le document"
+      menuiserie_type_pose_manquant: "Le type de pose de la menuiserie n'est pas indiqué"
       menuiserie_type_pose_manquant_infos: "La pose de la menuiserie peut être en rénovation ou en dépose totale." # renovation ou depose totale
       menuiserie_localisation_manquant: "La pièce dans laquelle est installée la menuiserie est manquante"
       menuiserie_position_paroie_manquant: "La position par rapport à la paroie de la menuiserie n'est pas indiquée"
@@ -238,15 +238,15 @@ fr:
       # validate_menuiserie_fenetre
       menuiserie_uw_fenetre_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la fenêtre n'est pas indiqué"
       menuiserie_uw_fenetre_manquant_infos: "Le coefficient Uw mesure la performance thermique globale d'une fenêtre, incluant le vitrage et le cadre."
-      menuiserie_sw_fenetre_manquant: "Le facteur solaire de la fenêtre n'est pas indiqué dans le document."
+      menuiserie_sw_fenetre_manquant: "Le facteur solaire de la fenêtre n'est pas indiqué."
       menuiserie_sw_fenetre_manquant_infos: "Le Sw va de 0 (pas de chaleur transmise) à 1 (toute la chaleur est transmise). Il indique la capacité d'une fenêtre à laisser entrer la chaleur solaire. Il représente la proportion d’énergie solaire transmise à travers la fenêtre."
       # validate_menuiserie_fenetre_toit
       menuiserie_uw_fenetre_toit_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la fenêtre de toit n'est pas indiqué"
       menuiserie_uw_fenetre_toit_manquant_infos: "Le coefficient Uw mesure la performance thermique globale de la fenêtre de toit, incluant le vitrage et le cadre."
-      menuiserie_sw_fenetre_toit_manquant: "Le facteur solaire de la fenêtre n'est pas indiqué dans le document"
+      menuiserie_sw_fenetre_toit_manquant: "Le facteur solaire de la fenêtre n'est pas indiqué"
       menuiserie_sw_fenetre_toit_manquant_infos: "Le Sw va de 0 (pas de chaleur transmise) à 1 (toute la chaleur est transmise). Il indique la capacité d'une fenêtre de toit à laisser entrer la chaleur solaire. Il représente la proportion d’énergie solaire transmise à travers la fenêtre de toit."
       # validate_menuiserie_porte
-      menuiserie_ud_porte_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la porte ou de la porte-fenêtre n'est pas indiqué dans le document"
+      menuiserie_ud_porte_manquant: "Le coefficient de transmission thermique (en W/m2⋅K) de la porte ou de la porte-fenêtre n'est pas indiqué"
       # validate_menuiserie_volet_isolant
       menuiserie_deltar_volet_manquant: "Le gain de résistance thermique (en W/m2⋅K) suite à l'installation du volet isolant est manquant"
       menuiserie_deltar_volet_manquant_infos: "Le ΔR représente l’augmentation de la résistance thermique (R) d’un élément de construction après rénovation."
@@ -262,11 +262,11 @@ fr:
         # VMC simple flux hygroréable de type A (Hygro A)
         # VMC simple flux hygroréable de type B (Hygro B)
         # VMC double flux avec échangeur
-      vmc_marque_caisson_manquant: "La marque du caisson n'est pas indiquée dans le document"
+      vmc_marque_caisson_manquant: "La marque du caisson n'est pas indiquée"
       vmc_reference_caisson_manquant: "La référence du caisson est manquante"
       vmc_marque_bouche_extraction_manquant: "La marque des bouches d'extraction est manquante"
       vmc_reference_bouche_extraction_manquant: "La référence des bouches d'extration est manquante"
-      vmc_nombre_bouche_extraction_manquant: "Le nombre de bouche d'extraction n'est pas indiqué dans le document"
+      vmc_nombre_bouche_extraction_manquant: "Le nombre de bouche d'extraction n'est pas indiqué"
       vmc_classe_caisson_manquant: "La classe d'efficacité énergétique du caisson est manquante"
       vmc_puissance_manquant: "La puissance électrique du moteur est manquante"
       vmc_puissance_manquant_infos: "La puissance électtrique du moteur est exprimée en W-Th-C. " # Puissance electrique du moteur en fonction de la config du logement - exprimé en (W-Th-C) (doit être basse conso)
