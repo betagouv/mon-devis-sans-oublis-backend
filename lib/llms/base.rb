@@ -22,6 +22,7 @@ module Llms
       # rubocop:disable Style/SafeNavigationChainLength
       text&.strip
           &.gsub(/^[\W\s]+$/i, "")
+          &.gsub(/^\**\s*/i, "")
           &.gsub(/^Aucune?s?(?:\s+.+\s+)?(?: *mention(?:née?)?s?)?\.?(?:\s*.+)?$/i, "")
           &.gsub(/\(?(?:Non (?:mention(?:née?)?s?|disponibles?)\.?|Aucune?s? .+ n'est mentionnée?s?\.?|Inconnue?s? \(pas de [^\)]+\))\)?\.?/i, "") # rubocop:disable Layout/LineLength
           &.presence
