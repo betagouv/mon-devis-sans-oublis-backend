@@ -108,6 +108,8 @@ module Llms
           @read_attributes = eval(content_jsx_result.gsub(/: +null/i, ": nil")) # rubocop:disable Security/Eval
         else
           content_json_result = self.class.extract_json(content)
+          raise ResultError, "JSON content empty: #{content}" unless content_json_result
+
           @read_attributes = begin
             TrackingHash.nilify_empty_values(
               JSON.parse(content_json_result, symbolize_names: true)
