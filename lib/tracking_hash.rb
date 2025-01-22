@@ -63,6 +63,10 @@ class TrackingHash < Hash
     current
   end
 
+  def key?(key)
+    super || super(key&.to_s) || super(key&.to_sym)
+  end
+
   def keys_accessed
     @keys_accessed.to_a.map do |key|
       if self[key].is_a?(TrackingHash)
