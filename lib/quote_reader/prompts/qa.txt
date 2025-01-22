@@ -149,12 +149,12 @@ remplacement_chaudiere_condensation: boolean;
 marque: text; 
 reference: text; 
 ETAS: Pourcentage; 
-puissance: decimal **(kW);**
+puissance: decimal **(kW) (puissance minimaleque la PAC peut fournir en condition réelle);**
 regime_temperature: enum(basse, moyenne, haute);
 type_fluide_frigorigene: text;
 COP: decimal;
 SCOP: decimal;
-puissance_nominale: decimal;
+puissance_nominale: decimal **(kW) (puissance standardisée utilisée pour le dimensionnement et la comparaison)**
 }
 ```
 

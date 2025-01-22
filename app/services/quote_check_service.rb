@@ -40,8 +40,9 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
   def check(llm: nil)
     ErrorNotifier.set_context(:quote_check, { id: quote_check.id })
 
+    reset_validation
     read_quote(llm:)
-    validate_quote
+    validate_quote if quote_check.validation_errors.blank?
 
     quote_check.update!(
       application_version: Rails.application.config.application_version,
@@ -54,19 +55,46 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
   private
 
   # rubocop:disable Metrics/AbcSize
+  def add_error(code,
+                category: nil, type: nil,
+                title: nil)
+    quote_check.validation_errors ||= []
+    quote_check.validation_errors << code
+
+    quote_check.validation_error_details ||= []
+    quote_check.validation_error_details << {
+      id: [quote_check.id, quote_check.validation_error_details.count + 1].compact.join("-"),
+      code:,
+      category:, type:,
+      title: title || I18n.t("quote_validator.errors.#{code}")
+    }
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def read_quote(llm: nil)
     quote_reader = QuoteReader::Global.new(
       quote_check.file.content,
       quote_check.file.content_type
     )
-    quote_reader.read(llm: llm)
+    begin
+      quote_reader.read(llm: llm)
 
-    unless quote_reader.text&.strip.presence
+      unless quote_reader.text&.strip.presence
+        add_error("file_reading_error",
+                  category: "file",
+                  type: "error")
+        return
+      end
+    rescue QuoteReader::ReadError
       add_error("file_reading_error",
                 category: "file",
                 type: "error")
-      return
+    rescue QuoteReader::UnsupportedFileType
+      add_error("unsupported_file_format",
+                category: "file",
+                type: "error")
     end
 
     quote_check.assign_attributes(
@@ -87,17 +115,17 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
 
       read_attributes: quote_reader.read_attributes
     )
-  rescue QuoteReader::ReadError
-    add_error("file_reading_error",
-              category: "file",
-              type: "error")
-  rescue QuoteReader::UnsupportedFileType
-    add_error("unsupported_file_format",
-              category: "file",
-              type: "error")
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
+
+  def reset_validation
+    quote_check.assign_attributes(
+      validation_errors: nil,
+      validation_error_details: nil,
+      validation_version: nil
+    )
+  end
 
   def validate_quote
     quote_validator = QuoteValidator::Global.new(
@@ -112,21 +140,4 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
       validation_version: quote_validator.version
     )
   end
-
-  # rubocop:disable Metrics/AbcSize
-  def add_error(code,
-                category: nil, type: nil,
-                title: nil)
-    quote_check.validation_errors ||= []
-    quote_check.validation_errors << code
-
-    quote_check.validation_error_details ||= []
-    quote_check.validation_error_details << {
-      id: [quote_check.id, quote_check.validation_error_details.count + 1].compact.join("-"),
-      code:,
-      category:, type:,
-      title: title || I18n.t("quote_validator.errors.#{code}")
-    }
-  end
-  # rubocop:enable Metrics/AbcSize
 end
