@@ -148,7 +148,7 @@ regime_temperature: enum(basse, moyenne, haute);
 type_fluide_frigorigene: text;
 COP: decimal;
 SCOP: decimal;
-puissance_nominale: decimal;
+puissance_nominale: decimal **(kW);**
 }
 ```
 
@@ -241,3 +241,349 @@ Réfléchissez étape par étape.
 
 Vous ne répondrez que par un objet JSON qui concatene le JSON général et tous les JSON des gestes présent dans le devis
 Ne fournissez pas d’explications.
+
+ Madame Séverine DEMOGUE
+DEVIS                                                                      Madame et Monsieur Séverine-Ludovic
+                                                                           DEMOGUE- CHOUVELONarre
+ N° : DEV00000755                                                          ADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESS : 17/09/ADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESS° client : CLT000002LA
+
+ Devis valable jusqu'au 01/10/2024
+
+
+Fourniture et installation de deux pompes à chaleur air/air connexion Wi-Fi
+
+Mise en service
+Percement de la dalle entre le sous sol et l'étage, percement des murs pour liaison entre groupes extérieurs et unités
+
+intérieures.
+Des protections électriques seront à prévoir au lot électricité suivant les prescriptions fabricant
+
+Visite préalable le 04 Juin 2024
+
+
+ Libellé                                                            Qté   Unité        PU HT    Montant HT        TVA
+ Fournitures                                                       1,00   Unité   8 849,00 €      8 849,00 €   20,00%
+
+ Pièces de vie +chambre
+ MITSUBISHI multi split hyper heating
+ Unité extérieure  MXZ-4F83VFHZ2
+ Puissance frigo nominale 8.3 kw, mini 3.5 kw, maxi 9.20 kw
+
+ Performances froid :
+
+
+ EER 4.37
+ SEER 7.30
+ Classe énergétique saisonnière A++
+ Plage de fonctionnement -10/+46 °C
+
+ Performances chaud :
+
+
+ COP 5.29
+ FORM 4.30
+ Classe énergétique saisonnière A+
+ Plage de fonctionnement -25/+24 °C
+
+ 3 Unités intérieures MFZ-KT25VG-E2 
+
+ SEER 6.5
+ Classe énergétique saisonnière A++
+ FORM 4.2
+ Classe énergétique saisonnière A+
+
+ 1 unité intérieure MFZ-KT50VG-E2
+ SEER 6.8
+
+ Classe énergétique saisonnière A++
+ FORM 4.2
+ Classe énergétique saisonnière A+
+
+
+
+ Fournitures                                                       1,00   Unité   1 253,00 €      1 253,00 €   20,00%
+ Accessoires de raccordement comprend
+ tube frigo préisolé 1/4-3/8
+ tube frigo préisolé 1/4-1/2
+
+ kit rubberfoot
+
+
+
+   THIVELET Eric - ADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESS (APE) LA22A - N° RCS 794675LA5 - EI au capital social de 0 €
+                                        - Siret : 794675LA500014 - N° TVA FR09794675LA5
+                                                                                                                Page 1 de 3 
+                                                                                                   Devis - N° : DEV00000755
+EI THIVELET Eric                           Séverine-Ludovic DEMOGUE- CHOUVELON                            Date : 17/09/2024
+
+
+ Libellé                                                            Qté   Unité        PU HT    Montant HT        TVA
+ Câble 4G1.5
+
+ Câble 3G6
+
+ Eco participation                                                  1,00  Unité        6,67 €          6,67 €  20,00%
+ Eco participation                                                  4,00  Unité        2,08 €          8,32 €  20,00%
+
+                                                      Sous-total                                10 LA6,99 €
+
+ Fournitures                                                        1,00  Unité   7 295,00 €      7 295,00 €   20,00%
+ Chambres étage
+ MITSUBISHI multisplit standard
+ Unité extérieure MXZ-5F102VF2
+
+ Puissance nominale 10.20 KW, mini 3.90 kw, maxiLA kw
+
+ Performances froid 
+
+ EER 3.64
+
+ SEER 8.20
+ Classe énergétique saisonnière A++
+ Plage de fonctionnement -10/+46°C
+
+ Performances chaud
+
+
+ COP 4.61
+ FORM 4.60
+ Classe énergétique A++
+ Plage de fonctionnement -15/+24°C
+
+
+ 5 Unités intérieures murales compact  MSZ-AY20GVK-E1 blanches
+ EER 4.35
+ SEER 8.6
+ Classe énergétique A++
+ COP 4.17
+
+ FORM 4.2
+ Classe énergétique A+
+
+ Fournitures                                                        1,00  Unité   1 139,00 €      1 139,00 €   20,00%
+ Accessoires de raccordement comprend :
+ tub frigo pré isolé 1/4-3/8
+ kit rubber foot
+ câble 4g1.5
+
+ câble 3g4
+
+ Eco participation                                                  1,00  Unité        6,67 €          6,67 €  20,00%
+ Eco participation                                                  5,00  Unité        1,04 €          5,20 €  20,00%
+
+                                                      Sous-total                                 8 445,87 €
+
+ Main d'œuvre                                                      1,00  Forfait 3 328,00 €      3 328,00 €   10,00%
+ Pour l'ensemble comprend les deux mises en service
+
+
+
+
+ Variante avec matériel Bosch 
+ Etage pièces de vie 6313 € HT soit 7575.60 € TTC
+ Etage chambres 4647 € HT soit 5576.40 € TTC
+ Le reste des postes  chiffrés restant identiques 
+
+Devis gratuit
+30% à la commande, 40% à la livraison, solde en fin de chantier
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   THIVELET Eric - ADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESS (APE) LA22A - N° RCS 794675LA5 - EI au capital social de 0 €
+
+                                        - Siret : 794675LA500014 - N° TVA FR09794675LA5
+                                                                                                                Page 2 de 3 
+                                                                                            Devis - N° : DEV00000755
+EI THIVELET Eric                        Séverine-Ludovic DEMOGUE- CHOUVELON                       Date : 17/09/2024
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ Détail de la TVA                                                         Total HT                 LA 890,86 €
+
+ Code           Base HT         Taux        Montant                       TVA                       4 045,37 €
+ Réduite      3 328,00 €      10,00%        332,80 €
+                                                                          Total TTC               25 936,LA €
+ Normale     18 562,86 €      20,00%      3 712,57 €
+                                                                               Acompte demandé 30,00 %
+
+ Règlement         Chèque                                                                       Soit 7 780,87 €
+
+ Echéance(s)       Acompte de 7 780,87 € au 17/09/2024
+
+
+                            Bon pour accord
+ Date et signature
+
+
+
+
+
+
+
+ Coordonnées bancaires
+
+ Nom       CAISSE D'EPARGNE LOIRE DROME ARDECHE
+
+ IBAN      IBANIBANIBANIBANIBANIBANIBA
+
+ BIC       CEPAFRPP426
+
+
+
+N° RGE : 49737 auprès de Qualit'Enr
+Assurance décennale obligatoire n°14LA68LA2L-MCE-001 souscrite auprès de MAAF SA - ADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESS.
+
+
+
+
+
+
+
+   THIVELET Eric - ADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESSADRESS (APE) LA22A - N° RCS 794675LA5 - EI au capital social de 0 €
+
+                                     - Siret : 794675LA500014 - N° TVA FR09794675LA5
+                                                                                                        Page 3 de 3 
+                                                                                                                        N°1301-SD
+
+                                          DIRECTION GÉNÉRALE DES FINANCES PUBLIQUES
+
+
+                                                                                                                        N°13948   *05
+                                                                                                                           (09-2016)
+                                                                                             1
+                                               ATTESTATION SIMPLIFIEE
+   I DENTITÉ DU CLIENT OU DE SON REPRÉSENTANT           :
+
+  Je soussigné(e) :
+  Nom :……………………………….............................                Prénom :…………….....................................................................
+  Adresse :………………………………………………                                   Code postal :………… Commune………………………………..
+
+
+   N  ATURE DES LOCAUX
+  J’atteste que les travaux à réaliser portent sur un immeuble achevé depuis plus de deux ans à la date de commencement des travaux et
+  affecté à l’habitation à l’issue de ces travaux :
+   maison ou immeuble individuel                      immeuble collectif                      appartement individuel
+   autre (précisez la nature du local à usage d’habitation)    ……………………………………………………………………
+
+  Les travaux sont réalisés dans :
+   un local affecté exclusivement ou principalement à l’habitation
+   des pièces affectées exclusivement à l’habitation situées dans un local affecté pour moins de 50 % à cet usage
+   des parties communes de locaux affectés exclusivement ou principalement à l’habitation dans une proportion de (……………….)
+  millièmes de l’immeuble
+   un local antérieurement affecté à un usage autre que d’habitation et transformé à cet usage
+          2
+  Adresse :………………………………………………Commune………………………………..Code postal :………
+  dont je suis :  propriétaire    locataire          autre (précisez votre qualité) :………………………………
+
+   N  ATURE DES TRAVAUX
+  J’atteste que sur la période de deux ans précédant ou suivant la réalisation des travaux décrits dans la présente attestation, les
+  travaux :
+   n’affectent ni les fondations, ni les éléments, hors fondations, déterminant la résistance et la rigidité de l’ouvrage, ni la
+
+  consistance des façades (hors ravalement).
+   n’affectent pas plus de cinq des six éléments de second œuvre suivants :
+  Cochez les cases correspondant aux éléments affectés :  planchers qui ne déterminent pas la résistance ou la rigidité de
+  l’ouvrage  huisseries extérieures  cloisons intérieures  installations sanitaires et de plomberie  installations électriques
+   système de chauffage (pour les immeubles situés en métropole)
+
+  NB : tous autres travaux sont sans incidence sur le bénéfice du taux réduit.
+   n’entraînent pas une augmentation de la surface de plancher de la construction existante supérieure à 10 %.
+   ne consistent pas en une surélévation ou une addition de construction.
+   J’atteste que les travaux visent à améliorer la qualité énergétique du logement et portent sur la fourniture, la pose, l’installation ou
+  l’entretien des matériaux, appareils et équipements dont la liste figure dans la notice (1 de l’article 200 quater du code général des
+  impôts – CGI) et respectent les caractéristiques techniques et les critères de performances minimales fixés par un arrêté du ministre
+
+  du budget (article 18 bis de l’annexe IV au CGI).
+   J’atteste que les travaux ont la nature de travaux induits indissociablement liés à des travaux d’amélioration de la qualité
+  énergétique soumis au taux de TVA de 5,5 %.
+
+
+   C  ONSERVATION DE L     ’ATTESTATION ET DES PIÈCES JUSTIFICATIVES
+  Je conserve une copie de cette attestation ainsi que de toutes les factures ou notes émises par les entreprises prestataires jusqu’au
+  31 décembre de la cinquième année suivant la réalisation des travaux et m’engage à en produire une copie à l’administration fiscale
+  sur sa demande.
+
+
+  Si les mentions portées sur l’attestation s’avèrent inexactes de votre fait et ont eu pour conséquence l’application erronée du taux
+  réduit de la TVA, vous êtes solidairement tenu au paiement du complément de taxe résultant de la différence entre le montant de la
+
+  taxe due (TVA au taux de 20 % ou 10 %) et le montant de la TVA effectivement payé au taux de :
+  -    10 % pour les travaux d’amélioration, de transformation, d’aménagement et d’entretien portant sur des locaux à usage
+       d’habitation achevés depuis plus de 2 ans ;
+  -    5,5 % pour les travaux d’amélioration de la qualité énergétique des locaux à usage d’habitation achevés depuis plus de 2 ans
+       ainsi que sur les travaux induits qui leur sont indissociablement liés.
+
+
+                                                      Fait à………………………….., le……………….
+
+                                                      Signature du client ou de son représentant :
+
+
+
+
+
+
+
+1Pour remplir cette attestation, cochez les cases correspondant à votre situation et complétez les rubriques en pointillés. Vous pouvez vous aider de la notice explicative.
+2Si différente de l’adresse ADRESSAD dans le cadre .
