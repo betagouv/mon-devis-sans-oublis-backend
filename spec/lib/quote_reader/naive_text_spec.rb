@@ -182,6 +182,8 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
       expect(described_class.find_label_numbers("CPLUS/67225")).to eq(["CPLUS/67225"])
       expect(described_class.find_label_numbers("CPLUS/67225")).to eq(["CPLUS/67225"])
       expect(described_class.find_label_numbers("VPLUS/49707")).to eq(["VPLUS/49707"])
+      expect(described_class.find_label_numbers("e\n  35630")).to eq([])
+      expect(described_class.find_label_numbers("e  35630")).to eq(["e  35630"])
     end
   end
 

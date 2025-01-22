@@ -13,6 +13,32 @@ RSpec.describe QuoteValidator::Global, type: :service do
     it "returns validation" do
       expect(quote_validator.validate!).to be false
     end
+
+    context "with symbolized and stringified keys" do
+      let(:quote_attributes) do
+        {
+          client: {
+            nom: "DOE",
+            prenom: "JANE"
+          },
+          "pro" => {
+            numero_tva: "1234567890",
+            "raison_sociale" => "ACME"
+          }
+        }
+      end
+
+      before { quote_validator.validate! }
+
+      it "reads the keys" do # rubocop:disable RSpec/ExampleLength
+        expect(quote_validator.errors).not_to include(
+          "client_nom_manquant",
+          "client_prenom_manquant",
+          "pro_raison_sociale_manquant",
+          "tva_manquant"
+        )
+      end
+    end
   end
 
   describe "#errors" do
