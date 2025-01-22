@@ -53,7 +53,7 @@ module QuoteValidator
     # Attention, souvent on a le logo mais rarement le numéro RGE.
     def validate_rge
       @pro = quote[:pro] ||= TrackingHash.new
-      rge_labels = @pro[:labels]
+      rge_labels = @pro[:rge_labels]
       add_error("rge_manquant", category: "admin", type: "missing") if rge_labels.blank?
     end
 
