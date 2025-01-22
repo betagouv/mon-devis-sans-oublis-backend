@@ -19,6 +19,11 @@ RSpec.describe Llms::Base, type: :service do
       expect(described_class.clean_value("Aucune information trouvée")).to be_nil
       expect(described_class.clean_value("Aucune forme juridique de prestataires professionnels mentionnée.")).to be_nil
     end
+
+    it "cleans the value" do # rubocop:disable RSpec/MultipleExpectations
+      expect(described_class.clean_value("** value")).to eq("value")
+      expect(described_class.clean_value("* value")).to eq("value")
+    end
     # rubocop:enable RSpec/ExampleLength
   end
 
