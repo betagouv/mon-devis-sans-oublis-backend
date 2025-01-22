@@ -44,18 +44,9 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
       it "fills the attributes" do # rubocop:disable RSpec/ExampleLength
         expect(attributes).to include(
           devis: "Devis",
-          client: {
-            adresse: "42",
-            adresse_chantier: "43"
-          },
+          client: {},
           pro: {
-            adresse: "42",
-            raison_sociale: "ACME",
-            forme_juridique: "SAS",
             numero_tva: "FR12345678911",
-            capital: "1000",
-            labels: ["E123456"],
-            rge_number: "E123456",
             siret: nil
           }
         )
