@@ -4,6 +4,7 @@ module Llms
   # Base API client
   class Base
     class ResultError < StandardError; end
+    class TimeoutError < ResultError; end
 
     attr_reader :prompt, :result_format
 

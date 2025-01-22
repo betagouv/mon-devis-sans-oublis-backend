@@ -53,6 +53,7 @@ module Llms
         request.body = body.to_json
         http.request(request)
       end
+      raise TimeoutError if response.code == "504"
 
       raise ResultError, "Error: #{response.code} - #{response.message}" unless response.is_a?(Net::HTTPSuccess)
 
@@ -61,6 +62,8 @@ module Llms
       raise ResultError, "Content empty" unless content
 
       extract_result(content)
+    rescue Net::ReadTimeout => e
+      raise TimeoutError, e
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
