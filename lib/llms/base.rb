@@ -21,8 +21,9 @@ module Llms
     def self.clean_value(text)
       # rubocop:disable Style/SafeNavigationChainLength
       text&.strip
-          &.gsub(/^Aucune?s?$/i, "")
-          &.gsub(/\(?(?:Non (?:mentionnée?s?|disponibles?)|Aucune?s? .+ n'est mentionnée?s?\.?|Inconnue?s? \(pas de [^\)]+\))\)?/i, "") # rubocop:disable Layout/LineLength
+          &.gsub(/^[\W\s]+$/i, "")
+          &.gsub(/^Aucune?s?(?:\s+.+\s+)?(?: *mention(?:née?)?s?)?\.?(?:\s*.+)?$/i, "")
+          &.gsub(/\(?(?:Non (?:mention(?:née?)?s?|disponibles?)\.?|Aucune?s? .+ n'est mentionnée?s?\.?|Inconnue?s? \(pas de [^\)]+\))\)?\.?/i, "") # rubocop:disable Layout/LineLength
           &.presence
       # rubocop:enable Style/SafeNavigationChainLength
     end
@@ -35,23 +36,34 @@ module Llms
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     def self.extract_numbered_list(text) # rubocop:disable Metrics/MethodLength
-      parts = text.split(/^\s*\d+\.\s+/).keep_if { it.start_with?("**") }
+      parts = text.split(/^\n(?:\*\*\s*)?\d+\.\s+/)[1..]
       parts.each_with_index.map do |part, index|
-        match = part.match(/^\*\*(?<label>.*?)\*\*\s*: *\n*(?:\s*-\s*)?(?<value>.*)$/m)
-        raise ResultError, "Parsing numbered list inside part: #{part}" unless match
+        match = part.match(/^(?:\*\*\s*)?(?:\d+\.)?(?<label>.*?)(?:\s+\*\*)?\s*: *(?<value>\n*(?:\s*-\s*)?.*)$/m)
+        raise ResultError, "Parsing numbered list inside match: #{match.to_a}" unless match
 
+        next if match[:label]&.gsub("**", "").blank?
+
+        is_address_search = match[:label].include?("dresse")
         detected_separator = [
-          /\n+\s*-\s*/,
+          /\n+\s*-\s*/m,
           %r{/},
-          /,/
-        ].detect { match[:value].match? it } || ","
+          is_address_search ? nil : /,/,
+          /\n/,
+          /\*\*:\s/
+        ].compact.detect { match[:value].match?(it) }
+        next if index.zero? && !detected_separator
+
+        unless detected_separator
+          raise ResultError,
+                "Parsing numbered list without separator inside match: #{match.to_a}"
+        end
 
         {
           number: Integer(index + 1),
-          label: match[:label],
-          value: clean_value(match[:value])&.split(/\s*#{detected_separator}\s*/)&.map(&:strip)
+          label: match[:label]&.gsub("**", "")&.downcase&.strip.presence, # rubocop:disable Style/SafeNavigationChainLength
+          value: match[:value]&.split(/\s*#{detected_separator}\s*/)&.filter_map { clean_value(it&.strip) }
         }
-      end.sort_by { it.fetch(:number) } # rubocop:disable Style/MultilineBlockChain
+      end.compact.sort_by { it.fetch(:number) } # rubocop:disable Style/MultilineBlockChain
     end
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity

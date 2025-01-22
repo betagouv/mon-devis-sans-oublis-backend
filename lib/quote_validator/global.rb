@@ -210,7 +210,7 @@ module QuoteValidator
         # AUDIT ENERGETIQUE
 
         when "", nil
-          pass
+          next
 
         else
           e = NotImplementedError.new("Geste inconnu '#{geste[:type]}' is not listed")

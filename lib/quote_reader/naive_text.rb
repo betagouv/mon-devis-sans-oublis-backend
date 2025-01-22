@@ -74,6 +74,7 @@ module QuoteReader
     FRENCH_CHARACTER_REGEX = /[\wÀ-ÖØ-öø-ÿ]/i
     PHONE_REGEX = /(?:\(?\+?33\)?)?\s?(?:[\s.]*\d\d){5}/i # TODO: find better
     RCS_REGEX = /R\.?C\.?S\.?(?:\s+[A-Za-zÀ-ÖØ-öø-ÿ\s-]+)?(?:\s+[AB])?\s+\d{9}/i
+    SPACE_WITHOUT_NEWLINE_REGEX = /[ \t\f\v\r]*/i
     URI_REGEX = %r{(?:https?|ftp)://(?:www\.)?[^\s/$.?#].[^\s]*|www\.[^\s/$.?#].[^\s]*}i
 
     def self.find_adresses(text)
@@ -96,7 +97,7 @@ module QuoteReader
     end
 
     def self.find_capital(text)
-      text[/(?:Capitale?|capilâide)(?:\s+de)?#{BETWEEN_LABEL_VALUE_REGEX}(\d+(?: \d{3})*)\s*€/i, 1].presence
+      text[/(?:Capitale?|capilâide)(?:\s+de)?#{BETWEEN_LABEL_VALUE_REGEX}(\d+(?: \d{3})*)#{SPACE_WITHOUT_NEWLINE_REGEX}€/i, 1].presence # rubocop:disable Layout/LineLength
     end
 
     def self.find_emails(text)
@@ -116,7 +117,7 @@ module QuoteReader
     def self.find_label_numbers(text)
       # Warning : insure caracter before not match the IBAN
       text.scan(
-        %r{(?:\A|.*?#{BETWEEN_LABEL_VALUE_REGEX})((?:(?:CPLUS|QB|QPAC|QPV|QS|VPLUS)\s*/\s*|(?:R|E-)?E)\s*\d{5,6})(?!\n)}i
+        %r{(?:\A|.*?#{BETWEEN_LABEL_VALUE_REGEX})((?:(?:CPLUS|QB|QPAC|QPV|QS|VPLUS)#{SPACE_WITHOUT_NEWLINE_REGEX}/#{SPACE_WITHOUT_NEWLINE_REGEX}|(?:R|E-)?E)#{SPACE_WITHOUT_NEWLINE_REGEX}\d{5,6})(?!\n)}i # rubocop:disable Layout/LineLength
       ).flatten.filter_map { it&.strip }.uniq
     end
 
@@ -145,7 +146,9 @@ module QuoteReader
     end
 
     def self.find_sirets(text)
-      text.scan(/\b(\d{3}\s*\d{3}\s*\d{3}\s*\d{5})\b/i).flatten.filter_map { it&.strip }.uniq
+      text.scan(/\b(\d{3}#{SPACE_WITHOUT_NEWLINE_REGEX}\d{3}#{SPACE_WITHOUT_NEWLINE_REGEX}\d{3}#{SPACE_WITHOUT_NEWLINE_REGEX}\d{5})\b/i).flatten.filter_map do # rubocop:disable Layout/LineLength
+        it&.strip
+      end.uniq
     end
 
     def self.find_telephones(text)
