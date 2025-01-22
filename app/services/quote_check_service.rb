@@ -41,7 +41,7 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
     ErrorNotifier.set_context(:quote_check, { id: quote_check.id })
 
     read_quote(llm:)
-    validate_quote if quote_check.validation_errors.blank?
+    validate_quote
 
     quote_check.update!(
       application_version: Rails.application.config.application_version,
