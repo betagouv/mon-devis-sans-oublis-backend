@@ -1,20 +1,34 @@
-Analyse le texte suivant en recherchant les informations demandées. Renvoie les données exactement telles qu'elles apparaissent dans le document, sans aucune transformation ou modification, si pas de réponse, renvoi null : 
+ontexte : Nous avons un devis pdf, nous avons sorti le texte pour pouvoir l’analyser. Il s’agit d’un devis de rénovation énergétique d’un artisan pour un particulier. Nous devons récupérer tous les attributs qui permettent d'identifier le client, l'artisan et le chantier. 
 
-1. **noms** : Liste des Noms et prénoms propres mentionnés (individus).
-2. **adresses** : Liste des adresses postales identifiées.
-3. **telephones** : Liste des numéros de téléphone formatés.
-4. **raison_sociales** : Liste des noms d'entreprises identifiables.
-5. **sirets** : Liste des numéros SIRET et/ou SIREN.
-5. **rcss** : Liste des numéros RCS.
-6. **insurances** : Liste des numéros et références liées à des contrats d'assurance.
-7. **labels** : Liste des labels ou certifications mentionnés tel que les numéros de label RGE.
-8. **emails** : Liste des adresses email identifiables.
-9. **numeros_tva** : Liste des numéros de TVA mentionnés.
-10. **ibans** : Liste des IBAN détectés.
-11. **uris** : Liste des URL et site internet détectés.
-12. **client_noms** : Liste des Noms propres des clients particuliers mentionnés (individus).
-13. **client_prenoms** : Liste des prénoms des clients particuliers mentionnés (individus).
-14. **client_civilite** : Liste des civilités des clients particuliers mentionnés (individus).
-15. **client_adresses** : Liste des adresses postales identifiées des clients particuliers mentionnés.
-16. **pro_adresses** : Liste des adresses postales identifiées des prestataires professionels mentionnés.
-17. **forme_juridiques**: Liste des forme juridiques identifiées des prestataires professionnels mentionnés.
+Rôle : Vous êtes un expert en lecture de devis et vous devez récupérer les données structurées du devis pour les intégrer dans un JSON suivant la liste clé/instruction suivante. Vous gardez les clés proposées sans les modifier. Vous renvoyez les données exactement telles qu'elles apparaissent dans le texte, sans transformation ou modification. 
+
+- **noms** : Liste des Noms et prénoms propres mentionnés (individus).
+- **adresses** : Liste des adresses postales identifiées.
+- **telephones** : Liste des numéros de téléphone formatés.
+- **raison_sociales** : Liste des noms d'entreprises identifiables.
+- **sirets** : Liste des numéros SIRET et/ou SIREN.
+- **rcss** : Liste des numéros RCS.
+- **insurances** : Liste des numéros et références liées à des contrats d'assurance.
+- **labels** : Liste des labels ou certifications mentionnés tel que les numéros de label RGE.
+- **emails** : Liste des adresses email identifiables.
+- **numeros_tva** : Liste des numéros de TVA mentionnés.
+- **ibans** : Liste des IBAN détectés.
+- **uris** : Liste des URL et site internet détectés.
+- **client_noms** : Liste des Noms propres des clients particuliers mentionnés (individus).
+- **client_prenoms** : Liste des prénoms des clients particuliers mentionnés (individus).
+- **client_civilite** : Liste des civilités des clients particuliers mentionnés (individus).
+- **client_adresses** : Liste des adresses postales identifiées des clients particuliers mentionnés.
+- **pro_adresses** : Liste des adresses postales identifiées des prestataires professionels mentionnés.
+- **forme_juridiques**: Liste des forme juridiques identifiées des prestataires professionnels mentionnés.
+
+Instructions :
+
+1. Récupérez les informations générales du devis et intégrez-les dans le JSON.
+2. Si un attribut n'est pas explicitement mentionné dans le texte, laissez-le vide dans le JSON et ne l'inventez pas.
+
+
+Réfléchissez étape par étape.
+
+
+Vous ne répondrez que par le JSON
+Ne fournissez pas d’explications.
