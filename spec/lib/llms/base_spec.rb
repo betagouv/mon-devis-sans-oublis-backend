@@ -17,6 +17,7 @@ RSpec.describe Llms::Base, type: :service do
       expect(described_class.clean_value("aucune mention")).to be_nil
       expect(described_class.clean_value("aucune mention d'assurance")).to be_nil
       expect(described_class.clean_value("Aucune information trouvée")).to be_nil
+      expect(described_class.clean_value("Aucune forme juridique de prestataires professionnels mentionnée.")).to be_nil
     end
     # rubocop:enable RSpec/ExampleLength
   end
