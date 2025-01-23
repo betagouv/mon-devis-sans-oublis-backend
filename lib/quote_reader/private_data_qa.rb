@@ -29,7 +29,7 @@ module QuoteReader
       llm = Llms::Albert.new(prompt, result_format: :json)
       begin
         llm.chat_completion(text)
-      rescue TimeoutError, Llms::Albert::ResultError => e
+      rescue Llms::Base::TimeoutError, Llms::Albert::ResultError => e
         ErrorNotifier.notify(e)
       end
 
