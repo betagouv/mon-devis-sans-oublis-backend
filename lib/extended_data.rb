@@ -37,11 +37,9 @@ class ExtendedData
   # rubocop:enable Metrics/AbcSize
 
   def sirets
-    return [] unless attributes.key?(:sirets)
-
-    attributes[:sirets].map { it.strip.gsub(/[^\d]/, "") }
-                       .group_by { it }
-                       .sort_by { |_, group| -group.size }
-                       .map(&:first)
+    (attributes[:sirets] || []).map { it.strip.gsub(/[^\d]/, "") }
+                               .group_by { it }
+                               .sort_by { |_, group| -group.size }
+                               .map(&:first)
   end
 end
