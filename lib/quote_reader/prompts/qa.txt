@@ -128,10 +128,10 @@ remplacement_chaudiere_condensation: boolean;
 ETAS: pourcentage **(ɳs)**; 
 rendement_energetique: decimal;
 label_flamme_verte: boolean;
-emission_monoxyde_carbone: Integer (mg/Nm3);
-emission_composés_organique: Integer (mgC/Nm3);
+emission_monoxyde_carbone: Integer (mg/Nm3) (emission de CO);
+emission_composés_organique: Integer (mgC/Nm3) (emission de COG);
 emission_particules: Integer (mg/Nm3); 
-emission_oxydes_azotes: Integer (mg/Nm3)}
+emission_oxydes_azotes: Integer (mg/Nm3) (emission de Nox)}
 ```
 
 ### pompe à chaleur :
@@ -166,12 +166,12 @@ ETAS: pourcentage;
 puissance: decimal (kW);
 remplacement_chaudiere_condensation: boolean;
 label_flamme_verte: boolean; 
-emission_monoxyde_carbone: Integer (mg/Nm3);
-emission_composés_organique: Integer (mgC/Nm3);
+emission_monoxyde_carbone: Integer (mg/Nm3) (emission de CO);
+emission_composés_organique: Integer (mgC/Nm3) (emission de COG);
 emission_particules: Integer (mg/Nm3); 
-emission_oxydes_azotes: Integer (mg/Nm3);
+emission_oxydes_azotes: Integer (mg/Nm3) (emission de Nox);
 type_silo: text (externeinterne, neuf/existant, textile/maconner); 
-contenance: Decimal (Litre); 
+contenance_silo: Decimal (Litre); 
 marque_regulateur: text; 
 reference_regulateur: text; 
 classe_regulateur: text}
