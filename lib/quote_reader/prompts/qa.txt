@@ -20,10 +20,15 @@ validite: boolean;
 date_debut_chantier: date; 
 
 date_pre_visite: date; 
+ligne_specifique_cout_main_doeuvre: boolean;
+prix_total_ht: decimal; 
+prix_total_ttc: decimal;
+tva:[{taux1}, {taux2}...];
 gestes : [{geste1},{geste2}...]
 
 } 
 ```
+
 
 ### chauffe-eau thermodynamique :
 
@@ -35,7 +40,8 @@ reference: text;
 volume: integer (en Litre); 
 ETAS: pourcentage; 
 profil_soutirage: enum(M,L,XL,XXL); 
-COP: decimal;}
+COP: decimal;
+}
 ```
 
 ### Chauffe-eau solaire individuel (CESI)
@@ -220,6 +226,26 @@ nombre_bouches_soufflage: integer;
 emplacement_bouches_soufflage: text;
 marque_bouches_soufflage: text;
 reference_bouches_soufflage: text;
+}
+```
+
+pour chaque geste, rajoute également : 
+
+```jsx
+{
+prix_ht: decimal; 
+prix_unitaire_ht: decimal;
+taux_tva: percentage
+prix_ttc: decimal
+} 
+```
+je tiens à préciser que l'intitulé doit permettre à l'utilisateur de savoir de quelle ligne du devis il s'agit surtout lorsque plusieurs travaux similaires sont prévus (exemple des fenêtres)
+
+Pour chaque taux de TVA, merci d'extraire les données suivantes sans faire de calcul mais en vérifiant qu'ils sont bien explicitement indiqués : 
+```jsx
+{taux_tva: percentage;
+prix_ht_total: decimal; 
+montant_tva_total: decimal
 }
 ```
 
