@@ -68,7 +68,7 @@ resistance_thermique: Decimal (m².K/W);
 }
 ```
 
-Pour isolation_thermique_par_interieur_ITI, isolation_thermique_par_exterieur_ITE il faut rajouter : 
+Pour isolation_thermique_par_interieur_ITI et isolation_thermique_par_exterieur_ITE il faut rajouter : 
 
 ```jsx
 {presence_parement: boolean; 
@@ -96,7 +96,9 @@ type_isolation_toiture_terrasse: text;
 
 ```jsx
 {type: enum(menuiserie_fenetre, menuiserie_fenetre_toit, menuiserie_porte, menuiserie_volet_isolant); 
-intitule: text,
+intitule: text;
+marque: text; 
+reference: text; 
 type_menuiserie: enum(fenetre, porte_fenetre, porte, fenetre_de_toit, volet_isolant); 
 type_materiaux: enum (PVC, bois, aluminium); 
 type_vitrage: enum(simple,double, triple,...); 
@@ -112,6 +114,12 @@ dans le cadre d’une porte
 
 ```jsx
 {ud: W/m2.K} à la place du uw et sw
+```
+
+dans le cadre d’un volet isolant
+
+```jsx
+{deltaR: m².K/W}
 ```
 
 # Système chauffage
