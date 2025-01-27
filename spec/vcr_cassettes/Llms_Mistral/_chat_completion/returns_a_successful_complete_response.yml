@@ -17,7 +17,7 @@ http_interactions:
         date; \ngestes : [{geste1},{geste2}...]\n\n} \n```\n\n### chauffe-eau thermodynamique
         :\n\n```jsx\n{type: ''chauffe_eau_thermo''; \nintitule: text;\nmarque: text;
         \nreference: text; \nvolume: integer (en Litre); \nETAS: pourcentage; \nprofil_soutirage:
-        enum(M,L,XL,XXL); \nCOP: decimal;}\n```\n\n### Chauffe-eau solaire individuel
+        enum(M,L,XL,XXL); \ntype_installation: enum(air exterieur, air extrait, air ambiant); \nCOP: decimal;}\n```\n\n### Chauffe-eau solaire individuel
         (CESI)\n\n```jsx\n{type: ''chauffe_eau_solaire_individuel''; \nintitule: text;\nmarque:
         text; \nreference: text; \nvolume: integer (Litre); \nETAS: pourcentage; \nprofil_soutirage:
         enum(M,L,XL,XXL); \ntype_appoint: enum (electrique, autre); \nsurface_capteur:

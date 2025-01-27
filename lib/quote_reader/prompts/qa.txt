@@ -35,6 +35,7 @@ reference: text;
 volume: integer (en Litre); 
 ETAS: pourcentage; 
 profil_soutirage: enum(M,L,XL,XXL); 
+type_installation: enum(air exterieur, air extrait, air ambiant);
 COP: decimal;}
 ```
 
@@ -193,7 +194,7 @@ reference_capteurs: text;
 type_capteurs: text; 
 surface_captage: decimal (m2); 
 productivite_capteurs: decimal (W/m2); 
-volume_ballon:decimal (litre);
+volume_ballon: decimal (litre);
 profil_soutirage: enum(M,L,XL,XXL); 
 energie_appoint: (electricite, gaz,...);
 }
