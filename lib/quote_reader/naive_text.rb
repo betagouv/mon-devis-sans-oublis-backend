@@ -38,9 +38,11 @@ module QuoteReader
                                                               # self.class.find_raison_sociale(text)
                                                             ],
                                                             numeros_tva: self.class.find_numeros_tva(text),
+                                                            powered_by: self.class.find_powered_by(text),
                                                             rcss: self.class.find_rcss(text),
                                                             sirets: self.class.find_sirets(text),
                                                             telephones: self.class.find_telephones(text),
+                                                            terms: self.class.find_terms(text),
                                                             uris: self.class.find_uris(text)
                                                           })
     end
@@ -133,6 +135,12 @@ module QuoteReader
       text.scan(/\bFR[A-Z0-9]{2}\d{9}\b/i).flatten.filter_map { it&.strip }.uniq
     end
 
+    def self.find_powered_by(text)
+      text.scan(
+        /Powered by TCPDF \(www\.tcpdf\.org\)/i
+      )
+    end
+
     def self.find_raison_sociale(text)
       forme_jurique_raison_sociale_regex = /#{FORME_JURIDIQUE_REGEX}\s+.+|.+\s+#{FORME_JURIDIQUE_REGEX}/i
 
@@ -143,6 +151,10 @@ module QuoteReader
 
     def self.find_rge_numbers(text)
       find_label_numbers(text).select { |label_number| label_number.start_with?(/(?:R|E-)?E?/i) }
+    end
+
+    def self.find_rcss(text)
+      text.scan(/\b(#{RCS_REGEX})\b/i).flatten.filter_map { it&.strip }.uniq
     end
 
     def self.find_sirets(text)
@@ -157,8 +169,10 @@ module QuoteReader
       ).flatten.filter_map { it&.strip }.uniq
     end
 
-    def self.find_rcss(text)
-      text.scan(/\b(#{RCS_REGEX})\b/i).flatten.filter_map { it&.strip }.uniq
+    def self.find_terms(text)
+      text.scan(
+        /CONDITIONS(?: G[EÉ]N[EÉ]RALES DE)? VENTE.+\z/im
+      )
     end
 
     def self.find_uris(text)

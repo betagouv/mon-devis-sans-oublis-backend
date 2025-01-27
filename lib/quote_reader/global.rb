@@ -7,6 +7,7 @@ module QuoteReader
   class Global
     attr_reader :content, :content_type,
                 :text,
+                :shrinked_text,
                 :anonymised_text,
                 :naive_attributes, :naive_version,
                 :private_data_qa_attributes, :private_data_qa_result, :private_data_qa_version,
@@ -34,7 +35,9 @@ module QuoteReader
       @naive_attributes = naive_reader.read
       @naive_version = naive_reader.version
 
-      private_data_qa_reader = PrivateDataQa.new(text)
+      @shrinked_text = Shrinker.new(text).shrinked_text(naive_attributes)
+
+      private_data_qa_reader = PrivateDataQa.new(shrinked_text)
       begin
         @private_data_qa_attributes = private_data_qa_reader.read || {}
       ensure
@@ -51,7 +54,7 @@ module QuoteReader
         private_attributes,
         ExtendedData.new(private_attributes).extended_attributes
       )
-      @anonymised_text = Anonymiser.new(text).anonymised_text(private_extended_attributes)
+      @anonymised_text = Anonymiser.new(shrinked_text).anonymised_text(private_extended_attributes)
 
       qa_reader = Qa.new(anonymised_text)
       begin
