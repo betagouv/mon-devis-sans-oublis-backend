@@ -27,20 +27,19 @@ class QuoteFile < ApplicationRecord
     existing_quote_file = find_by(hexdigest: hexdigest)
     return existing_quote_file if existing_quote_file
 
-    new(
+    new_quote_file = new(
       filename: filename,
       content_type: file[:content_type],
       hexdigest: hexdigest,
       uploaded_at: Time.current
-    ).tap do |new_quote_file|
-      tempfile.rewind
-      new_quote_file.data = tempfile.read
+    )
+    tempfile.rewind
+    new_quote_file.data = tempfile.read
+    tempfile.rewind
+    new_quote_file.file.attach(io: tempfile, filename: filename) # File.basename(tempfile.path)
+    new_quote_file.save!
 
-      tempfile.rewind
-      new_quote_file.file.attach(io: tempfile, filename: filename) # File.basename(tempfile.path)
-
-      new_quote_file.save!
-    end
+    new_quote_file
   end
   # rubocop:enable Metrics/MethodLength
 
