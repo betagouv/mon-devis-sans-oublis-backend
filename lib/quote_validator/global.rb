@@ -36,7 +36,7 @@ module QuoteValidator
       add_error("date_devis_manquant", category: "admin", type: "missing") if quote[:date_devis].blank?
 
       # date_debut_chantier
-      date_chantier = quote[:date_chantier] || quote[:date_debut_chantier]
+      date_chantier = quote[:date_debut_chantier]
       add_error("date_chantier_manquant", category: "admin", type: "warning") if date_chantier.blank?
 
       # date_pre_visite
@@ -109,12 +109,12 @@ module QuoteValidator
       client_address = @client[:adresse]
       validate_address(client_address, "client")
 
-      site_address = @client[:adresse_chantier]
-      if site_address.blank?
-        add_error("chantier_facturation_idem", category: "admin", type: "warning")
-      else
-        validate_address(site_address, "chantier")
-      end
+      # site_address = @client[:adresse_chantier]
+      # if site_address.blank?
+      #   add_error("chantier_facturation_idem", category: "admin", type: "warning")
+      # else
+      #   validate_address(site_address, "chantier")
+      # end
     end
 
     def validate_pro_address
