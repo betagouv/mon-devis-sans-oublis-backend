@@ -17,8 +17,8 @@ describe "Devis API" do
           {
             type: :object,
             properties: {
-              rating: { type: :integer, nullable: false, description: "de 0 à 5 (trés satisfait) inclus" },
-              email: { type: :string, nullable: true },
+              rating: { type: :integer, nullable: false, description: "de 0 à 5 (trés satisfait) inclus", example: 2 },
+              email: { type: :string, nullable: true, example: nil },
               comment: {
                 type: :string,
                 nullable: true,
