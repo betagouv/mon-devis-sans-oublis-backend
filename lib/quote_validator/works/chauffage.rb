@@ -42,19 +42,19 @@ module QuoteValidator
 
         # Si label, pas besoin de vérifier les emissions
         unless geste[:label_flamme_verte]
-          add_error("chaudiere_emission_CO_manquant", geste) if geste[:emission_CO].blank?
+          add_error("chaudiere_emission_CO_manquant", geste) if geste[:emission_monoxyde_carbone].blank?
           # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
           # TODO V1 ≤600mg/Nm3 pour manuelle et ≤400mg/Nm3 pour automatique)
 
-          add_error("chaudiere_emission_COG_manquant", geste) if geste[:emission_COG].blank?
+          add_error("chaudiere_emission_COG_manquant", geste) if geste[:emission_composés_organique].blank?
           # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
           # TODO V1 :(≤ 20mg/Nm3 pour manuelle ≤16mg/Nm3 pour automatique)
 
-          add_error("chaudiere_emission_particule_manquant", geste) if geste[:emission_particule].blank?
+          add_error("chaudiere_emission_particule_manquant", geste) if geste[:emission_particules].blank?
           # Emission de particules (mg/Nm3)
           # todo V1 : (≤40 pour manuelle et ≤30 pour automatique)
 
-          add_error("chaudiere_emission_nox_manquant", geste) if geste[:emission_Nox].blank?
+          add_error("chaudiere_emission_nox_manquant", geste) if geste[:emission_oxydes_azotes].blank?
           # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
           # TODO (≤200 pour les deux)
 
@@ -83,19 +83,19 @@ module QuoteValidator
 
         return if geste[:label_flamme_verte]
 
-        add_error("poele_emission_CO_manquant", geste) if geste[:emission_CO].blank?
+        add_error("poele_emission_CO_manquant", geste) if geste[:emission_monoxyde_carbone].blank?
         # Emission de monoxyde de carbone rapporté à 13% d’O2) (mg/Nm3)
         # TODO V1 : (≤1500 pour bûches ≤ 300 pour granulé)
 
-        add_error("poele_emission_COG_manquant", geste) if geste[:emission_COG].blank?
+        add_error("poele_emission_COG_manquant", geste) if geste[:emission_composés_organique].blank?
         # Emission de composés organiques Volatile (COG) rapporté à 13% d’O2(mgC/Nm3)
         # TODO V1 : (≤120 si bûches ≤ 60 si granulé)
 
-        add_error("poele_emission_particule_manquant", geste) if geste[:emission_particule].blank?
+        add_error("poele_emission_particule_manquant", geste) if geste[:emission_particules].blank?
         # Emission de particules rapportée à 13% d’O2(mg/Nm3)
         # TODO V1 / (≤40 si bûches ≤ 30 pour granulé)
 
-        add_error("poele_emission_nox_manquant", geste) if geste[:emission_Nox].blank?
+        add_error("poele_emission_nox_manquant", geste) if geste[:emission_oxydes_azotes].blank?
         # Emission d’oxydes d’azotes (NOx) rapporté à 13% d’O2 (mg/Nm3)
         # TODO V1 / (≤ 200 pour les deux)
       end

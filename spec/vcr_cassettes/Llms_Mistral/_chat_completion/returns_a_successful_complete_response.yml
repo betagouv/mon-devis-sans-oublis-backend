@@ -55,7 +55,7 @@ http_interactions:
         boolean; \nemission_monoxyde_carbone: Integer (mg/Nm3);\nemission_composés_organique:
         Integer (mgC/Nm3);\nemission_particules: Integer (mg/Nm3); \nemission_oxydes_azotes:
         Integer (mg/Nm3);\ntype_silo: text (externeinterne, neuf/existant, textile/maconner);
-        \ncontenance: Decimal (Litre); \nmarque_regulateur: text; \nreference_regulateur:
+        \ncontenance_silo: Decimal (Litre); \nmarque_regulateur: text; \nreference_regulateur:
         text; \nclasse_regulateur: text}\n\n```\n\n### systeme solaire combine\n\n```jsx\n{type:''systeme_solaire_combine'';
         \nintitule: text;\nremplacement_chaudiere_condensation: boolean;\nmarque:
         text; \nreference: text; \nETAS: Pourcentage; \npuissance: decimal **(kW);**\nmarque_capteurs:
