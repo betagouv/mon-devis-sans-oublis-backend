@@ -14,7 +14,7 @@ module QuoteValidator
       def validate_menuiserie(geste)
         add_error("menuiserie_marque_manquant", geste) if geste[:marque].blank?
         add_error("menuiserie_reference_manquant", geste) if geste[:reference].blank?
-        add_error("menuiserie_type_materiau_manquant", geste) if geste[:type_materiau].blank? # bois, alu, pvc ...
+        add_error("menuiserie_type_materiau_manquant", geste) if geste[:type_materiaux].blank? # bois, alu, pvc ...
         add_error("menuiserie_type_vitrage_manquant", geste) if geste[:type_vitrage].blank? # simple - double vitrage
         add_error("menuiserie_type_pose_manquant", geste) if geste[:type_pose].blank? # renovation ou depose totale
         add_error("menuiserie_localisation_manquant", geste) if geste[:localisation].blank?
