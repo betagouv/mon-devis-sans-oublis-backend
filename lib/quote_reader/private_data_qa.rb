@@ -54,7 +54,8 @@ module QuoteReader
             forme_juridique: @read_attributes.dig(:forme_juridiques, 0),
             assurance: @read_attributes.dig(:insurances, 0),
             capital: @read_attributes.dig(:capital_social, 0),
-            rge_labels: @read_attributes&.fetch(:numero_rge, [])
+            rge_labels: @read_attributes&.fetch(:numero_rge, []),
+            siret: @read_attributes.dig(:sirets, 0)
           }.compact
         )&.compact
       end
