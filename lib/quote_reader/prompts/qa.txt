@@ -218,6 +218,7 @@ marque_caisson: text;
 reference_caisson: text; 
 nombre_bouches_extraction: integer; 
 marque_bouche_extraction: text; 
+nombre_bouche_extraction: integer;
 reference_bouche_extraction: text; 
 classe_caisson:text (de A+++ à G); 
 puissance_absobée_pondéréé_moteur: Decimal (W-th-C); 
