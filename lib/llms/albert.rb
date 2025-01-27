@@ -45,11 +45,11 @@ module Llms
         ]
       }
 
-      response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-        request = Net::HTTP::Post.new(uri, headers)
-        request.body = body.to_json
-        http.request(request)
-      end
+      http = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true)
+      http.read_timeout = 120 # seconds
+      request = Net::HTTP::Post.new(uri, headers)
+      request.body = body.to_json
+      response = http.request(request)
       raise TimeoutError if response.code == "504"
 
       # Auto switch model if not found
