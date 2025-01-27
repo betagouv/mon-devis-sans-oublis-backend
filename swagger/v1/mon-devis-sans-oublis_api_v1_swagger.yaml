@@ -65,9 +65,11 @@ paths:
                     type: integer
                     nullable: false
                     description: de 0 à 5 (trés satisfait) inclus
+                    example: 2
                   email:
                     type: string
                     nullable: true
+                    example:
                   comment:
                     type: string
                     nullable: true
