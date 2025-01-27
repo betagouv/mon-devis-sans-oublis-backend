@@ -178,6 +178,21 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
     end
   end
 
+  describe ".find_powered_by" do
+    it "returns the powered_by" do
+      expect(
+        described_class.find_powered_by("  Powered by TCPDF (www.tcpdf.org)   ")
+      ).to eq(["Powered by TCPDF (www.tcpdf.org)"])
+    end
+  end
+
+  describe ".find_rcss" do
+    it "returns the rcss" do
+      expect(described_class.find_rcss("RCS Nice B 987654321")).to eq(["RCS Nice B 987654321"])
+      expect(described_class.find_rcss("RCS 987654321")).to eq(["RCS 987654321"])
+    end
+  end
+
   describe ".find_sirets" do
     it "returns the sirets" do
       expect(described_class.find_sirets("Siret : 12345678900000")).to eq(["12345678900000"])
@@ -194,10 +209,27 @@ RSpec.describe QuoteReader::NaiveText, type: :service do
     end
   end
 
-  describe ".find_rcss" do
-    it "returns the rcss" do
-      expect(described_class.find_rcss("RCS Nice B 987654321")).to eq(["RCS Nice B 987654321"])
-      expect(described_class.find_rcss("RCS 987654321")).to eq(["RCS 987654321"])
+  describe ".find_terms" do
+    let(:text) do
+      <<~TEXT
+        Page 4/4
+
+        Powered by TCPDF (www.tcpdf.org)
+                                                                               CONDITIONS GÉNÉRALES DE VENTE
+
+
+
+        ARTICLE 1 -CHAMP D’APPLICATION
+
+
+        Les présentes Conditions Générales de Vente s’appliquent sans restriction ni réserve à l’ensemble des ventes et prestations de services conclues par la société
+      TEXT
+    end
+
+    it "returns the terms" do
+      expect(
+        described_class.find_terms(text).first
+      ).to match(/^CONDITIONS GÉNÉRALES DE VENTE/)
     end
   end
 
