@@ -55,6 +55,7 @@ module QuoteReader
             assurance: @read_attributes.dig(:insurances, 0),
             capital: @read_attributes.dig(:capital_social, 0),
             rge_labels: @read_attributes&.fetch(:numero_rge, [])
+            siret: @read_attributes.dig(:sirets, 0)
           }.compact
         )&.compact
       end

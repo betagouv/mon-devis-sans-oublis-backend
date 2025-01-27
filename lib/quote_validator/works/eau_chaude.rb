@@ -31,7 +31,7 @@ module QuoteValidator
           "cesi_surface_capteur_manquant" => :surface_capteur, # TODO: V1 > 2m2 en metropole pour MPR
           "cesi_classe_energetique_ballon_manquant" => :classe_energetique_ballon,
           # TODO: V1 minimum Classe C si volume ≤ 500L
-          "cesi_fluide_manquant" => :fluide # eau, eau glucolée ou air
+          "cesi_fluide_manquant" => :fluide_capteur # eau, eau glucolée ou air
         }
 
         # TODO: V1 : Capteur hybrides produisant elec et chaleur exclus CEE uniquement ?
