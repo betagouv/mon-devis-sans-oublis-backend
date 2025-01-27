@@ -30,6 +30,8 @@ module QuoteReader
     # rubocop:disable Metrics/MethodLength
     # Recursive method to replace text from attributes, like Rails parameters
     def self.replace_text_from_attributes(attributes, fields_or_field, text, max_size: nil)
+      attributes = ActiveSupport::HashWithIndifferentAccess.new(attributes)
+
       if fields_or_field.is_a?(Symbol)
         return text unless attributes.key?(fields_or_field)
 
