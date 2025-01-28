@@ -30,7 +30,6 @@ module QuoteValidator
     # date d'emission, date de pré-visite (CEE uniquement ?),
     # validité (par défaut 3 mois -> Juste un warning),
     # Date de début de chantier (CEE uniquement)
-    # rubocop:disable Metrics/AbcSize
     def validate_dates
       # date_devis
       add_error("date_devis_manquant", category: "admin", type: "missing") if quote[:date_devis].blank?
@@ -45,7 +44,6 @@ module QuoteValidator
       # validite
       add_error("date_validite_manquant", category: "admin", type: "warning") unless quote[:validite]
     end
-    # rubocop:enable Metrics/AbcSize
 
     # V0 on check la présence - attention devrait dépendre du geste, à terme,
     # on pourra utiliser une API pour vérifier la validité
