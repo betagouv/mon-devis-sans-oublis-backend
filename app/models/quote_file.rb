@@ -14,7 +14,7 @@ class QuoteFile < ApplicationRecord
   # So check can manualy review them
   validates :filename, presence: true
   validates :content_type, presence: true
-  validates :hexdigest, presence: true, uniqueness: true # checksum like
+  validates :hexdigest, presence: true, uniqueness: { scope: :filename }
 
   validates :data, presence: true
   validates :file, attached: true, size: { less_than: 50.megabytes }
