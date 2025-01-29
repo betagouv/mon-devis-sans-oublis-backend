@@ -12,6 +12,7 @@ class StatsService
       average_quote_check_errors_count:,
       average_quote_check_processing_time:,
       average_quote_check_cost:,
+      median_quote_check_processing_time:,
       unique_visitors_count:
     }
   end
@@ -42,11 +43,35 @@ class StatsService
     (total_processing_time.to_f / quote_checks_finished.count).ceil
   end
 
+  # In seconds
+  def median_quote_check_processing_time
+    quote_checks_finished = QuoteCheck.where.not(finished_at: nil)
+    return nil if quote_checks_finished.count.zero?
+
+    processing_times = quote_checks_finished.select(:finished_at, :started_at).map { it.processing_time.ceil }
+    median(processing_times)
+  end
+
   def quote_checks_count
     QuoteCheck.count
   end
 
   def unique_visitors_count
     MatomoApi.new.value(method: "VisitsSummary.getUniqueVisitors") if MatomoApi.auto_configured?
+  end
+
+  private
+
+  def median(array)
+    return nil if array.empty?
+
+    sorted = array.sort
+    mid = sorted.length / 2
+
+    if sorted.length.odd?
+      sorted[mid] # Odd-length array → middle element
+    else
+      (sorted[mid - 1] + sorted[mid]) / 2.0 # Even-length array → average of two middle elements
+    end
   end
 end
