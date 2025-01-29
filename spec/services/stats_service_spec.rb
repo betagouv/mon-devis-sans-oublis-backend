@@ -20,6 +20,7 @@ RSpec.describe StatsService, type: :service do
           average_quote_check_errors_count: nil,
           average_quote_check_processing_time: nil,
           average_quote_check_cost: nil,
+          median_quote_check_processing_time: nil,
           unique_visitors_count: 42
         )
       end
@@ -37,6 +38,7 @@ RSpec.describe StatsService, type: :service do
           average_quote_check_errors_count: 0.5,
           average_quote_check_processing_time: 301, # 5 minutes
           average_quote_check_cost: nil,
+          median_quote_check_processing_time: 301, # 5 minutes
           unique_visitors_count: 42
         )
       end

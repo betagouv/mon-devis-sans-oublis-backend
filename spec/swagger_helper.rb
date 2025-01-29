@@ -212,6 +212,11 @@ RSpec.configure do |config|
                 description: "temps moyen de traitement d'une analyse en secondes, arrondi supérieur",
                 nullable: true
               },
+              median_quote_check_processing_time: {
+                type: :number,
+                description: "temps médian de traitement d'une analyse en secondes, arrondi supérieur",
+                nullable: true
+              },
               unique_visitors_count: {
                 type: :integer,
                 description: "nombre de visiteurs uniques dans le temps", nullable: true
