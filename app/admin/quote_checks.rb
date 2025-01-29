@@ -176,30 +176,33 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
         end
       end
 
-      tab "Attributs via par Mistral" do
-        pre JSON.pretty_generate(resource.qa_attributes)
-      end
-
-      tab "Attributs via par Albert" do
-        pre JSON.pretty_generate(resource.private_data_qa_attributes)
-
-        h1 "Résultat brut"
-        pre JSON.pretty_generate(resource.private_data_qa_result)
-      end
-
-      tab "Attributs via méthode naïve hors ligne privé" do
-        pre JSON.pretty_generate(resource.naive_attributes)
-      end
-
-      tab "Texte Anonymisé" do
-        pre resource.anonymised_text
-      end
-
-      tab "Texte brut" do
+      tab "1. Texte brut" do
         pre resource.text
       end
 
-      tab "Retour API" do
+      tab "2. Données privées via méthode naïve hors ligne" do
+        pre JSON.pretty_generate(resource.naive_attributes)
+      end
+
+      tab "3. Données privées et Attributs via par Albert (Gouv)" do
+        pre JSON.pretty_generate(resource.private_data_qa_attributes)
+
+        h1 "Résultat technique brut"
+        pre JSON.pretty_generate(resource.private_data_qa_result)
+      end
+
+      tab "4. Texte Anonymisé" do
+        pre resource.anonymised_text
+      end
+
+      tab "5. Attributs via par Mistral" do
+        pre JSON.pretty_generate(resource.qa_attributes)
+
+        h1 "Résultat technique brut"
+        pre JSON.pretty_generate(resource.qa_result)
+      end
+
+      tab "6. Retour API pour frontend" do
         pre JSON.pretty_generate(Api::V1::QuoteChecksController.quote_check_json(resource))
       end
     end
