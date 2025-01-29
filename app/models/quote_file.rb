@@ -24,7 +24,7 @@ class QuoteFile < ApplicationRecord
     hexdigest = hexdigest_for_file(tempfile)
     file = tempfile_to_file(tempfile)
 
-    existing_quote_file = find_by(hexdigest: hexdigest)
+    existing_quote_file = find_by(filename:, hexdigest:)
     return existing_quote_file if existing_quote_file
 
     new_quote_file = new(
