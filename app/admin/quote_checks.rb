@@ -1,12 +1,39 @@
 # frozen_string_literal: true
 
+# rubocop:disable Rails/I18nLocaleTexts
 ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
-  actions :index, :show
+  actions :index, :show, :edit, :update
+
+  permit_params :expected_validation_errors
 
   includes :file, :feedbacks
 
   config.filters = false
   config.sort_order = "created_at_desc"
+
+  scope "tous", :all, default: true
+  scope "avec valeurs test", :with_expected_value
+
+  controller do
+    def update # rubocop:disable Metrics/MethodLength
+      quote_check = resource
+
+      begin
+        # TODO: Find a proper way to parse JSON and reuse super
+        quote_check.expected_validation_errors = if params[:quote_check][:expected_validation_errors].presence
+                                                   JSON.parse(params[:quote_check][:expected_validation_errors])
+                                                 end
+      rescue JSON::ParserError
+        redirect_to edit_admin_quote_check_path, alert: "Invalid JSON format" and return
+      end
+
+      if quote_check.save
+        redirect_to admin_quote_check_path(quote_check), notice: "Quote check updated successfully"
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    end
+  end
 
   unless Rails.application.config.app_env == "production"
     member_action :recheck, method: :post do
@@ -14,7 +41,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
 
       QuoteCheckCheckJob.perform_later(quote_check.id)
 
-      flash[:success] = "Le devis est en cours de retraitement." # rubocop:disable Rails/I18nLocaleTexts
+      flash[:success] = "Le devis est en cours de retraitement."
       redirect_to admin_quote_check_path(quote_check)
     end
   end
@@ -123,6 +150,10 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
                   target: "_blank", rel: "noopener"
         end
       end
+
+      row "expected_validation_errors" do
+        pre JSON.pretty_generate(resource.expected_validation_errors) if resource.expected_validation_errors
+      end
     end
 
     tabs do # rubocop:disable Metrics/BlockLength
@@ -213,4 +244,18 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       end
     end
   end
+
+  form do |f|
+    f.inputs "Quote Check Details" do
+      f.input :expected_validation_errors,
+              input_html: {
+                value: JSON.pretty_generate(
+                  f.object.expected_validation_errors.presence ||
+                  f.object.validation_errors
+                )
+              }
+    end
+    f.actions
+  end
 end
+# rubocop:enable Rails/I18nLocaleTexts
