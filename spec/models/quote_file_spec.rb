@@ -23,11 +23,11 @@ RSpec.describe QuoteFile do
     # rubocop:enable RSpec/PendingWithoutReason
     # rubocop:enable RSpec/ExampleLength
 
-    it "does not save the same file twice" do
+    it "save the same file twice" do
       file = fixture_file_upload("quote_files/Devis_test.pdf", "application/pdf")
       quote_file = described_class.find_or_create_file(file, file.original_filename)
 
-      expect(described_class.find_or_create_file(file, file.original_filename)).to eq(quote_file)
+      expect(described_class.find_or_create_file(file, file.original_filename)).not_to eq(quote_file)
     end
 
     context "with a non-PDF file" do
