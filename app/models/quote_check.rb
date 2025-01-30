@@ -23,6 +23,11 @@ class QuoteCheck < ApplicationRecord
 
   delegate :filename, to: :file, allow_nil: true
 
+  scope :with_valid_processing_time, lambda {
+    where.not(finished_at: nil)
+         .where("finished_at - started_at > ? AND finished_at - started_at < ?", 0, 1_000.seconds.to_i)
+  }
+
   # Returns a float number in €
   def cost
     return unless qa_result&.key?("usage")

@@ -36,7 +36,7 @@ class StatsService
 
   # In seconds
   def average_quote_check_processing_time
-    quote_checks_finished = QuoteCheck.where.not(finished_at: nil)
+    quote_checks_finished = QuoteCheck.with_valid_processing_time
     return nil if quote_checks_finished.count.zero?
 
     total_processing_time = quote_checks_finished.select(:finished_at, :started_at).sum { it.processing_time }
@@ -45,7 +45,7 @@ class StatsService
 
   # In seconds
   def median_quote_check_processing_time
-    quote_checks_finished = QuoteCheck.where.not(finished_at: nil)
+    quote_checks_finished = QuoteCheck.with_valid_processing_time
     return nil if quote_checks_finished.count.zero?
 
     processing_times = quote_checks_finished.select(:finished_at, :started_at).map { it.processing_time.ceil }
