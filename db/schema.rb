@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_30_070211) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_30_094608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -184,6 +184,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_30_070211) do
     t.datetime "updated_at", null: false
     t.string "content_type", null: false
     t.binary "data", null: false
+    t.index ["hexdigest", "filename"], name: "index_quote_files_on_hexdigest_and_filename", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

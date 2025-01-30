@@ -14,7 +14,7 @@ class QuoteFile < ApplicationRecord
   # So check can manualy review them
   validates :filename, presence: true
   validates :content_type, presence: true
-  validates :hexdigest, presence: true
+  validates :hexdigest, presence: true, uniqueness: { scope: :filename }
 
   validates :data, presence: true
   validates :file, attached: true, size: { less_than: 50.megabytes }
@@ -24,10 +24,8 @@ class QuoteFile < ApplicationRecord
     hexdigest = hexdigest_for_file(tempfile)
     file = tempfile_to_file(tempfile)
 
-    # TODO: FIXME we got wrong hexdigest on different file
-    # and re-add related index
-    # existing_quote_file = find_by(filename:, hexdigest:)
-    # return existing_quote_file if existing_quote_file
+    existing_quote_file = find_by(filename:, hexdigest:)
+    return existing_quote_file if existing_quote_file
 
     new_quote_file = new(
       filename: filename,
