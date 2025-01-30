@@ -9,7 +9,7 @@ ActiveAdmin.register QuoteFile do
   member_action :view_file, method: :get do
     quote_file = QuoteFile.find(params[:id])
 
-    send_data quote_file.file.download,
+    send_data quote_file.content,
               filename: quote_file.filename,
               type: quote_file.content_type,
               disposition: params[:disposition] || "inline"
