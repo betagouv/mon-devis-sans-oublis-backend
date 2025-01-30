@@ -33,8 +33,10 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
     end
 
     column "Nom de fichier" do
-      link_to it.filename, view_file_admin_quote_file_path(it.file, format: it.file.extension),
-              target: "_blank", rel: "noopener"
+      if it.file
+        link_to it.filename, view_file_admin_quote_file_path(it.file, format: it.file.extension),
+                target: "_blank", rel: "noopener"
+      end
     end
 
     column "Correction" do
