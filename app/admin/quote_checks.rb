@@ -127,6 +127,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
           table do
             thead do
               tr do
+                th "Courriel"
                 th "Note (globale)"
                 th "Ligne en erreur dans devis (si feedback spécifique)"
                 th "Commentaire"
@@ -135,6 +136,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
             tbody do
               resource.feedbacks.each do |feedback|
                 tr do
+                  td feedback.email
                   td feedback.rating
                   td feedback.provided_value
                   td feedback.comment
