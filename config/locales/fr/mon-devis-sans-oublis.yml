@@ -148,7 +148,7 @@ fr:
       poele_emission_nox_manquant_infos: "Lorsque le poêle ou l'insert n'a pas le label flamme verte, il faut indiquer les émissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (en mg/Nm3)." # Emissions d’oxydes d’azote (NOx) rapporté à 10% d’O2 (mg/Nm3)
       # validate_systeme_solaire_combine
       ssc_marque_capteurs_manquant: "La marque exacte du système n'est pas indiée"
-      ssc_reference_capteurs_manquant: "La référence exacte du système doit être mentionnée"
+      ssc_reference_capteurs_manquant: "Le modèle exact du système doit être mentionné"
       ssc_type_capteurs_manquant: "Le type de capteurs utilisés doit être mentionné"
       # TODO Pas toujours les mêmes en fonction des aides !!
       ssc_type_capteurs_manquant_infos: "Capteurs thermique à circulation de liquide ou d'air, hybrides thermiques et électriques à circulation de liquide"
@@ -204,7 +204,7 @@ fr:
 
 
       isolation_marque_manquant: "La marque du materiel d'isolation est manquante"
-      isolation_reference_manquant: "La référence de l'isolant est manquante"
+      isolation_reference_manquant: "Le modèle de l'isolant est manquant"
       isolation_surface_manquant: "La surface isolée n'est pas indiquée"
       isolation_epaisseur_manquant: "L'épaisseur de l'isolant est manquante"
       isolation_epaisseur_manquant_infos: "L'épaisseur totale de l'isolant doit être précisée en cm."
@@ -225,7 +225,7 @@ fr:
 
 
       menuiserie_marque_manquant: "La marque de la menuiserie installée est manquante"
-      menuiserie_reference_manquant: "La référence de la menuiserie n'est pas indiquée"
+      menuiserie_reference_manquant: "Le modèle de la menuiserie n'est pas indiqué"
       menuiserie_type_materiau_manquant: "Le matériau des montants n'est pas précisé"
       menuiserie_type_materiau_manquant_infos: "Les montants peuvent être par exemple en bois, alu,pvc ..." # bois, alu, pvc ...
       menuiserie_type_vitrage_manquant: "Le type de vitrage est manquant"
@@ -263,20 +263,20 @@ fr:
         # VMC simple flux hygroréable de type B (Hygro B)
         # VMC double flux avec échangeur
       vmc_marque_caisson_manquant: "La marque du caisson n'est pas indiquée"
-      vmc_reference_caisson_manquant: "La référence du caisson est manquante"
+      vmc_reference_caisson_manquant: "Le modèle du caisson est manquant"
       vmc_marque_bouche_extraction_manquant: "La marque des bouches d'extraction est manquante"
-      vmc_reference_bouche_extraction_manquant: "La référence des bouches d'extration est manquante"
+      vmc_reference_bouche_extraction_manquant: "Le modèle des bouches d'extration est manquant"
       vmc_nombre_bouche_extraction_manquant: "Le nombre de bouche d'extraction n'est pas indiqué"
       vmc_classe_caisson_manquant: "La classe d'efficacité énergétique du caisson est manquante"
       vmc_puissance_manquant: "La puissance électrique du moteur est manquante"
       vmc_puissance_manquant_infos: "La puissance électtrique du moteur est exprimée en W-Th-C. " # Puissance electrique du moteur en fonction de la config du logement - exprimé en (W-Th-C) (doit être basse conso)
       vmc_simple_flux_nombre_bouches_entree_dair_manquant: "Le nombre de bouches d'entrée d'air n'est pas indiqué"
       vmc_simple_flux_marque_bouches_entree_dair_manquant: "La marque des bouches d'entrée d'air est manquante"
-      vmc_simple_flux_reference_bouches_entree_dair_manquant: "La référence des bouches d'entrée d'air est manquante"
+      vmc_simple_flux_reference_bouches_entree_dair_manquant: "Le modèle des bouches d'entrée d'air est manquant"
       vmc_simple_flux_emplacement_bouches_entree_dair_manquant: "L'emplacement des bouches d'entrée d'air n'est pas indiqué"
       vmc_simple_flux_emplacement_bouches_entree_dair_manquant_infos: "Attention de vérifier la présence d’entrées d’air sur les menuiseries des pièces sèches et leur absence sur les menuiseries des pièces humides."
       vmc_double_flux_marque_bouches_soufflage_manquant: "La marque des bouches de soufflage est manquante"
-      vmc_double_flux_reference_bouches_soufflage_manquant: "La référence des bouches de soufflage est manquante"
+      vmc_double_flux_reference_bouches_soufflage_manquant: "Le modèle des bouches de soufflage est manquant"
       vmc_double_flux_emplacement_bouches_soufflage_manquant: "L'emplacement des bouches de soufflages n'est pas précisé"
       vmc_double_flux_emplacement_bouches_soufflage_manquant_infos: "Attention de vérifier l'absence d'entrées d'air sur toutes les menuiseries."
       vmc_double_flux_nombre_bouches_soufflage_manquant: "Le nombre de bouches de soufflage n'est pas précisé"
