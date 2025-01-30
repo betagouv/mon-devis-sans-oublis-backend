@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddActiveStorageAttachmentsIndex < ActiveRecord::Migration[7.2]
   def change
     change_column_null :active_storage_attachments, :record_id, false
