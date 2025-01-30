@@ -20,13 +20,19 @@ class QuoteCheck < ApplicationRecord
 
   validate :metadata_data
   validate :validation_errors_as_array, if: -> { validation_errors.present? || validation_error_details.present? }
+  validate :expected_validation_errors_as_array, if: -> { expected_validation_errors.present? }
 
   delegate :filename, to: :file, allow_nil: true
 
+  scope :with_expected_value, -> { where.not(expected_validation_errors: nil) }
   scope :with_valid_processing_time, lambda {
     where.not(finished_at: nil)
          .where("finished_at - started_at > ? AND finished_at - started_at < ?", 0, 1_000.seconds.to_i)
   }
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %i[with_expected_value]
+  end
 
   # Returns a float number in €
   def cost
@@ -100,6 +106,13 @@ class QuoteCheck < ApplicationRecord
     return unless validation_error_details && !validation_error_details.is_a?(Array)
 
     errors.add(:validation_error_details, "must be an array")
+  end
+
+  def expected_validation_errors_as_array
+    return unless expected_validation_errors && !expected_validation_errors.is_a?(Array)
+
+    errors.add(:expected_validation_errors,
+               "must be an array")
   end
 
   def format_metadata
