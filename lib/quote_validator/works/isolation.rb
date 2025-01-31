@@ -17,6 +17,21 @@ module QuoteValidator
         add_error("isolation_r_manquant", geste) if geste[:resistance_thermique].blank?
 
         # TODO : V1 - vérifier les normes
+        validate_norme(geste)
+      end
+
+      def validate_norme(geste)
+        acermi = geste[:numero_acermi]
+        norme = geste[:norme_calcul_resistance]
+        return unless norme.blank? && acermi.blank?
+
+        add_error("isolation_norme_acermi_manquant", geste)
+      end
+
+      def validate_protection(geste)
+        return unless !geste[:presence_parement] && !geste[:presence_protection] && !geste[:presence_fixation]
+
+        add_error("isolation_parement_fixation_protection_manquant", geste)
       end
 
       def validate_isolation_ite(geste)
@@ -24,6 +39,7 @@ module QuoteValidator
         # TODO : check valeur R en V1 - R ≥ 3,7 m².K/W ou R ≥ 4.4 m².K/W si MAR
 
         # TODO : V1 - présence parement, protection et fixation (pour être éligible MPR, TODO quid CEE)
+        validate_protection(geste)
       end
 
       def validate_isolation_combles(geste)
@@ -51,6 +67,7 @@ module QuoteValidator
         # Protection des conduits de fumées
 
         # TODO : V1 - présence parement, protection et fixation (pour être éligible MPR, TODO quid CEE)
+        validate_protection(geste)
       end
 
       def validate_isolation_plancher_bas(geste)

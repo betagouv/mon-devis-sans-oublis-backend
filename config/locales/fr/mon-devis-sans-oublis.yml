@@ -85,6 +85,8 @@ fr:
       siret_manquant_infos : "Le Numéro SIRET (système d’identification du répertoire des établissements) est une série de 14 chiffres. Il correspond au numéro SIREN (Système d’Identification du Répertoire des Entreprises, à 9 chiffres) délivré lors de la création de la structure, suivi du numéro NIC (numéro interne de classement)."
       siret_format_erreur: "Le numéro de SIRET n'a pas le bon format"
       siret_format_erreur_infos: "Attention, il semblerait que le SIREN ait été utilisé à la place du SIRET. Le SIRET est une série de 14 chiffres."
+      rcs_manquant: "Le N° RCS et ville d'immatriculation (pour les sociétés) ou le N° RNE est manquant"
+      rcs_ville_manquant: "La ville d'immatriculation de la structure effectuant les travaux est manquante."
       pro_adresse_manquant: "L'adresse du siège social est manquante"
       rge_manquant: "Le numéro de certification RGE du professionnel est manquant"
       rge_manquant_infos: "Pour obtenir des aides, le professionel doit avoir le label RGE du geste en question. Merci de préciser le numéro de certification."
@@ -216,7 +218,10 @@ fr:
       # validate_isolation_plancher_bas
       isolation_localisation_plancher_bas_manquant: "L'emplacement de l'isolation des planchers bas n'est pas indiqué"
       isolation_localisation_plancher_bas_manquant_infos: "Pour l'isolation des planchers bas, il faut préciser sur quelle pièce cela donne."
-
+      isolation_norme_acermi_manquant: "La norme de calcul de la résistance ou son numéro ACERMI sont manquants"
+      isolation_norme_acermi_manquant_infos: "faisant référence au respect à l'une des normes NF éligibles selon le dispositif correspondant (ou bien son numéro ACERMI réputant satisfaire les conditions)."
+      isolation_parement_fixation_protection_manquant: "La présence d'un parement, d'éléments de protection et d'un système de fixation de l'isolant est manquante"
+      isolation_parement_fixation_protection_manquant_infos: "Pour être éligible aux aides financières, le complexe isolant, fixation d'isolant, protection de l'isolant (ex : plaque de plâtre) doit être réalisé par l'entreprise qualifiée RGE."
 
 
 #################################################
