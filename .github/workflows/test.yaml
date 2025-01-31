@@ -1,7 +1,8 @@
-name: ci
+name: CI tests
 
 on:
   push:
+  workflow_call:
   workflow_dispatch:
 
 env:

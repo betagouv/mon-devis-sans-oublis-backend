@@ -1,4 +1,4 @@
-name: "Run Fiability tests"
+name: Fiability tests
 
 on:
   pull_request:
