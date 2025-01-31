@@ -6,7 +6,6 @@ on:
 
 env:
   DATABASE_URL: postgres://postgres:dummy@localhost:5432/test
-  POSTGRES_VERSION: 16
 
 jobs:
   build:
@@ -75,6 +74,7 @@ jobs:
         env:
           POSTGRES_DB: test
           POSTGRES_PASSWORD: dummy
+          POSTGRES_VERSION: 16
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
