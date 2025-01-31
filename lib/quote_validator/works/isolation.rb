@@ -23,15 +23,15 @@ module QuoteValidator
       def valide_norme(geste)
         acermi = geste[:numero_acermi]
         norme = geste[:norme_calcul_resistance]
-        if norme.blank? && acermi.blank?
-          add_error("isolation_norme_acermi_manquant", geste)
-        end
+        return unless norme.blank? && acermi.blank?
+
+        add_error("isolation_norme_acermi_manquant", geste)
       end
 
       def validate_protection(geste)
-        if !geste[:presence_parement] && !geste[:presence_protection] && !geste[:presence_fixation]
-          add_error("isolation_parement_fixation_protection_manquant", geste)
-        end
+        return unless !geste[:presence_parement] && !geste[:presence_protection] && !geste[:presence_fixation]
+
+        add_error("isolation_parement_fixation_protection_manquant", geste)
       end
 
       def validate_isolation_ite(geste)

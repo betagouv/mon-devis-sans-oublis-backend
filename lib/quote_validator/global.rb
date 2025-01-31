@@ -81,11 +81,9 @@ module QuoteValidator
                                          type: "wrong")
       end
 
-      if @pro[:rcs].blank? && @pro[:rne].blank?
-        add_error("rcs_manquant", category: "admin", type: "missing") 
-      end
-      if !@pro[:rcs].blank?
-        add_error("rcs_ville_manquant", category: "admin", type: "missing") if @pro[:rcs_ville].blank?
+      add_error("rcs_manquant", category: "admin", type: "missing") if @pro[:rcs].blank? && @pro[:rne].blank?
+      if @pro[:rcs].blank? && @pro[:rcs_ville].blank?
+        add_error("rcs_ville_manquant", category: "admin", type: "missing")
       end
 
       add_error("pro_assurance_manquant", category: "admin", type: "missing") if @pro[:assurance].blank?
