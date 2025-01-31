@@ -65,6 +65,8 @@ reference_isolant: text;
 surface_isolant: Decimal (m2); 
 epaisseur_isolant: Decimal (cm); 
 resistance_thermique: Decimal (m².K/W);
+norme_calcul_resistance: text; (une des normes NF elligible, par exemple : NF EN 12664); 
+numero_acermi: text, (dont le format est : XX/XX/XXX)
 }
 ```
 

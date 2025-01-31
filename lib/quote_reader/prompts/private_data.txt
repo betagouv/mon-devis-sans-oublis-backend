@@ -32,4 +32,5 @@ Réfléchissez étape par étape.
 
 
 Vous ne répondrez que par le JSON
-Ne fournissez pas d’explications
+Ne fournissez pas d’explications.
+

@@ -216,6 +216,8 @@ fr:
       # validate_isolation_plancher_bas
       isolation_localisation_plancher_bas_manquant: "L'emplacement de l'isolation des planchers bas n'est pas indiqué"
       isolation_localisation_plancher_bas_manquant_infos: "Pour l'isolation des planchers bas, il faut préciser sur quelle pièce cela donne."
+      isolation_norme_acermi_manquant: "La norme de calcul de la résistance ou son numéro ACERMI sont manquants."
+      isolation_norme_acermi_manquant_infos: "faisant référence au respect à l'une des normes NF éligibles selon le dispositif correspondant (ou bien son numéro ACERMI réputant satisfaire les conditions)."
 
 
 

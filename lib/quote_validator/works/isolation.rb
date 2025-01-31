@@ -17,6 +17,15 @@ module QuoteValidator
         add_error("isolation_r_manquant", geste) if geste[:resistance_thermique].blank?
 
         # TODO : V1 - vérifier les normes
+        validate_norme(geste)
+      end
+
+      def valide_norme(geste)
+        acermi = geste[:numero_acermi]
+        norme = geste[:norme_calcul_resistance]
+        if norme.blank? && acermi.blank?
+          add_error("isolation_norme_acermi_manquant", geste)
+        end
       end
 
       def validate_isolation_ite(geste)
