@@ -85,6 +85,8 @@ fr:
       siret_manquant_infos : "Le Numéro SIRET (système d’identification du répertoire des établissements) est une série de 14 chiffres. Il correspond au numéro SIREN (Système d’Identification du Répertoire des Entreprises, à 9 chiffres) délivré lors de la création de la structure, suivi du numéro NIC (numéro interne de classement)."
       siret_format_erreur: "Le numéro de SIRET n'a pas le bon format"
       siret_format_erreur_infos: "Attention, il semblerait que le SIREN ait été utilisé à la place du SIRET. Le SIRET est une série de 14 chiffres."
+      rcs_manquant: "Le N° RCS et ville d'immatriculation (pour les sociétés) ou le N° RNE est manquant"
+      rcs_ville_manquant: "La ville d'immatriculation de la structure effectuant les travaux est manquante."
       pro_adresse_manquant: "L'adresse du siège social est manquante"
       rge_manquant: "Le numéro de certification RGE du professionnel est manquant"
       rge_manquant_infos: "Pour obtenir des aides, le professionel doit avoir le label RGE du geste en question. Merci de préciser le numéro de certification."
