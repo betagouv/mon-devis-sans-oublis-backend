@@ -1,6 +1,8 @@
 name: ci
 
-on: push
+on:
+  push:
+  workflow_dispatch:
 
 env:
   DATABASE_URL: postgres://postgres:dummy@localhost:5432/test
