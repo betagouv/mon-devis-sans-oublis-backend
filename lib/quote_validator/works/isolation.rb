@@ -28,11 +28,18 @@ module QuoteValidator
         end
       end
 
+      def validate_protection(geste)
+        if !geste[:presence_parement] && !geste[:presence_protection] && !geste[:presence_fixation]
+          add_error("isolation_parement_fixation_protection_manquant", geste)
+        end
+      end
+
       def validate_isolation_ite(geste)
         validate_isolation(geste)
         # TODO : check valeur R en V1 - R ≥ 3,7 m².K/W ou R ≥ 4.4 m².K/W si MAR
 
         # TODO : V1 - présence parement, protection et fixation (pour être éligible MPR, TODO quid CEE)
+        validate_protection(geste)
       end
 
       def validate_isolation_combles(geste)
@@ -60,6 +67,7 @@ module QuoteValidator
         # Protection des conduits de fumées
 
         # TODO : V1 - présence parement, protection et fixation (pour être éligible MPR, TODO quid CEE)
+        validate_protection(geste)
       end
 
       def validate_isolation_plancher_bas(geste)

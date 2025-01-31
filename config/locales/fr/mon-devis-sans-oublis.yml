@@ -220,7 +220,8 @@ fr:
       isolation_localisation_plancher_bas_manquant_infos: "Pour l'isolation des planchers bas, il faut préciser sur quelle pièce cela donne."
       isolation_norme_acermi_manquant: "La norme de calcul de la résistance ou son numéro ACERMI sont manquants."
       isolation_norme_acermi_manquant_infos: "faisant référence au respect à l'une des normes NF éligibles selon le dispositif correspondant (ou bien son numéro ACERMI réputant satisfaire les conditions)."
-
+      isolation_parement_fixation_protection_manquant: "La présence d'un parement, d'éléments de protection et d'un système de fixation de l'isolant est manquante"
+      isolation_parement_fixation_protection_manquant_infos: "Pour être éligible aux aides financières, le complexe isolant, fixation d'isolant, protection de l'isolant (ex : plaque de plâtre) doit être réalisé par l'entreprise qualifiée RGE."
 
 
 #################################################
