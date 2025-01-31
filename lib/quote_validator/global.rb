@@ -82,7 +82,7 @@ module QuoteValidator
       end
 
       add_error("rcs_manquant", category: "admin", type: "missing") if @pro[:rcs].blank? && @pro[:rne].blank?
-      if @pro[:rcs].blank? && @pro[:rcs_ville].blank?
+      if @pro[:rcs].present? && @pro[:rcs_ville].blank?
         add_error("rcs_ville_manquant", category: "admin", type: "missing")
       end
 
