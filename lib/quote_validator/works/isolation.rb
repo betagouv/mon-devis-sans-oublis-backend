@@ -20,7 +20,7 @@ module QuoteValidator
         validate_norme(geste)
       end
 
-      def valide_norme(geste)
+      def validate_norme(geste)
         acermi = geste[:numero_acermi]
         norme = geste[:norme_calcul_resistance]
         return unless norme.blank? && acermi.blank?
