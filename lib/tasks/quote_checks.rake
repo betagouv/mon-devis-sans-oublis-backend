@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-namespace :quote_checks do
+namespace :quote_checks do # rubocop:disable Metrics/BlockLength
   desc "Create a QuoteCheck against local file(s) or by diretory"
   task :create, [:file_path] => :environment do |_t, args|
     file_path = args[:file_path]
@@ -26,5 +26,21 @@ namespace :quote_checks do
       puts JSON.pretty_generate(quote_check.attributes)
       puts "QuoteCheck created with id: #{quote_check.id}"
     end
+  end
+
+  desc "Run Fiability checks on flagged QuoteChecks"
+  task fiability: :environment do |_t, _args|
+    # Anonymous temporary class
+    class QuoteCheckToTest < QuoteCheck # rubocop:disable Lint/ConstantDefinitionInBlock
+      establish_connection :test_source
+
+      default_scope { with_expected_value }
+
+      def readonly?
+        true
+      end
+    end
+
+    puts "Found QuoteCheckToTest #{QuoteCheckToTest.count}"
   end
 end
