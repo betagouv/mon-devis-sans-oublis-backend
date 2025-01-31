@@ -244,7 +244,7 @@ Instructions :
 1. Récupérez les informations générales du devis et intégrez-les dans le JSON général.
 2. Pour chaque geste, identifiez le type de geste et récupérez les informations spécifiques en suivant les définitions des JSON spécifiques fournies.
 3. Si un geste ne correspond pas exactement à l'un des types définis dans les JSON spécifiques fournis, ne l'incluez pas dans le JSON final.
-4. Assurez-vous de ne pas mélanger les informations des différents gestes. Repérez les titres et sous-titres dans le devis. Ils sont souvents utilisés pour regrouper les informations par gestes et pour donner du contexte au geste (notamment la localisation dans le logement).
+4. Assurez-vous de ne pas mélanger les informations des différents gestes et de bien identifier les sections et titres. Repérez les titres et sous-titres dans le devis. Ils sont souvents utilisés pour regrouper les informations par gestes et pour donner du contexte au geste (notamment la localisation dans le logement).
 5. Si un attribut n'est pas explicitement mentionné dans le texte, laissez-le vide dans le JSON et ne l'inventez pas.
 6. Lorsqu'un champ du JSON est un enum, utilisez uniquement l'une des options possibles.
 7. Utilisez le titre ou sous-titre de la section pour compléter l'intitulé du geste afin de le clarifier si nécessaire
