@@ -16,6 +16,11 @@ test:
   host: db
   port: 5433
 
+test_source:
+  <<: *default
+  url: <%= ENV.fetch("TEST_SOURCE_DATABASE_URL", ENV.fetch("DATABASE_URL")) %>
+  replica: true
+
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
