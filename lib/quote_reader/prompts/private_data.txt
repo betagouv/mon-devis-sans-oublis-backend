@@ -16,7 +16,7 @@ Rôle : Vous êtes un expert en lecture de devis et vous devez récupérer les d
 - **numeros_tva** : Liste des numéros de TVA mentionnés.
 - **ibans** : Liste des IBAN détectés.
 - **uris** : Liste des URL et site internet détectés.
-- **client_noms** : Liste des Noms propres des clients particuliers mentionnés (individus).
+- **client_noms_de_famille** : Liste des Noms propres des clients particuliers mentionnés (individus).
 - **client_prenoms** : Liste des prénoms des clients particuliers mentionnés (individus).
 - **client_civilite** : Liste des civilités des clients particuliers mentionnés (individus) - cela peut être par exemple M, Mr,M., Mme, Monsieur, Madame ...
 - **client_adresses** : Liste des adresses postales identifiées des clients particuliers mentionnés.
@@ -35,4 +35,3 @@ Réfléchissez étape par étape.
 
 Vous ne répondrez que par le JSON
 Ne fournissez pas d’explications.
-

@@ -43,7 +43,7 @@ module QuoteReader
         @read_attributes = @read_attributes&.merge(
           client: {
             adresse: @read_attributes.dig(:client_adresses, 0),
-            nom: @read_attributes.dig(:client_noms, 0),
+            nom: @read_attributes.dig(:client_noms_de_famille, 0),
             prenom: @read_attributes.dig(:client_prenoms, 0),
             civilite: @read_attributes.dig(:client_civilite, 0)
           }.compact,
