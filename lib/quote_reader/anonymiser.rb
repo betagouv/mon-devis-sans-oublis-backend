@@ -6,7 +6,7 @@ module QuoteReader
     class NotImplementedError < ::NotImplementedError; end
 
     FIELDS_TO_ANONYMISE = [
-      :adresses, :emails, :ibans, :insurances, :rge_labels, :noms, :numero_rge,
+      :adresses, :emails, :ibans, :assurances, :rge_labels, :noms, :numero_rge,
       :capital_social, :numeros_tva, :raison_sociales, :rcss, :numero_rcss, :rnes, :sirets, :telephones, :uris,
       :client_noms_de_famille, :client_prenoms, :pro_noms,
       :client_adresses, :pro_adresses,
