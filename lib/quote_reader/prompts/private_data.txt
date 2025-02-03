@@ -18,7 +18,7 @@ Rôle : Vous êtes un expert en lecture de devis et vous devez récupérer les d
 - **uris** : Liste des URL et site internet détectés.
 - **client_noms_de_famille** : Liste des Noms propres des clients particuliers mentionnés (individus).
 - **client_prenoms** : Liste des prénoms des clients particuliers mentionnés (individus).
-- **client_civilite** : Liste des civilités des clients particuliers mentionnés (individus) - dont voici quelques exemples M, Mr,M., Mme, Monsieur, Madame...etc, La civilité comprise dans le devis peut représenter un couple (2 personnes), comme par exemple au pluriel ou avec un 'et'
+- **client_civilite** : Liste des civilités des clients particuliers mentionnés (individus) - Il s'agit très souvent d'une abréviation dont voici quelques exemples 'M', 'Mr', 'M.', 'Mme', 'Monsieur', 'Madame'...etc, La civilité comprise dans le devis peut représenter un couple (2 personnes), comme par exemple au pluriel ou avec un 'et'.
 - **client_adresses** : Liste des adresses postales identifiées des clients particuliers mentionnés.
 - **pro_adresses** : Liste des adresses postales identifiées des prestataires professionels mentionnés.
 - **forme_juridiques**: Liste des forme juridiques identifiées des prestataires professionnels mentionnés. La forme juridique peut être comprise dans le nom de la structure directement. (quelques exemples : association, SAS, SASU, EURL, SARL, Entrepreneur individuel ...)
