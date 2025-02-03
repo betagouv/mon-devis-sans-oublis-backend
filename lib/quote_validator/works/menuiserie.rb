@@ -18,11 +18,12 @@ module QuoteValidator
         add_error("menuiserie_type_materiau_manquant", geste) if geste[:type_materiaux].blank? # bois, alu, pvc ...
         add_error("menuiserie_localisation_manquant", geste) if geste[:localisation].blank?
 
-        if geste[:type] != "menuiserie_volet_isolant"
-          add_error("menuiserie_type_vitrage_manquant", geste) if geste[:type_vitrage].blank? # simple - double vitrage
-          add_error("menuiserie_type_pose_manquant", geste) if geste[:type_pose].blank? # renovation ou depose totale
-          add_error("menuiserie_position_paroie_manquant", geste) if geste[:position_paroie].blank? # nu intérieur, nu extérieur, tunnel ...
-        end 
+        return unless geste[:type] != "menuiserie_volet_isolant"
+
+        add_error("menuiserie_type_vitrage_manquant", geste) if geste[:type_vitrage].blank? # simple - double vitrage
+        add_error("menuiserie_type_pose_manquant", geste) if geste[:type_pose].blank? # renovation ou depose totale
+        # nu intérieur, nu extérieur, tunnel ...
+        add_error("menuiserie_position_paroie_manquant", geste) if geste[:position_paroie].blank?
       end
       # rubocop:enable Metrics/PerceivedComplexity
       # rubocop:enable Metrics/CyclomaticComplexity
