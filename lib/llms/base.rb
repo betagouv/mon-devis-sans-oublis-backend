@@ -85,7 +85,7 @@ module Llms
         size = model.match(/-(\d+)B-/i)&.to_a&.last.to_i
 
         # Prioritize meta-llama models (-1 for meta-llama, 0 for others)
-        priority = model.include?("meta-llama") ? -1 : 0
+        priority = model.match?(/meta-llama/i) ? -1 : 0
 
         # Sort by priority first, then by size in descending order (negative size)
         [priority, -size]
