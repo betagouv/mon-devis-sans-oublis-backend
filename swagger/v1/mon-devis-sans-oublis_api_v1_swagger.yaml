@@ -413,6 +413,9 @@ components:
             type: string
             description: code d'erreur => message
           nullable: true
+        finished_at:
+          type: datetime
+          nullable: true
       required:
       - id
       - status
