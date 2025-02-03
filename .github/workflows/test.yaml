@@ -95,7 +95,7 @@ jobs:
             --network="host" \
             -e DATABASE_URL="${{ env.DATABASE_URL }}" \
             -v /var/run/docker.sock:/var/run/docker.sock \
-            --rm rails-template bundle exec rspec
+            --rm rails-template bash -c "bin/rails db:environment:set RAILS_ENV=test && bundle exec rspec"
   integration-tests:
     name: "Integration tests: Cucumber"
     runs-on: ubuntu-latest
