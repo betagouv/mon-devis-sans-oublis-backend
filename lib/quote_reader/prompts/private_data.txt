@@ -29,6 +29,7 @@ Instructions :
 1. Récupérez les informations générales du devis et intégrez-les dans le JSON.
 2. Si un attribut n'est pas explicitement mentionné dans le texte, laissez-le vide dans le JSON et ne l'inventez pas.
 3. Le JSON doit avoir maximum 21 entrées et ne pas rajouter d'entrées en plus de celles demandées ci-dessus
+4. Rajoutez dans le JSON, l'attribut suivant : {version: 2.0.0}
 
 
 Réfléchissez étape par étape.
