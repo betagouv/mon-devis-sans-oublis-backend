@@ -4,20 +4,22 @@
 class QuoteCheckService # rubocop:disable Metrics/ClassLength
   attr_reader :quote_check
 
+  # rubocop:disable Metrics/ParameterLists
   def initialize(
     tempfile_or_quote_check, filename = nil,
     profile = nil,
-    metadata: nil, parent_id: nil
+    content_type: nil, metadata: nil, parent_id: nil
   )
     @quote_check = if tempfile_or_quote_check.is_a?(QuoteCheck)
                      tempfile_or_quote_check
                    else
                      QuoteCheckUploadService.new(
                        tempfile_or_quote_check, filename, profile,
-                       metadata:, parent_id:
+                       content_type:, metadata:, parent_id:
                      ).upload
                    end
   end
+  # rubocop:enable Metrics/ParameterLists
 
   def self.quote_fields
     quote_validation = QuoteValidator::Global.new({})

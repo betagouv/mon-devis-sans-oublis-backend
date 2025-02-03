@@ -6,9 +6,13 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  DATABASE_URL: postgres://postgres:dummy@localhost:5432/test
+  FIABILITY_THRESHOLD: 0.6
+
 jobs:
   build:
-    uses: ./.github/workflows/test.yaml
+    uses: ./.github/workflows/build.yaml
   fiability:
     name: "Fiability tests"
     runs-on: ubuntu-latest
@@ -43,4 +47,7 @@ jobs:
             -e DATABASE_URL="${{ env.DATABASE_URL }}" \
             -e TEST_SOURCE_DATABASE_URL="${{ env.TEST_SOURCE_DATABASE_URL }}" \
             -v /var/run/docker.sock:/var/run/docker.sock \
-            --rm rails-template bundle exec rspec
+            --rm rails-template bash -c "bin/rails db:environment:set RAILS_ENV=test && bundle exec rake quote_checks:fiability" | tee output.log
+          if grep -q "❌ FAILED" output.log; then
+            exit 1
+          fi
