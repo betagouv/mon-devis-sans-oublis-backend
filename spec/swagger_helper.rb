@@ -163,6 +163,10 @@ RSpec.configure do |config|
                   description: "code d'erreur => message"
                 },
                 nullable: true
+              },
+              finished_at: {
+                type: :datetime,
+                nullable: true
               }
             },
             required: %w[id status profile]

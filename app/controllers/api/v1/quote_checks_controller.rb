@@ -73,7 +73,8 @@ module Api
           "valid", "errors", "error_details", "error_messages",
           "parent_id",
           "filename",
-          "gestes"
+          "gestes",
+          "finished_at"
         ).compact
       end
       # rubocop:enable Metrics/MethodLength
