@@ -11,7 +11,10 @@ module QuoteReader
       :client_noms_de_famille, :client_prenoms, :pro_noms,
       :client_adresses, :pro_adresses,
       { client: %i[adresse adresse_chantier nom prenom] },
-      { pro: %i[adresse capital forme_juridique rge_labels numero_tva raison_sociale rge_number siret rcs rcs_ville rne assurance] }
+      { pro: %i[
+        adresse capital forme_juridique rge_labels numero_tva
+        raison_sociale rge_number siret rcs rcs_ville rne assurance
+      ] }
     ].freeze
 
     def initialize(raw_text)
