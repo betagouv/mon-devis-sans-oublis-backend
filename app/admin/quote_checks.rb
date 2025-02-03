@@ -134,6 +134,10 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
         it.metadata&.dig("aides")&.join("\n")
       end
 
+      row "Nb erreurs" do
+        it.validation_errors&.count
+      end
+
       row "Correction" do
         link_to "Devis #{it.id}", it.frontend_webapp_url,
                 target: "_blank", rel: "noopener"
