@@ -15,7 +15,7 @@ module Llms
     DEFAULT_MODEL = ENV.fetch("ALBERT_MODEL", "meta-llama/Meta-Llama-3.1-70B-Instruct")
     HOST = "https://albert.api.etalab.gouv.fr/v1"
 
-    def initialize(prompt, model: nil, result_format: :json)
+    def initialize(prompt, model: DEFAULT_MODEL, result_format: :json)
       super
       @api_key = ENV.fetch("ALBERT_API_KEY")
     end
@@ -36,9 +36,11 @@ module Llms
     # - AgentPublic/llama3-instruct-8b (default)
     # - AgentPublic/Llama-3.1-8B-Instruct
     def chat_completion(text, model: nil, model_fallback: true)
+      @model = model if model
+
       uri = URI("#{HOST}/chat/completions")
       body = {
-        model: model || @model || DEFAULT_MODEL,
+        model: @model,
         messages: [
           { role: "system", content: prompt },
           { role: "user", content: text }
@@ -81,7 +83,7 @@ module Llms
     end
 
     def model
-      result&.fetch("model")
+      result&.fetch("model") || super
     end
 
     def usage

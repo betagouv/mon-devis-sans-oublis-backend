@@ -69,7 +69,7 @@ module Llms
     # rubocop:enable Metrics/AbcSize
 
     def model
-      result&.fetch("model")
+      result&.fetch("model") || super
     end
 
     def usage

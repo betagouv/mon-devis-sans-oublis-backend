@@ -47,7 +47,7 @@ class QuoteFile < ApplicationRecord
     Digest::SHA256.file(tempfile).hexdigest
   end
 
-  def self.tempfile_to_file(tempfile, content_type: nil)
+  def self.tempfile_to_file(tempfile, content_type: nil) # rubocop:disable Metrics/MethodLength
     return unless tempfile
 
     content_type = [

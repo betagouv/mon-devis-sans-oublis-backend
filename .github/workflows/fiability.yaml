@@ -7,8 +7,10 @@ on:
   workflow_dispatch:
 
 env:
+  ALBERT_MODEL: ${{ vars.ALBERT_MODEL || 'meta-llama/Llama-3.1-8B-Instruct' }}
   DATABASE_URL: postgres://postgres:dummy@localhost:5432/test
-  FIABILITY_THRESHOLD: 0.6
+  FIABILITY_THRESHOLD: ${{ vars.FIABILITY_THRESHOLD || '0.6' }}
+  MISTRAL_MODEL: ${{ vars.MISTRAL_MODEL || 'mistral-large-latest' }}
 
 jobs:
   build:
@@ -17,6 +19,7 @@ jobs:
     name: "Fiability tests"
     runs-on: ubuntu-latest
     needs: build
+    environment: production
     services:
       postgres:
         # TODO: Fix reuse of POSTGRES_VERSION
@@ -40,11 +43,18 @@ jobs:
           key: ${{ github.sha }}-rails-template
       - run: docker load --input /tmp/rails-template.tar
       - env:
+          ALBERT_API_KEY: ${{ secrets.ALBERT_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
           TEST_SOURCE_DATABASE_URL: ${{ secrets.TEST_SOURCE_DATABASE_URL }}
         run: |
           docker run \
             --network="host" \
+            -e ALBERT_MODEL="${{ env.ALBERT_MODEL }}" \
+            -e ALBERT_API_KEY="${{ env.ALBERT_API_KEY }}" \
             -e DATABASE_URL="${{ env.DATABASE_URL }}" \
+            -e FIABILITY_THRESHOLD="${{ env.FIABILITY_THRESHOLD }}" \
+            -e MISTRAL_MODEL="${{ env.MISTRAL_MODEL }}" \
+            -e MISTRAL_API_KEY="${{ env.MISTRAL_API_KEY }}" \
             -e TEST_SOURCE_DATABASE_URL="${{ env.TEST_SOURCE_DATABASE_URL }}" \
             -v /var/run/docker.sock:/var/run/docker.sock \
             --rm rails-template bash -c "bin/rails db:environment:set RAILS_ENV=test && bundle exec rake quote_checks:fiability" | tee output.log

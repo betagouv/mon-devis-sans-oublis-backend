@@ -90,7 +90,7 @@ namespace :quote_checks do # rubocop:disable Metrics/BlockLength
         new_quote_check.validation_errors.size,
         source_quote_check.expected_validation_errors.size
       ].max
-      total_items += max_errors_count
+      total_items += source_quote_check.expected_validation_errors.size
       total_differences += (0...max_errors_count).to_a.sum do |index|
         new_quote_check.validation_errors[index] == source_quote_check.expected_validation_errors[index] ? 0 : 1
       end
@@ -104,14 +104,19 @@ namespace :quote_checks do # rubocop:disable Metrics/BlockLength
           new_quote_check.validation_errors[index] == source_quote_check.expected_validation_errors[index] ? "✅" : "❌"
         ]
       end)
-
-      fiability = (1 - total_differences).to_f / total_items
-      puts "Fiability of #{fiability.round(2)}"
-
-      succeed = fiability >= Float(ENV.fetch("FIABILITY_THRESHOLD"))
-      puts succeed ? "✅ Succeed" : "❌ FAILED"
-
-      exit 1 unless succeed
     end
+
+    puts "ALBERT_MODEL wished: #{ENV.fetch('ALBERT_MODEL', nil)}"
+    puts "ALBERT_MODEL used: #{Llms::Albert.new('').model}"
+    puts "MISTRAL_MODE wished: #{ENV.fetch('MISTRAL_MODEL', nil)}"
+    puts "MISTRAL_MODEL used: #{Llms::Mistral.new('').model}"
+
+    fiability = 1 - (total_differences.to_f / total_items)
+    puts "Fiability of #{fiability.round(2)} / 1 (best)"
+
+    succeed = fiability >= Float(ENV.fetch("FIABILITY_THRESHOLD"))
+    puts succeed ? "✅ Succeed" : "❌ FAILED"
+
+    exit 1 unless succeed
   end
 end
