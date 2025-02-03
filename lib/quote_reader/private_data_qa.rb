@@ -56,7 +56,7 @@ module QuoteReader
             capital: @read_attributes.dig(:capital_social, 0),
             rge_labels: @read_attributes&.fetch(:numero_rge, []),
             siret: @read_attributes.dig(:sirets, 0),
-            rcs: @read_attributes.dig(:rcss, 0),
+            rcs: @read_attributes.dig(:numero_rcss, 0),
             rcs_ville: @read_attributes.dig(:rcs_villes, 0),
             rne: @read_attributes.dig(:rnes, 0)
           }.compact
