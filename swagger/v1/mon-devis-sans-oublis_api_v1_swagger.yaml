@@ -290,23 +290,24 @@ components:
           items:
             type: string
             enum:
-            - Chaudière à granulés
-            - Chaudière à bûches
+            - Chaudière biomasse
             - Chauffage solaire combiné
-            - Foyer fermé, insert
-            - Poêle à granulés
-            - Poêle à bûches
+            - Poêle/insert à bois/granulés
+            - Pompe à chaleur air / air
             - Pompe à chaleur air / eau
-            - Pompes à chaleur géothermique
+            - Pompe à chaleur géothermique
             - Chauffe-eau solaire individuel
-            - Chauffe-eau thermodynamique
-            - Isolation des murs par l'extérieur
-            - Isolation des murs par l'intérieur
+            - Chauffe-eau thermodynamique (CET)
+            - Isolation des murs par l'extérieur (ITE)
+            - Isolation des murs par l'intérieur (ITI)
+            - Isolation des planchers de combles perdues
             - Isolation de la toiture en pente - plafond de combles
             - Isolation de la toiture-terrasse
-            - Isolation plancher bas (que CEE)
+            - Isolation des planchers bas
             - Remplacement des fenêtres ou porte-fenêtres
+            - Volet isolant
             - Ventilation Mécanique Double-Flux
+            - Ventilation Mécanique Simple-Flux
     quote_check_status:
       type: string
       enum:
