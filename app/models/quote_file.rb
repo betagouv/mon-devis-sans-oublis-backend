@@ -20,9 +20,9 @@ class QuoteFile < ApplicationRecord
   validates :file, attached: true, size: { less_than: 50.megabytes }
 
   # rubocop:disable Metrics/MethodLength
-  def self.find_or_create_file(tempfile, filename)
+  def self.find_or_create_file(tempfile, filename, content_type: nil)
     hexdigest = hexdigest_for_file(tempfile)
-    file = tempfile_to_file(tempfile)
+    file = tempfile_to_file(tempfile, content_type:)
 
     existing_quote_file = find_by(filename:, hexdigest:)
     return existing_quote_file if existing_quote_file
@@ -47,10 +47,14 @@ class QuoteFile < ApplicationRecord
     Digest::SHA256.file(tempfile).hexdigest
   end
 
-  def self.tempfile_to_file(tempfile)
+  def self.tempfile_to_file(tempfile, content_type: nil) # rubocop:disable Metrics/MethodLength
     return unless tempfile
 
-    content_type = MIME::Types.type_for(tempfile.path).first.content_type
+    content_type = [
+      MIME::Types.type_for(tempfile.path).first&.content_type,
+      content_type
+    ].compact.first
+    raise ArgumentError, "Missing content_type for tempfile #{tempfile.path}" unless content_type
 
     {
       io: tempfile,
