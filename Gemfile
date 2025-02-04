@@ -62,6 +62,9 @@ gem "rswag-api" # Serves the generated Swagger documentation
 gem "rswag-ui" # Provides the Swagger UI interface
 gem "sib-api-v3-sdk", require: false # Brevo (ex Sendinblue) API
 
+gem "concurrent-ruby", require: false
+gem "parallel", require: false
+
 # Required for langchainrb
 gem "csv" # Since Ruby > 3.4.0
 gem "faraday"
