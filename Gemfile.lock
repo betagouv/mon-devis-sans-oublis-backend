@@ -562,6 +562,7 @@ DEPENDENCIES
   brakeman
   bundler-audit
   capybara
+  concurrent-ruby
   csv
   cucumber!
   cucumber-rails
@@ -580,6 +581,7 @@ DEPENDENCIES
   langchainrb (>= 0.19)
   mime-types
   ostruct
+  parallel
   pdf-reader
   pg
   puma (~> 6.0)

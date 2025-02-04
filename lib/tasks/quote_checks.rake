@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "parallel"
+require "concurrent"
+
 def print_table(headers, rows) # rubocop:disable Metrics/AbcSize
   widths = headers.map.with_index { |h, i| [h.length, *rows.map { |r| r[i].to_s.length }].max }
 
@@ -63,66 +66,71 @@ namespace :quote_checks do # rubocop:disable Metrics/BlockLength
       end
     end
 
-    total_items = 0
-    total_differences = 0
-    QuoteCheckToTest.includes(:file).order(created_at: :desc).find_each do |source_quote_check| # rubocop:disable Metrics/BlockLength
-      source_quote_file = source_quote_check.file
+    total_items = Concurrent::AtomicFixnum.new(0)
+    total_differences = Concurrent::AtomicFixnum.new(0)
 
-      tempfile = Tempfile.new(
-        source_quote_file.filename,
-        content_type: source_quote_file.content_type
-      )
-      tempfile.binmode # Ensure it handles binary data properly
-      tempfile.write(source_quote_file.content)
-      tempfile.rewind
+    QuoteCheckToTest.includes(:file).order(created_at: :desc).find_in_batches do |source_quote_checks| # rubocop:disable Metrics/BlockLength
+      Parallel.each(source_quote_checks, in_threads: Parallel.processor_count) do |source_quote_check| # rubocop:disable Metrics/BlockLength
+        source_quote_file = source_quote_check.file
 
-      quote_check_service = QuoteCheckService.new(
-        tempfile, source_quote_file.filename,
-        source_quote_check.profile,
-        content_type: source_quote_file.content_type,
-        metadata: source_quote_check.metadata,
-        parent_id: nil # can not reuse it
-      )
-      new_quote_check = quote_check_service.quote_check
-      new_quote_check = QuoteCheckCheckJob.new.perform(new_quote_check.id)
+        tempfile = Tempfile.new(
+          source_quote_file.filename,
+          content_type: source_quote_file.content_type
+        )
+        tempfile.binmode # Ensure it handles binary data properly
+        tempfile.write(source_quote_file.content)
+        tempfile.rewind
 
-      max_errors_count = [
-        new_quote_check.validation_errors.size,
-        source_quote_check.expected_validation_errors.size
-      ].max
-      total_items += source_quote_check.expected_validation_errors.size
-      current_differences = Fiability.count_differences(
-        new_quote_check.validation_errors,
-        source_quote_check.expected_validation_errors
-      )
-      total_differences += current_differences
+        quote_check_service = QuoteCheckService.new(
+          tempfile, source_quote_file.filename,
+          source_quote_check.profile,
+          content_type: source_quote_file.content_type,
+          metadata: source_quote_check.metadata,
+          parent_id: nil # can not reuse it
+        )
+        new_quote_check = quote_check_service.quote_check
+        new_quote_check = QuoteCheckCheckJob.new.perform(new_quote_check.id)
 
-      puts "QuoteCheck #{source_quote_check.id}"
-      print_table(%w[index Expected Result Match?], (0...max_errors_count).to_a.map do |index|
-        [
-          index,
-          source_quote_check.expected_validation_errors[index],
-          new_quote_check.validation_errors[index],
-          new_quote_check.validation_errors[index] == source_quote_check.expected_validation_errors[index] ? "✅" : "❌"
-        ]
-      end)
-      puts "Number of Difference(s): #{current_differences}"
+        max_errors_count = [
+          new_quote_check.validation_errors.size,
+          source_quote_check.expected_validation_errors.size
+        ].max
+        current_items = source_quote_check.expected_validation_errors.size
+        total_items.increment(current_items)
 
-      puts ""
+        current_differences = Fiability.count_differences(
+          new_quote_check.validation_errors,
+          source_quote_check.expected_validation_errors
+        )
+        total_differences.increment(current_differences)
+
+        puts "QuoteCheck #{source_quote_check.id}"
+        print_table(%w[index Expected Result Match?], (0...max_errors_count).to_a.map do |index|
+          [
+            index,
+            source_quote_check.expected_validation_errors[index],
+            new_quote_check.validation_errors[index],
+            new_quote_check.validation_errors[index] == source_quote_check.expected_validation_errors[index] ? "✅" : "❌"
+          ]
+        end)
+        puts "Number of Difference(s): #{current_differences} / #{current_items} items = #{(1 - (current_differences.to_f / current_items)).round(2)}" # rubocop:disable Layout/LineLength
+
+        puts ""
+      end
+
+      puts "ALBERT_MODEL wished: #{ENV.fetch('ALBERT_MODEL', nil)}"
+      puts "ALBERT_MODEL used: #{Llms::Albert.new('').model}"
+      puts "MISTRAL_MODE wished: #{ENV.fetch('MISTRAL_MODEL', nil)}"
+      puts "MISTRAL_MODEL used: #{Llms::Mistral.new('').model}"
+
+      puts "Number of Difference(s): #{total_differences.value}"
+      fiability = 1 - (total_differences.value.to_f / total_items.value)
+      puts "Fiability of #{fiability.round(2)} / 1 (best)"
+
+      succeed = fiability >= Float(ENV.fetch("FIABILITY_THRESHOLD"))
+      puts succeed ? "✅ Succeed" : "❌ FAILED"
+
+      exit 1 unless succeed
     end
-
-    puts "ALBERT_MODEL wished: #{ENV.fetch('ALBERT_MODEL', nil)}"
-    puts "ALBERT_MODEL used: #{Llms::Albert.new('').model}"
-    puts "MISTRAL_MODE wished: #{ENV.fetch('MISTRAL_MODEL', nil)}"
-    puts "MISTRAL_MODEL used: #{Llms::Mistral.new('').model}"
-
-    puts "Number of Difference(s): #{total_differences}"
-    fiability = 1 - (total_differences.to_f / total_items)
-    puts "Fiability of #{fiability.round(2)} / 1 (best)"
-
-    succeed = fiability >= Float(ENV.fetch("FIABILITY_THRESHOLD"))
-    puts succeed ? "✅ Succeed" : "❌ FAILED"
-
-    exit 1 unless succeed
   end
 end
