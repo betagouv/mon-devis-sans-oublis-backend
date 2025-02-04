@@ -6,7 +6,7 @@ module Llms
     class ResultError < StandardError; end
     class TimeoutError < ResultError; end
 
-    attr_reader :prompt, :result_format
+    attr_reader :model, :prompt, :result_format
 
     RESULT_FORMATS = %i[numbered_list json].freeze
 
