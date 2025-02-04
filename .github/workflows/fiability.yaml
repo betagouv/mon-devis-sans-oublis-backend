@@ -57,7 +57,12 @@ jobs:
             -e MISTRAL_API_KEY="${{ env.MISTRAL_API_KEY }}" \
             -e TEST_SOURCE_DATABASE_URL="${{ env.TEST_SOURCE_DATABASE_URL }}" \
             -v /var/run/docker.sock:/var/run/docker.sock \
-            --rm rails-template bash -c "bin/rails db:environment:set RAILS_ENV=test && bundle exec rake quote_checks:fiability" | tee output.log
-          if grep -q "❌ FAILED" output.log; then
+            --rm rails-template bash -c "bin/rails db:environment:set RAILS_ENV=test && bundle exec rake quote_checks:fiability" | tee logs/fiability_test_results.txt
+          if grep -q "❌ FAILED" logs/fiability_test_results.txt; then
             exit 1
           fi
+      - name: Upload Fiability Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: fiability-test-results
+          path: logs/fiability_test_results.txt
