@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # QuoteCheck represents a submission of a quote to be checked.
-class QuoteCheck < ApplicationRecord
+class QuoteCheck < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :file, class_name: "QuoteFile"
   belongs_to :parent, class_name: "QuoteFile", optional: true
 
