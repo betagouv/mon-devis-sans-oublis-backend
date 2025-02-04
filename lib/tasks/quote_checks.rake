@@ -91,10 +91,11 @@ namespace :quote_checks do # rubocop:disable Metrics/BlockLength
         source_quote_check.expected_validation_errors.size
       ].max
       total_items += source_quote_check.expected_validation_errors.size
-      total_differences += Fiability.count_differences(
+      current_differences = Fiability.count_differences(
         new_quote_check.validation_errors,
         source_quote_check.expected_validation_errors
       )
+      total_differences += current_differences
 
       puts "QuoteCheck #{source_quote_check.id}"
       print_table(%w[index Expected Result Match?], (0...max_errors_count).to_a.map do |index|
@@ -105,7 +106,7 @@ namespace :quote_checks do # rubocop:disable Metrics/BlockLength
           new_quote_check.validation_errors[index] == source_quote_check.expected_validation_errors[index] ? "✅" : "❌"
         ]
       end)
-      puts "Number of Difference(s): #{total_differences}"
+      puts "Number of Difference(s): #{current_differences}"
 
       puts ""
     end
@@ -115,6 +116,7 @@ namespace :quote_checks do # rubocop:disable Metrics/BlockLength
     puts "MISTRAL_MODE wished: #{ENV.fetch('MISTRAL_MODEL', nil)}"
     puts "MISTRAL_MODEL used: #{Llms::Mistral.new('').model}"
 
+    puts "Number of Difference(s): #{total_differences}"
     fiability = 1 - (total_differences.to_f / total_items)
     puts "Fiability of #{fiability.round(2)} / 1 (best)"
 
