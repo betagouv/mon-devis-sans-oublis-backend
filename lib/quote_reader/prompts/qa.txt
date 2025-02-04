@@ -9,7 +9,7 @@ Voici les JSON que l'on souhaite récupérer :
 
 ```jsx
 {
-version: "2.0.0";
+version: "2.0.1";
 mention_devis: boolean; 
 numero_devis : text; 
 pro_forme_juridique: text; 
@@ -33,7 +33,7 @@ gestes : [{geste1},{geste2}...]
 {type: 'chauffe_eau_thermo'; 
 intitule: text;
 marque: text; 
-reference: text; 
+reference: text; (Le modèle du chauffe-eau thermodynamique)
 volume: integer (en Litre); 
 ETAS: pourcentage; 
 profil_soutirage: enum(M,L,XL,XXL); 
@@ -160,7 +160,7 @@ puissance: decimal **(kW) (puissance minimaleque la PAC peut fournir en conditio
 regime_temperature: enum(basse, moyenne, haute);
 type_fluide_frigorigene: text;
 COP: decimal;
-SCOP: decimal;
+SCOP: decimal; ##Attention de ne pas confondre le COP et le SCOP !
 puissance_nominale: decimal **(kW) (puissance standardisée utilisée pour le dimensionnement et la comparaison)**
 }
 ```
@@ -247,9 +247,11 @@ Instructions :
 2. Pour chaque geste, identifiez le type de geste et récupérez les informations spécifiques en suivant les définitions des JSON spécifiques fournies.
 3. Si un geste ne correspond pas exactement à l'un des types définis dans les JSON spécifiques fournis, ne l'incluez pas dans le JSON final.
 4. Assurez-vous de ne pas mélanger les informations des différents gestes et de bien identifier les sections et titres. Repérez les titres et sous-titres dans le devis. Ils sont souvents utilisés pour regrouper les informations par gestes et pour donner du contexte au geste (notamment la localisation dans le logement).
-5. Si un attribut n'est pas explicitement mentionné dans le texte, laissez-le vide dans le JSON et ne l'inventez pas.
+5. Assurez-vous de toujours récupérer les attributs de l'équipement lorsqu'ils sont mentionnés dans le texte.
+5 bis. Si un attribut n'est pas explicitement mentionné dans le texte, laissez-le vide dans le JSON et ne l'inventez pas.
 6. Lorsqu'un champ du JSON est un enum, utilisez uniquement l'une des options possibles.
 7. Utilisez le titre ou sous-titre de la section pour compléter l'intitulé du geste afin de le clarifier si nécessaire
+8. La majorité du temps, les gestes sont inscrits dans un tableau à plusieurs colonnes comme par exemple, informations techniques / Quantités / unitités / prix HT / Taux TVA / Montant TTC
 
 
 Réfléchissez étape par étape.
