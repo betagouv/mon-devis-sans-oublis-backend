@@ -37,15 +37,15 @@ fr:
         - group: Eau chaude sanitaire
           values:
             - Chauffe-eau solaire individuel
-            - Chauffe-eau thermodynamique
+            - Chauffe-eau thermodynamique (CET)
         - group: Isolation
           values:
-            - Isolation des murs par l'extérieur
-            - Isolation des murs par l'intérieur
+            - Isolation des murs par l'extérieur (ITE)
+            - Isolation des murs par l'intérieur (ITI)
             - Isolation des planchers de combles perdues
             - Isolation de la toiture en pente - plafond de combles
             - Isolation de la toiture-terrasse
-            - Isolation plancher bas (que CEE)
+            - Isolation des planchers bas
         - group: Menuiserie
           values:
             - Remplacement des fenêtres ou porte-fenêtres
