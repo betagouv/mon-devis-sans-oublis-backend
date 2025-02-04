@@ -104,6 +104,8 @@ namespace :quote_checks do # rubocop:disable Metrics/BlockLength
           new_quote_check.validation_errors[index] == source_quote_check.expected_validation_errors[index] ? "✅" : "❌"
         ]
       end)
+
+      puts ""
     end
 
     puts "ALBERT_MODEL wished: #{ENV.fetch('ALBERT_MODEL', nil)}"
