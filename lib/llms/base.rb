@@ -72,7 +72,7 @@ module Llms
     # rubocop:enable Metrics/AbcSize
 
     def self.extract_json(text)
-      text[/(\{.+\})/im, 1]
+      text[/(\{.+\})/im, 1]&.gsub(/"version": ([\d\.]+)/, '"version": "\1"') # TODO: Remove version temporary fix
     end
 
     def self.extract_jsx(text)
@@ -118,6 +118,9 @@ module Llms
           rescue JSON::ParserError
             raise ResultError, "Parsing JSON inside content: #{content_json_result}"
           end
+          raise ResultError, "No attributes for JSON: #{content_json_result}" if @read_attributes.empty?
+
+          @read_attributes
         end
       end
     end

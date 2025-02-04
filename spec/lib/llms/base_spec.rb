@@ -27,6 +27,22 @@ RSpec.describe Llms::Base, type: :service do
     # rubocop:enable RSpec/ExampleLength
   end
 
+  describe ".extract_json" do
+    let(:text) do
+      <<~TEXT
+        blabla
+        {
+          "version": 2.0.2
+        }
+      TEXT
+    end
+
+    it "returns a hash of items" do
+      json = described_class.extract_json(text)
+      expect(JSON.parse(json)).to include("version" => "2.0.2")
+    end
+  end
+
   describe ".extract_numbered_list" do
     context "when the text is made of one liners" do
       let(:text) do
