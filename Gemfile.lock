@@ -567,6 +567,7 @@ DEPENDENCIES
   cucumber!
   cucumber-rails
   debug
+  diff-lcs
   dotenv-rails
   dsfr-view-components
   factory_bot_rails
