@@ -40,7 +40,6 @@ fr:
             - Chauffe-eau thermodynamique
         - group: Isolation
           values:
-
             - Isolation des murs par l'extérieur
             - Isolation des murs par l'intérieur
             - Isolation des planchers de combles perdues
