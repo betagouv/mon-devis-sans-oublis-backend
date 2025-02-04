@@ -115,13 +115,28 @@ class QuoteCheck < ApplicationRecord
                "must be an array")
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
   def format_metadata
     self.metadata = metadata&.presence
     return unless metadata
 
     self.metadata = JSON.parse(metadata) if metadata.is_a?(String)
     self.metadata = metadata.transform_values(&:presence).compact # Remove empty values
+
+    if metadata&.key?("gestes")
+      metadata["gestes"] = # Backport
+        metadata["gestes"].map do
+          it.gsub("Poêle à granulés", "Poêle/insert à bois/granulés")
+        end
+    end
+
+    metadata
   end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
