@@ -17,7 +17,10 @@ RSpec.describe "/api/v1/quote_checks" do
       expect(json.fetch("aides")).to include("CEE")
       expect(json.fetch("gestes")).to include({
                                                 "group" => "Menuiserie",
-                                                "values" => ["Remplacement des fenêtres ou porte-fenêtres"]
+                                                "values" => [
+                                                  "Remplacement des fenêtres ou porte-fenêtres",
+                                                  "Volet isolant"
+                                                ]
                                               })
     end
     # rubocop:enable RSpec/MultipleExpectations
