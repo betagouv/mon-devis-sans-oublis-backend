@@ -28,31 +28,33 @@ fr:
       gestes:
         - group: "Chauffage"
           values:
-            - Chaudière à granulés
-            - Chaudière à bûches
+            - Chaudière biomasse
             - Chauffage solaire combiné
-            - Foyer fermé, insert
-            - Poêle à granulés
-            - Poêle à bûches
+            - Poêle/insert à bois/granulés
+            - Pompe à chaleur air / air
             - Pompe à chaleur air / eau
-            - Pompes à chaleur géothermique
+            - Pompe à chaleur géothermique
         - group: Eau chaude sanitaire
           values:
             - Chauffe-eau solaire individuel
             - Chauffe-eau thermodynamique
         - group: Isolation
           values:
+
             - Isolation des murs par l'extérieur
             - Isolation des murs par l'intérieur
+            - Isolation des planchers de combles perdues
             - Isolation de la toiture en pente - plafond de combles
             - Isolation de la toiture-terrasse
             - Isolation plancher bas (que CEE)
         - group: Menuiserie
           values:
             - Remplacement des fenêtres ou porte-fenêtres
+            - Volet isolant
         - group: Ventilation
           values:
             - Ventilation Mécanique Double-Flux
+            - Ventilation Mécanique Simple-Flux
   quote_validator:
     error_categories:
       admin: "Mentions administratives"
