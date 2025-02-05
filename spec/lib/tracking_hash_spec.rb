@@ -34,6 +34,15 @@ RSpec.describe TrackingHash, type: :service do
     end
     # rubocop:enable RSpec/MultipleExpectations
     # rubocop:enable RSpec/ExampleLength
+
+    context "with compact option" do
+      it "removes empty values" do
+        expect(described_class.nilify_empty_values(
+                 { "f" => [nil] },
+                 compact: true
+               )).to eq({ "f" => [] })
+      end
+    end
   end
 
   describe "#[]" do
