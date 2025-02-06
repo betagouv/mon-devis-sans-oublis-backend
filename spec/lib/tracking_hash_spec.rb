@@ -14,7 +14,8 @@ RSpec.describe TrackingHash, type: :service do
       expect(described_class.nilify_empty_values(
                {
                  a: { b: nil, c: "c", d: { e: nil, f: [nil, "f", ""], g: "" }, h: "", i: { j: "" } }
-               }
+               },
+               compact_array: false
              )).to eq(
                {
                  a: { b: nil, c: "c", d: { e: nil, f: [nil, "f", nil], g: nil }, h: nil, i: { j: nil } }
@@ -35,10 +36,16 @@ RSpec.describe TrackingHash, type: :service do
     # rubocop:enable RSpec/MultipleExpectations
     # rubocop:enable RSpec/ExampleLength
 
+    it "cleans Array" do
+      expect(described_class.nilify_empty_values(
+               { "e" => nil, "f" => [nil] }
+             )).to eq({ "e" => nil, "f" => [] })
+    end
+
     context "with compact option" do
       it "removes empty values" do
         expect(described_class.nilify_empty_values(
-                 { "f" => [nil] },
+                 { "e" => nil, "f" => [nil] },
                  compact: true
                )).to eq({ "f" => [] })
       end

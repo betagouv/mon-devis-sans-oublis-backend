@@ -26,12 +26,19 @@ class TrackingHash < Hash
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity
 
-  def self.nilify_empty_values(value, compact: false) # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  def self.nilify_empty_values(value, compact: false, compact_array: true) # rubocop:disable Metrics/MethodLength
     subvalue = case value
                when Hash
-                 value.transform_values { nilify_empty_values(it, compact:) }
+                 value.transform_values { nilify_empty_values(it, compact:, compact_array:) }
                when Array
-                 value.map { nilify_empty_values(it, compact:) }
+                 if compact_array
+                   value.filter_map { nilify_empty_values(it, compact:, compact_array:) }
+                 else
+                   value.map { nilify_empty_values(it, compact:, compact_array:) }
+                 end
                when value.presence
                  value
                end
@@ -39,6 +46,9 @@ class TrackingHash < Hash
 
     compact ? subvalue&.compact : subvalue
   end
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
 
   def [](key)
     @keys_accessed.add(key)
