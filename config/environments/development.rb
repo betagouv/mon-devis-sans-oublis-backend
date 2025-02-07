@@ -75,4 +75,16 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
   config.hosts << "host.docker.internal"
+
+  config.web_console.permissions = "127.0.0.1"
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: ENV.fetch("SMTP_ADDRESS", "localhost"),
+    port: ENV.fetch("SMTP_PORT", 1025),
+    domain: "localhost",
+    authentication: nil,
+    enable_starttls_auto: false,
+    openssl_verify_mode: "none"
+  }
 end

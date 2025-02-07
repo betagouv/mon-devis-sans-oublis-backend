@@ -11,8 +11,10 @@ services:
        - '.env.development'
     environment:
       - DATABASE_URL=postgresql://postgres:dummy@db:5433
+      - SMTP_ADDRESS=mailcatcher
     depends_on:
       - db
+      - mailcatcher
   db:
     image: postgres:16
     environment:
@@ -20,3 +22,8 @@ services:
       PGPORT: 5433
     ports:
       - "5433:5433"
+  mailcatcher:
+    image: sj26/mailcatcher
+    ports:
+      - "1080:1080"  # Web UI
+      - "1025:1025"  # SMTP Server
