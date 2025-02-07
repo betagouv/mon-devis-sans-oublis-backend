@@ -102,10 +102,22 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
                 category: "file",
                 type: "error")
     ensure
-      quote_check.assign_attributes(
-        text: quote_reader.text,
+      # TODO: Better fix me
+      # Avoid null bytes inside text field for PostgreSQL
+      text = quote_reader.text
+      anonymised_text = quote_reader.anonymised_text
+      if text&.include?("\x00")
+        ErrorNotifier.notify(
+          StandardError.new("QuoteCheck #{quote_check.id} contains null bytes")
+        )
+        text = text.gsub("\x00", "")
+        anonymised_text = anonymised_text.gsub("\x00", "")
+      end
 
-        anonymised_text: quote_reader.anonymised_text,
+      quote_check.assign_attributes(
+        text:,
+
+        anonymised_text:,
 
         naive_attributes: quote_reader.naive_attributes,
         naive_version: quote_reader.naive_version,
