@@ -360,16 +360,16 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.1.9)
+    rack (2.2.10)
     rack-cors (2.0.2)
       rack (>= 2.0.0)
-    rack-session (2.1.0)
-      base64 (>= 0.1.0)
-      rack (>= 3.0.0)
+    rack-session (1.0.2)
+      rack (< 3)
     rack-test (2.2.0)
       rack (>= 1.3)
-    rackup (2.2.1)
-      rack (>= 3)
+    rackup (1.0.1)
+      rack (< 3)
+      webrick
     rails (7.2.2.1)
       actioncable (= 7.2.2.1)
       actionmailbox (= 7.2.2.1)
@@ -540,6 +540,7 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    webrick (1.9.1)
     websocket-driver (0.7.7)
       base64
       websocket-extensions (>= 0.1.0)
@@ -743,11 +744,11 @@ CHECKSUMS
   puma (6.6.0) sha256=f25c06873eb3d5de5f0a4ebc783acc81a4ccfe580c760cfe323497798018ad87
   raabro (1.4.0) sha256=d4fa9ff5172391edb92b242eed8be802d1934b1464061ae5e70d80962c5da882
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
-  rack (3.1.9) sha256=3d0a390444dcc753ced32978159463f92ac920ae28d7058b6fd633abb9dd349d
+  rack (2.2.10) sha256=e4a5ee3f8f2ba45614a4498114d6dc7da1c51a0f0dd810d891906ea71d3aa72b
   rack-cors (2.0.2) sha256=415d4e1599891760c5dc9ef0349c7fecdf94f7c6a03e75b2e7c2b54b82adda1b
-  rack-session (2.1.0) sha256=437c3916535b58ef71c816ce4a2dee0a01c8a52ae6077dc2b6cd19085760a290
+  rack-session (1.0.2) sha256=a02115e5420b4de036839b9811e3f7967d73446a554b42aa45106af335851d76
   rack-test (2.2.0) sha256=005a36692c306ac0b4a9350355ee080fd09ddef1148a5f8b2ac636c720f5c463
-  rackup (2.2.1) sha256=f737191fd5c5b348b7f0a4412a3b86383f88c43e13b8217b63d4c8d90b9e798d
+  rackup (1.0.1) sha256=ba86604a28989fe1043bff20d819b360944ca08156406812dca6742b24b3c249
   rails (7.2.2.1) sha256=aedb1604b40f4e43b5e8066e5a1aa34dae02c33aa9669b21fd4497d0f8c9bb40
   rails-dom-testing (2.2.0) sha256=e515712e48df1f687a1d7c380fd7b07b8558faa26464474da64183a7426fa93b
   rails-html-sanitizer (1.6.2) sha256=35fce2ca8242da8775c83b6ba9c1bcaad6751d9eb73c1abaa8403475ab89a560
@@ -807,6 +808,7 @@ CHECKSUMS
   view_component (2.83.0) sha256=101a173b263ba539302ae2dbd88da0628e16f6864535f9838116ce1cb749978c
   web-console (4.2.1) sha256=e7bcf37a10ea2b4ec4281649d1cee461b32232d0a447e82c786e6841fd22fe20
   webmock (3.24.0) sha256=be01357f6fc773606337ca79f3ba332b7d52cbe5c27587671abc0572dbec7122
+  webrick (1.9.1) sha256=b42d3c94f166f3fb73d87e9b359def9b5836c426fc8beacf38f2184a21b2a989
   websocket-driver (0.7.7) sha256=056d99f2cd545712cfb1291650fde7478e4f2661dc1db6a0fa3b966231a146b4
   websocket-extensions (0.1.5) sha256=1c6ba63092cda343eb53fc657110c71c754c56484aad42578495227d717a8241
   xpath (3.2.0) sha256=6dfda79d91bb3b949b947ecc5919f042ef2f399b904013eb3ef6d20dd3a4082e
