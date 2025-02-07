@@ -1,20 +1,26 @@
+x-app-base: &app_base
+  build: .
+  volumes:
+    - "./:/app"
+    - "/app/node_modules"
+  env_file:
+    - ".env.development"
+  environment:
+    - DATABASE_URL=postgresql://postgres:dummy@db:5433
+    - SMTP_ADDRESS=mailcatcher
+  depends_on:
+    - db
+    - mailcatcher
+
 services:
   web:
-    build: .
-    volumes:
-      - "./:/app"
-      - "/app/node_modules"
+    <<: *app_base
     ports:
       - "3000:3000"
       - "12345:12345"
-    env_file:
-       - '.env.development'
-    environment:
-      - DATABASE_URL=postgresql://postgres:dummy@db:5433
-      - SMTP_ADDRESS=mailcatcher
-    depends_on:
-      - db
-      - mailcatcher
+  worker:
+    <<: *app_base
+    command: bundle exec good_job start
   db:
     image: postgres:16
     environment:
