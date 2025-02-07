@@ -7,8 +7,8 @@ class QuoteCheckMailer < ApplicationMailer
     return if admin_recipients.blank?
 
     mail(
-      to: recipients.first,
-      cc: recipients[1..],
+      to: admin_recipients.first,
+      cc: admin_recipients[1..],
       subject: subject("Nouveau devis soumis #{quote_check.id}")
     )
   end
