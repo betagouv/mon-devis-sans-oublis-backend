@@ -67,7 +67,7 @@ module Api
                                                                     "id" => geste_id,
                                                                     "valid" =>
                                                                       quote_check.validation_error_details.none? do
-                                                                        it[:geste_id] == geste_id
+                                                                        it["geste_id"] == geste_id
                                                                       end
                                                                   )
                                                                 end
