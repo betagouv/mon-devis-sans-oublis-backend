@@ -45,6 +45,7 @@ module Api
       end
 
       # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/CyclomaticComplexity
       # rubocop:disable Metrics/MethodLength
       def self.quote_check_json(quote_check = nil)
         json_hash = quote_check.attributes.merge({ # Warning: attributes has stringifed keys, so use it too
@@ -83,6 +84,7 @@ module Api
         ).compact
       end
       # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/CyclomaticComplexity
       # rubocop:enable Metrics/AbcSize
 
       protected
