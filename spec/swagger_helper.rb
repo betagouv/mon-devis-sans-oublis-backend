@@ -132,7 +132,6 @@ RSpec.configure do |config|
               filename: { type: :string, nullable: true },
               metadata: { "$ref" => "#/components/schemas/quote_check_metadata", nullable: true },
               profile: { "$ref" => "#/components/schemas/profile" },
-              valid: { type: :boolean, nullable: true },
               gestes: {
                 type: :array,
                 items: {

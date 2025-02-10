@@ -43,7 +43,7 @@ module QuoteCheckPostCheckMetadata
 
   # valid? is already used by the framework
   def quote_valid?
-    validation_version.present? && validation_errors.blank?
+    status == "valid"
   end
 
   def status

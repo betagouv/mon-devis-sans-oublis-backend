@@ -49,7 +49,6 @@ module Api
       def self.quote_check_json(quote_check = nil)
         json_hash = quote_check.attributes.merge({ # Warning: attributes has stringifed keys, so use it too
                                                    "status" => quote_check.status,
-                                                   "valid" => quote_check.quote_valid?,
                                                    "errors" => quote_check.validation_errors,
                                                    "error_details" => quote_check.validation_error_details,
                                                    "error_messages" => quote_check.validation_errors&.index_with do
