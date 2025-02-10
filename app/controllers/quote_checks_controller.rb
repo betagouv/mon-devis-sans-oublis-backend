@@ -71,7 +71,6 @@ class QuoteChecksController < ApplicationController
     @quote_check_json_hash = Api::V1::QuoteChecksController.quote_check_json(quote_check)
 
     @quote_check_json = {
-      valid: @quote_valid,
       errors: @quote_errors,
       error_messages: @quote_errors&.index_with { |error_key| I18n.t("quote_validator.errors.#{error_key}") },
       quote_error_details: @quote_error_details,
