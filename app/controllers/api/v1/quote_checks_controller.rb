@@ -58,10 +58,16 @@ module Api
 
                                                    "gestes" => quote_check.read_attributes&.fetch("gestes", nil) # rubocop:disable Style/SafeNavigationChainLength
                                                                 &.map&.with_index do |geste, geste_index|
+                                                                  geste_id = QuoteValidator::Base.geste_index(
+                                                                    quote_check.id, geste_index
+                                                                  )
+
                                                                   geste.slice("intitule").merge(
-                                                                    "id" => QuoteValidator::Base.geste_index(
-                                                                      quote_check.id, geste_index
-                                                                    )
+                                                                    "id" => geste_id,
+                                                                    "valid" =>
+                                                                      quote_check.validation_error_details.any? do
+                                                                        it[:geste_id] == geste_id
+                                                                      end
                                                                   )
                                                                 end
                                                  })

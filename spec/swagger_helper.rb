@@ -138,7 +138,8 @@ RSpec.configure do |config|
                   type: :object,
                   properties: {
                     id: { type: :string },
-                    intitule: { type: :string }
+                    intitule: { type: :string },
+                    valid: { type: :boolean, nullable: true }
                   }
                 },
                 nullable: true
