@@ -111,7 +111,7 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
           StandardError.new("QuoteCheck #{quote_check.id} contains null bytes")
         )
         text = text.gsub("\x00", "")
-        anonymised_text = anonymised_text.gsub("\x00", "")
+        anonymised_text = anonymised_text&.gsub("\x00", "")
       end
 
       quote_check.assign_attributes(
