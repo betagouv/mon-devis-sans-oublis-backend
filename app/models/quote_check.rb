@@ -3,6 +3,7 @@
 # QuoteCheck represents a submission of a quote to be checked.
 class QuoteCheck < ApplicationRecord
   include QuoteCheckBackoffice
+  include QuoteCheckEdits
   include QuoteCheckFeedbacks
   include QuoteCheckInputMetadata
   include QuoteCheckPostCheckMetadata
