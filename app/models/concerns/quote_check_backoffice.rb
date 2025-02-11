@@ -2,8 +2,15 @@
 
 # Makes QuoteCheck easier for the Backoffice
 module QuoteCheckBackoffice
-  def self.ransackable_attributes(_auth_object = nil)
-    %i[with_expected_value]
+  extend ActiveSupport::Concern
+
+  class_methods do
+    def ransackable_attributes(_auth_object = nil)
+      %i[
+        with_expected_value
+        with_file_error
+      ]
+    end
   end
 
   def frontend_webapp_url
