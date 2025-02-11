@@ -13,6 +13,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
 
   scope "tous", :all, default: true
   scope "avec valeurs test", :with_expected_value
+  scope "fichier en erreur", :with_file_error
 
   controller do
     def update # rubocop:disable Metrics/MethodLength

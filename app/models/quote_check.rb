@@ -23,6 +23,8 @@ class QuoteCheck < ApplicationRecord
 
   delegate :filename, to: :file, allow_nil: true
 
+  scope :with_file_error, -> { where("validation_error_details @> ?", [{ "category" => "file" }].to_json) }
+
   def set_application_version
     self.application_version = Rails.application.config.application_version
   end
