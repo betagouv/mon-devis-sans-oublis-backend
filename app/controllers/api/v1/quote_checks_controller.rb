@@ -30,8 +30,7 @@ module Api
         )
         @quote_check = quote_check_service.quote_check
 
-        QuoteCheckCheckJob.perform_later(@quote_check.id) # Might be time consuming so make it async with background job
-        # @quote_check = QuoteCheckCheckJob.new.perform(@quote_check.id) # Local debug
+        QuoteCheckCheckJob.perform_later(@quote_check.id)
 
         QuoteCheckMailer.created(@quote_check).deliver_later
 
@@ -47,11 +46,17 @@ module Api
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/CyclomaticComplexity
       # rubocop:disable Metrics/MethodLength
+      # rubocop:disable Metrics/PerceivedComplexity
       def self.quote_check_json(quote_check = nil)
         json_hash = quote_check.attributes.merge({ # Warning: attributes has stringifed keys, so use it too
                                                    "status" => quote_check.status,
                                                    "errors" => quote_check.validation_errors,
-                                                   "error_details" => quote_check.validation_error_details,
+                                                   "error_details" => quote_check.validation_error_details&.map do
+                                                     it.merge("deleted" =>
+                                                       quote_check.validation_error_edits&.fetch(
+                                                         it["id"], {}
+                                                       )&.[]("deleted") || false)
+                                                   end,
                                                    "error_messages" => quote_check.validation_errors&.index_with do
                                                      I18n.t("quote_validator.errors.#{it}")
                                                    end,
@@ -83,6 +88,7 @@ module Api
           "finished_at"
         ).compact
       end
+      # rubocop:enable Metrics/PerceivedComplexity
       # rubocop:enable Metrics/MethodLength
       # rubocop:enable Metrics/CyclomaticComplexity
       # rubocop:enable Metrics/AbcSize

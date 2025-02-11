@@ -54,6 +54,9 @@ fr:
           values:
             - Ventilation Mécanique Double-Flux
             - Ventilation Mécanique Simple-Flux
+    validation_error_detail_deletion_reasons:
+      information_not_present: Information en fait présente
+      not_used: Information non utilisé dans notre cas
   quote_validator:
     error_categories:
       admin: "Mentions administratives"
@@ -286,6 +289,3 @@ fr:
       vmc_double_flux_emplacement_bouches_soufflage_manquant: "L'emplacement des bouches de soufflages n'est pas précisé"
       vmc_double_flux_emplacement_bouches_soufflage_manquant_infos: "Attention de vérifier l'absence d'entrées d'air sur toutes les menuiseries."
       vmc_double_flux_nombre_bouches_soufflage_manquant: "Le nombre de bouches de soufflage n'est pas précisé"
-
-
-

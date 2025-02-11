@@ -7,13 +7,18 @@ Rails.application.routes.draw do
       resources :quote_checks, only: %i[create show] do
         collection do
           get :metadata
+          get :error_detail_deletion_reasons,
+              to: "quote_checks_validation_error_details#validation_error_detail_deletion_reasons"
         end
 
         resources :feedbacks, only: %i[create], controller: "quote_check_feedbacks"
-        resources :quote_check_validation_error_details,
+        resources :quote_checks_validation_error_details,
                   path: "error_details",
                   as: :validation_error_details,
-                  only: %i[] do
+                  only: %i[destroy] do
+          member do
+            post "", action: :create
+          end
           resources :feedbacks, only: %i[create], controller: "quote_check_feedbacks"
         end
       end

@@ -31,6 +31,7 @@ module QuoteReader
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/PerceivedComplexity
     # Recursive method to replace text from attributes, like Rails parameters
     def self.replace_text_from_attributes(attributes, fields_or_field, text, max_size: nil)
       attributes = ActiveSupport::HashWithIndifferentAccess.new(attributes)
@@ -67,6 +68,7 @@ module QuoteReader
 
       raise NotImplementedError, "#{fields_or_field.class} is not implemented"
     end
+    # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize

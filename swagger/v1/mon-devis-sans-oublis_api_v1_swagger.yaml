@@ -88,6 +88,79 @@ paths:
                 required:
                 - validation_error_details_id
                 - comment
+  "/quote_checks/error_detail_deletion_reasons":
+    get:
+      summary: Récupérer les profils disponibles
+      tags:
+      - Devis
+      - Erreurs
+      responses:
+        '200':
+          description: liste des raisons de suppression d'erreur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties:
+                      "$ref": "#/components/schemas/quote_check_error_deletion_reason_code"
+                required:
+                - data
+  "/quote_checks/{quote_check_id}/error_details/{error_details_id}":
+    post:
+      summary: Ré-ajouter un détail d'erreur
+      tags:
+      - Devis
+      - Erreurs
+      security:
+      - basic_auth: []
+      parameters:
+      - name: quote_check_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: error_details_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: détail d'erreur ré-ajouté
+    delete:
+      summary: Supprimer un détail d'erreur
+      tags:
+      - Devis
+      - Erreurs
+      security:
+      - basic_auth: []
+      parameters:
+      - name: quote_check_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: error_details_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: reason
+        in: query
+        schema:
+          oneOf:
+          - "$ref": "#/components/schemas/quote_check_error_deletion_reason_code"
+          - type: string
+            maxLength: 255
+        description: Raison de la suppression (soit un code quote_check_error_deletion_reason_code
+          ou champs libre)
+        maxLength: 255
+      responses:
+        '204':
+          description: détail d'erreur supprimé
   "/quote_checks/{quote_check_id}/error_details/{error_details_id}/feedbacks":
     post:
       summary: Déposer un retour
@@ -325,7 +398,10 @@ components:
         technique des gestes'
     quote_check_error_code:
       type: string
-      description: code d'erreur
+      description: code d'erreur de validation
+    quote_check_error_deletion_reason_code:
+      type: string
+      description: code de raison de suppression d'erreur, remplaçant le message d'erreur
     quote_check_error_type:
       type: string
       enum:
@@ -361,6 +437,9 @@ components:
         value:
           type: string
           description: DEPRECATED
+        deleted:
+          type: boolean
+          nullable: true
       required:
       - id
       - code
@@ -383,9 +462,6 @@ components:
           nullable: true
         profile:
           "$ref": "#/components/schemas/profile"
-        valid:
-          type: boolean
-          nullable: true
         gestes:
           type: array
           items:
@@ -395,6 +471,9 @@ components:
                 type: string
               intitule:
                 type: string
+              valid:
+                type: boolean
+                nullable: true
           nullable: true
         errors:
           type: array

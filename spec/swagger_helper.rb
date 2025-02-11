@@ -92,7 +92,11 @@ RSpec.configure do |config|
           quote_check_error_code: {
             type: :string,
             # enum: QuoteCheck::ERRORS, # TODO
-            description: "code d'erreur"
+            description: "code d'erreur de validation"
+          },
+          quote_check_error_deletion_reason_code: {
+            type: :string,
+            description: "code de raison de suppression d'erreur, remplaçant le message d'erreur"
           },
           quote_check_error_type: {
             type: :string,
@@ -116,7 +120,8 @@ RSpec.configure do |config|
               problem: { type: :string, description: "Réutilisez le title si vide" },
               solution: { type: :string, description: "peut-être vide" },
               provided_value: { type: :string, description: "peut-être vide, ou ligne du geste correspondant" },
-              value: { type: :string, description: "DEPRECATED" }
+              value: { type: :string, description: "DEPRECATED" },
+              deleted: { type: :boolean, nullable: true }
             },
             required: %w[id code]
           },
