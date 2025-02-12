@@ -9,6 +9,7 @@ module QuoteCheckBackoffice
       %i[
         with_expected_value
         with_file_error
+        with_edits
       ]
     end
   end

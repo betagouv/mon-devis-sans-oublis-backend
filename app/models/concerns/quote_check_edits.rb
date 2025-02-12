@@ -13,6 +13,8 @@ module QuoteCheckEdits
   included do
     before_validation :format_validation_error_edits
     validate :validation_error_edits_data
+
+    scope :with_edits, -> { where.not(validation_error_edits: nil) }
   end
 
   def delete_validation_error_detail!(error_id, reason: nil)

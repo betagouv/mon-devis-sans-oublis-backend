@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+def geste_errors(quote_check, geste_index)
+  geste_id = QuoteValidator::Base.geste_index(
+    quote_check.id, geste_index
+  )
+  quote_check.validation_error_details&.select { |error| error["geste_id"] == geste_id }
+end
+
 # rubocop:disable Rails/I18nLocaleTexts
 ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
   actions :index, :show, :edit, :update
@@ -14,6 +21,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
   scope "tous", :all, default: true
   scope "avec valeurs test", :with_expected_value
   scope "fichier en erreur", :with_file_error
+  scope "devis avec corrections", :with_edits
 
   controller do
     def update # rubocop:disable Metrics/MethodLength
@@ -188,15 +196,46 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       end
 
       tab "Attributs détectés" do # rubocop:disable Metrics/BlockLength
-        panel "Gestes" do
+        panel "Gestes" do # rubocop:disable Metrics/BlockLength
           gestes = resource.read_attributes&.dig("gestes")
           if gestes&.any?
-            table_for gestes do
+            table_for gestes do # rubocop:disable Metrics/BlockLength
               column "Type" do |geste|
                 geste.fetch("type")
               end
               column "Attributs" do |geste|
                 pre JSON.pretty_generate(geste)
+              end
+              column "Erreur(s) et correction(s)" do |geste|
+                geste_errors = geste_id_errors(resource, gestes.index(geste))
+
+                if geste_errors.any?
+                  content_tag(:ul) do
+                    geste_errors.map do
+                      content = "#{it.fetch('code')} : #{it.fetch('title')} #{it.fetch('id')}"
+
+                      edit = resource.validation_error_edits&.dig(it.fetch("id"))
+                      if edit
+                        deletetion_reason = edit["reason"]
+                        if deletetion_reason # rubocop:disable Metrics/BlockNesting
+                          deletetion_reason = I18n.t(
+                            "quote_checks.validation_error_detail_deletion_reasons.#{deletetion_reason}",
+                            fallback: deletetion_reason
+                          )
+                        end
+
+                        content = safe_join([
+                                              content,
+                                              content_tag(:br),
+                                              content_tag(:strong,
+                                                          ["\nSupprimée", deletetion_reason].compact.join(" : "))
+                                            ])
+                      end
+
+                      concat(content_tag(:li, content))
+                    end
+                  end
+                end
               end
             end
           end
