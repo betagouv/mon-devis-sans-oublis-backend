@@ -29,8 +29,12 @@ composants DSFR](https://github.com/betagouv/dsfr-view-components)
 
 ## Moteur et fonctionnement interne / Architecture
 
-Les fichiers devis sont traités par le `QuoteChecksController` qui les envoient aux services:
+Nous suivons les recommendations et les conventions du framework Ruby on Rails et de la communauté.
 
+- dossier `lib` : pour les parties isolées qui pourraient être externalisées, comme la communication avec des services externes
+- dossier `app/services` : pour organiser la logique métier propre et interne à notre projet
+
+Les fichiers devis sont traités par le `QuoteChecksController` qui les envoient aux services:
 - `QuoteReader` lisant le devis brut puis extractant les information du devis de manière naïve en se basant sur le texte du PDF et via solutions LLM avec croisement de données d'annuaires publiques de la rénovation
 - puis ces attributs de devis sont vérifier par le `QuoteValdiator` qui controlle un ensemble de règles et renvoit les erreurs correspondantes
 
