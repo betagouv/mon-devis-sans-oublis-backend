@@ -207,7 +207,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
                 pre JSON.pretty_generate(geste)
               end
               column "Erreur(s) et correction(s)" do |geste|
-                geste_errors = geste_id_errors(resource, gestes.index(geste))
+                geste_errors = geste_errors(resource, gestes.index(geste))
 
                 if geste_errors.any?
                   content_tag(:ul) do
