@@ -162,5 +162,31 @@ Et qu'il faut boucler sur l'appel /quote_check/:id pour récupérer le devis à 
         run_test!
       end
     end
+
+    patch "Mettre à jour un Devis" do
+      tags "Devis"
+      security [basic_auth: []]
+      consumes "application/json"
+      produces "application/json"
+      parameter name: :id, in: :path, type: :string, required: true
+
+      parameter name: :quote_check, in: :body, schema: {
+        type: :object,
+        properties: {
+          comment: { type: :string }
+        }
+      }
+
+      response "200", "Devis mis à jour" do
+        schema "$ref" => "#/components/schemas/quote_check"
+
+        let(:id) { create(:quote_check).id }
+        let(:quote_check) { { comment: "test" } }
+
+        let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
+
+        run_test!
+      end
+    end
   end
 end

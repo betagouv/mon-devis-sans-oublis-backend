@@ -4,6 +4,7 @@
 module QuoteCheckEdits
   extend ActiveSupport::Concern
 
+  MAX_COMMENT_LENGTH = 1_000
   MAX_EDITION_REASON_LENGTH = 255
   VALIDATION_ERROR_DELETION_REASONS = %w[
     information_not_present
@@ -11,6 +12,8 @@ module QuoteCheckEdits
   ].freeze
 
   included do
+    validates :comment, length: { maximum: MAX_COMMENT_LENGTH }
+
     before_validation :format_validation_error_edits
     validate :validation_error_edits_data
 
@@ -52,6 +55,10 @@ module QuoteCheckEdits
 
       if validation_error_details.none? { it.fetch("id") == error_id }
         errors.add(:validation_error_edits, "erreur #{error_id} inconnue")
+      end
+
+      if edit["reason"].to_s.length > MAX_EDITION_REASON_LENGTH
+        errors.add(:validation_error_edits, "reason in #{error_id} exceeds #{MAX_EDITION_REASON_LENGTH} chars")
       end
     end
   end

@@ -307,6 +307,33 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/api_error"
+    patch:
+      summary: Mettre à jour un Devis
+      tags:
+      - Devis
+      security:
+      - basic_auth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Devis mis à jour
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/quote_check"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
   "/stats":
     get:
       summary: Récupérer les stats
@@ -437,6 +464,11 @@ components:
         value:
           type: string
           description: DEPRECATED
+        comment:
+          type: string
+          nullable: true
+          description: commentaire manuel (humain), vide ou null pour retirer
+          maxLength: 1000
         deleted:
           type: boolean
           nullable: true
@@ -496,6 +528,11 @@ components:
         finished_at:
           type: datetime
           nullable: true
+        comment:
+          type: string
+          nullable: true
+          description: commentaire manuel (humain), vide ou null pour retirer
+          maxLength: 1000
       required:
       - id
       - status

@@ -96,8 +96,12 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       it.validation_errors&.count
     end
 
-    column "Présence d’un feedback ?" do
+    column "Présence feedback ?" do
       it.feedbacks.any?
+    end
+
+    column "Présence commentaire ?" do
+      it.comment.present?
     end
 
     column "Date soumission" do
@@ -151,6 +155,8 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
         link_to "Devis #{it.id}", it.frontend_webapp_url,
                 target: "_blank", rel: "noopener"
       end
+
+      row :comment, label: "Commentaire"
 
       row "temps traitement" do
         "#{resource.processing_time.ceil(1)}s" if resource.processing_time
