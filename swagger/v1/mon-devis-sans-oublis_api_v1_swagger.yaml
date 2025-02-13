@@ -161,6 +161,35 @@ paths:
       responses:
         '204':
           description: détail d'erreur supprimé
+    patch:
+      summary: Mettre à jour un détail d'erreur
+      tags:
+      - Devis
+      - Erreurs
+      security:
+      - basic_auth: []
+      parameters:
+      - name: quote_check_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: error_details_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: détail d'erreur mis à jour
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
   "/quote_checks/{quote_check_id}/error_details/{error_details_id}/feedbacks":
     post:
       summary: Déposer un retour

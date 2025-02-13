@@ -73,5 +73,33 @@ describe "Error Details edition API" do
         run_test!
       end
     end
+
+    patch "Mettre à jour un détail d'erreur" do
+      tags "Devis", "Erreurs"
+      security [basic_auth: []]
+      consumes "application/json"
+      produces "application/json"
+
+      parameter name: :quote_check_id, in: :path, type: :string, required: true
+      parameter name: :error_details_id, in: :path, type: :string, required: true
+
+      parameter name: :error_details, in: :body, schema: {
+        type: :object,
+        properties: {
+          comment: { type: :string }
+        }
+      }
+
+      let(:quote_check) { create(:quote_check, :invalid) }
+      let(:quote_check_id) { quote_check.id }
+      let(:error_details_id) { quote_check.validation_error_details.first.fetch("id") }
+      let(:error_details) { { comment: "test" } }
+
+      response "200", "détail d'erreur mis à jour" do
+        let(:Authorization) { basic_auth_header.fetch("Authorization") } # rubocop:disable RSpec/VariableName
+
+        run_test!
+      end
+    end
   end
 end

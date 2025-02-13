@@ -20,13 +20,24 @@ module QuoteCheckEdits
     scope :with_edits, -> { where.not(validation_error_edits: nil) }
   end
 
+  def comment_validation_error_detail!(error_id, comment)
+    self.validation_error_edits ||= {}
+    validation_error_edits[error_id] ||= {}
+    validation_error_edits[error_id].merge!(
+      comment: comment&.presence&.first(MAX_COMMENT_LENGTH)
+    )
+
+    save!
+  end
+
   def delete_validation_error_detail!(error_id, reason: nil)
     self.validation_error_edits ||= {}
-    validation_error_edits[error_id] = {
+    validation_error_edits[error_id] ||= {}
+    validation_error_edits[error_id].merge!(
       deleted: true,
       deleted_at: Time.zone.now,
-      reason: reason&.first(QuoteCheck::MAX_EDITION_REASON_LENGTH)
-    }
+      reason: reason&.presence&.first(QuoteCheck::MAX_EDITION_REASON_LENGTH)
+    )
 
     save!
   end
@@ -42,11 +53,18 @@ module QuoteCheckEdits
   end
 
   def readd_validation_error_detail!(validation_error_id)
-    self.validation_error_edits = validation_error_edits&.except(validation_error_id).presence
+    if validation_error_edits&.key?(validation_error_id)
+      self.validation_error_edits[validation_error_id] = validation_error_edits[validation_error_id]
+                                                         .except("deleted", "deleted_at", "reason").presence
+    end
 
     save!
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
   def validation_error_edits_data
     return unless validation_error_edits
 
@@ -57,9 +75,17 @@ module QuoteCheckEdits
         errors.add(:validation_error_edits, "erreur #{error_id} inconnue")
       end
 
-      if edit["reason"].to_s.length > MAX_EDITION_REASON_LENGTH
+      if edit["reason"] && edit["reason"].length > MAX_EDITION_REASON_LENGTH
         errors.add(:validation_error_edits, "reason in #{error_id} exceeds #{MAX_EDITION_REASON_LENGTH} chars")
       end
+
+      if edit["comment"] && edit["comment"].length > MAX_COMMENT_LENGTH
+        errors.add(:validation_error_edits, "comment in #{error_id} exceeds #{MAX_COMMENT_LENGTH} chars")
+      end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
   end
 end

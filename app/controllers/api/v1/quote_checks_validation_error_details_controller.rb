@@ -13,6 +13,15 @@ module Api
         head :created
       end
 
+      def update
+        quote_check.comment_validation_error_detail!(
+          validation_error_details.fetch("id"),
+          validation_error_details_edit_params.fetch(:comment)
+        )
+
+        head :ok
+      end
+
       def destroy
         quote_check.delete_validation_error_detail!(
           validation_error_details.fetch("id"),
@@ -34,6 +43,10 @@ module Api
 
       def quote_check
         @quote_check ||= QuoteCheck.find(params[:quote_check_id])
+      end
+
+      def validation_error_details_edit_params
+        params.permit(:comment)
       end
 
       def validation_error_details
