@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_10_155140) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_13_085455) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -174,6 +174,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_10_155140) do
     t.string "application_version"
     t.jsonb "expected_validation_errors"
     t.jsonb "validation_error_edits"
+    t.text "comment"
     t.index ["file_id"], name: "index_quote_checks_on_file_id"
     t.index ["parent_id"], name: "index_quote_checks_on_parent_id"
   end

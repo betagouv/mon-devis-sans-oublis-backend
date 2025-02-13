@@ -5,7 +5,7 @@ module Api
     # Controller for QuoteChecks API
     class QuoteChecksController < BaseController
       before_action :authorize_request, except: :metadata
-      before_action :quote_check, only: %i[show]
+      before_action :quote_check, except: %i[create metadata]
 
       def show
         # Force to use async way by using show to get other fields
@@ -38,6 +38,12 @@ module Api
       end
       # rubocop:enable Metrics/MethodLength
       # rubocop:enable Metrics/AbcSize
+
+      def update
+        quote_check.update!(quote_check_edit_params)
+
+        render json: quote_check_json
+      end
 
       def metadata
         render json: I18n.t("quote_checks.metadata").to_json
@@ -105,6 +111,10 @@ module Api
 
       def quote_check_params
         params.permit(:file, :metadata, :profile, :parent_id)
+      end
+
+      def quote_check_edit_params
+        params.permit(:comment)
       end
     end
   end

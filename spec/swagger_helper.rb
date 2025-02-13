@@ -121,6 +121,12 @@ RSpec.configure do |config|
               solution: { type: :string, description: "peut-être vide" },
               provided_value: { type: :string, description: "peut-être vide, ou ligne du geste correspondant" },
               value: { type: :string, description: "DEPRECATED" },
+              comment: {
+                type: :string,
+                nullable: true,
+                description: "commentaire manuel (humain), vide ou null pour retirer",
+                maxLength: QuoteCheck::MAX_COMMENT_LENGTH
+              },
               deleted: { type: :boolean, nullable: true }
             },
             required: %w[id code]
@@ -172,6 +178,12 @@ RSpec.configure do |config|
               finished_at: {
                 type: :datetime,
                 nullable: true
+              },
+              comment: {
+                type: :string,
+                nullable: true,
+                description: "commentaire manuel (humain), vide ou null pour retirer",
+                maxLength: QuoteCheck::MAX_COMMENT_LENGTH
               }
             },
             required: %w[id status profile]
