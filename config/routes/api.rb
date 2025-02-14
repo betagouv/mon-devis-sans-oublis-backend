@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         resources :quote_checks_validation_error_details,
                   path: "error_details",
                   as: :validation_error_details,
-                  only: %i[destroy] do
+                  only: %i[destroy update] do
           member do
             post "", action: :create
           end

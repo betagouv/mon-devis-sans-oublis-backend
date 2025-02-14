@@ -58,10 +58,15 @@ module Api
                                                    "status" => quote_check.status,
                                                    "errors" => quote_check.validation_errors,
                                                    "error_details" => quote_check.validation_error_details&.map do
-                                                     it.merge("deleted" =>
-                                                       quote_check.validation_error_edits&.fetch(
+                                                     it.merge(
+                                                       "comment" => quote_check.validation_error_edits&.fetch(
                                                          it["id"], {}
-                                                       )&.[]("deleted") || false)
+                                                       )&.[]("comment") || nil,
+                                                       "deleted" =>
+                                                        quote_check.validation_error_edits&.fetch(
+                                                          it["id"], {}
+                                                        )&.[]("deleted") || false
+                                                     )
                                                    end,
                                                    "error_messages" => quote_check.validation_errors&.index_with do
                                                      I18n.t("quote_validator.errors.#{it}")
