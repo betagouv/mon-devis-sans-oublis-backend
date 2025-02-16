@@ -292,7 +292,9 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       end
 
       tab "6. Retour API pour frontend" do
-        pre JSON.pretty_generate(Api::V1::QuoteChecksController.quote_check_json(resource))
+        pre JSON.pretty_generate(
+          QuoteCheckSerializer.new(resource).as_json
+        )
       end
     end
   end

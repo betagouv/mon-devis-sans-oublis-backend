@@ -14,11 +14,11 @@ module Api
 
       private
 
-      def api_error(error, message, status)
+      def api_error(error, message = nil, status = :bad_request)
         render json: {
           error: error,
-          message: Array.wrap(message)
-        }, status: status
+          message: Array.wrap(message).presence
+        }.compact, status: status
       end
 
       def handle_parameter_missing(exception)
