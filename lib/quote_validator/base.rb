@@ -52,10 +52,17 @@ module QuoteValidator
         ErrorNotifier.notify(e)
       end
 
+      geste_id = geste && self.class.geste_index(quote_id, quote.fetch("gestes")&.index(geste))
+
+      if error_details.any? { |it| it.key?(:geste_id) && it.fetch(:geste_id) == geste_id && it.fetch(:code) == code }
+        e = ArgumentError.new("Already error with code '#{code}' for geste_id '#{geste_id}'")
+        ErrorNotifier.notify(e)
+      end
+
       error_details << TrackingHash.nilify_empty_values(
         {
           id: [quote_id, error_details.count + 1].compact.join("-"),
-          geste_id: geste && self.class.geste_index(quote_id, quote.fetch("gestes")&.index(geste)),
+          geste_id:,
           code:,
           category:, type:,
           title: title || I18n.t("quote_validator.errors.#{code}"),
