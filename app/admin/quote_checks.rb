@@ -128,6 +128,10 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
         end
       end
 
+      row "Date soumission" do
+        resource.started_at
+      end
+
       row :tokens_count, "Nb de token" do
         number_with_delimiter(it.tokens_count, delimiter: " ")
       end
