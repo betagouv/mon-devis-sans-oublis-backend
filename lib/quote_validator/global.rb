@@ -36,7 +36,8 @@ module QuoteValidator
 
       # date_debut_chantier
       date_chantier = quote[:date_debut_chantier]
-      add_error("date_chantier_manquant", category: "admin", type: "warning") if date_chantier.blank?
+      delai_chantier = quote[:delai_debut_chantier]
+      add_error("date_chantier_manquant", category: "admin", type: "warning") if date_chantier.blank? && delai_debut_chantier.blank?
 
       # date_pre_visite
       add_error("date_pre_visite_manquant", category: "admin", type: "warning") if quote[:date_pre_visite].blank?
