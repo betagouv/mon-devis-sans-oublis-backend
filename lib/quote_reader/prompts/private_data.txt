@@ -13,7 +13,7 @@ Rôle : Vous êtes un expert en lecture de devis et vous devez récupérer les d
 - **assurances** : Liste des numéros et références liées à des contrats d'assurance, notamment l'assurance décennale.
 - **numero_rge** : Liste des numéros de certification RGE mentionnés. (le format doit être comme un des exemples ci après QB/74612,QS/51778, QPV/59641, QPAC/59641, CPLUS/67225, VPLUS/49707, RE/75071, QFRG/49335, E-E181506  ou RE16128)
 - **emails** : Liste des adresses email identifiables.
-- **numeros_tva** : Liste des numéros de TVA mentionnés.
+- **numeros_tva** : Liste des numéros de TVA mentionnés (peut être assimilé au Numéro d’Identification Intracommunautaire)
 - **ibans** : Liste des IBAN détectés.
 - **uris** : Liste des URL et site internet détectés.
 - **client_noms_de_famille** : Liste des Noms propres des clients particuliers mentionnés (individus).
