@@ -151,7 +151,9 @@ module QuoteValidator
       ventilation = Works::Ventilation.new(quote, quote_id:, error_details:)
 
       gestes = quote[:gestes] || []
-      gestes.each do |geste| # rubocop:disable Metrics/BlockLength
+      gestes.each_with_index do |geste, index| # rubocop:disable Metrics/BlockLength
+        geste[:index] = index
+
         case geste[:type]
 
         # ISOLATION

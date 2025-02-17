@@ -52,7 +52,7 @@ module QuoteValidator
         ErrorNotifier.notify(e)
       end
 
-      geste_id = geste && self.class.geste_index(quote_id, quote.fetch("gestes")&.index(geste))
+      geste_id = self.class.geste_index(quote_id, geste[:index]) if geste
 
       if error_details.any? { |it| it.key?(:geste_id) && it.fetch(:geste_id) == geste_id && it.fetch(:code) == code }
         e = ArgumentError.new("Already error with code '#{code}' for geste_id '#{geste_id}'")
