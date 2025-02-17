@@ -32,6 +32,7 @@ Instructions :
 4. Le JSON doit avoir maximum 21 entrées et ne pas rajouter d'entrées en plus de celles demandées ci-dessus
 5. Rajoutez dans le JSON, l'attribut suivant : {version: 2.0.3}
 6. Ne déduisez aucune information. Si une information n'est pas présente dans le texte, laissez le champ vide.
+7. Si le texte fournis n'est pas exploitable, renvoyez le json suivant : {bad_file: true}
 
 
 Réfléchissez étape par étape.
