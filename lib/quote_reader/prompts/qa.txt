@@ -9,7 +9,7 @@ Voici les JSON que l'on souhaite récupérer :
 
 ```jsx
 {
-version: "2.0.1";
+version: "2.0.2";
 mention_devis: boolean; 
 numero_devis : text; 
 pro_forme_juridique: text; 
