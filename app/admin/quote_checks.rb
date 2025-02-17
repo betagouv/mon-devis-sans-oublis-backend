@@ -206,16 +206,17 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       tab "Attributs détectés" do # rubocop:disable Metrics/BlockLength
         panel "Gestes" do # rubocop:disable Metrics/BlockLength
           gestes = resource.read_attributes&.dig("gestes")
+
           if gestes&.any?
-            table_for gestes do # rubocop:disable Metrics/BlockLength
-              column "Type" do |geste|
+            table_for gestes.each_with_index do # rubocop:disable Metrics/BlockLength
+              column "Type" do |geste,|
                 geste.fetch("type")
               end
-              column "Attributs" do |geste|
+              column "Attributs" do |geste,|
                 pre JSON.pretty_generate(geste)
               end
-              column "Erreur(s) et correction(s)" do |geste|
-                geste_errors = geste_errors(resource, gestes.index(geste))
+              column "Erreur(s) et correction(s)" do |_, geste_index|
+                geste_errors = geste_errors(resource, geste_index)
 
                 if geste_errors&.any?
                   content_tag(:ul) do
