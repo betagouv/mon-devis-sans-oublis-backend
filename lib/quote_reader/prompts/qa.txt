@@ -259,4 +259,3 @@ Vous ne répondrez que par un objet JSON qui concatene le JSON général et tous
 Ne fournissez pas d’explications.
 voici le texte du devis anonymise :
 
-"Powered by TCPDF (www.tcpdf.org)"
