@@ -18,6 +18,7 @@ Style/Documentation:
   Exclude:
     - 'app/config/application.rb'
     - 'app/mailers/**/*.rb'
+    - 'app/serializers/**/*.rb'
     - 'db/migrate/**/*.rb'
 Style/StringLiterals:
   Enabled: true

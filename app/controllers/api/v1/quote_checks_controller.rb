@@ -18,7 +18,7 @@ module Api
         upload_file = quote_check_params[:file]
 
         if upload_file.blank?
-          render json: { error: "No file uploaded" }, status: :unprocessable_entity
+          api_error("No file uploaded", nil, :unprocessable_entity)
           return
         end
 
@@ -34,7 +34,7 @@ module Api
 
         QuoteCheckMailer.created(@quote_check).deliver_later
 
-        render json: quote_check_json(@quote_check), status: :created
+        render json: quote_check_json, status: :created
       end
       # rubocop:enable Metrics/MethodLength
       # rubocop:enable Metrics/AbcSize
@@ -49,69 +49,14 @@ module Api
         render json: I18n.t("quote_checks.metadata").to_json
       end
 
-      # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Metrics/CyclomaticComplexity
-      # rubocop:disable Metrics/MethodLength
-      # rubocop:disable Metrics/PerceivedComplexity
-      def self.quote_check_json(quote_check = nil)
-        json_hash = quote_check.attributes.merge({ # Warning: attributes has stringifed keys, so use it too
-                                                   "status" => quote_check.status,
-                                                   "errors" => quote_check.validation_errors,
-                                                   "error_details" => quote_check.validation_error_details&.map do
-                                                     it.merge(
-                                                       "comment" => quote_check.validation_error_edits&.fetch(
-                                                         it["id"], {}
-                                                       )&.[]("comment") || nil,
-                                                       "deleted" =>
-                                                        quote_check.validation_error_edits&.fetch(
-                                                          it["id"], {}
-                                                        )&.[]("deleted") || false
-                                                     )
-                                                   end,
-                                                   "error_messages" => quote_check.validation_errors&.index_with do
-                                                     I18n.t("quote_validator.errors.#{it}")
-                                                   end,
-                                                   "filename" => quote_check.filename,
-
-                                                   "gestes" => quote_check.read_attributes&.fetch("gestes", nil) # rubocop:disable Style/SafeNavigationChainLength
-                                                                &.map&.with_index do |geste, geste_index|
-                                                                  geste_id = QuoteValidator::Base.geste_index(
-                                                                    quote_check.id, geste_index
-                                                                  )
-
-                                                                  geste.slice("intitule").merge(
-                                                                    "id" => geste_id,
-                                                                    "valid" =>
-                                                                      quote_check.validation_error_details.none? do
-                                                                        it["geste_id"] == geste_id
-                                                                      end
-                                                                  )
-                                                                end
-                                                 })
-        return json_hash if Rails.env.development?
-
-        json_hash.slice(
-          "id", "status", "profile", "metadata",
-          "valid", "errors", "error_details", "error_messages",
-          "parent_id",
-          "filename",
-          "gestes",
-          "finished_at"
-        ).compact
-      end
-      # rubocop:enable Metrics/PerceivedComplexity
-      # rubocop:enable Metrics/MethodLength
-      # rubocop:enable Metrics/CyclomaticComplexity
-      # rubocop:enable Metrics/AbcSize
-
       protected
-
-      def quote_check_json(quote_check_provided = nil)
-        self.class.quote_check_json(quote_check_provided || quote_check)
-      end
 
       def quote_check
         @quote_check ||= QuoteCheck.find(params[:id])
+      end
+
+      def quote_check_json(quote_check_provided = nil)
+        QuoteCheckSerializer.new(quote_check_provided || quote_check).as_json
       end
 
       def quote_check_params

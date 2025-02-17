@@ -68,7 +68,7 @@ class QuoteChecksController < ApplicationController
   def render_show
     set_quote_check_results
 
-    @quote_check_json_hash = Api::V1::QuoteChecksController.quote_check_json(quote_check)
+    @quote_check_json_hash = QuoteCheckSerializer.new(quote_check).as_json
 
     @quote_check_json = {
       errors: @quote_errors,
