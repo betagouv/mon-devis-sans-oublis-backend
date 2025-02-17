@@ -44,23 +44,21 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  unless Rails.application.config.app_env == "production"
-    member_action :recheck, method: :post do
-      quote_check = QuoteCheck.find(params[:id])
+  member_action :recheck, method: :post do
+    quote_check = QuoteCheck.find(params[:id])
 
+    if quote_check.recheckable?
       QuoteCheckCheckJob.perform_later(quote_check.id)
-
       flash[:success] = "Le devis est en cours de retraitement."
-      redirect_to admin_quote_check_path(quote_check)
+    else
+      flash[:error] = "Le devis ne peut pas être retraité."
     end
+
+    redirect_to admin_quote_check_path(quote_check)
   end
 
-  unless Rails.application.config.app_env == "production"
-    action_item :recheck, only: :show do
-      unless resource.status == "pending"
-        link_to "Re-vérifier à nouveau", recheck_admin_quote_check_path(resource), method: :post
-      end
-    end
+  action_item :recheck, only: :show do
+    link_to "Re-vérifier à nouveau", recheck_admin_quote_check_path(resource), method: :post if resource.recheckable?
   end
 
   index do # rubocop:disable Metrics/BlockLength
@@ -215,7 +213,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
               column "Erreur(s) et correction(s)" do |geste|
                 geste_errors = geste_errors(resource, gestes.index(geste))
 
-                if geste_errors.any?
+                if geste_errors&.any?
                   content_tag(:ul) do
                     geste_errors.map do
                       content = "#{it.fetch('code')} : #{it.fetch('title')} #{it.fetch('id')}"
