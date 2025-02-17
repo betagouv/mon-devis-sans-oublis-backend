@@ -249,6 +249,7 @@ Instructions :
 7. Lorsqu'un champ du JSON est un enum, utilisez uniquement l'une des options possibles.
 8. Utilisez le titre ou sous-titre de la section pour compléter l'intitulé du geste afin de le clarifier si nécessaire
 9. La majorité du temps, les gestes sont inscrits dans un tableau à plusieurs colonnes comme par exemple, informations techniques / Quantités / unitités / prix HT / Taux TVA / Montant TTC
+10. Si le texte fournis n'est pas exploitable, renvoyez null plutôt que d'inventer des gestes
 
 
 Réfléchissez étape par étape.
@@ -256,4 +257,4 @@ Réfléchissez étape par étape.
 
 Vous ne répondrez que par un objet JSON qui concatene le JSON général et tous les JSON des gestes présent dans le devis
 Ne fournissez pas d’explications.
-voici le texte du devis anonymise : 
+voici le texte du devis anonymise :
