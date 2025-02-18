@@ -229,7 +229,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
                         if deletetion_reason # rubocop:disable Metrics/BlockNesting
                           deletetion_reason = I18n.t(
                             "quote_checks.validation_error_detail_deletion_reasons.#{deletetion_reason}",
-                            fallback: deletetion_reason
+                            default: deletetion_reason
                           )
                         end
 
