@@ -9,7 +9,7 @@ Voici les JSON que l'on souhaite récupérer :
 
 ```jsx
 {
-version: "2.0.1";
+version: "2.0.2";
 mention_devis: boolean; 
 numero_devis : text; 
 pro_forme_juridique: text; 
@@ -20,6 +20,7 @@ date_devis: date;
 validite: boolean;
 
 date_debut_chantier: date; 
+delai_debut_chantier: text;
 
 date_pre_visite: date; 
 gestes : [{geste1},{geste2}...]
@@ -237,10 +238,6 @@ reference_bouches_soufflage: text;
 }
 ```
 
-voici le texte du devis anonymise : 
-
-
-
 Instructions :
 
 1. Récupérez les informations générales du devis et intégrez-les dans le JSON général.
@@ -248,10 +245,11 @@ Instructions :
 3. Si un geste ne correspond pas exactement à l'un des types définis dans les JSON spécifiques fournis, ne l'incluez pas dans le JSON final.
 4. Assurez-vous de ne pas mélanger les informations des différents gestes et de bien identifier les sections et titres. Repérez les titres et sous-titres dans le devis. Ils sont souvents utilisés pour regrouper les informations par gestes et pour donner du contexte au geste (notamment la localisation dans le logement).
 5. Assurez-vous de toujours récupérer les attributs de l'équipement lorsqu'ils sont mentionnés dans le texte.
-5 bis. Si un attribut n'est pas explicitement mentionné dans le texte, laissez-le vide dans le JSON et ne l'inventez pas.
-6. Lorsqu'un champ du JSON est un enum, utilisez uniquement l'une des options possibles.
-7. Utilisez le titre ou sous-titre de la section pour compléter l'intitulé du geste afin de le clarifier si nécessaire
-8. La majorité du temps, les gestes sont inscrits dans un tableau à plusieurs colonnes comme par exemple, informations techniques / Quantités / unitités / prix HT / Taux TVA / Montant TTC
+6. Laissez les attributs vides s'ils ne sont pas clairement indiqués dans le texte.
+7. Lorsqu'un champ du JSON est un enum, utilisez uniquement l'une des options possibles.
+8. Utilisez le titre ou sous-titre de la section pour compléter l'intitulé du geste afin de le clarifier si nécessaire
+9. La majorité du temps, les gestes sont inscrits dans un tableau à plusieurs colonnes comme par exemple, informations techniques / Quantités / unitités / prix HT / Taux TVA / Montant TTC
+10. Si le texte fourni ne contient pas d'informations exploitables ou de gestes de travaux, renvoyez immédiatement le JSON : {bad_file: true}.
 
 
 Réfléchissez étape par étape.
@@ -259,3 +257,5 @@ Réfléchissez étape par étape.
 
 Vous ne répondrez que par un objet JSON qui concatene le JSON général et tous les JSON des gestes présent dans le devis
 Ne fournissez pas d’explications.
+voici le texte du devis anonymise :
+
