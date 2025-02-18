@@ -55,8 +55,8 @@ fr:
             - Ventilation Mécanique Double-Flux
             - Ventilation Mécanique Simple-Flux
     validation_error_detail_deletion_reasons:
-      information_not_present: Information en fait présente
-      not_used: Information non utilisé dans notre cas
+      information_present: Élément bien présent dans le devis
+      not_used: Client non concerné par cette remarque
   quote_validator:
     error_categories:
       admin: "Mentions administratives"
