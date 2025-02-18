@@ -7,7 +7,7 @@ module QuoteCheckEdits
   MAX_COMMENT_LENGTH = 1_000
   MAX_EDITION_REASON_LENGTH = 255
   VALIDATION_ERROR_DELETION_REASONS = %w[
-    information_not_present
+    information_present
     not_used
   ].freeze
 
