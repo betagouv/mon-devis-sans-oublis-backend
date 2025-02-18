@@ -23,7 +23,7 @@ describe "Error Details edition API" do
   end
 
   path "/quote_checks/{quote_check_id}/error_details/{error_details_id}" do
-    post "Ré-ajouter un détail d'erreur" do
+    post "Annuler la suppression d'un détail d'erreur donc le Ré-ajouter comme originellement" do
       tags "Devis", "Erreurs"
       security [basic_auth: []]
       consumes "application/json"
@@ -74,7 +74,7 @@ describe "Error Details edition API" do
       end
     end
 
-    patch "Mettre à jour un détail d'erreur" do
+    patch "Modifier le commentaire sur le détail d'erreur" do
       tags "Devis", "Erreurs"
       security [basic_auth: []]
       consumes "application/json"

@@ -110,7 +110,8 @@ paths:
                 - data
   "/quote_checks/{quote_check_id}/error_details/{error_details_id}":
     post:
-      summary: Ré-ajouter un détail d'erreur
+      summary: Annuler la suppression d'un détail d'erreur donc le Ré-ajouter comme
+        originellement
       tags:
       - Devis
       - Erreurs
@@ -162,7 +163,7 @@ paths:
         '204':
           description: détail d'erreur supprimé
     patch:
-      summary: Mettre à jour un détail d'erreur
+      summary: Modifier le commentaire sur le détail d'erreur
       tags:
       - Devis
       - Erreurs
