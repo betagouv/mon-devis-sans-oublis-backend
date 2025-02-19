@@ -5,7 +5,7 @@ require "swagger_helper"
 describe "Error Details edition API" do
   path "/quote_checks/error_detail_deletion_reasons" do
     get "Récupérer les profils disponibles" do
-      tags "Devis", "Erreurs"
+      tags "Erreurs Devis"
       produces "application/json"
 
       response "200", "liste des raisons de suppression d'erreur" do
@@ -24,7 +24,7 @@ describe "Error Details edition API" do
 
   path "/quote_checks/{quote_check_id}/error_details/{error_details_id}" do
     post "Annuler la suppression d'un détail d'erreur donc le Ré-ajouter comme originellement" do
-      tags "Devis", "Erreurs"
+      tags "Erreurs Devis"
       security [basic_auth: []]
       consumes "application/json"
       produces "application/json"
@@ -44,7 +44,7 @@ describe "Error Details edition API" do
     end
 
     delete "Supprimer un détail d'erreur" do
-      tags "Devis", "Erreurs"
+      tags "Erreurs Devis"
       security [basic_auth: []]
       consumes "application/json"
       produces "application/json"
@@ -75,7 +75,7 @@ describe "Error Details edition API" do
     end
 
     patch "Modifier le commentaire sur le détail d'erreur" do
-      tags "Devis", "Erreurs"
+      tags "Erreurs Devis"
       security [basic_auth: []]
       consumes "application/json"
       produces "application/json"

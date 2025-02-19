@@ -6,7 +6,7 @@ describe "Devis API" do
   path "/quote_checks/{quote_check_id}/error_details/{error_details_id}/feedbacks" do
     # TODO: i18n?
     post "Déposer un retour" do
-      tags "Devis"
+      tags "Erreurs Devis"
       security [basic_auth: []]
       consumes "application/json"
       produces "application/json"
