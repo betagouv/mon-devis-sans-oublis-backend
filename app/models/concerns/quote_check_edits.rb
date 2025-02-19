@@ -26,14 +26,16 @@ module QuoteCheckEdits
     validation_error_edits[error_id] ||= {}
     validation_error_edits[error_id].merge!(
       "comment" => comment&.presence&.first(MAX_COMMENT_LENGTH),
-      "commented_at" => Time.zone.now
+      "commented_at" => Time.zone.now.iso8601
     )
+    self.validation_error_edited_at = validation_error_edits[error_id].fetch("commented_at")
 
     save!
   end
 
-  def commented?
-    comment.present? || commented_at.present? ||
+  def commented? # rubocop:disable Metrics/CyclomaticComplexity
+    feedbacks.any? || # Backport
+      comment.present? || commented_at.present? ||
       validation_error_edits&.values&.any? { it.key? "commented_at" } || false
   end
 
@@ -42,18 +44,23 @@ module QuoteCheckEdits
     validation_error_edits[error_id] ||= {}
     validation_error_edits[error_id].merge!(
       "deleted" => true,
-      "deleted_at" => Time.zone.now,
+      "deleted_at" => Time.zone.now.iso8601,
       "reason" => reason&.presence&.first(QuoteCheck::MAX_EDITION_REASON_LENGTH)
     )
+    self.validation_error_edited_at = validation_error_edits[error_id].fetch("deleted_at")
 
     save!
   end
 
-  def edited_at
+  def edited_at # rubocop:disable Metrics/AbcSize
     (
-      [commented_at] +
-        Array.wrap(validation_error_edits&.values&.flat_map { [it["commented_at"], it["deleted_at"]] })
-    ).compact.map { Time.zone.parse(it) }.max
+      [
+        validation_error_edited_at,
+        commented_at
+      ] +
+        Array.wrap(validation_error_edits&.values&.flat_map { [it["commented_at"], it["deleted_at"]] }).compact
+             .map { Time.zone.parse(it) }
+    ).compact.max
   end
 
   def format_commented_at
@@ -74,6 +81,7 @@ module QuoteCheckEdits
     if validation_error_edits&.key?(validation_error_id)
       self.validation_error_edits[validation_error_id] = validation_error_edits[validation_error_id]
                                                          .except("deleted", "deleted_at", "reason").presence
+      self.validation_error_edited_at = Time.zone.now
     end
 
     save!

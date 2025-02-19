@@ -66,6 +66,8 @@ fr:
       missing: "Information manquante"
       wrong: "Information erronée"
     errors:
+      server_timeout_error: "Malheuresement, nous n'avons pas encore réussi à traiter le devis. Merci de réessayer plus tard."
+
       file_reading_error: "Malheureusement, nous n'avons pas réussi à lire le fichier... (nous ne supportons pas encore les scans ou images pour le moment)."
       unsupported_file_format: "L'extension et le format du fichier ne sont pas supportés pour le moment."
 
