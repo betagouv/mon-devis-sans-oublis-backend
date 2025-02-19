@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class QuoteCheckSerializer < ActiveModel::Serializer
+  TIMEOUT_FOR_PROCESSING = 15.minutes
+
   attributes :id, :status, :profile, :metadata,
              :errors, :error_details, :error_messages,
              :parent_id,
@@ -16,11 +18,11 @@ class QuoteCheckSerializer < ActiveModel::Serializer
   end
 
   def errors
-    object.validation_errors
+    validation_errors
   end
 
   def error_details
-    object.validation_error_details&.map do
+    validation_error_details&.map do
       it.merge(
         "comment" => object.validation_error_edits&.dig(it["id"], "comment"),
         "deleted" => object.validation_error_edits&.dig(it["id"], "deleted") || false
@@ -29,7 +31,7 @@ class QuoteCheckSerializer < ActiveModel::Serializer
   end
 
   def error_messages
-    object.validation_errors&.index_with do
+    validation_errors&.index_with do
       I18n.t("quote_validator.errors.#{it}")
     end
   end
@@ -40,10 +42,40 @@ class QuoteCheckSerializer < ActiveModel::Serializer
       geste.slice("intitule").merge(
         "id" => geste_id,
         "valid" =>
-          object.validation_error_details.none? do
+          validation_error_details.none? do
             it["geste_id"] == geste_id
           end
       )
     end
+  end
+
+  def status
+    return "invalid" if consider_timeout?
+
+    object.status
+  end
+
+  protected
+
+  def consider_timeout?
+    object.status == "pending" && object.started_at < TIMEOUT_FOR_PROCESSING.ago
+  end
+
+  def validation_errors
+    validation_error_details&.map { it.fetch("code") }
+  end
+
+  def validation_error_details # rubocop:disable Metrics/MethodLength
+    @validation_error_details ||= if consider_timeout?
+                                    code = "server_timeout_error"
+                                    [{
+                                      "id" => [object.id, 1].compact.join("-"),
+                                      "code" => code,
+                                      "category" => "server", type: "error",
+                                      "title" => I18n.t("quote_validator.errors.#{code}")
+                                    }]
+                                  else
+                                    object.validation_error_details
+                                  end
   end
 end

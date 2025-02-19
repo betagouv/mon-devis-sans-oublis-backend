@@ -4,6 +4,7 @@
 class QuoteCheck < ApplicationRecord
   include QuoteCheckBackoffice
   include QuoteCheckEdits
+  include QuoteCheckExpectations
   include QuoteCheckFeedbacks
   include QuoteCheckInputMetadata
   include QuoteCheckPostCheckMetadata
