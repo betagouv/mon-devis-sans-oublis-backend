@@ -14,6 +14,7 @@ module QuoteCheckEdits
   included do
     validates :comment, length: { maximum: MAX_COMMENT_LENGTH }
 
+    before_validation :format_commented_at
     before_validation :format_validation_error_edits
     validate :validation_error_edits_data
 
@@ -24,22 +25,39 @@ module QuoteCheckEdits
     self.validation_error_edits ||= {}
     validation_error_edits[error_id] ||= {}
     validation_error_edits[error_id].merge!(
-      comment: comment&.presence&.first(MAX_COMMENT_LENGTH)
+      "comment" => comment&.presence&.first(MAX_COMMENT_LENGTH),
+      "commented_at" => Time.zone.now
     )
 
     save!
+  end
+
+  def commented?
+    comment.present? || commented_at.present? ||
+      validation_error_edits&.values&.any? { it.key? "commented_at" } || false
   end
 
   def delete_validation_error_detail!(error_id, reason: nil)
     self.validation_error_edits ||= {}
     validation_error_edits[error_id] ||= {}
     validation_error_edits[error_id].merge!(
-      deleted: true,
-      deleted_at: Time.zone.now,
-      reason: reason&.presence&.first(QuoteCheck::MAX_EDITION_REASON_LENGTH)
+      "deleted" => true,
+      "deleted_at" => Time.zone.now,
+      "reason" => reason&.presence&.first(QuoteCheck::MAX_EDITION_REASON_LENGTH)
     )
 
     save!
+  end
+
+  def edited_at
+    (
+      [commented_at] +
+        Array.wrap(validation_error_edits&.values&.flat_map { [it["commented_at"], it["deleted_at"]] })
+    ).compact.map { Time.zone.parse(it) }.max
+  end
+
+  def format_commented_at
+    self.commented_at = comment.present? ? Time.zone.now : nil
   end
 
   def format_validation_error_edits

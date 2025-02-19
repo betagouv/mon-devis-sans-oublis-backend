@@ -73,6 +73,10 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       end
     end
 
+    column "Date soumission" do
+      it.started_at
+    end
+
     column "Correction" do
       link_to "Devis #{it.id}", it.frontend_webapp_url,
               target: "_blank", rel: "noopener"
@@ -94,20 +98,20 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       it.validation_errors&.count
     end
 
-    column "Présence feedback ?" do
+    column "Feedback ?" do
       it.feedbacks.any?
     end
 
-    column "Présence commentaire ?" do
-      it.comment.present?
+    column "Commentaire ?" do
+      it.commented?
     end
 
-    column "Date soumission" do
-      it.started_at
+    column "Date édition" do
+      it.edited_at
     end
 
     column "Persona", :profile
-    column "Nb de token" do
+    column "Nb tokens" do
       number_with_delimiter(it.tokens_count, delimiter: " ")
     end
     column "temps traitement" do
@@ -115,7 +119,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
     end
 
     actions defaults: false do
-      link_to "Voir le détail", admin_quote_check_path(it), class: "button"
+      link_to "Voir détail", admin_quote_check_path(it), class: "button"
     end
   end
 
@@ -128,14 +132,17 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
         end
       end
 
-      row "Date soumission" do
+      row "Date de soumission" do
         resource.started_at
       end
 
-      row :tokens_count, "Nb de token" do
+      row :profile, label: "Persona"
+      row :tokens_count, "Nombre de tokens" do
         number_with_delimiter(it.tokens_count, delimiter: " ")
       end
-      row :profile, label: "Persona"
+      row "temps traitement (de soumission à fin d'analyse auto)" do
+        "#{resource.processing_time.ceil(1)}s" if resource.processing_time
+      end
 
       row "Gestes demandés" do
         it.metadata&.dig("gestes")&.join("\n")
@@ -149,7 +156,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
         it.metadata&.dig("aides")&.join("\n")
       end
 
-      row "Nb erreurs" do
+      row "Nombre d'erreurs" do
         it.validation_errors&.count
       end
 
@@ -158,11 +165,19 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
                 target: "_blank", rel: "noopener"
       end
 
-      row :comment, label: "Commentaire"
-
-      row "temps traitement" do
-        "#{resource.processing_time.ceil(1)}s" if resource.processing_time
+      row "Présence de feedback ?" do
+        it.feedbacks.any?
       end
+
+      row "Présence de commentaire ?" do
+        it.commented?
+      end
+
+      row "Date de dernière édition" do
+        it.edited_at
+      end
+
+      row :comment, label: "Commentaire global"
 
       row "version application" do
         if resource.application_version && resource.application_version != "unknown"

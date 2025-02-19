@@ -16,6 +16,22 @@ RSpec.describe QuoteCheckEdits do
     end
   end
 
+  describe "#commented?" do
+    subject(:commented) { quote_check.commented? }
+
+    context "when there is no comment" do
+      it { is_expected.to be false }
+    end
+
+    context "when there is an comment" do
+      before do
+        quote_check.comment_validation_error_detail!(validation_error_id, "commented? test")
+      end
+
+      it { is_expected.to be true }
+    end
+  end
+
   describe "#delete_validation_error_detail" do
     it "deletes a validation error detail" do
       quote_check.delete_validation_error_detail!(validation_error_id, reason: "not_used")
@@ -24,6 +40,22 @@ RSpec.describe QuoteCheckEdits do
         "deleted" => true,
         "reason" => "not_used"
       )
+    end
+  end
+
+  describe "#edited_at" do
+    subject(:edited_at) { quote_check.edited_at }
+
+    context "when there is no edition" do
+      it { is_expected.to be_nil }
+    end
+
+    context "when there is an edition" do
+      before do
+        quote_check.comment_validation_error_detail!(validation_error_id, "edited_at test")
+      end
+
+      it { is_expected.to be_within(1.second).of(Time.zone.now) }
     end
   end
 
