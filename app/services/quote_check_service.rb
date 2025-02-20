@@ -102,37 +102,35 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
                 category: "file",
                 type: "error")
     ensure
-      # TODO: Better fix me
-      # Avoid null bytes inside text field for PostgreSQL
       text = quote_reader.text
       anonymised_text = quote_reader.anonymised_text
-      if text&.include?("\x00")
+
+      if Llms::Base.include_null_bytes?(text)
         ErrorNotifier.notify(
           StandardError.new("QuoteCheck #{quote_check.id} contains null bytes")
         )
-        text = text.gsub("\x00", "")
-        anonymised_text = anonymised_text&.gsub("\x00", "")
       end
-
-      quote_check.assign_attributes(
-        text:,
-
-        anonymised_text:,
-
-        naive_attributes: quote_reader.naive_attributes,
-        naive_version: quote_reader.naive_version,
-
-        private_data_qa_attributes: quote_reader.private_data_qa_attributes,
-        private_data_qa_result: quote_reader.private_data_qa_result,
-        private_data_qa_version: quote_reader.private_data_qa_version,
-
-        qa_attributes: quote_reader.qa_attributes,
-        qa_result: quote_reader.qa_result,
-        qa_version: quote_reader.qa_version,
-
-        read_attributes: quote_reader.read_attributes
-      )
     end
+
+    quote_check.assign_attributes(
+      # Avoid null bytes inside text field to not break PostgreSQL
+      # TODO: Better fix null bytes at chore to not have them
+      text: Llms::Base.remove_null_bytes(text),
+      anonymised_text: Llms::Base.remove_null_bytes(anonymised_text),
+
+      naive_attributes: quote_reader.naive_attributes,
+      naive_version: quote_reader.naive_version,
+
+      private_data_qa_attributes: quote_reader.private_data_qa_attributes,
+      private_data_qa_result: quote_reader.private_data_qa_result,
+      private_data_qa_version: quote_reader.private_data_qa_version,
+
+      qa_attributes: quote_reader.qa_attributes,
+      qa_result: quote_reader.qa_result,
+      qa_version: quote_reader.qa_version,
+
+      read_attributes: quote_reader.read_attributes
+    )
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize

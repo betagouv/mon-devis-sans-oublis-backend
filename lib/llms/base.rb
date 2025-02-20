@@ -79,6 +79,14 @@ module Llms
       text[/(\{.+\})/im, 1] if text&.match?(/```jsx\n/i)
     end
 
+    def self.include_null_bytes?(text)
+      text&.gsub("\x00", "")
+    end
+
+    def self.remove_null_bytes(text)
+      text&.gsub("\x00", "")
+    end
+
     def self.sort_models(models)
       models.sort_by do |model|
         # Extract the size (e.g., "8B", "70B") and convert to an integer
@@ -97,7 +105,9 @@ module Llms
     end
 
     # rubocop:disable Metrics/AbcSize
-    def extract_result(content) # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
+    def extract_result(content, ignore_null_bytes: false) # rubocop:disable Metrics/MethodLength
       case result_format
       when :numbered_list
         @read_attributes = TrackingHash.nilify_empty_values(
@@ -115,7 +125,11 @@ module Llms
             TrackingHash.nilify_empty_values(
               JSON.parse(content_json_result, symbolize_names: true)
             )
-          rescue JSON::ParserError
+          rescue JSON::ParserError => e
+            if e.message.include?("invalid ASCII") && !ignore_null_bytes # rubocop:disable Metrics/BlockNesting
+              return extract_result(self.class.remove_null_bytes(content), ignore_null_bytes: true)
+            end
+
             raise ResultError, "Parsing JSON inside content: #{content_json_result}"
           end
           raise ResultError, "No attributes for JSON: #{content_json_result}" if @read_attributes.empty?
@@ -124,6 +138,8 @@ module Llms
         end
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize
   end
 end
