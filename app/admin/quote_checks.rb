@@ -230,7 +230,7 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
               column "Attributs" do |geste,|
                 pre JSON.pretty_generate(geste)
               end
-              column "Erreur(s) et correction(s)" do |_, geste_index|
+              column "Erreur(s) et correction(s)" do |_, geste_index| # rubocop:disable Metrics/BlockLength
                 geste_errors = geste_errors(resource, geste_index)
 
                 if geste_errors&.any?
@@ -240,20 +240,26 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
 
                       edit = resource.validation_error_edits&.dig(it.fetch("id"))
                       if edit
-                        deletetion_reason = edit["reason"]
-                        if deletetion_reason # rubocop:disable Metrics/BlockNesting
-                          deletetion_reason = I18n.t(
-                            "quote_checks.validation_error_detail_deletion_reasons.#{deletetion_reason}",
-                            default: deletetion_reason
+                        deletion_reason = edit["reason"]
+                        if deletion_reason # rubocop:disable Metrics/BlockNesting
+                          deletion_reason = I18n.t(
+                            "quote_checks.validation_error_detail_deletion_reasons.#{deletion_reason}",
+                            default: deletion_reason
                           )
                         end
 
                         content = safe_join([
-                                              content,
-                                              content_tag(:br),
-                                              content_tag(:strong,
-                                                          ["\nSupprimée", deletetion_reason].compact.join(" : "))
-                                            ])
+                          content,
+                          content_tag(:br),
+                          if edit.key?("comment") # rubocop:disable Metrics/BlockNesting
+                            content_tag(:strong,
+                                        ["\nCommentaire", edit.fetch("comment")].compact.join(" : "))
+                          end,
+                          if edit.key?("deleted_at") # rubocop:disable Metrics/BlockNesting
+                            content_tag(:strong,
+                                        ["\nSupprimée", deletion_reason].compact.join(" : "))
+                          end
+                        ].compact)
                       end
 
                       concat(content_tag(:li, content))
