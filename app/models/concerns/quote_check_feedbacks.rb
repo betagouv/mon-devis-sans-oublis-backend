@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Add feedbacks
+# Add feedbacks for us only like customer support.
 module QuoteCheckFeedbacks
   extend ActiveSupport::Concern
 

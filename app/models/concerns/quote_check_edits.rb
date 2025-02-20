@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Add edits
+# Edits Quote after analysis, adding some comments for the end-user.
 module QuoteCheckEdits
   extend ActiveSupport::Concern
 
@@ -33,9 +33,8 @@ module QuoteCheckEdits
     save!
   end
 
-  def commented? # rubocop:disable Metrics/CyclomaticComplexity
-    feedbacks.any? || # Backport
-      comment.present? || commented_at.present? ||
+  def commented?
+    comment.present? || commented_at.present? ||
       validation_error_edits&.values&.any? { it.key? "commented_at" } || false
   end
 
