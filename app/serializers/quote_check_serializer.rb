@@ -9,6 +9,7 @@ class QuoteCheckSerializer < ActiveModel::Serializer
              :filename,
              :gestes,
              :finished_at,
+             :comment,
              # Virtual attributes
              :errors, :error_details, :error_messages,
              :gestes
