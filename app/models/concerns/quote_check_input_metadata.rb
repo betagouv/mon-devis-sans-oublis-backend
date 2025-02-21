@@ -4,10 +4,11 @@
 module QuoteCheckInputMetadata
   extend ActiveSupport::Concern
 
-  PROFILES = %w[artisan particulier mandataire conseiller].freeze
+  PROFILES = %w[artisan particulier conseiller].freeze # Also called Persona
+  DEPRECATED_PROFILES = %w[mandataire].freeze
 
   included do
-    validates :profile, presence: true, inclusion: { in: PROFILES }
+    validates :profile, presence: true, inclusion: { in: PROFILES + DEPRECATED_PROFILES }
 
     before_validation :format_metadata
     validate :metadata_data
