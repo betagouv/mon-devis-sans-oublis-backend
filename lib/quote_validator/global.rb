@@ -7,9 +7,24 @@ module QuoteValidator
 
     def validate!
       super do
-        validate_admin
-        validate_works
+        if validate_file # Skip other checks if file not relevant
+          validate_admin
+          validate_works
+        end
       end
+    end
+
+    def validate_file
+      if quote[:bad_file]
+        add_error(
+          "file_type_error",
+          category: "file",
+          type: "error"
+        )
+        return false
+      end
+
+      true
     end
 
     # doit valider les mentions administratives du devis
