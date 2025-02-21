@@ -89,9 +89,7 @@ module QuoteValidator
       rcs_present = @pro[:rcs].present? || @pro[:rne].present? || (@pro[:rcs_ville].present? && @pro[:siret].present?)
 
       add_error("rcs_manquant", category: "admin", type: "missing") unless rcs_present
-      if rcs_present && @pro[:rcs_ville].blank?
-        add_error("rcs_ville_manquant", category: "admin", type: "missing")
-      end
+      add_error("rcs_ville_manquant", category: "admin", type: "missing") if rcs_present && @pro[:rcs_ville].blank?
 
       add_error("pro_assurance_manquant", category: "admin", type: "missing") if @pro[:assurance].blank?
 
