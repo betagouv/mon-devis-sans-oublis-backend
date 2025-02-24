@@ -57,7 +57,8 @@ module Llms
       # Auto switch model if not found
       if response.code == "404" && model_fallback
         backup_model = (self.class.sort_models(
-          models.map { |m| m.fetch("id") }
+          models.filter { it.fetch("type") == "text-generation" }
+                .map { it.fetch("id") }
         ) - [model].compact).first
         return chat_completion(text, model: backup_model) if backup_model
       end
