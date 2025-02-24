@@ -219,6 +219,47 @@ ActiveAdmin.register QuoteCheck do # rubocop:disable Metrics/BlockLength
       end
 
       tab "Attributs détectés" do # rubocop:disable Metrics/BlockLength
+        file_errors = resource.validation_error_details&.select { |error| error["category"] == "file" }
+        if file_errors&.any?
+          panel "Fichier" do # rubocop:disable Metrics/BlockLength
+            table_for [nil] do # rubocop:disable Metrics/BlockLength
+              column "Erreur(s) et correction(s)" do
+                content_tag(:ul) do
+                  file_errors.map do
+                    content = "#{it.fetch('code')} : #{it.fetch('title')} #{it.fetch('id')}"
+
+                    edit = resource.validation_error_edits&.dig(it.fetch("id"))
+                    if edit
+                      deletion_reason = edit["reason"]
+                      if deletion_reason
+                        deletion_reason = I18n.t(
+                          "quote_checks.validation_error_detail_deletion_reasons.#{deletion_reason}",
+                          default: deletion_reason
+                        )
+                      end
+
+                      content = safe_join([
+                        content,
+                        content_tag(:br),
+                        if edit.key?("comment")
+                          content_tag(:strong,
+                                      ["\nCommentaire", edit.fetch("comment")].compact.join(" : "))
+                        end,
+                        if edit.key?("deleted_at")
+                          content_tag(:strong,
+                                      ["\nSupprimée", deletion_reason].compact.join(" : "))
+                        end
+                      ].compact)
+                    end
+
+                    concat(content_tag(:li, content))
+                  end
+                end
+              end
+            end
+          end
+        end
+
         panel "Admin" do # rubocop:disable Metrics/BlockLength
           table_for [nil] do # rubocop:disable Metrics/BlockLength
             column "Erreur(s) et correction(s)" do # rubocop:disable Metrics/BlockLength
