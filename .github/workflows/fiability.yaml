@@ -47,6 +47,8 @@ jobs:
           MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
           TEST_SOURCE_DATABASE_URL: ${{ secrets.TEST_SOURCE_DATABASE_URL }}
         run: |
+          mkdir -p log
+          echo "❌ FAILED to run the Fiability test, no results available." > log/fiability_test_results.txt
           docker run \
             --network="host" \
             -e ALBERT_MODEL="${{ env.ALBERT_MODEL }}" \
@@ -57,12 +59,13 @@ jobs:
             -e MISTRAL_API_KEY="${{ env.MISTRAL_API_KEY }}" \
             -e TEST_SOURCE_DATABASE_URL="${{ env.TEST_SOURCE_DATABASE_URL }}" \
             -v /var/run/docker.sock:/var/run/docker.sock \
-            --rm rails-template bash -c "bin/rails db:environment:set RAILS_ENV=test && bundle exec rake quote_checks:fiability" | tee logs/fiability_test_results.txt
-          if grep -q "❌ FAILED" logs/fiability_test_results.txt; then
+            --rm rails-template bash -c "bin/rails db:environment:set RAILS_ENV=test && bundle exec rake quote_checks:fiability > log/fiability_test_results.txt"
+          if grep -q "❌ FAILED" log/fiability_test_results.txt; then
             exit 1
           fi
       - name: Upload Fiability Test Results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: fiability-test-results
-          path: logs/fiability_test_results.txt
+          path: log/fiability_test_results.txt
