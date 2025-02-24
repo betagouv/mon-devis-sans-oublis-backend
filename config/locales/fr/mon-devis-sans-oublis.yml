@@ -131,7 +131,7 @@ fr:
       chaudiere_type_silo_manquant_infos: "Il est important de décrire précisément le silo (externe ou interne, neuf ou existant, textile ou maçonné." # externe/interne, neuf/existant, Textile/maconner
       chaudiere_contenance_silo_manquant: "La contenance du silo n'est pas indiquée"
       chaudiere_contenance_silo_trop_petit: "Le volume du silo doit être supérieur ou égal à 225 litres"
-      chaudiere_emission_CO_manquant: "Il manque l'émission de monoxyde de carbone de la chaudière" # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
+      chaudiere_emission_CO_manquant: "Il manque les émissions de monoxyde de carbone de la chaudière" # Emission monoxyde de carbone rapportée (CO) à 10% d’O2 (mg/Nm3)
       chaudiere_emission_CO_manquant_infos: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissions de monoxyde de carbone (CO) rapportée à 10% d’O2 (en mg/Nm3)."
       chaudiere_emission_COG_manquant: "Il manque les émissions de composés organiques volatiles (COG) de la chaudière"
       chaudiere_emission_COG_manquant_infos: "Lorsque la chaudière n'a pas le label flamme verte, il faut indiquer les émissions de composés organiques volatiles (COG) rapportée à 10% d’O2 (en mg/Nm3)." # Emission de composés organiques volatiles (COG) (mg/Nm3) rapportée à 10% d’O2
