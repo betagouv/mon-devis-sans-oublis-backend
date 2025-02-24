@@ -6,5 +6,6 @@ Dockerfile
 docker-compose.yml
 tmp/**
 log/**
+!log/fiability_test_results.txt
 .DS_STORE
 storage/**
