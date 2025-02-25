@@ -47,6 +47,11 @@ module QuoteReader
             /#{Regexp.escape(value)}/i,
             (fields_or_field.to_s.singularize.upcase * 10)[0...[value.size, max_size].compact.min]
           )
+        rescue TypeError => e
+          extended_exception = TypeError.new(
+            "TypeError: fields_or_field: #{fields_or_field}, value: #{value} - #{e.message}"
+          )
+          raise extended_exception
         end
         return tmp_anonymised_text
       end
