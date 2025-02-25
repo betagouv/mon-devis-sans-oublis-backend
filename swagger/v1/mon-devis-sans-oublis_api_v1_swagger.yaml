@@ -396,7 +396,6 @@ components:
       enum:
       - artisan
       - particulier
-      - mandataire
       - conseiller
     quote_check_metadata:
       type: object

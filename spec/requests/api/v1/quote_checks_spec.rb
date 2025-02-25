@@ -111,4 +111,54 @@ RSpec.describe "/api/v1/quote_checks" do
       # rubocop:enable RSpec/MultipleExpectations
     end
   end
+
+  describe "PATCH /api/v1/quote_checks/:id" do
+    let(:quote_check) { create(:quote_check) }
+
+    let(:quote_check_params) do
+      {
+        comment: "This is a comment"
+      }
+    end
+
+    before do
+      patch api_v1_quote_check_url(quote_check), params: quote_check_params, as: :json, headers: basic_auth_header
+    end
+
+    it "returns a successful response" do
+      expect(response).to be_successful
+    end
+
+    it "returns the updated comment" do
+      expect(json.fetch("comment")).to eq("This is a comment")
+    end
+
+    context "with large comment" do
+      let(:quote_check_params) do
+        {
+          comment: "a" * 10_000
+        }
+      end
+
+      it "returns an error response" do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "returns the error message" do
+        expect(json.fetch("message")).to include(/Comment/i)
+      end
+    end
+
+    context "with special characters" do
+      let(:quote_check_params) do
+        {
+          comment: "<script>alert('XSS')</script> test < and >"
+        }
+      end
+
+      it "returns the sanitized comment" do
+        expect(json.fetch("comment")).to eq("alert('XSS') test &lt; and &gt;")
+      end
+    end
+  end
 end
