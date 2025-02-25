@@ -185,7 +185,7 @@ emission_composés_organique: Integer (mgC/Nm3) (emission de COG);
 emission_particules: Integer (mg/Nm3); 
 emission_oxydes_azotes: Integer (mg/Nm3) (emission de Nox);
 type_silo: text (externeinterne, neuf/existant, textile/maconner); 
-contenance_silo: Decimal (Litre); 
+contenance_silo: Decimal (La contenance peut être définie en litres (L), mètres cubes (m³) ou tonnes (T) );
 marque_regulateur: text; 
 reference_regulateur: text; 
 classe_regulateur: text}
