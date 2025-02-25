@@ -2,13 +2,14 @@
 
 # This class is responsible for checking the quote and returning the result.
 class QuoteCheckService # rubocop:disable Metrics/ClassLength
-  attr_reader :quote_check
+  attr_reader :quote_check, :save
 
   # rubocop:disable Metrics/ParameterLists
   def initialize(
     tempfile_or_quote_check, filename = nil,
     profile = nil,
-    content_type: nil, metadata: nil, parent_id: nil
+    content_type: nil, metadata: nil, parent_id: nil,
+    save: true
   )
     @quote_check = if tempfile_or_quote_check.is_a?(QuoteCheck)
                      tempfile_or_quote_check
@@ -18,6 +19,7 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
                        content_type:, metadata:, parent_id:
                      ).upload
                    end
+    @save = save
   end
   # rubocop:enable Metrics/ParameterLists
 
@@ -49,9 +51,8 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
       validate_quote if quote_check.validation_errors.blank?
       quote_check.finished_at = Time.current
     ensure
-      quote_check.update!(
-        application_version: Rails.application.config.application_version
-      )
+      quote_check.application_version = Rails.application.config.application_version
+      quote_check.save! if save
     end
 
     quote_check
