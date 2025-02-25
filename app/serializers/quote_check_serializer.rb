@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class QuoteCheckSerializer < ActiveModel::Serializer
+  include ActionView::Helpers::SanitizeHelper
+
   TIMEOUT_FOR_PROCESSING = 15.minutes
 
   attributes :id, :status, :profile, :metadata,
@@ -18,6 +20,10 @@ class QuoteCheckSerializer < ActiveModel::Serializer
     super.compact # Removes keys with nil values
   end
 
+  def comment
+    sanitize(object.comment)
+  end
+
   def errors
     validation_errors
   end
@@ -25,7 +31,7 @@ class QuoteCheckSerializer < ActiveModel::Serializer
   def error_details
     validation_error_details&.map do
       it.merge(
-        "comment" => object.validation_error_edits&.dig(it["id"], "comment"),
+        "comment" => sanitize(object.validation_error_edits&.dig(it["id"], "comment")),
         "deleted" => object.validation_error_edits&.dig(it["id"], "deleted") || false
       ).compact
     end
