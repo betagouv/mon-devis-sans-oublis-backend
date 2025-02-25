@@ -57,9 +57,10 @@ jobs:
             -e FIABILITY_THRESHOLD="${{ env.FIABILITY_THRESHOLD }}" \
             -e MISTRAL_MODEL="${{ env.MISTRAL_MODEL }}" \
             -e MISTRAL_API_KEY="${{ env.MISTRAL_API_KEY }}" \
+            -e SILENT_MIGRATION="true" \
             -e TEST_SOURCE_DATABASE_URL="${{ env.TEST_SOURCE_DATABASE_URL }}" \
             -v /var/run/docker.sock:/var/run/docker.sock \
-            --rm rails-template bash -c "bin/rails db:environment:set RAILS_ENV=test && bundle exec rake quote_checks:fiability > log/fiability_test_results.txt"
+            --rm rails-template bash -c "bin/rails db:environment:set RAILS_ENV=test && bundle exec rake quote_checks:fiability" | tee log/fiability_test_results.txt
           if grep -q "❌ FAILED" log/fiability_test_results.txt; then
             exit 1
           fi
