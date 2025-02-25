@@ -6,7 +6,8 @@ RUN apt-get update && apt-get upgrade -y && \
     apt-get install --no-install-recommends -y \
         build-essential git \
         libpq-dev libyaml-dev \
-        nodejs npm
+        nodejs npm \
+        tesseract-ocr tesseract-ocr-fra libtesseract-dev imagemagick poppler-utils
 
 # do the bundle install in another directory with the strict essential
 # (Gemfile and Gemfile.lock) to allow further steps to be cached

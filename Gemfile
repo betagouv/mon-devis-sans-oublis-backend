@@ -58,22 +58,27 @@ gem "active_storage-postgresql" # Store file in database
 gem "active_storage_validations" # Validate ActiveStorage attachments
 gem "diff-lcs", require: false
 gem "good_job" # Postgres-backed job queue
-gem "mime-types"
-gem "pdf-reader"
 gem "rswag-api" # Serves the generated Swagger documentation
 gem "rswag-ui" # Provides the Swagger UI interface
 gem "sib-api-v3-sdk", require: false # Brevo (ex Sendinblue) API
 
+# Quote files Reading
+gem "mime-types", require: false
+gem "mini_magick", require: false
+gem "pdf-reader", require: false
+gem "rtesseract", require: false
+
+# Efficiency
 gem "concurrent-ruby", require: false
 gem "parallel", require: false
 
-# Required for langchainrb
+# Required for langchainrb LLMs
 gem "csv" # Since Ruby > 3.4.0
 gem "faraday"
 gem "langchainrb", ">= 0.19" # Framework around LLMs
 
 gem "ostruct" # Since Ruby > 3.4.0
-gem "rack-cors"
+gem "rack-cors" # TODO: use built-in Rails 8+ https://www.bigbinary.com/blog/rails-8-rate-limiting-api
 
 # Back Office
 gem "activeadmin"

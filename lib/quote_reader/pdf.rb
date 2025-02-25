@@ -14,8 +14,7 @@ module QuoteReader
     end
 
     def extract_text
-      io = StringIO.new(content)
-      @text = fix_french_characters(extract_text_from_pdf(io))
+      @text = fix_french_characters(extract_text_from_pdf)
     rescue PDF::Reader::MalformedPDFError, PDF::Reader::UnsupportedFeatureError,
            StandardError => e
       raise parse_error(e)
@@ -57,8 +56,10 @@ module QuoteReader
       ReadError.new(error_message)
     end
 
-    def extract_text_from_pdf(pdf_path_or_io)
-      reader = PDF::Reader.new(pdf_path_or_io)
+    def extract_text_from_pdf
+      io = StringIO.new(content)
+
+      reader = PDF::Reader.new(io)
       raw_text = reader.pages.map(&:text)
 
       raw_text.join("\n") # Join all pages text into a single string, separated by new lines
