@@ -26,6 +26,7 @@ composants DSFR](https://github.com/betagouv/dsfr-view-components)
 * Cucumber et Capybara pour les tests BDD ;
 * Rubocop (RSpec et Rails) pour le linting ;
 * Docker pour avoir un environnement de développement.
+* tesseract et la gem `mini_magick` pour la reconnaisance des images et lire leur contenu via OCR
 
 ## Moteur et fonctionnement interne / Architecture
 
@@ -65,6 +66,17 @@ DATABASE_URL='postgresql://postgres:dummy@localhost:5433' bin/rails server -b 0.
 
 Tout l'environnement est configuré pour et depuis [Docker](https://www.docker.com/). Des
 commandes utiles sont fournies dans le [Makefile](./Makefile).
+
+## Installation de tesseract sous Mac OSX
+
+`brew install tesseract tesseract-lang`
+
+```sh
+mkdir -p /opt/homebrew/share/tessdata
+cd /opt/homebrew/share/tessdata
+curl -O https://github.com/tesseract-ocr/tessdata_best/raw/main/fra.traineddata
+# check that you really download the file and it's not empty
+```
 
 ## Back office
 

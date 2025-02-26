@@ -10,8 +10,6 @@ class QuoteFile < ApplicationRecord
   has_one_attached :file
   has_many :quote_checks, dependent: :nullify, inverse_of: :file
 
-  # Do not limit on content_type: ["application/pdf"]
-  # So check can manualy review them
   validates :filename, presence: true
   validates :content_type, presence: true
   validates :hexdigest, presence: true, uniqueness: { scope: :filename }
@@ -35,6 +33,8 @@ class QuoteFile < ApplicationRecord
     )
     tempfile.rewind
     new_quote_file.data = tempfile.read
+    raise QuoteReader::NoFileContentError if new_quote_file.data.blank?
+
     tempfile.rewind
     new_quote_file.file.attach(io: tempfile, filename: filename) # File.basename(tempfile.path)
     new_quote_file.save!

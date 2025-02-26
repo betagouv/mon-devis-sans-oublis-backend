@@ -47,8 +47,16 @@ RSpec.describe QuoteCheckService, type: :service do
     end
     # rubocop:enable RSpec/MultipleExpectations
 
-    context "when the file is not a PDF" do
-      let(:tempfile) { fixture_file_upload("quote_files/Devis_test.png", "image/png") }
+    context "with an empty file" do
+      let(:tempfile) { fixture_file_upload("quote_files/empty.pdf", "application/pdf") }
+
+      it "creates the QuoteCheck with dedicated error" do
+        expect { quote_check.validation_errors }.to raise_error(QuoteReader::NoFileContentError)
+      end
+    end
+
+    context "with an unsupported content type" do
+      let(:tempfile) { fixture_file_upload("quote_files/Devis_test.zip", "application/zip") }
 
       it "creates the QuoteCheck with dedicated error" do
         expect(quote_check.validation_errors).to include("unsupported_file_format")

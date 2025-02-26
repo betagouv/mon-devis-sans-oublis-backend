@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module QuoteReader
+  class NoFileContentError < StandardError; end
   class UnsupportedFileType < StandardError; end
 
   # Read Quote from PDF file to extract Quote attributes
@@ -24,12 +25,15 @@ module QuoteReader
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
     def read(llm: nil)
-      if content_type != "application/pdf"
-        raise QuoteReader::UnsupportedFileType,
-              "File type #{content_type} not supported"
-      end
-
-      @text = Pdf.new(content).extract_text
+      @text = case content_type
+              when %r{^image/}
+                Image.new(content, content_type).extract_text
+              when "application/pdf"
+                Pdf.new(content).extract_text
+              else
+                raise QuoteReader::UnsupportedFileType,
+                      "File type #{content_type} not supported"
+              end
 
       naive_reader = NaiveText.new(text)
       @naive_attributes = naive_reader.read

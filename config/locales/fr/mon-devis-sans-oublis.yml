@@ -68,6 +68,7 @@ fr:
     errors:
       server_timeout_error: "Malheuresement, nous n'avons pas encore réussi à traiter le devis. Merci de réessayer plus tard."
 
+      empty_file_error: "Le fichier fourni semble vide, nous n'avons pas pu lire son contenu."
       file_reading_error: "Malheureusement, nous n'avons pas réussi à lire le fichier... (nous ne supportons pas encore les scans ou images pour le moment)."
       unsupported_file_format: "L'extension et le format du fichier ne sont pas supportés pour le moment."
       file_type_error: "Le fichier ne semble pas être un devis, veuillez nous transférer uniquement des devis de rénovation énergétique."

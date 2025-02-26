@@ -94,6 +94,10 @@ class QuoteCheckService # rubocop:disable Metrics/ClassLength
                   category: "file",
                   type: "error")
       end
+    rescue QuoteReader::NoFileContentError
+      add_error("empty_file_error",
+                category: "file",
+                type: "error")
     rescue QuoteReader::ReadError
       add_error("file_reading_error",
                 category: "file",
