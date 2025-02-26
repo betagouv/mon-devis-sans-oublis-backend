@@ -71,4 +71,6 @@ Rails.application.configure do
   # SassC::SyntaxError: Error: Custom property values may not be empty. (SassC::SyntaxError)
   # on line 4:375078 of stdin
   # >> ckbox]:checked+label:before{--data-uri-svg:url("data:image/sv
+
+  config.secret_key_base = Rails.application.credentials.secret_key_base || "fallback_secret_key"
 end
