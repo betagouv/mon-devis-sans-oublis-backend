@@ -17,9 +17,9 @@ class QuoteCheck < ApplicationRecord
   STATUSES = %w[pending valid invalid].freeze
 
   after_initialize :set_application_version
+  strip_attributes
 
   validates :started_at, presence: true
-
   validate :validation_errors_as_array, if: -> { validation_errors.present? || validation_error_details.present? }
 
   delegate :filename, to: :file, allow_nil: true

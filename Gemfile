@@ -61,6 +61,7 @@ gem "good_job" # Postgres-backed job queue
 gem "rswag-api" # Serves the generated Swagger documentation
 gem "rswag-ui" # Provides the Swagger UI interface
 gem "sib-api-v3-sdk", require: false # Brevo (ex Sendinblue) API
+gem "strip_attributes"
 
 # Quote files Reading
 gem "mime-types", require: false

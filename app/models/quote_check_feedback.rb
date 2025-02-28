@@ -4,6 +4,8 @@
 class QuoteCheckFeedback < ApplicationRecord
   belongs_to :quote_check
 
+  strip_attributes
+
   # Global feedback
   validates :rating,
             presence: true,
