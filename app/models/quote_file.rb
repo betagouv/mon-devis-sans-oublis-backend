@@ -10,6 +10,8 @@ class QuoteFile < ApplicationRecord
   has_one_attached :file
   has_many :quote_checks, dependent: :nullify, inverse_of: :file
 
+  strip_attributes
+
   validates :filename, presence: true
   validates :content_type, presence: true
   validates :hexdigest, presence: true, uniqueness: { scope: :filename }
