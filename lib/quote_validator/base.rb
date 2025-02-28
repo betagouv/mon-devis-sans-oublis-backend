@@ -80,15 +80,15 @@ module QuoteValidator
     # rubocop:enable Metrics/AbcSize
 
     def errors
-      error_details.map { it.fetch(:code) }
+      error_details&.map { it.fetch(:code) } || []
     end
 
     def fields
-      quote.keys_accessed
+      quote&.keys_accessed || []
     end
 
     def validate!
-      @error_details ||= []
+      @error_details = []
 
       yield
 
