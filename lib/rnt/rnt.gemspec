@@ -30,5 +30,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Runtime dependencies
-  spec.add_dependency "nokogiri", "~> 1.8"
+  spec.add_dependency "nokogiri", "~> 1.18"
 end
