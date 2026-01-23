@@ -29,6 +29,8 @@ services:
       PGPORT: 5433
     ports:
       - "5433:5433"
+    # volumes:
+    #   - "/tmp/postgres-data:/var/lib/postgresql/data"
   redis:
     image: redis:7
     ports:
