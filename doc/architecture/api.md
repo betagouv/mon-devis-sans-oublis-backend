@@ -1,9 +1,18 @@
 ## API
 
 - Au format REST JSON
-- Protégée via authentification HTTP Basic avec Bearer hashé
+- Protégée via un token d'authentification en HTTP Basic avec Bearer hashé
+- Un mode `partner` pour les plateformes extérieures avec accès et un mode `internal` plus poussé pour nos besoins complets
 - Voir le fichier de documentation de l'API au format OpenAPI Swagger et l'interface bac à sable interactive sur `/api-docs`
 - Régénération et mise à jour de la documentation à partir des spécifications tests via `make doc`
+
+### Fonctionnalités
+
+- Analayse d'un devis dans une entité `QuoteCheck` via upload direct ou URL autorisée (voir variables d'environnnement)
+- Récupération des résultats via l'ID et/ou lien vers l'interface fourni après upload car analyse asynchrone
+- Analayse d'un dossier avec plusieurs documents via la création d'un `QuotesCase` contenant des `QuoteCheck`
+- Vérification des certifications RGE suivant les informations fournies
+- Statistiques publiques
 
 ### API Documentation
 
