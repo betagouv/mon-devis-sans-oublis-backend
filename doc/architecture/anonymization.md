@@ -1,6 +1,8 @@
 ## Contexte et besoin d'anonymisation
 
-L'utilisation de solutions IA en ligne (Mistral, etc.) pour l'analyse des devis nécessite une anonymisation rigoureuse des données privées et commerciales contenues dans ces documents (noms, adresses, prix, informations sensibles).
+L'utilisation de solutions IA en ligne (Mistral, etc.) pour l'analyse des devis nécessite une anonymisation rigoureuse des données privées et commerciales contenues dans ces documents.
+
+Les champs extraits sont listés dans notre schéma [swagger/v1/quote_check_private_data_qa_attributes.json](https://github.com/MTES-MCT/mon-devis-sans-oublis-backend/blob/main/swagger/v1/quote_check_private_data_qa_attributes.json) tels que ceux pour le `client` (nom, adresse, mail, tel) et le `pro` (siret, assurance, adresse, mail, nom, rge ...).
 
 Notre première approche repose sur des expressions régulières (regex) pour leur simplicité de mise en œuvre. Cependant, cette solution présente des limites importantes :
 - **Maintenance complexe** : les regex deviennent difficiles à maintenir à mesure que les cas d'usage se multiplient
