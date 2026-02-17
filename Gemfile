@@ -84,10 +84,10 @@ gem "parallel", require: false
 
 # Required for langchainrb LLMs
 gem "csv" # Since Ruby > 3.4.0
-gem "faraday"
+gem "faraday", ">= 2.14.1"
 gem "faraday-follow_redirects"
 gem "langchainrb", ">= 0.19" # Framework around LLMs
-gem "ruby_llm", require: false
+gem "ruby_llm", ">= 1.10.0", require: false
 
 gem "clamby", require: false # Virus scanning with ClamAV
 gem "ostruct" # Since Ruby > 3.4.0
